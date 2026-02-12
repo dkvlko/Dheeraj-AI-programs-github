@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Hindi Transcription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 16px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .textarea-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px; /* roughly 10–12 lines */
+            resize: vertical;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 1.1rem; /* “novel” reading size */
+            line-height: 1.5;
+            /* Devanagari-friendly fonts */
+            font-family: "Nirmala UI", "Mangal", "Kohinoor Devanagari",
+                         "Noto Sans Devanagari", system-ui, sans-serif;
+        }
+
+        .actions-row {
+            display: flex;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .actions-row .spacer {
+            flex: 1;
+        }
+
+        button {
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        #recordButton {
+            background-color: #007bff;
+            color: white;
+        }
+
+        #recordButton.recording {
+            background-color: #dc3545;
+        }
+
+        #submitButton {
+            background-color: #28a745;
+            color: white;
+            margin-left: 8px;
+        }
+
+        #status {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #555;
+            min-height: 1.2em;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Hindi to Marathi Speech Transcription</h1>
+
+    <div class="textarea-wrapper">
+        <textarea id="transcriptText"
+                  placeholder=" हिंदी टेक्स्ट।"></textarea>
+
+        <div class="actions-row">
+            <!--<button id="recordButton" type="button">Start</button>-->
+
+            <div class="spacer"></div>
+
+            <form method="POST" action="/hindi2marathi-transcribe">
+            <input type="hidden" id="hiddenText" name="text">
+            <button id="submitButton" type="submit">Submit</button>
+            </form>
+        </div>
+
+        <div id="status"></div>
+    </div>
+</div>
+
+<script>
+    // ========================
+    // CONFIG
+    // ========================
+
+    
+    const submitButton = document.getElementById("submitButton");
+    const transcriptText = document.getElementById("transcriptText");
+
+
+
+    submitButton.addEventListener("click", () => {
+        // Placeholder: in future, send transcriptText.value back to server.
+        // Example:
+        // fetch("/submit_transcript", { method: "POST", body: JSON.stringify({ text: transcriptText.value }) })
+        //   .then(...)
+        //alert("Submit clicked. (Submission logic can be added later.)");
+        document.getElementById("hiddenText").value = transcriptText.value;
+    });
+</script>
+</body>
+</html>

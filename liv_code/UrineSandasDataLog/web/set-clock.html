@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            width: 320px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .row {
+            margin: 10px 0;
+        }
+        input {
+            width: 80px;
+            padding: 6px;
+            text-align: center;
+        }
+        button {
+            padding: 8px 20px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        function toggleFields() {
+            let mode = document.querySelector('input[name="mode"]:checked').value;
+            document.getElementById("alarmFields").style.display = mode === "alarm" ? "block" : "none";
+            document.getElementById("timerFields").style.display = mode === "timer" ? "block" : "none";
+        }
+    </script>
+</head>
+
+<body onload="toggleFields()">
+<div class="card">
+    <h3>Set Alarm / Timer</h3>
+
+    <form method="post">
+        <div class="row">
+            <label><input type="radio" name="mode" value="alarm" checked onclick="toggleFields()"> Alarm</label>
+            <label><input type="radio" name="mode" value="timer" onclick="toggleFields()"> Timer</label>
+        </div>
+
+        <div id="alarmFields">
+            <div class="row">
+                <input name="hour" type="number" min="0" max="23" placeholder="Hour">
+                <input name="minute" type="number" min="0" max="59" placeholder="Minute">
+            </div>
+        </div>
+
+        <div id="timerFields">
+            <div class="row">
+                <input name="minutes" type="number" min="1" placeholder="Minutes">
+            </div>
+        </div>
+
+        <div class="row">
+            <button type="submit">Set</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
