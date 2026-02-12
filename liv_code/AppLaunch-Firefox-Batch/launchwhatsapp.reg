@@ -1,0 +1,12 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\launchwhatsapp]
+@="URL:Launch WhatsApp Protocol"
+"URL Protocol"=""
+
+[HKEY_CLASSES_ROOT\launchwhatsapp\shell]
+
+[HKEY_CLASSES_ROOT\launchwhatsapp\shell\open]
+
+[HKEY_CLASSES_ROOT\launchwhatsapp\shell\open\command]
+@="\"D:\\OneDrive-Local\\OneDrive\\DheerajOnHP\\liv_code\\AppLaunch-Firefox-Batch\\launch_whatsapp.bat\""

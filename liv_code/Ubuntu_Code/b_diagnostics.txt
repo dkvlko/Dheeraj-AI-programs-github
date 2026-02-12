@@ -1,0 +1,537 @@
+BLUETOOTH DIAGNOSTICS REPORT
+================================================================================
+
+
+
+================================================================================
+SYSTEM INFORMATION
+================================================================================
+
+KERNEL:
+Linux dheeraj-HP-ENVY-15-Notebook-PC 6.14.0-37-generic #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+OS:
+Distributor ID:	Ubuntu
+Description:	Ubuntu 24.04.3 LTS
+Release:	24.04
+Codename:	noble
+
+BLUEZ_VERSION:
+bluetoothctl: 5.72
+
+
+================================================================================
+BLUETOOTH STATUS
+================================================================================
+
+HCICONFIG:
+hci1:	Type: Primary  Bus: USB
+	BD Address: 30:3A:64:79:95:5E  ACL MTU: 1021:5  SCO MTU: 96:5
+	UP RUNNING PSCAN 
+	RX bytes:11257 acl:153 sco:0 events:482 errors:0
+	TX bytes:41954 acl:152 sco:0 commands:284 errors:0
+	Features: 0xff 0xfe 0x0f 0xfe 0xdb 0xff 0x7b 0x87
+	Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3 
+	Link policy: RSWITCH HOLD SNIFF 
+	Link mode: PERIPHERAL ACCEPT 
+	Name: 'dheeraj-HP-ENVY-15-Notebook-PC'
+	Class: 0x7c010c
+	Service Classes: Rendering, Capturing, Object Transfer, Audio, Telephony
+	Device Class: Computer, Laptop
+	HCI Version: 4.0 (0x6)  Revision: 0x500
+	LMP Version: 4.0 (0x6)  Subversion: 0x500
+	Manufacturer: Intel Corp. (2)
+
+hci0:	Type: Primary  Bus: USB
+	BD Address: 00:E0:4C:23:99:87  ACL MTU: 1021:6  SCO MTU: 255:12
+	UP RUNNING 
+	RX bytes:2895 acl:0 sco:0 events:274 errors:0
+	TX bytes:42731 acl:0 sco:0 commands:274 errors:0
+	Features: 0xff 0xff 0xff 0xfe 0xdb 0xfd 0x7b 0x87
+	Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3 
+	Link policy: RSWITCH HOLD SNIFF PARK 
+	Link mode: PERIPHERAL ACCEPT 
+	Name: 'dheeraj-HP-ENVY-15-Notebook-PC #1'
+	Class: 0x7c010c
+	Service Classes: Rendering, Capturing, Object Transfer, Audio, Telephony
+	Device Class: Computer, Laptop
+	HCI Version: 5.1 (0xa)  Revision: 0xdfc6
+	LMP Version: 5.1 (0xa)  Subversion: 0xd922
+	Manufacturer: Realtek Semiconductor Corporation (93)
+
+SERVICE_STATUS:
+● bluetooth.service - Bluetooth service
+     Loaded: loaded (/usr/lib/systemd/system/bluetooth.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2026-01-03 07:55:28 IST; 11min ago
+       Docs: man:bluetoothd(8)
+   Main PID: 12177 (bluetoothd)
+     Status: "Running"
+      Tasks: 1 (limit: 18946)
+     Memory: 1.1M (peak: 1.6M)
+        CPU: 100ms
+     CGroup: /system.slice/bluetooth.service
+             └─12177 /usr/libexec/bluetooth/bluetoothd
+
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_0
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_1
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_0
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream_duplex
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05_duplex
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05_duplex
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Failed to set privacy: Rejected (0x0b)
+
+BLUETOOTHCTL_LIST:
+Controller 00:E0:4C:23:99:87 dheeraj-HP-ENVY-15-Notebook-PC #1 [default]
+Controller 30:3A:64:79:95:5E dheeraj-HP-ENVY-15-Notebook-PC
+
+ADAPTERS:
+bt-adapter not available
+
+
+================================================================================
+BLUETOOTH LOGS
+================================================================================
+
+JOURNAL_BLUETOOTH:
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/aptx
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/sbc
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/sbc
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/sbc_xq
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/sbc_xq
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_1
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_0
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_1
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_0
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream_duplex
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05_duplex
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05_duplex
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/ldac
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/aptx_hd
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_hd
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/aptx
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/sbc
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/sbc
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/sbc_xq
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/sbc_xq
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_1
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_0
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_1
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_0
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream_duplex
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05_duplex
+Jan 03 07:51:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05_duplex
+Jan 03 07:55:01 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: profiles/audio/a2dp.c:a2dp_config() avdtp_close failed
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC systemd[1]: bluetooth.service: Main process exited, code=dumped, status=11/SEGV
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC systemd[1]: bluetooth.service: Failed with result 'core-dump'.
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC systemd[1]: bluetooth.service: Scheduled restart job, restart counter is at 1.
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC (uetoothd)[12177]: bluetooth.service: ConfigurationDirectory 'bluetooth' already exists but the mode is different. (File system: 755 ConfigurationDirectoryMode: 555)
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC systemd[1]: Starting bluetooth.service - Bluetooth service...
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Bluetooth daemon 5.72
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: src/main.c:check_options() Unknown key ControllerAddress for group General in /etc/bluetooth/main.conf
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: src/main.c:check_options() Unknown key AutoEnable for group General in /etc/bluetooth/main.conf
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC systemd[1]: Started bluetooth.service - Bluetooth service.
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Starting SDP server
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: src/plugin.c:plugin_init() System does not support csip plugin
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: profiles/audio/micp.c:micp_init() D-Bus experimental not enabled
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: src/plugin.c:plugin_init() System does not support micp plugin
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: src/plugin.c:plugin_init() System does not support vcp plugin
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: src/plugin.c:plugin_init() System does not support mcp plugin
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: src/plugin.c:plugin_init() System does not support bass plugin
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: src/plugin.c:plugin_init() System does not support bap plugin
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Bluetooth management interface 1.23 initialized
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Battery Provider Manager created
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: sap-server: Operation not permitted (1)
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Battery Provider Manager created
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: sap-server: Operation not permitted (1)
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Failed to set privacy: Rejected (0x0b)
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/ldac
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/aptx_hd
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_hd
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/aptx
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/sbc
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/sbc
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/sbc_xq
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/sbc_xq
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_1
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_0
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_1
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_0
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream_duplex
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05_duplex
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05_duplex
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/ldac
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/aptx_hd
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_hd
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/aptx
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/sbc
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/sbc
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/sbc_xq
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/sbc_xq
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_1
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_0
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_1
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/aptx_ll_duplex_0
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/faststream_duplex
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSink/opus_05_duplex
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Endpoint registered: sender=:1.84 path=/MediaEndpoint/A2DPSource/opus_05_duplex
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Failed to set privacy: Rejected (0x0b)
+
+DMESG_BLUETOOTH:
+[    1.025617] usb 2-6: Product: Bluetooth Radio
+[   19.968301] Bluetooth: Core ver 2.22
+[   19.968329] NET: Registered PF_BLUETOOTH protocol family
+[   19.968331] Bluetooth: HCI device and connection manager initialized
+[   19.968378] Bluetooth: HCI socket layer initialized
+[   19.968381] Bluetooth: L2CAP socket layer initialized
+[   19.968387] Bluetooth: SCO socket layer initialized
+[   21.996490] Bluetooth: hci0: RTL: examining hci_ver=0a hci_rev=000b lmp_ver=0a lmp_subver=8761
+[   21.997538] Bluetooth: hci0: RTL: rom_version status=0 version=1
+[   21.997544] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761bu_fw.bin
+[   22.061168] Bluetooth: hci1: Legacy ROM 2.5 revision 0.0 build 2 week 3 2013
+[   23.063795] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761bu_config.bin
+[   23.064912] Bluetooth: hci0: RTL: cfg_sz 6, total sz 30210
+[   23.210700] Bluetooth: hci0: RTL: fw version 0xdfc6d922
+[   23.386714] Bluetooth: hci1: Intel Bluetooth firmware file: intel/ibt-hw-37.7.10-fw-1.0.2.3.d.bseq
+[   23.609176] Bluetooth: hci1: Intel BT fw patch 0x56 completed & activated
+[   43.935819] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[   43.935824] Bluetooth: BNEP filters: protocol multicast
+[   43.935829] Bluetooth: BNEP socket layer initialized
+[   43.937968] Bluetooth: MGMT ver 1.23
+[   43.938074] Bluetooth: MGMT ver 1.23
+[   73.925994] Bluetooth: RFCOMM TTY layer initialized
+[   73.926017] Bluetooth: RFCOMM socket layer initialized
+[   73.926036] Bluetooth: RFCOMM ver 1.11
+[  297.637431] bluetoothd[1402]: segfault at 10 ip 00006136d3fe07e5 sp 00007ffe4fec63c0 error 4 in bluetoothd[367e5,6136d3fcf000+f3000] likely on CPU 2 (core 1, socket 0)
+
+CRASH_DIR:
+total 1396
+drwxrwsrwt  2 root whoopsie    4096 Jan  3 07:57 .
+drwxr-xr-x 14 root root        4096 Jul 28 13:26 ..
+-rw-r-----  1 root whoopsie 1421288 Jan  3 07:56 _usr_libexec_bluetooth_bluetoothd.0.crash
+-rw-r--r--  1 root whoopsie       0 Jan  3 07:57 _usr_libexec_bluetooth_bluetoothd.0.upload
+
+BLUETOOTH_ERRORS:
+Jan 01 08:07:44 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1401]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 01 17:45:09 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1450]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 00:52:01 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1471]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 00:52:01 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1471]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 02 20:21:54 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1471]: Failed to set mode: Authentication Failed (0x05)
+Jan 02 20:21:56 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1471]: Failed to remove UUID: Authentication Failed (0x05)
+Jan 02 20:21:58 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1471]: Failed to remove UUID: Authentication Failed (0x05)
+Jan 02 20:22:01 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1471]: Failed to remove UUID: Authentication Failed (0x05)
+Jan 03 12:53:18 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1409]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 12:53:19 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1409]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 07:49:03 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[54989]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 07:49:03 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[54989]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 07:50:48 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 07:50:49 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 07:55:01 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[1402]: profiles/audio/a2dp.c:a2dp_config() avdtp_close failed
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC systemd[1]: bluetooth.service: Failed with result 'core-dump'.
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Failed to set privacy: Rejected (0x0b)
+Jan 03 07:55:28 dheeraj-HP-ENVY-15-Notebook-PC bluetoothd[12177]: Failed to set privacy: Rejected (0x0b)
+
+
+================================================================================
+NETWORK AND USB INFORMATION
+================================================================================
+
+USB_BLUETOOTH:
+Port 1: 0000.0503 highspeed power enable connect
+   Port 2: 0000.0100 power
+Device Status:     0x0001
+  Self Powered
+
+Bus 001 Device 002: ID 8087:8000 Intel Corp. Integrated Rate Matching Hub
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            9 Hub
+  bDeviceSubClass         0 [unknown]
+  bDeviceProtocol         1 Single TT
+  bMaxPacketSize0        64
+  idVendor           0x8087 Intel Corp.
+  idProduct          0x8000 Integrated Rate Matching Hub
+  bcdDevice            0.04
+  iManufacturer           0 
+  iProduct                0 
+  iSerial                 0 
+--
+        wMaxPacketSize     0x0008  1x 8 bytes
+        bInterval               4
+Device Status:     0x0000
+  (Bus Powered)
+
+Bus 001 Device 005: ID 8087:07dc Intel Corp. Bluetooth wireless interface
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass          224 Wireless
+  bDeviceSubClass         1 Radio Frequency
+  bDeviceProtocol         1 Bluetooth
+  bMaxPacketSize0        64
+  idVendor           0x8087 Intel Corp.
+  idProduct          0x07dc Bluetooth wireless interface
+  bcdDevice            0.01
+  iManufacturer           0 
+  iProduct                0 
+  iSerial                 0 
+  bNumConfigurations      1
+--
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           3
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              0 
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+--
+      bInterfaceNumber        1
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              0 
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+--
+      bInterfaceNumber        1
+      bAlternateSetting       1
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              0 
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+--
+      bInterfaceNumber        1
+      bAlternateSetting       2
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              0 
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+--
+      bInterfaceNumber        1
+      bAlternateSetting       3
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              0 
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+--
+      bInterfaceNumber        1
+      bAlternateSetting       4
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              0 
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+--
+      bInterfaceNumber        1
+      bAlternateSetting       5
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              0 
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+--
+   Port 8: 0000.0100 power
+   Port 9: 0000.0100 power
+Device Status:     0x0001
+  Self Powered
+
+Bus 002 Device 002: ID 0bda:b771 Realtek Semiconductor Corp. Bluetooth Radio
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               1.10
+  bDeviceClass          224 Wireless
+  bDeviceSubClass         1 Radio Frequency
+  bDeviceProtocol         1 Bluetooth
+  bMaxPacketSize0        64
+  idVendor           0x0bda Realtek Semiconductor Corp.
+  idProduct          0xb771 Bluetooth Radio
+  bcdDevice            2.00
+  iManufacturer           1 Realtek
+  iProduct                2 Bluetooth Radio
+  iSerial                 0 
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+--
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           3
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              4 Bluetooth Radio
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            3
+--
+      bInterfaceNumber        1
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              4 Bluetooth Radio
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+        bmAttributes            1
+--
+      bInterfaceNumber        1
+      bAlternateSetting       1
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              4 Bluetooth Radio
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+        bmAttributes            1
+--
+      bInterfaceNumber        1
+      bAlternateSetting       2
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              4 Bluetooth Radio
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+        bmAttributes            1
+--
+      bInterfaceNumber        1
+      bAlternateSetting       3
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              4 Bluetooth Radio
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+        bmAttributes            1
+--
+      bInterfaceNumber        1
+      bAlternateSetting       4
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              4 Bluetooth Radio
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+        bmAttributes            1
+--
+      bInterfaceNumber        1
+      bAlternateSetting       5
+      bNumEndpoints           2
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+      iInterface              4 Bluetooth Radio
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+        bmAttributes            1
+
+USB_TREE:
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=ehci-pci/2p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Hub, Driver=hub/8p, 480M
+        |__ Port 003: Dev 003, If 0, Class=Video, Driver=uvcvideo, 480M
+        |__ Port 003: Dev 003, If 1, Class=Video, Driver=uvcvideo, 480M
+        |__ Port 005: Dev 004, If 0, Class=Vendor Specific Class, Driver=[none], 12M
+        |__ Port 007: Dev 005, If 0, Class=Wireless, Driver=btusb, 12M
+        |__ Port 007: Dev 005, If 1, Class=Wireless, Driver=btusb, 12M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/9p, 480M
+    |__ Port 006: Dev 002, If 0, Class=Wireless, Driver=btusb, 12M
+    |__ Port 006: Dev 002, If 1, Class=Wireless, Driver=btusb, 12M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 5000M
+
+NETWORK_INTERFACES:
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eno1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN mode DEFAULT group default qlen 1000
+    link/ether 8c:dc:d4:78:f1:61 brd ff:ff:ff:ff:ff:ff
+    altname enp9s0
+3: wlo1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DORMANT group default qlen 1000
+    link/ether 30:3a:64:79:95:5a brd ff:ff:ff:ff:ff:ff
+    altname wlp8s0
+
+
+================================================================================
+ISSUES DETECTED
+================================================================================
+1. USB autosuspend might be causing disconnections
+2. Possible firmware issues detected
+
+SUGGESTED FIXES:
+1. Add 'options btusb enable_autosuspend=N' to /etc/modprobe.d/btusb.conf
+2. Check for firmware updates: sudo apt update && sudo apt install linux-firmware

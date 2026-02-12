@@ -1,0 +1,12 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\copy-query]
+@="URL:Copy Query Protocol"
+"URL Protocol"=""
+
+[HKEY_CLASSES_ROOT\copy-query\shell]
+
+[HKEY_CLASSES_ROOT\copy-query\shell\open]
+
+[HKEY_CLASSES_ROOT\copy-query\shell\open\command]
+@="\"D:\\Program Files\\Python314\\pythonw.exe\" \"D:\\OneDrive-Local\\OneDrive\\DheerajOnHP\\liv_code\\python-copy2clipboard-protocol\\copy2clip.py\" \"%1\""
