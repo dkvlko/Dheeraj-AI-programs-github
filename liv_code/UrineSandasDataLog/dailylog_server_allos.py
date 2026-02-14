@@ -10,6 +10,8 @@ import ctypes
 from ctypes import wintypes
 import markdown
 from pathlib import Path
+import threading
+
 
 #Setting OS neutral variables
 CURRENT_FILE = Path(__file__).resolve()
@@ -40,6 +42,75 @@ app = Flask(__name__, template_folder=TEMPLATE_FOLDER)
 
 LRESULT = ctypes.c_ssize_t 
 
+# =========================
+# Gemini Client Helper
+# =========================
+
+
+_gemini_client_lock = threading.Lock()
+_gemini_client: Optional[genai.Client] = None
+
+
+def get_gemini_client() -> genai.Client:
+    """
+    Singleton Gemini client.
+    Creates once, reuses everywhere.
+    Thread-safe for Flask.
+    """
+    global _gemini_client
+
+    if _gemini_client is None:
+        with _gemini_client_lock:
+            if _gemini_client is None:
+                api_key = os.getenv("GEMINI_API_KEY")
+                if not api_key:
+                    raise RuntimeError(
+                        "GEMINI_API_KEY environment variable not set."
+                    )
+
+                _gemini_client = genai.Client(api_key=api_key)
+
+    return _gemini_client
+
+
+def gemini_generate(
+    prompt: str,
+    model: str = "gemini-2.5-flash",
+    max_retries: int = 2
+) -> str:
+    """
+    Central Gemini invocation wrapper.
+    Handles retries + errors.
+    """
+
+    client = get_gemini_client()
+
+    last_error = None
+
+    for attempt in range(max_retries + 1):
+        try:
+            response = client.models.generate_content(
+                model=model,
+                contents=prompt
+            )
+
+            if not response or not response.text:
+                raise RuntimeError("Empty Gemini response")
+
+            return response.text.strip()
+
+        except Exception as e:
+            last_error = e
+            print(f"[Gemini retry {attempt+1}] Error:", e)
+
+    raise RuntimeError(f"Gemini failed after retries: {last_error}")
+
+
+def render_markdown(md_text: str) -> str:
+    return markdown.markdown(
+        md_text,
+        extensions=["extra", "codehilite", "tables"]
+    )
 
 
 def turn_off_screen(timeout_ms: int = 2000) -> None:
@@ -238,15 +309,7 @@ def game_help():
         print("Received text from /game-help:", text)
         print("Selected game:", text_choice)
         
-        api_key = os.getenv("GEMINI_API_KEY")
-        if not api_key:
-            print("Error: GEMINI_API_KEY environment variable not set.")
-            return "API Key not configured", 500
-
         try:
-            # NEW: create client (no genai.configure, no GenerativeModel)
-            client = genai.Client(api_key=api_key)
-
             prompt = (
                 f"How can I achieve the following goal in the standard windows 10 game "
                 f"'{text_choice}'? "
@@ -256,27 +319,16 @@ def game_help():
                 f"Question: {text}"
             )
 
-            print("Sending request to Google AI...")
-
-            # NEW: generate content via client
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt
-            )
-
-            print("\n=== Google AI Response ===")
-            print(response.text)
+            answer_text = gemini_generate(prompt)
 
         except Exception as e:    
             print(f"\nError encountered: {e}")
             return "Gemini API error", 500
         
-        final_answer = f"{text_choice} : {response.text}"
+        final_answer = f"{text_choice} : {answer_text}"
         
-        html_answer = markdown.markdown(
-            final_answer,
-            extensions=["extra", "codehilite", "tables"]
-        )
+        html_answer = render_markdown(final_answer)
+
         return render_template("ganswer.html", answer=html_answer)
 
     # GET: serve the HTML page
@@ -292,38 +344,21 @@ def hindi2marathi_transcribe():
     text = (request.form.get("text") or "").strip()
     print("Received text from /hindi-transcribe:", text)
 
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        print("Error: GEMINI_API_KEY environment variable not set.")
-        return "API Key not configured", 500
-
     try:
-        # NEW: create client (no genai.configure, no GenerativeModel)
-        client = genai.Client(api_key=api_key)
-
         prompt = (
-            "Please translate the following Hindi sentence or word to Marathi and "
-            "if there are any grammatical errors suggest solution. "
-            "Please translate in as few words as possible: "
+            "Translate Hindi to Marathi. "
+            "Fix grammar if needed. "
+            "Keep answer concise:\n"
             + text
         )
 
-        print("Sending request to Google AI...")
-
-        # NEW: generate content via client
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-
-        print("\n=== Google AI Response ===")
-        print(response.text)
+        answer_text = gemini_generate(prompt)
 
     except Exception as e:
         print(f"\nError encountered: {e}")
         return "Gemini API error", 500
 
-    return render_template("ganswerhindi2marathi.html", answer=response.text)
+    return render_template("ganswerhindi2marathi.html", answer=answer_text)
 
 
 @app.route("/screen-off", methods=["POST", "GET"])
@@ -347,37 +382,21 @@ def gemini_help():
 
         print("Received text from /gemini-call:", text)
         
-        api_key = os.getenv("GEMINI_API_KEY")
-        if not api_key:
-            print("Error: GEMINI_API_KEY environment variable not set.")
-            return
-    
-
         try:
-            # Create client
-            client = genai.Client(api_key=api_key)
-
             prompt = (
-                f"Can you please answer the following in as few lines as possible without losing important details? : {text}"
+                "Answer briefly but keep key details:\n"
+                + text
             )
-            print("Sending request to Google AI...")
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt
-            )
-        
-            print("\n=== Google AI Response ===")
-            print(response.text)
+
+            answer_text = gemini_generate(prompt)
 
         except Exception as e:    
             print(f"\nError encountered: {e}")
         
         #return render_template("ganswer.html", answer=response.text)
         
-        html_answer = markdown.markdown(
-            response.text,
-            extensions=["extra", "codehilite", "tables"]
-        )
+        html_answer = render_markdown(answer_text)
+
         return render_template("geminianswer.html", answer=html_answer)
     # GET: serve the HTML page
     return render_template("gemini_help.html")
