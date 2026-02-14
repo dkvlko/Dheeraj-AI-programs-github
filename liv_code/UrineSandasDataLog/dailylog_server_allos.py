@@ -28,6 +28,9 @@ DB_PATH = PROJECT_ROOT / "activities.db"
 
 #DB_PATH = os.path.join(BASE_DIR, "activities.db")
 
+ai_api_dir = PROJECT_ROOT_SSL / "AI-key"
+
+key_file_path = ai_api_dir / "AI-keys.key"
 # Path to your web folder with HTML
 #TEMPLATE_FOLDER = r"C:\Users\dheer\OneDrive\DheerajOnHP\liv_code\UrineSandasDataLog\web"
 # Build certificate directory path
@@ -41,6 +44,40 @@ TEMPLATE_FOLDER =  PROJECT_ROOT / "web"
 app = Flask(__name__, template_folder=TEMPLATE_FOLDER)
 
 LRESULT = ctypes.c_ssize_t 
+
+def load_ai_keys(file_path: Path) -> dict:
+    """
+    Reads AI API keys from a .key file.
+    Expected format per line:
+        AI_NAME:API_KEY
+    Example:
+        Gemini:54656
+        OpenAI:sk-xxxxx
+    Returns:
+        dict -> {AI_NAME: API_KEY}
+    """
+    ai_keys = {}
+
+    if not file_path.exists():
+        raise FileNotFoundError(f"Key file not found: {file_path}")
+
+    with file_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+
+            # Skip empty lines or comments
+            if not line or line.startswith("#"):
+                continue
+
+            if ":" not in line:
+                raise ValueError(f"Invalid key format: {line}")
+
+            ai_name, api_key = line.split(":", 1)
+            ai_keys[ai_name.strip()] = api_key.strip()
+
+    return ai_keys
+
+
 
 # =========================
 # Gemini Client Helper
@@ -62,13 +99,21 @@ def get_gemini_client() -> genai.Client:
     if _gemini_client is None:
         with _gemini_client_lock:
             if _gemini_client is None:
-                api_key = os.getenv("GEMINI_API_KEY")
-                if not api_key:
-                    raise RuntimeError(
-                        "GEMINI_API_KEY environment variable not set."
-                    )
+                try:
+                    keys = load_ai_keys(key_file_path)
+                    gemini_api_key = keys.get("Gemini")
 
-                _gemini_client = genai.Client(api_key=api_key)
+                    if not gemini_api_key:
+                        raise KeyError("Gemini API key not found in key file.")
+
+                    print("Gemini API Key loaded successfully.")
+                    # print(gemini_api_key)
+
+                    _gemini_client = genai.Client(api_key=gemini_api_key)
+
+                except Exception as e:
+                    print(f"Error loading API keys: {e}")
+                    raise   # Fail fast — don’t create invalid client
 
     return _gemini_client
 
