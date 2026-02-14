@@ -11,21 +11,31 @@ from ctypes import wintypes
 import markdown
 from pathlib import Path
 
+#Setting OS neutral variables
+CURRENT_FILE = Path(__file__).resolve()
+
+# Project folder (UrineSandasDataLog)
+PROJECT_ROOT = CURRENT_FILE.parent
+
+# Project SSL folder (liv_code)
+PROJECT_ROOT_SSL = PROJECT_ROOT.parent
 
 # Path to your SQLite database (activities.db)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "activities.db")
+#BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = PROJECT_ROOT / "activities.db"
+
+#DB_PATH = os.path.join(BASE_DIR, "activities.db")
 
 # Path to your web folder with HTML
 #TEMPLATE_FOLDER = r"C:\Users\dheer\OneDrive\DheerajOnHP\liv_code\UrineSandasDataLog\web"
 # Build certificate directory path
-one_drive = Path(os.environ["OneDrive"])
-cert_dir = one_drive / "DheerajOnHP" / "liv_code" / "sslcert"
+#one_drive = Path(os.environ["OneDrive"])
+cert_dir = PROJECT_ROOT_SSL / "sslcert"
 # Files
-server_cert = cert_dir / "server.crt"
-server_key  = cert_dir / "server.key"
+server_cert = cert_dir / "ubuntu_server.crt"
+server_key  = cert_dir / "ubuntu_server.key"
 
-TEMPLATE_FOLDER = Path(os.environ["OneDrive"]) / "DheerajOnHP" / "liv_code" / "UrineSandasDataLog" / "web"
+TEMPLATE_FOLDER =  PROJECT_ROOT / "web"
 app = Flask(__name__, template_folder=TEMPLATE_FOLDER)
 
 LRESULT = ctypes.c_ssize_t 
