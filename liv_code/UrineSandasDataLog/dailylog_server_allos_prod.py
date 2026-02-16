@@ -2,47 +2,160 @@ import os
 import sqlite3
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime, timedelta
-
-from faster_whisper import WhisperModel
-import tempfile
-
-import google.generativeai as genai
-
-import numpy as np
+from google import genai
 import threading
-
 from typing import Optional
-from google.generativeai.types import GenerateContentResponse
-
 import platform
 import ctypes
 from ctypes import wintypes
+import markdown
+from pathlib import Path
+import threading
 
-# -------------------------
-# CONFIG
-# -------------------------
-MODEL_SIZE = "medium"   # you asked for large
-DEVICE = "cpu"            # change to "cuda" if you have a supported GPU
-COMPUTE_TYPE = "int8" if DEVICE == "cpu" else "float16"
-SAMPLE_RATE = 16000       # expected sample-rate from client
 
-print(f"Loading Whisper model ({MODEL_SIZE}) on {DEVICE} with compute_type={COMPUTE_TYPE}...")
-model = WhisperModel(MODEL_SIZE, device=DEVICE, compute_type=COMPUTE_TYPE)
-print("Model loaded.")
+#Setting OS neutral variables
+CURRENT_FILE = Path(__file__).resolve()
+
+# Project folder (UrineSandasDataLog)
+PROJECT_ROOT = CURRENT_FILE.parent
+
+# Project SSL folder (liv_code)
+PROJECT_ROOT_SSL = PROJECT_ROOT.parent
 
 # Path to your SQLite database (activities.db)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "activities.db")
+#BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = PROJECT_ROOT / "activities.db"
 
+#DB_PATH = os.path.join(BASE_DIR, "activities.db")
+
+ai_api_dir = PROJECT_ROOT_SSL / "AI-key"
+
+key_file_path = ai_api_dir / "AI-keys.key"
 # Path to your web folder with HTML
-TEMPLATE_FOLDER = r"C:\Users\dheer\OneDrive\DheerajOnHP\liv_code\UrineSandasDataLog\web"
+#TEMPLATE_FOLDER = r"C:\Users\dheer\OneDrive\DheerajOnHP\liv_code\UrineSandasDataLog\web"
+# Build certificate directory path
+#one_drive = Path(os.environ["OneDrive"])
+cert_dir = PROJECT_ROOT_SSL / "sslcert"
+# Files
+server_cert = cert_dir / "ubuntu_server.crt"
+server_key  = cert_dir / "ubuntu_server.key"
 
+TEMPLATE_FOLDER =  PROJECT_ROOT / "web"
 app = Flask(__name__, template_folder=TEMPLATE_FOLDER)
 
 LRESULT = ctypes.c_ssize_t 
 
-# To avoid concurrent access issues on a single model instance
-model_lock = threading.Lock()
+def load_ai_keys(file_path: Path) -> dict:
+    """
+    Reads AI API keys from a .key file.
+    Expected format per line:
+        AI_NAME:API_KEY
+    Example:
+        Gemini:54656
+        OpenAI:sk-xxxxx
+    Returns:
+        dict -> {AI_NAME: API_KEY}
+    """
+    ai_keys = {}
+
+    if not file_path.exists():
+        raise FileNotFoundError(f"Key file not found: {file_path}")
+
+    with file_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+
+            # Skip empty lines or comments
+            if not line or line.startswith("#"):
+                continue
+
+            if ":" not in line:
+                raise ValueError(f"Invalid key format: {line}")
+
+            ai_name, api_key = line.split(":", 1)
+            ai_keys[ai_name.strip()] = api_key.strip()
+
+    return ai_keys
+
+
+
+# =========================
+# Gemini Client Helper
+# =========================
+
+
+_gemini_client_lock = threading.Lock()
+_gemini_client: Optional[genai.Client] = None
+
+
+def get_gemini_client() -> genai.Client:
+    """
+    Singleton Gemini client.
+    Creates once, reuses everywhere.
+    Thread-safe for Flask.
+    """
+    global _gemini_client
+
+    if _gemini_client is None:
+        with _gemini_client_lock:
+            if _gemini_client is None:
+                try:
+                    keys = load_ai_keys(key_file_path)
+                    gemini_api_key = keys.get("Gemini")
+
+                    if not gemini_api_key:
+                        raise KeyError("Gemini API key not found in key file.")
+
+                    print("Gemini API Key loaded successfully.")
+                    # print(gemini_api_key)
+
+                    _gemini_client = genai.Client(api_key=gemini_api_key)
+
+                except Exception as e:
+                    print(f"Error loading API keys: {e}")
+                    raise   # Fail fast — don’t create invalid client
+
+    return _gemini_client
+
+
+def gemini_generate(
+    prompt: str,
+    model: str = "gemini-2.5-flash",
+    max_retries: int = 2
+) -> str:
+    """
+    Central Gemini invocation wrapper.
+    Handles retries + errors.
+    """
+
+    client = get_gemini_client()
+
+    last_error = None
+
+    for attempt in range(max_retries + 1):
+        try:
+            response = client.models.generate_content(
+                model=model,
+                contents=prompt
+            )
+
+            if not response or not response.text:
+                raise RuntimeError("Empty Gemini response")
+
+            return response.text.strip()
+
+        except Exception as e:
+            last_error = e
+            print(f"[Gemini retry {attempt+1}] Error:", e)
+
+    raise RuntimeError(f"Gemini failed after retries: {last_error}")
+
+
+def render_markdown(md_text: str) -> str:
+    return markdown.markdown(
+        md_text,
+        extensions=["extra", "codehilite", "tables"]
+    )
 
 
 def turn_off_screen(timeout_ms: int = 2000) -> None:
@@ -233,120 +346,64 @@ def memo():
 @app.route("/game-help", methods=["GET", "POST"])
 def game_help():
     text = "" 
+    text_choice = ""
     if request.method == "POST":
         text = (request.form.get("query_text") or "").strip()
+        text_choice = (request.form.get("game_choice") or "").strip()
+
         print("Received text from /game-help:", text)
-        api_key = os.getenv("GEMINI_API_KEY")
-        if not api_key:
-            print("Error: GEMINI_API_KEY environment variable not set.")
-            return
-    
-        genai.configure(api_key=api_key)
-        try:
-            model = genai.GenerativeModel("gemini-2.5-flash")
-            prompt = (
-                'How can I achieve the following goal in the standard The Witcher 3(Wild Hunt)?Please answer in as few words as possible. I am using Microsoft controller along with keyboard and mouse. : '
-                + text
-            )
-            print("Sending request to Google AI...")
-            response = model.generate_content(prompt)
+        print("Selected game:", text_choice)
         
-            print("\n=== Google AI Response ===")
-            print(response.text)
+        try:
+            prompt = (
+                f"How can I achieve the following goal in the standard windows 10 game "
+                f"'{text_choice}'? "
+                f"Please answer in as few words as possible. "
+                f"I am using a Microsoft controller, keyboard and mouse. "
+                f"Give answer for each case if possible. "
+                f"Question: {text}"
+            )
+
+            answer_text = gemini_generate(prompt)
 
         except Exception as e:    
             print(f"\nError encountered: {e}")
+            return "Gemini API error", 500
         
-        #return "Success"
-        return render_template("ganswer.html", answer=response.text)
+        final_answer = f"{text_choice} : {answer_text}"
+        
+        html_answer = render_markdown(final_answer)
+
+        return render_template("ganswer.html", answer=html_answer)
+
     # GET: serve the HTML page
     return render_template("game_help.html")
 
-@app.route("/hindi-transcribe",  methods=["GET", "POST"])
-def hindi_transcribe():
-    #return render_template("transcribe.html")  # or whatever name you save
-        response: Optional[GenerateContentResponse] = None
-        if request.method == "GET":
-            return render_template("transcribe.html")
 
-        # POST handling:
-        text = (request.form.get("text") or "").strip()
-        print("Received text from /hindi-transcribe:", text)
-        #text = request.form.get("text", "")  # textarea value
-        api_key = os.getenv("GEMINI_API_KEY")
-        if not api_key:
-            print("Error: GEMINI_API_KEY environment variable not set.")
-            return
-    
-        genai.configure(api_key=api_key)
-        try:
-            model = genai.GenerativeModel("gemini-2.5-flash")
-            prompt = (
-                'Please translate the following Hindi sentence or word to Marathi and if there are any grammatical errors suggest solution.Please translate in as few words as possible.  : '
-                + text
-            )
-            print("Sending request to Google AI...")
-            response = model.generate_content(prompt)
-        
-            print("\n=== Google AI Response ===")
-            print(response.text)
+@app.route("/hindi2marathi-transcribe", methods=["GET", "POST"])
+def hindi2marathi_transcribe():
+    if request.method == "GET":
+        return render_template("transcribe.html")
 
-        except Exception as e:    
-            print(f"\nError encountered: {e}")
-        
-        #return "Success"
-
-        return render_template("ganswerhindi2marathi.html", answer=response.text)
-
-@app.route("/transcribe", methods=["POST"])
-def transcribe():
-    """
-    Expects:
-      - raw float32 mono PCM samples in the request body
-      - header: X-Sample-Rate = 16000
-    Returns:
-      JSON: { "text": "<Hindi text>" }
-    """
-    if not request.data:
-        return jsonify({"error": "No audio data received"}), 400
+    # POST handling:
+    text = (request.form.get("text") or "").strip()
+    print("Received text from /hindi-transcribe:", text)
 
     try:
-        sample_rate = int(request.headers.get("X-Sample-Rate", "16000"))
-    except ValueError:
-        return jsonify({"error": "Invalid X-Sample-Rate header"}), 400
-
-    if sample_rate != SAMPLE_RATE:
-        # For simplicity, enforce 16 kHz; we can add resampling if needed later.
-        return jsonify({
-            "error": f"Expected sample rate {SAMPLE_RATE}, got {sample_rate}"
-        }), 400
-
-    pcm_bytes = request.data
-    # Reconstruct float32 mono audio
-    audio = np.frombuffer(pcm_bytes, dtype=np.float32)
-
-    if audio.size == 0:
-        return jsonify({"error": "Empty audio data"}), 400
-
-    with model_lock:
-        segments, info = model.transcribe(
-            audio,
-            language="hi",         # Force Hindi
-            task="transcribe",     # Not "translate"
-            beam_size=5,
-            initial_prompt=("""
-        हिंदी भाषा, हिंदी शब्द, भारत, मराठी, मराठी भाषा।
-        कृपया "है" और "हैं" में अंतर स्पष्ट रूप से रखें।
-        एकवचन के लिए "है" और बहुवचन के लिए "हैं" का प्रयोग करें।
-        """)
+        prompt = (
+            "Translate Hindi to Marathi. "
+            "Fix grammar if needed. "
+            "Keep answer concise:\n"
+            + text
         )
 
+        answer_text = gemini_generate(prompt)
 
-        text = "".join(seg.text for seg in segments).strip()
-        if not text:
-            text = "[No text recognized]"
+    except Exception as e:
+        print(f"\nError encountered: {e}")
+        return "Gemini API error", 500
 
-    return jsonify({"text": text}), 200
+    return render_template("ganswerhindi2marathi.html", answer=answer_text)
 
 
 @app.route("/screen-off", methods=["POST", "GET"])
@@ -361,12 +418,42 @@ def screen_off_handler():
     except Exception as exc:
         return jsonify({"status": "error", "message": str(exc)}), 500
 
+@app.route("/gemini-call", methods=["GET", "POST"])
+def gemini_help():
+    text = "" 
+
+    if request.method == "POST":
+        text = (request.form.get("query_text") or "").strip()
+
+        print("Received text from /gemini-call:", text)
+        
+        try:
+            prompt = (
+                "Answer briefly but keep key details:\n"
+                + text
+            )
+
+            answer_text = gemini_generate(prompt)
+
+        except Exception as e:    
+            print(f"\nError encountered: {e}")
+        
+        #return render_template("ganswer.html", answer=response.text)
+        
+        html_answer = render_markdown(answer_text)
+
+        return render_template("geminianswer.html", answer=html_answer)
+    # GET: serve the HTML page
+    return render_template("gemini_help.html")
+
+
 if __name__ == "__main__":
     # You can change port if you want, e.g. port=8000
     #app.run(host="0.0.0.0", port=8000, debug=True)
     app.run(
         host="0.0.0.0",          # important so LAN devices can connect
         port=8000,
-        debug=True,
-        ssl_context=("C:/ssl/cert.pem", "C:/ssl/key.pem")  # use forward slashes or raw string
+       debug=True,
+         #ssl_context=("C:/ssl/cert.pem", "C:/ssl/key.pem")  # use forward slashes or raw string
+         ssl_context=(str(server_cert), str(server_key))
     )
