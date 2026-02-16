@@ -453,7 +453,7 @@ if __name__ == "__main__":
     app.run(
         host="0.0.0.0",          # important so LAN devices can connect
         port=8000,
-       debug=True,
+       debug=False,
          #ssl_context=("C:/ssl/cert.pem", "C:/ssl/key.pem")  # use forward slashes or raw string
          ssl_context=(str(server_cert), str(server_key))
     )
