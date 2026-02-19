@@ -4,6 +4,7 @@ import analyzer
 from file_io import (
     get_input_output_paths,
     read_tab_csv,
+    write_gift_file,
     write_tab_csv,
 )
 
@@ -105,7 +106,7 @@ def main():
     processed_data = processor(data)
 
     # ---- Write output for gift ----
-    write_tab_csv(output_path_gift, processed_data)
+    write_gift_file(output_path_gift, processed_data)
 
     
     # ---- Exit message ----
