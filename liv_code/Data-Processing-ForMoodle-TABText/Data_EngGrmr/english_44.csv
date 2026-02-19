@@ -1,0 +1,5 @@
+999	You are asking somebody about their travel plans. Put the words in order.	Will {{c1::you}} {{c1::be}} {{c1::travelling}} {{c1::by}} {{c1::train}} (travelling / train / be / you / by)?				
+1000	You are asking somebody about their travel plans. Put the words in order.	What {{c1::time}} {{c1::will}} {{c1::you}} {{c1::be}} {{c1::arriving}} (you / time / arriving / be / will)?				
+1001	You are asking somebody about their travel plans. Put the words in order.	Will {{c1::you}} {{c1::be}} {{c1::travelling}} {{c1::alone}} (alone / be / travelling / you)?				
+1002	You are asking somebody about their travel plans. Put the words in order.	Where {{c1::will}} {{c1::you}} {{c1::be}} {{c1::staying}} (you / will / staying / be)?				
+1003	You are asking somebody about their travel plans. Put the words in order.	When {{c1::will}} {{c1::you}} {{c1::be}} {{c1::leaving}} (leaving / you / be / will)?				
