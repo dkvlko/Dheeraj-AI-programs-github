@@ -41,7 +41,7 @@ def process(data):
 
     return data
 
-def process_4gift(data):
+def process_4gift_backup(data):
 
     for row in data:
         if len(row) >= 3:
@@ -49,11 +49,35 @@ def process_4gift(data):
 
     return data
 
-
 def process_4gift(data):
 
-    for row in data:
-        if len(row) >= 3:
-            row[2] = row[2].upper()
+    gift_questions = []
 
-    return data
+    for row in data:
+
+        if len(row) < 4:
+            continue
+
+        q1 = row[1].strip()
+        q2 = row[2].strip()
+        ans = row[3].strip()
+
+        #print(f"Ans: {ans}")
+
+        # Replace blank token
+        if "$Blankspace$" in q2:
+            q2 = q2.replace(
+                "$Blankspace$",
+                f"{{={ans}}}"
+            )
+
+        # Merge text
+        full_question = q1 + "\n" + q2
+
+        # Create GIFT block
+        gift_block = f"::Question::\n{full_question}\n"
+
+        gift_questions.append(gift_block)
+
+    return gift_questions
+

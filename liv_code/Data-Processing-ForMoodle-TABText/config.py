@@ -11,5 +11,5 @@ INPUT_PATTERN = "english_{num}.csv"
 OUTPUT_SUFFIX = "_out"
 
 #gift format suffix
-OUTPUT_SUFFIX_GIFT = "_gift"
+OUTPUT_SUFFIX_GIFT = "_gift.gift"
 INPUT_PATTERN_GIFT = "english_{num}_out.csv"
