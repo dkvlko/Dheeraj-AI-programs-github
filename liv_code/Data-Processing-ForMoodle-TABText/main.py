@@ -4,8 +4,11 @@ import analyzer
 from file_io import (
     get_input_output_paths,
     read_tab_csv,
+    remove_imagelinks,
+    trim_empty_columns,
     write_gift_file,
     write_tab_csv,
+    insert_column_header,
 )
 
 #returns the function  reference of dynamic module.
@@ -21,7 +24,7 @@ def load_processor(file_number: int, format: int):
         module = importlib.import_module(module_name)
         if format == 0:
            print("Processor 1 loaded")
-           return module.process
+           return module.process_cloze
 
         elif format == 1:
              print("Processor 2 loaded")
@@ -29,7 +32,7 @@ def load_processor(file_number: int, format: int):
 
         elif format == 2:
              print("Processor 3 loaded")
-             return module.process_4gift
+             return module.process_mcq
 
         else:
               print("Default processor loaded")
@@ -58,24 +61,25 @@ def main():
         print(f"❌ Input file not found: {input_path}")
         return
 
-    # ---- Read data ----
+    # ----1st Read data ----
     data = read_tab_csv(input_path)
-    analyzer.validate_uniformity(data)  # Ensure uniform structure
+    data = remove_imagelinks(data)
+    data = trim_empty_columns(data)
+
     
-
-    # ---- Analyze structure ----
-    rows, cols = analyzer.analyze_uniform_tabular_data(data)
-    
-
-    print(f"Rows with data    : {rows}")
-    print(f"Columns with data: {cols}")
-
-    # ---- Load processor ----
-    processor = load_processor(file_number,0)
+    #Check MCQs
+    # ---- Load processor ----MCQs
+    processor = load_processor(file_number,2)
 
     # ---- Process data ----
     processed_data = processor(data)
-
+    
+    # ---- Load processor ---- Fill-in the-blank
+    processor = load_processor(file_number,0)
+    
+    # ---- Process data ----
+    processed_data = processor(processed_data)
+    
     # ---- Write output ----
     write_tab_csv(output_path, processed_data)
 
@@ -89,22 +93,13 @@ def main():
 
     # ---- Read data ----
     data = read_tab_csv(input_path_gift)
-    analyzer.validate_uniformity(data)  # Ensure uniform structure
-    
 
-    # ---- Analyze structure ----
-    rows, cols = analyzer.analyze_uniform_tabular_data(data)
-    
-
-    print(f"Rows with data    : {rows}")
-    print(f"Columns with data: {cols}")
-
-        # ---- Load processor for gift----
+     # ---- Load processor for gift----
     processor = load_processor(file_number,1)
 
     # ---- Process data for gift ----
     processed_data = processor(data)
-
+    
     # ---- Write output for gift ----
     write_gift_file(output_path_gift, processed_data)
 
