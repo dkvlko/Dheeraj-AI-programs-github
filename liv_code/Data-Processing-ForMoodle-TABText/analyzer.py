@@ -1,6 +1,20 @@
 from typing import List
 import metadata
 
+
+def get_max_dimensions(data):
+    if not data:
+        return 0, 0
+
+    max_rows = len(data)
+    max_columns = 0
+
+    for row in data:
+        if len(row) > max_columns:
+            max_columns = len(row)
+
+    return max_rows, max_columns
+
 def validate_uniformity(data):
 
     if not data:

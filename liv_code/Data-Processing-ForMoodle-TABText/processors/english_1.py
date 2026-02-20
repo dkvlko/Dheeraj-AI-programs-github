@@ -1,3 +1,5 @@
+#Handle single cloze replacement
+
 def process(data):
 
     BLANK_TOKEN = "$Blankspace$"
