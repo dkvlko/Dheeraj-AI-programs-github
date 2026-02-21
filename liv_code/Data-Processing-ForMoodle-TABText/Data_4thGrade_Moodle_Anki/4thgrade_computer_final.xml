@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+  <question type="description">
+    <name><text>Instructions</text></name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <style>
+          /* This forces the Cloze input boxes to be 25 characters wide */
+          .que.cloze input.form-control {
+            display: inline-block !important;
+            width: 25ch !important;
+            min-width: 200px !important;
+          }
+        </style>
+        <p>Complete the following computer science questions.</p>
+      ]]></text>
+    </questiontext>
+  </question>
+
+  <question type="cloze">
+    <name><text>Q1</text></name>
+    <questiontext format="html">
+      <text><![CDATA[The Internet became accessible to the public in {1:SHORTANSWER:=1983}.]]></text>
+    </questiontext>
+  </question>
+
+  <question type="cloze">
+    <name><text>Q2</text></name>
+    <questiontext format="html">
+      <text><![CDATA[The World Wide Web was created in {1:SHORTANSWER:=1989}.]]></text>
+    </questiontext>
+  </question>
+
+  <question type="cloze">
+    <name><text>Q3</text></name>
+    <questiontext format="html">
+      <text><![CDATA[WWW stands for {1:SHORTANSWER:=World Wide Web}.]]></text>
+    </questiontext>
+  </question>
+
+  <question type="cloze">
+    <name><text>Q4</text></name>
+    <questiontext format="html">
+      <text><![CDATA[The first website for online shopping was made by {1:SHORTANSWER:=CERN}.]]></text>
+    </questiontext>
+  </question>
+
+  <question type="cloze">
+    <name><text>Q5</text></name>
+    <questiontext format="html">
+      <text><![CDATA[The rise of online shopping began in {1:SHORTANSWER:=1991}.]]></text>
+    </questiontext>
+  </question>
+
+</quiz>
