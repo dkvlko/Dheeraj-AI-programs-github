@@ -1,0 +1,13 @@
+::Q1:: The Internet became accessible to the public in {1:SHORTANSWER:=1983:25}.
+
+
+::Q2:: The World Wide Web was created in {1:SHORTANSWER:=1989:25}.
+
+
+::Q3:: WWW stands for {1:SHORTANSWER:=World Wide Web:25}.
+
+
+::Q4:: The first website for online shopping was made by {1:SHORTANSWER:=CERN:25}.
+
+
+::Q5:: The rise of online shopping began in {1:SHORTANSWER:=1991:25}.
