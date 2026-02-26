@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dheeraj AI Prompt Generator</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    input, textarea, button, select {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px;
+      font-size: 14px;
+    }
+    textarea {
+      height: 160px;
+    }
+    button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>AI Prompt Generator</h2>
+
+<select id="template">
+  <option value="company">Company Snapshot</option>
+</select>
+
+<input id="company" placeholder="Enter company name" />
+
+<button onclick="generate()">Generate</button>
+<button onclick="copyText()">Copy to Clipboard</button>
+
+<textarea id="output"></textarea>
+
+<script>
+
+const templates = {
+  company:
+  "Can you name the major shareholders of the following company and its founder and when it was founded and its headquaters and its CEO and Chairman and how it makes most of its profit and who are its competitors?: "
+};
+
+function generate() {
+  const name = document.getElementById("company").value.trim();
+  const template = document.getElementById("template").value;
+
+  if (!name) return;
+
+  const finalText = templates[template] + name;
+  document.getElementById("output").value = finalText;
+}
+
+async function copyText() {
+  const text = document.getElementById("output").value;
+  if (!text) return;
+
+  await navigator.clipboard.writeText(text);
+  alert("Copied to clipboard!");
+}
+
+</script>
+
+</body>
+</html>
