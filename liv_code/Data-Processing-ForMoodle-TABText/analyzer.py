@@ -2,6 +2,7 @@ from typing import List
 import metadata
 
 
+
 def get_max_dimensions(data):
     if not data:
         return 0, 0
