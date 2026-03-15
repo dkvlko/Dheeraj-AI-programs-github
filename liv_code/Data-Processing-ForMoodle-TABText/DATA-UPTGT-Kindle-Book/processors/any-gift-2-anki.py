@@ -17,7 +17,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 
 # INPUT_DIR = one level up
 INPUT_DIR = SCRIPT_DIR.parent / "COMBINED_TEXT_KINDLE"
-INPUT_FILE = INPUT_DIR  / "UPTGT-Eng-Lit_Combined_Text_final.txt"
+INPUT_FILE = INPUT_DIR  / "UPTGT-Eng-Lit_Combined_Text_final_check.txt"
 OUTPUT_FILE = INPUT_DIR / "UPTGT-Eng-Lit-anki_flashcards.csv"
 
 # =========================

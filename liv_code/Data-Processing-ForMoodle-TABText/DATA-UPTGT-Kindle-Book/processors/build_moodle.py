@@ -20,7 +20,7 @@ def main():
 
     TEXT_DIR = INPUT_DIR / "COMBINED_TEXT_KINDLE"
 
-    INPUT_FILE = TEXT_DIR / "UPTGT-Eng-Lit_Combined_Text_formoodle.txt"
+    INPUT_FILE = TEXT_DIR / "UPTGT-Eng-Lit_Combined_Text_9_formoodle_checked.txt"
     OUTPUT_FILE = TEXT_DIR / "UPTGT-Eng-Lit_Combined_Text_final.txt"
 
     if not INPUT_FILE.exists():

@@ -20,10 +20,10 @@ def main():
 
     TEXT_DIR = INPUT_DIR / "COMBINED_TEXT_KINDLE"
 
-    INPUT_FILE = TEXT_DIR / "UPTGT-Eng-Lit_Combined_Text_mergedline.txt"
+    INPUT_FILE = TEXT_DIR / "UPTGT-Eng-Lit_Combined_Text_9.txt"
 
     OUTPUT_DIR = TEXT_DIR
-    OUTPUT_FILE = OUTPUT_DIR / "UPTGT-Eng-Lit_Combined_Text_formoodle.txt"
+    OUTPUT_FILE = OUTPUT_DIR / "UPTGT-Eng-Lit_Combined_Text_9_formoodle.txt"
 
     # --------------------------------------------------
     # Check input file
