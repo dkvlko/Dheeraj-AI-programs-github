@@ -1,31 +1,14 @@
 """
-Advanced Android TV Remote with Auto IP Discovery
+Android TV Remote with Enable/Disable Toggle
 
-Features
---------
-1. Automatically discovers the TV IP from its MAC address
-2. Connects to Android TV via ADB
-3. Keyboard based remote control
+Toggle Remote:
+CTRL + ALT + R  -> Enable / Disable remote
 
-Controls
---------
-Arrow keys  -> Navigate
-Enter       -> Select
-Backspace   -> Back
-h           -> Home
-p           -> Power toggle
-+           -> Volume up
--           -> Volume down
-m           -> Mute
-y           -> Launch YouTube
-n           -> Launch Netflix
-s           -> Screenshot
-t           -> Type text
-q           -> Quit
+When disabled:
+keyboard behaves normally
 
-Requirements
-------------
-pip install scapy keyboard
+When enabled:
+keyboard controls TV
 """
 
 import subprocess
@@ -33,36 +16,32 @@ import keyboard
 import datetime
 from scapy.all import ARP, Ether, srp
 
-# --------------------------------
-# YOUR TV MAC ADDRESS
-# --------------------------------
+# -----------------------------
+# TV MAC ADDRESS
+# -----------------------------
 
 TV_MAC = "b0:41:1d:d4:c8:29".lower()
 
-# --------------------------------
-# NETWORK RANGE (JIO ROUTER)
-# --------------------------------
-
 NETWORK = "192.168.29.0/24"
-
 TV_IP = None
 
+remote_enabled = False
 
-# --------------------------------
-# DISCOVER DEVICE BY MAC
-# --------------------------------
+
+# -----------------------------
+# DISCOVER TV
+# -----------------------------
 
 def discover_tv():
 
     global TV_IP
 
-    print("\nScanning network to find TV...\n")
+    print("\nScanning network for TV...\n")
 
     arp = ARP(pdst=NETWORK)
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")
 
     packet = ether / arp
-
     result = srp(packet, timeout=3, verbose=0)[0]
 
     for sent, received in result:
@@ -70,109 +49,101 @@ def discover_tv():
         ip = received.psrc
         mac = received.hwsrc.lower()
 
-        print(f"Found device {ip}   {mac}")
+        print(f"{ip}  {mac}")
 
         if mac == TV_MAC:
             TV_IP = ip
-            print("\nTV FOUND")
-            print("IP:", TV_IP)
+            print("\nTV FOUND:", TV_IP)
             return
 
-    print("\nTV not found on network.")
+    print("TV not found.")
     exit()
 
 
-# --------------------------------
+# -----------------------------
 # ADB COMMAND
-# --------------------------------
+# -----------------------------
 
 def adb(cmd):
-    command = f"adb -s {TV_IP} {cmd}"
-    subprocess.run(command, shell=True)
+    subprocess.run(f"adb -s {TV_IP} {cmd}", shell=True)
 
 
 def key(code):
+
+    if not remote_enabled:
+        return
+
     adb(f"shell input keyevent {code}")
 
 
-# --------------------------------
+# -----------------------------
 # NAVIGATION
-# --------------------------------
+# -----------------------------
 
-def up():
-    key(19)
-
-def down():
-    key(20)
-
-def left():
-    key(21)
-
-def right():
-    key(22)
-
-def select():
-    key(66)
-
-def back():
-    key(4)
-
-def home():
-    key(3)
+def up(): key(19)
+def down(): key(20)
+def left(): key(21)
+def right(): key(22)
+def select(): key(66)
+def back(): key(4)
+def home(): key(3)
 
 
-# --------------------------------
+# -----------------------------
 # POWER
-# --------------------------------
+# -----------------------------
 
-def power():
-    key(26)
+def power(): key(26)
 
 
-# --------------------------------
+# -----------------------------
 # VOLUME
-# --------------------------------
+# -----------------------------
 
-def vol_up():
-    key(24)
-
-def vol_down():
-    key(25)
-
-def mute():
-    key(164)
+def vol_up(): key(24)
+def vol_down(): key(25)
+def mute(): key(164)
 
 
-# --------------------------------
+# -----------------------------
 # APPS
-# --------------------------------
+# -----------------------------
 
 def youtube():
-    adb("shell am start -n com.google.android.youtube.tv/.MainActivity")
+    if remote_enabled:
+        adb("shell am start -n com.google.android.youtube.tv/.MainActivity")
+
 
 def netflix():
-    adb("shell am start -n com.netflix.ninja/.MainActivity")
+    if remote_enabled:
+        adb("shell am start -n com.netflix.ninja/.MainActivity")
 
 
-# --------------------------------
+# -----------------------------
 # SCREENSHOT
-# --------------------------------
+# -----------------------------
 
 def screenshot():
+
+    if not remote_enabled:
+        return
 
     filename = f"tvshot_{datetime.datetime.now().strftime('%H%M%S')}.png"
 
     adb("shell screencap -p /sdcard/screen.png")
     adb(f"pull /sdcard/screen.png {filename}")
 
-    print("Saved screenshot:", filename)
+    print("Screenshot saved:", filename)
 
 
-# --------------------------------
+# -----------------------------
 # TEXT INPUT
-# --------------------------------
+# -----------------------------
 
 def type_text():
+
+    if not remote_enabled:
+        return
 
     text = input("Enter text: ")
     text = text.replace(" ", "%s")
@@ -180,37 +151,51 @@ def type_text():
     adb(f"shell input text {text}")
 
 
-# --------------------------------
-# CONNECT TO TV
-# --------------------------------
+# -----------------------------
+# TOGGLE REMOTE
+# -----------------------------
+
+def toggle_remote():
+
+    global remote_enabled
+
+    remote_enabled = not remote_enabled
+
+    if remote_enabled:
+        print("\nREMOTE ENABLED\n")
+    else:
+        print("\nREMOTE DISABLED\n")
+
+
+# -----------------------------
+# CONNECT ADB
+# -----------------------------
 
 def connect():
-
-    print("\nConnecting to TV via ADB...\n")
 
     subprocess.run("adb start-server", shell=True)
     subprocess.run(f"adb connect {TV_IP}", shell=True)
 
 
-# --------------------------------
+# -----------------------------
 # HELP
-# --------------------------------
+# -----------------------------
 
 def help_menu():
 
     print("\n========= ANDROID TV REMOTE =========\n")
 
+    print("Toggle Remote")
+    print("CTRL + ALT + R  -> Enable / Disable remote")
+
+    print("\nNavigation")
     print("Arrow keys -> Navigate")
     print("Enter      -> Select")
     print("Backspace  -> Back")
     print("h          -> Home")
 
-    print("\nPower")
-    print("p          -> Power")
-
     print("\nVolume")
-    print("+          -> Volume Up")
-    print("-          -> Volume Down")
+    print("+ / -      -> Volume")
     print("m          -> Mute")
 
     print("\nApps")
@@ -224,18 +209,21 @@ def help_menu():
     print("\nq          -> Quit\n")
 
 
-# --------------------------------
+# -----------------------------
 # MAIN
-# --------------------------------
+# -----------------------------
 
 def main():
 
     discover_tv()
-
     connect()
 
     help_menu()
 
+    # toggle remote
+    keyboard.add_hotkey("ctrl+alt+r", toggle_remote)
+
+    # navigation
     keyboard.add_hotkey("up", up)
     keyboard.add_hotkey("down", down)
     keyboard.add_hotkey("left", left)
@@ -243,22 +231,25 @@ def main():
 
     keyboard.add_hotkey("enter", select)
     keyboard.add_hotkey("backspace", back)
-
     keyboard.add_hotkey("h", home)
 
+    # power
     keyboard.add_hotkey("p", power)
 
+    # volume
     keyboard.add_hotkey("+", vol_up)
     keyboard.add_hotkey("-", vol_down)
     keyboard.add_hotkey("m", mute)
 
+    # apps
     keyboard.add_hotkey("y", youtube)
     keyboard.add_hotkey("n", netflix)
 
+    # utilities
     keyboard.add_hotkey("s", screenshot)
     keyboard.add_hotkey("t", type_text)
 
-    print("Remote ready. Press q to quit.\n")
+    print("Remote ready. Press CTRL+ALT+R to enable.")
 
     keyboard.wait("q")
 
