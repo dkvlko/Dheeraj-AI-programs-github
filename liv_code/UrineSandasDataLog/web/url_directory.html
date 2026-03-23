@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Directory</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        tr {
+            margin-bottom: 20px;
+        }
+
+        tr.spacer td {
+            border: none;
+            height: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Available URL Handlers</h2>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>URL</th>
+    </tr>
+
+    {% for r in routes %}
+    <tr>
+        <td>{{ r.name }}</td>
+        <td><a href="{{ r.url }}">{{ r.url }}</a></td>
+    </tr>
+
+    <!-- Empty row for spacing -->
+    <tr class="spacer"><td colspan="2"></td></tr>
+
+    {% endfor %}
+</table>
+
+</body>
+</html>

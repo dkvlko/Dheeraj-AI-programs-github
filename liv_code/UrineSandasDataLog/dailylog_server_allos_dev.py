@@ -229,8 +229,39 @@ def getInsertTable(activity):
         now_display = now.strftime("%Y-%m-%d %H:%M:%S")
         return render_template("insert_form.html", activity=activity, now_display=now_display)
 
-
 @app.route("/")
+def url_directory():
+    routes = []
+    # Routes you want to hide
+    EXCLUDED_PATHS = {
+        "/",
+        "/view_results",
+        "/insert_entry",
+        "/activity",
+        "/memo",
+        "/screen-off"
+    }    
+
+    for rule in app.url_map.iter_rules():
+        # Skip static files
+        if rule.endpoint == 'static':
+            continue
+
+        # Skip excluded URLs
+        if str(rule) in EXCLUDED_PATHS:
+            continue
+
+        routes.append({
+            "name": "Activity",
+            "url": str(rule)
+        })
+
+    # Sort for clean display
+    routes = sorted(routes, key=lambda x: x["url"])
+
+    return render_template("url_directory.html", routes=routes)
+
+@app.route("/log")
 
 def index():
     tables = get_table_names()  # e.g. ["Sandas", "Urine"]
@@ -428,11 +459,11 @@ def gemini_help():
         print("Received text from /gemini-call:", text)
         
         try:
-            prompt = (
-                "Answer briefly but keep key details:\n"
-                + text
-            )
-
+            #prompt = (
+            #    "Answer briefly but keep key details:\n"
+            #    + text
+            #)
+            prompt=text
             answer_text = gemini_generate(prompt)
 
         except Exception as e:    
