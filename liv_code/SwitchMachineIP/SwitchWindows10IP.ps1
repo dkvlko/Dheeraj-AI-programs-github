@@ -1,40 +1,45 @@
-# Must run as Administrator
+﻿# Must run as Administrator
 
-Write-Host "Choose network configuration:"
-Write-Host "1. Dynamic IP (DHCP from router)"
-Write-Host "2. Static IP (192.168.29.25)"
-Write-Host "3. Static IP (192.168.0.25)"
+Write-Host "=============================="
+Write-Host " Static IP Configuration"
+Write-Host "=============================="
+Write-Host "1. 192.168.29.25 (Jio)"
+Write-Host "2. 192.168.0.25 (TP-Link)"
+Write-Host "=============================="
 
-$choice = Read-Host "Enter 1, 2 or 3"
+$choice = Read-Host "Enter 1 or 2"
 
-# Get active adapter
+# Get active adapter (Ethernet preferred)
 $adapter = Get-NetAdapter | Where-Object {$_.Status -eq "Up"} | Select-Object -First 1
 
 if (-not $adapter) {
-    Write-Host "No active network adapter found!" -ForegroundColor Red
+    Write-Host "❌ No active adapter found!" -ForegroundColor Red
     exit
 }
 
 $iface = $adapter.Name
+Write-Host "Using adapter: $iface"
 
-# Function to clean existing IPv4 config
-function Clear-IPConfig {
-    Get-NetIPAddress -InterfaceAlias $iface -AddressFamily IPv4 -ErrorAction SilentlyContinue |
-        Remove-NetIPAddress -Confirm:$false -ErrorAction SilentlyContinue
-}
+# 🔥 Clean existing config completely
+Write-Host "Cleaning previous IP configuration..."
 
+# Remove IP addresses
+Get-NetIPAddress -InterfaceAlias $iface -AddressFamily IPv4 -ErrorAction SilentlyContinue |
+    Remove-NetIPAddress -Confirm:$false -ErrorAction SilentlyContinue
+
+# Remove routes (THIS is what you were missing)
+Get-NetRoute -InterfaceAlias $iface -AddressFamily IPv4 -ErrorAction SilentlyContinue |
+    Remove-NetRoute -Confirm:$false -ErrorAction SilentlyContinue
+
+# Reset DNS
+Set-DnsClientServerAddress -InterfaceAlias $iface -ResetServerAddresses -ErrorAction SilentlyContinue
+
+Start-Sleep -Seconds 1
+
+# Apply selected static profile
 if ($choice -eq "1") {
-    Write-Host "Switching to DHCP..."
 
-    Set-NetIPInterface -InterfaceAlias $iface -Dhcp Enabled
-    Set-DnsClientServerAddress -InterfaceAlias $iface -ResetServerAddresses
-
-    Write-Host "DHCP enabled successfully." -ForegroundColor Green
-}
-elseif ($choice -eq "2") {
-    Write-Host "Setting Static IP: 192.168.29.25..."
-
-    Clear-IPConfig
+    Write-Host "➡️ Setting IP: 192.168.29.25"
 
     New-NetIPAddress `
         -InterfaceAlias $iface `
@@ -42,16 +47,10 @@ elseif ($choice -eq "2") {
         -PrefixLength 24 `
         -DefaultGateway "192.168.29.1"
 
-    Set-DnsClientServerAddress `
-        -InterfaceAlias $iface `
-        -ServerAddresses ("8.8.8.8","8.8.4.4")
-
-    Write-Host "Static IP 192.168.29.25 applied." -ForegroundColor Green
 }
-elseif ($choice -eq "3") {
-    Write-Host "Setting Static IP: 192.168.0.25..."
+elseif ($choice -eq "2") {
 
-    Clear-IPConfig
+    Write-Host "➡️ Setting IP: 192.168.0.25"
 
     New-NetIPAddress `
         -InterfaceAlias $iface `
@@ -59,12 +58,21 @@ elseif ($choice -eq "3") {
         -PrefixLength 24 `
         -DefaultGateway "192.168.0.1"
 
-    Set-DnsClientServerAddress `
-        -InterfaceAlias $iface `
-        -ServerAddresses ("8.8.8.8","8.8.4.4")
-
-    Write-Host "Static IP 192.168.0.25 applied." -ForegroundColor Green
 }
 else {
-    Write-Host "Invalid choice. Exiting." -ForegroundColor Yellow
+    Write-Host "❌ Invalid choice" -ForegroundColor Yellow
+    exit
 }
+
+# Set DNS (common for both)
+Set-DnsClientServerAddress `
+    -InterfaceAlias $iface `
+    -ServerAddresses ("8.8.8.8","8.8.4.4")
+
+# Show result
+Write-Host ""
+Write-Host "✅ Configuration applied."
+Write-Host "📡 Current IP(s):"
+
+Get-NetIPAddress -InterfaceAlias $iface -AddressFamily IPv4 |
+    Select-Object IPAddress
