@@ -76,3 +76,7 @@ Write-Host "📡 Current IP(s):"
 
 Get-NetIPAddress -InterfaceAlias $iface -AddressFamily IPv4 |
     Select-Object IPAddress
+	
+Write-Host ""
+Write-Host "Press Enter to exit..."
+Read-Host
