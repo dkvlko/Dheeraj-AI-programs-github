@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify,redirect
 from datetime import datetime, timedelta
 from google import genai
 import threading
@@ -11,6 +11,8 @@ from ctypes import wintypes
 import markdown
 from pathlib import Path
 import threading
+import subprocess
+
 
 
 #Setting OS neutral variables
@@ -260,6 +262,31 @@ def url_directory():
     routes = sorted(routes, key=lambda x: x["url"])
 
     return render_template("url_directory.html", routes=routes)
+
+
+
+
+@app.route("/copyText", methods=["GET", "POST"])
+def copy_text():
+    if request.method == "GET":
+        # Show the HTML page
+        return render_template("copytext.html")
+
+    # POST → run script
+    SCRIPT_PATH = os.path.abspath(os.path.join(TEMPLATE_FOLDER, "copytext.sh"))
+    #print(SCRIPT_PATH)
+    text = request.form.get("text", "")
+
+    subprocess.Popen(
+        [SCRIPT_PATH],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        text=True
+    ).communicate(text)
+
+    # Redirect back to home
+    return redirect("/")
 
 @app.route("/log")
 

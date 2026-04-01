@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Copy Text</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: monospace;
+        }
+        form {
+            text-align: center;
+        }
+        textarea {
+            width: 600px;
+            height: 20em; /* ~20 lines */
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/copyText">
+        <textarea name="text" required></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
