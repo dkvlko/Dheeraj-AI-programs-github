@@ -7,7 +7,7 @@ Write-Host "1. 192.168.29.25 (Jio)"
 Write-Host "2. 192.168.0.25 (TP-Link)"
 Write-Host "=============================="
 
-$choice = Read-Host "Enter 1 or 2"
+$choice = Read-Host "Change Ethernet Cable then Enter 1 or 2"
 
 # Get active adapter (Ethernet preferred)
 $adapter = Get-NetAdapter | Where-Object {$_.Status -eq "Up"} | Select-Object -First 1

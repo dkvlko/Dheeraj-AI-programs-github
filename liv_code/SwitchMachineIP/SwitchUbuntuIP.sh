@@ -21,7 +21,7 @@ echo "1. Use 192.168.29.25 (Jio)"
 echo "2. Use 192.168.0.25 (TP-Link)"
 echo "=============================="
 
-read -p "Enter your choice (1 or 2): " choice
+read -p "Change Ethernet Cable then Enter your choice (1 or 2): " choice
 
 # Select profile
 if [ "$choice" == "1" ]; then
@@ -52,6 +52,6 @@ echo "⚙️ Applying netplan..."
 netplan apply
 
 echo ""
-echo "✅ Done."
+echo "✅ Done.Change the Ethernet Cable."
 echo "📡 Current IP(s):"
 hostname -I
