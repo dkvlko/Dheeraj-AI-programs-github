@@ -3,6 +3,7 @@ import sqlite3
 from flask import Flask, render_template, request, jsonify,redirect
 from datetime import datetime, timedelta
 from google import genai
+from google.genai import types
 import threading
 from typing import Optional
 import platform
@@ -152,6 +153,50 @@ def gemini_generate(
 
     raise RuntimeError(f"Gemini failed after retries: {last_error}")
 
+
+def gemini_generate_search(
+    prompt: str,
+    model: str = "gemini-2.5-flash",
+    max_retries: int = 2
+) -> str:
+    """
+    Central Gemini invocation wrapper.
+    Handles retries + errors.
+    """
+
+    client = get_gemini_client()
+
+    last_error = None
+    # Define the grounding tool
+    google_search_tool = types.Tool(
+        google_search = types.GoogleSearch()
+    )
+
+    for attempt in range(max_retries + 1):
+        try:
+            # Make the call with the tool enabled
+            response = client.models.generate_content(
+                model=model, # Use a model that supports grounding
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    tools=[google_search_tool]
+                )
+            )
+            # response = client.models.generate_content(
+            #    model=model,
+            #    contents=prompt
+            #)
+
+            if not response or not response.text:
+                raise RuntimeError("Empty Gemini response")
+
+            return response.text.strip()
+
+        except Exception as e:
+            last_error = e
+            print(f"[Gemini retry {attempt+1}] Error:", e)
+
+    raise RuntimeError(f"Gemini failed after retries: {last_error}")
 
 def render_markdown(md_text: str) -> str:
     return markdown.markdown(
@@ -482,6 +527,7 @@ def gemini_help():
 
     if request.method == "POST":
         text = (request.form.get("query_text") or "").strip()
+        submit_type = request.form.get("submit_type")
 
         print("Received text from /gemini-call:", text)
         
@@ -491,7 +537,11 @@ def gemini_help():
             #    + text
             #)
             prompt=text
-            answer_text = gemini_generate(prompt)
+            if submit_type == "normal":
+                answer_text = gemini_generate(prompt)
+            elif submit_type == "web":
+                answer_text = gemini_generate_search(prompt)
+
 
         except Exception as e:    
             print(f"\nError encountered: {e}")

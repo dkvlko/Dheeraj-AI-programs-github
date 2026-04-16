@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-SCRIPT_PATH="/home/dkvlko/OneDrive/DheerajOnHP/liv_code/UrineSandasDataLog/dailylog_server_u.py"
+SCRIPT_PATH="/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/dailylog_server_allos_dev.py"
 VENV_DIR="/home/dkvlko/python314_projects/venv_3.14"
 VENV_PY="$VENV_DIR/bin/python"
 
