@@ -15,6 +15,14 @@ import threading
 import subprocess
 
 
+import asyncio
+from playwright.async_api import async_playwright
+from playwright_stealth import Stealth
+import trafilatura
+
+
+import pyautogui
+import time
 
 #Setting OS neutral variables
 CURRENT_FILE = Path(__file__).resolve()
@@ -47,6 +55,32 @@ TEMPLATE_FOLDER =  PROJECT_ROOT / "web"
 app = Flask(__name__, template_folder=TEMPLATE_FOLDER)
 
 LRESULT = ctypes.c_ssize_t 
+
+
+def get_latest_file_url(directory: str) -> str:
+    """
+    Returns the latest created/modified file in the directory as a file:// URL
+    """
+    path = Path(directory)
+
+    if not path.exists() or not path.is_dir():
+        raise ValueError(f"Invalid directory: {directory}")
+
+    # Get all files (ignore directories)
+    files = [f for f in path.iterdir() if f.is_file()]
+
+    if not files:
+        raise ValueError("No files found in directory")
+
+    # Pick the most recently modified file
+    latest_file = max(files, key=lambda f: f.stat().st_mtime)
+
+    # Convert to file:// URL
+    return latest_file.resolve().as_uri()
+
+directory = "/home/dkvlko/Downloads/Telegram Desktop"
+#FILE_PATH_GPT = get_latest_file_url(directory)
+
 
 def load_ai_keys(file_path: Path) -> dict:
     """
@@ -275,6 +309,124 @@ def getInsertTable(activity):
         now = datetime.now()
         now_display = now.strftime("%Y-%m-%d %H:%M:%S")
         return render_template("insert_form.html", activity=activity, now_display=now_display)
+
+#def rawhtml_generate_search(query):
+
+
+
+async def bing_search_raw(query: str) -> str:
+    async with Stealth().use_async(async_playwright()) as p:
+        browser = await p.chromium.launch(headless=False)
+        page = await browser.new_page()
+        
+        await page.goto("https://www.bing.com", wait_until="networkidle")
+        
+        # Handle cookie banner if present
+        try:
+            accept_btn = page.locator('button:has-text("Accept")')
+            if await accept_btn.count() > 0:
+                await accept_btn.click()
+                await page.wait_for_timeout(1000)
+        except:
+            pass
+        
+        # Wait for the textarea search box
+        await page.wait_for_selector('textarea[name="q"]', state="visible", timeout=15000)
+        
+        # Fill and search
+        await page.fill('textarea[name="q"]', query)
+        await page.keyboard.press("Enter")
+        
+        # Wait for results to appear
+        await page.wait_for_selector('ol#b_results', timeout=15000)
+        
+        raw_html = await page.content()
+        await browser.close()
+        return raw_html
+
+def extract_readable_text(html: str) -> str:
+    """Extract main content using Trafilatura"""
+    # Extract text; include formatting (links, paragraphs)
+    text = trafilatura.extract(
+        html,
+        include_comments=False,
+        include_tables=True,
+        include_links=True,
+        include_formatting=True,
+        output_format='txt'  # plain text; can also use 'markdown' or 'xml'
+    )
+    if text is None:
+        return "No readable content extracted."
+    return text
+
+
+async def extract_text_gpt(file_path_ubuntu):
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        page = await browser.new_page()
+        
+        print(file_path_ubuntu)
+        # Load local HTML file
+        await page.goto(file_path_ubuntu)
+
+        # Wait for JS to render (adjust if needed)
+        await page.wait_for_timeout(3000)
+
+        # Get full rendered HTML
+        html = await page.content()
+
+        await browser.close()
+
+        # Extract main text using trafilatura
+        extracted = trafilatura.extract(html)
+
+        return extracted
+
+
+def callAutoSave(prompt):
+
+    # Safety pause: move mouse to corner to abort
+    pyautogui.FAILSAFE = True
+
+    # Small delay before starting (gives you time to switch window)
+    time.sleep(3)
+
+    # Step 1: Move to (106, 227) and click
+    pyautogui.moveTo(106, 227, duration=0.3)
+    pyautogui.click()
+    time.sleep(5)
+
+    # Step 2: Move to (812, 437) and click
+    pyautogui.moveTo(812, 437, duration=0.3)
+    pyautogui.click()
+    time.sleep(1)
+
+    # Step 3: Type text
+    pyautogui.write(prompt, interval=0.05)
+
+    # Step 4: Move to (1169, 437) and click
+    pyautogui.moveTo(1169, 437, duration=0.3)
+    pyautogui.click()
+    time.sleep(20)
+
+    # Step 5: Press Ctrl + S
+    pyautogui.hotkey('ctrl', 's')
+
+    #Step 6: Click Save As and wait 3 seconds
+    pyautogui.moveTo(1043, 240, duration=0.3)
+    pyautogui.click()
+    time.sleep(5)
+    return
+
+def getGPTAnswer(prompt):
+    callAutoSave(prompt)
+    print("Auto Save Successful") 
+    FILE_PATH_GPT = get_latest_file_url(directory)
+    text = asyncio.run(extract_text_gpt(FILE_PATH_GPT))
+    
+    return text
+
+
 
 @app.route("/")
 def url_directory():
@@ -545,7 +697,10 @@ def gemini_help():
 
         except Exception as e:    
             print(f"\nError encountered: {e}")
-        
+            answer_text = (
+            "The AI service is temporarily unavailable or busy. "
+            "Please try again in a minute."
+            )
         #return render_template("ganswer.html", answer=response.text)
         
         html_answer = render_markdown(answer_text)
@@ -555,6 +710,77 @@ def gemini_help():
     return render_template("gemini_help.html")
 
 
+@app.route("/rawhtml", methods=["GET", "POST"])
+def raw_html():
+    if request.method == "GET":
+        # Show the HTML page
+        return render_template("raw_request.html")
+
+    # POST → to be implemented
+
+    text = "" 
+
+    if request.method == "POST":
+        text = (request.form.get("query_text") or "").strip()
+        submit_type = request.form.get("submit_type")
+
+        print("Received text from /rawhtml:", text)
+        
+        try:
+            #prompt = (
+            #    "Answer briefly but keep key details:\n"
+            #    + text
+            #)
+            prompt=text
+            if submit_type == "url":
+                #answer_text = "URL Request"
+                raw_html = asyncio.run(bing_search_raw(prompt))
+            elif submit_type == "bing":
+                #answer_text = rawhtml_generate_search(prompt)
+                raw_html = asyncio.run(bing_search_raw(prompt))
+        
+        #readable_text = extract_readable_text(raw_html)
+        except Exception as e:    
+            print(f"\nError encountered: {e}")
+            answer_text = (
+            "The Raw HTML service is temporarily unavailable or busy. "
+            "Please try again in a minute."
+            )
+        #return render_template("ganswer.html", answer=response.text)
+        readable_text = extract_readable_text(raw_html)
+
+        html_raw = render_markdown(readable_text)
+
+        return render_template("rawhtmlresult.html", answer=html_raw)
+
+
+@app.route("/gpt2txt",methods=["GET","POST"])
+def gptextract():
+    if request.method == "GET":
+       return render_template("gpt_query.html")
+    text=""
+
+    if request.method == "POST":
+
+        text = (request.form.get("query_text") or "").strip()
+        submit_type = request.form.get("submit_type")
+
+        print("Received text from /chatgpt_query:", text)
+        try :
+            #print("hello")
+            answer_text = getGPTAnswer(text)
+
+        except Exception as e:    
+            print(f"\nError encountered: {e}")
+            answer_text = (
+            "The AI service is temporarily unavailable or busy. "
+            "Please try again in a minute."
+            )
+
+        html_answer = render_markdown(answer_text)
+
+        return render_template("chatgptanswer.html", answer=html_answer)
+    
 if __name__ == "__main__":
     # You can change port if you want, e.g. port=8000
     #app.run(host="0.0.0.0", port=8000, debug=True)

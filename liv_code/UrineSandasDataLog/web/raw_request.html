@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Raw HTML Request</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            margin: 0 0 16px 0;
+            color: #555;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            resize: vertical;
+            min-height: 10em;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: Georgia, "Times New Roman", serif;  /* novel-style font */
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            justify-content: space-between;
+        }
+
+        .controls-right {
+            display: flex;
+            gap: 12px;
+        }
+       
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        #submit-url-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        #submit-bing-btn {
+            background: #007bff;
+            color: white;
+        }
+        #status {
+            margin-top: 10px;
+            min-height: 1em;
+            font-size: 0.9rem;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="card">
+        <h1>Raw HTML Request</h1>
+        <p class="description">Write your query or url and press Submit.</p>
+
+        <form id="rawhtml-form" method="post" action="/rawhtml">
+            <label for="query_text">Your question</label>
+            <textarea id="query_text" name="query_text"
+                      rows="12"
+                      placeholder="For example: How long is the mid break in football?"></textarea>
+           
+            <div class="controls">
+                <div class="controls-right">
+                    <button type="submit" id="submit-url-btn" name="submit_type" value="url">Submit-Url</button>
+                    <button type="submit" id="submit-bing-btn" name="submit_type" value="bing">Submit-Bing </button>
+                </div>
+            </div>
+
+            <p id="status" aria-live="polite"></p>
+        </form>
+    </div>
+</div>
+
+<script>
+    const statusEl = document.getElementById("status");
+    const textarea = document.getElementById("query_text");
+   
+    // On normal form submit, the server will just return "Success"
+    document.getElementById("rawhtml-form").addEventListener("submit", () => {
+        statusEl.textContent = "Submitting…";
+    });
+</script>
+</body>
+</html>
