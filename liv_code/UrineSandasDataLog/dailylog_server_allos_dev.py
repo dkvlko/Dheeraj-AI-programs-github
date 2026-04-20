@@ -20,6 +20,7 @@ from playwright.async_api import async_playwright
 from playwright_stealth import Stealth
 import trafilatura
 
+from flask_socketio import SocketIO, emit
 
 import pyautogui
 import time
@@ -52,7 +53,17 @@ server_cert = cert_dir / "ubuntu_server.crt"
 server_key  = cert_dir / "ubuntu_server.key"
 
 TEMPLATE_FOLDER =  PROJECT_ROOT / "web"
+STATIC_FOLDER = TEMPLATE_FOLDER / "static"
+
 app = Flask(__name__, template_folder=TEMPLATE_FOLDER)
+#app = Flask(
+#    __name__,
+#    template_folder=str(TEMPLATE_FOLDER),
+#    static_folder=str(STATIC_FOLDER),
+#    static_url_path="/static"
+#)
+
+#socketio = SocketIO(app, cors_allowed_origins="*")
 
 LRESULT = ctypes.c_ssize_t 
 
@@ -780,6 +791,10 @@ def gptextract():
         html_answer = render_markdown(answer_text)
 
         return render_template("chatgptanswer.html", answer=html_answer)
+
+#@app.route("/utremote")
+#def utremote():
+#    return render_template("ubuntu_remote.html")
     
 if __name__ == "__main__":
     # You can change port if you want, e.g. port=8000

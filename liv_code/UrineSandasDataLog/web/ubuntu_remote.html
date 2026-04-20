@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ubuntu Remote</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #top {
+            height: 50vh;
+            background: #222;
+        }
+
+        #bottom {
+            height: 50vh;
+            background: #444;
+            touch-action: none; /* important */
+        }
+    </style>
+</head>
+<body>
+
+<div id="top"></div>
+<div id="bottom"></div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="/static/remote.js"></script>
+
+</body>
+</html>
