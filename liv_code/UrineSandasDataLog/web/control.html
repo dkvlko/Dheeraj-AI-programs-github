@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="margin:0; font-family:sans-serif;">
+
+<!-- Top (empty for your video iframe if needed) -->
+<div style="height:75vh; background:black;">
+    <!-- You can embed your existing WebRTC page here -->
+    <iframe src="/your-existing-stream-page"
+            style="width:100%; height:100%; border:none;"></iframe>
+</div>
+
+<!-- Bottom Controls -->
+<div style="height:25vh; display:flex; justify-content:space-around; align-items:center; background:#222; color:white;">
+
+    <!-- Touchpad -->
+    <div style="text-align:center;">
+        <div id="pad"
+             style="width:180px; height:120px; background:#444; border-radius:10px; touch-action:none;">
+        </div>
+        <p>Touchpad</p>
+    </div>
+
+    <!-- Precise Movement -->
+    <div style="text-align:center;">
+        <p>Precise Move</p>
+        X: <input id="dx" type="number" value="0" style="width:60px;">
+        Y: <input id="dy" type="number" value="0" style="width:60px;">
+        <br><br>
+        <button onclick="move()">Move</button>
+        <br><br>
+        <button id="leftBtn">Left Click</button>
+        <button id="rightBtn">Right Click</button>
+    </div>
+
+
+</div>
+
+<script>
+const ws = new WebSocket("wss://" + location.host + "/ws");
+document.getElementById("leftBtn").addEventListener("click", () => {
+    console.log("LEFT BUTTON PRESSED");
+    ws.send(JSON.stringify({ action: "left_click" }));
+});
+
+document.getElementById("rightBtn").addEventListener("click", () => {
+    console.log("RIGHT BUTTON PRESSED");
+    ws.send(JSON.stringify({ action: "right_click" }));
+});
+// -------- Touchpad --------
+let lastX=null, lastY=null;
+const pad = document.getElementById("pad");
+
+pad.addEventListener("touchstart", e=>{
+    const t=e.touches[0];
+    lastX=t.clientX;
+    lastY=t.clientY;
+});
+
+pad.addEventListener("touchmove", e=>{
+    e.preventDefault();
+
+    const t=e.touches[0];
+
+    let dx=t.clientX-lastX;
+    let dy=t.clientY-lastY;
+
+    console.log("SEND dx:", dx, "dy:", dy);
+
+    lastX=t.clientX;
+    lastY=t.clientY;
+
+    ws.send(JSON.stringify({
+        action:"move",
+        dx:dx,
+        dy:dy
+    }));
+});
+
+// Tap = left click
+pad.addEventListener("touchend", ()=>{
+    ws.send(JSON.stringify({action:"left_click"}));
+});
+
+
+// -------- Precise Move --------
+function move(){
+    let dx=parseInt(document.getElementById("dx").value);
+    let dy=parseInt(document.getElementById("dy").value);
+
+    ws.send(JSON.stringify({
+        action:"move",
+        dx:dx,
+        dy:dy
+    }));
+}
+
+
+// -------- Clicks --------
+</script>
+
+</body>
+</html>
