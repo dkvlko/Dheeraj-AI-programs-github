@@ -4,10 +4,10 @@ import asyncio
 from fastapi import FastAPI,Request, WebSocket,WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-
+import av
+from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
 
 from fastapi.templating import Jinja2Templates
-from aiortc import RTCPeerConnection, RTCSessionDescription
 from aiortc.contrib.media import MediaPlayer
 from pathlib import Path
 app = FastAPI()
@@ -18,11 +18,10 @@ pcs = set()
 
 #--------WebRTC--------------
 
-# Custom Track to fix 1366x768 Stride/Alignment Issues
+# Custom Track to fix resolution / alignment issues
 class ScreenCaptureTrack(VideoStreamTrack):
     def __init__(self):
         super().__init__()
-        # Capture the FULL screen
         self.container = av.open(":1.0", format="x11grab", options={
             "video_size": "1366x768",
             "framerate": "15"
@@ -31,18 +30,14 @@ class ScreenCaptureTrack(VideoStreamTrack):
 
     async def recv(self):
         pts, time_base = await self.next_timestamp()
-        
-        # Grab the frame from X11
+
         for frame in self.container.decode(self.stream):
-            # SCALE and REFORMAT to fix Pink Lines/Green Screen
-            # 1024x576 is 16:9 and perfectly divisible by 16
             new_frame = frame.to_image().resize((1024, 576))
-            
-            # Convert back to VideoFrame for WebRTC
             final_frame = av.VideoFrame.from_image(new_frame)
             final_frame.pts = pts
             final_frame.time_base = time_base
             return final_frame
+
 
 @app.post("/offer")
 async def offer(request: Request):
@@ -58,10 +53,10 @@ async def offer(request: Request):
             await pc.close()
             pcs.discard(pc)
 
-    # Add our custom High-Compatibility Track
+    # Video track
     pc.addTrack(ScreenCaptureTrack())
 
-    # Audio remains as established in your previous successful build
+    # Audio track
     try:
         audio_player = MediaPlayer("default", format="pulse", options={"sample_rate": "44100"})
         if audio_player.audio:
@@ -149,3 +144,7 @@ async def index():
 
 
 app.mount("/web", StaticFiles(directory="web"), name="web")
+
+@app.on_event("shutdown")
+async def on_shutdown():
+    await asyncio.gather(*[pc.close() for pc in pcs])
