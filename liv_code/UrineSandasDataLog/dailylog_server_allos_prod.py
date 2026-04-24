@@ -1,4 +1,3 @@
-import os
 import sqlite3
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime, timedelta
@@ -10,7 +9,6 @@ import ctypes
 from ctypes import wintypes
 import markdown
 from pathlib import Path
-import threading
 
 
 #Setting OS neutral variables

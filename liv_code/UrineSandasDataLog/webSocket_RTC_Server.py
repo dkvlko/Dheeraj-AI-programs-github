@@ -1,5 +1,4 @@
 import asyncio
-import asyncio
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -67,8 +66,7 @@ async def on_shutdown():
     close_coros = [pc.close() for pc in pcs]
     await asyncio.gather(*close_coros)
 import av
-from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
-from aiortc.contrib.media import MediaPlayer
+from aiortc import VideoStreamTrack
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates

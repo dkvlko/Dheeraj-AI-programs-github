@@ -3,15 +3,12 @@ import sqlite3
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime, timedelta
 
-import tempfile
 
 from google import genai
 
 
-import numpy as np
 import threading
 
-from typing import Optional
 
 
 import platform

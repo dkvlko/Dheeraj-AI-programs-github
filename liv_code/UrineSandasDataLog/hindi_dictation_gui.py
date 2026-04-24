@@ -87,7 +87,7 @@ def transcribe_audio(app):
 
             app.root.after(0, update_ui)
 
-        except Exception as e:
+        except Exception:
             def update_ui_err():
                 app.append_text(f"\n[Error during transcription: {e}]\n")
             app.root.after(0, update_ui_err)

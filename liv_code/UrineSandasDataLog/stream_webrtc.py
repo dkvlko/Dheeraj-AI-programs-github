@@ -1,5 +1,4 @@
 # server.py
-import asyncio
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from aiortc import RTCPeerConnection, RTCSessionDescription

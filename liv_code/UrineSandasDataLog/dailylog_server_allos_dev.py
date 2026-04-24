@@ -11,7 +11,6 @@ import ctypes
 from ctypes import wintypes
 import markdown
 from pathlib import Path
-import threading
 import subprocess
 
 
@@ -20,7 +19,6 @@ from playwright.async_api import async_playwright
 from playwright_stealth import Stealth
 import trafilatura
 
-from flask_socketio import SocketIO, emit
 
 import pyautogui
 import time
