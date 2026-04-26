@@ -16,26 +16,67 @@
 <!-- Bottom Controls -->
 <div style="height:25vh; display:flex; justify-content:space-around; align-items:center; background:#222; color:white;">
 
-    <!-- Touchpad -->
+    <!-- Text submit -->
     <div style="text-align:center;">
-        <div id="pad"
-             style="width:180px; height:20px; background:#444; border-radius:10px; touch-action:none;">
-        </div>
-<div id="log" style="height:100px; overflow:auto; border:1px solid black;"></div>
-        <p>Touchpad</p>
+<div id="pad"
+     style="
+        width:310px;
+        height:170px;
+        background:#444;
+        border-radius:10px;
+        padding:8px;
+        box-sizing:border-box;
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+     ">
+
+    <textarea id="pad-text"
+        placeholder="Enter text..."
+        style="
+            width:100%;
+            height:110px;
+            resize:none;
+            border-radius:6px;
+            border:none;
+            padding:6px;
+            font-size:14px;
+            box-sizing:border-box;
+        "></textarea>
+
+    <button onclick="submitPadText()"
+        style="
+            width:100%;
+            height:36px;
+            border:none;
+            border-radius:6px;
+            background:#0a84ff;
+            color:white;
+            font-weight:bold;
+        ">
+        Submit Command
+    </button>
+
+</div>
+        <div id="log" style="height:0px; overflow:auto; border:1px solid black;"></div>
     </div>
 
     <!-- Precise Movement -->
     <div style="text-align:center;">
         <p>Precise Move</p>
-        X: <input id="dx" type="number" value="0" style="width:60px;">
-        Y: <input id="dy" type="number" value="0" style="width:60px;">
-        X-Y: <input id="cx-cy" type="text" value="0,0" style="width:80px;">
+        X: <input id="dx" type="number" value="0" style="width:30px;">
+        Y: <input id="dy" type="number" value="0" style="width:30px;">
+        X,Y: <input id="cx-cy" type="text" value="0,0" style="width:50px;">
         <br><br>
         <button onclick="move()">Move</button>
+        <!-- NEW DROPDOWN -->
+        <select id="moveMode" style="margin-left:10px;">
+        <option value="relative" selected>Relative</option>
+        <option value="absolute">Absolute</option>
+        </select>
         <br><br>
         <button id="leftBtn">Left Click</button>
-        <button id="rightBtn">Right Click</button>
+        <button onclick="nextwin()" >Next Window</button>
     </div>
 
 
@@ -50,8 +91,12 @@ const ws = new WebSocket("wss://" + location.host + "/ws");
                     if (data.action === "update_position") {
                         
                         //log("update_position received "+data.x+" "+data.y);
-                        cx=data.x-683
-                        cy=data.y-384
+                        if (data.mode === "relative"){
+                            cx=data.x-683
+                            cy=data.y-384}
+                        else{
+                            cx=data.x
+                            cy=data.y}
 
                         document.getElementById("cx-cy").value =
                             cx + "," + cy;
@@ -62,45 +107,21 @@ document.getElementById("leftBtn").addEventListener("click", () => {
     ws.send(JSON.stringify({ action: "left_click" }));
 });
 
-document.getElementById("rightBtn").addEventListener("click", () => {
-    console.log("RIGHT BUTTON PRESSED");
-    ws.send(JSON.stringify({ action: "right_click" }));
-});
-// -------- Touchpad --------
-let lastX=null, lastY=null;
-const pad = document.getElementById("pad");
 
-pad.addEventListener("touchstart", e=>{
-    const t=e.touches[0];
-    lastX=t.clientX;
-    lastY=t.clientY;
-});
+function submitPadText() {
+    const text = document.getElementById("pad-text").value;
 
-pad.addEventListener("touchmove", e=>{
-    e.preventDefault();
+    console.log("Submitted:", text);
 
-    const t=e.touches[0];
-
-    let dx=t.clientX-lastX;
-    let dy=t.clientY-lastY;
-
-    console.log("SEND dx:", dx, "dy:", dy);
-
-    lastX=t.clientX;
-    lastY=t.clientY;
-
-    ws.send(JSON.stringify({
-        action:"move",
-        dx:dx,
-        dy:dy
-    }));
-});
-
-// Tap = left click
-pad.addEventListener("touchend", ()=>{
-    ws.send(JSON.stringify({action:"left_click"}));
-});
-
+    // If using WebSocket (like your setup)
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+            action: "text_submit",
+            value: text
+        }));
+    }
+     document.getElementById("pad-text").value = "";
+}
 // --In browser logging---
 
 function log(msg) {
@@ -108,15 +129,23 @@ function log(msg) {
     div.innerHTML += msg + "<br>";
     div.scrollTop = div.scrollHeight;
 }
+//--------Call Next Window-----
+function nextwin(){
+     ws.send(JSON.stringify({
+         action:"next_window"
+     }));
+}
 // -------- Precise Move --------
 function move(){
     let dx=parseInt(document.getElementById("dx").value);
     let dy=parseInt(document.getElementById("dy").value);
-
+    let mode = document.getElementById("moveMode").value;
+    
     ws.send(JSON.stringify({
         action:"move",
         dx:dx,
-        dy:dy
+        dy:dy,
+        mode:mode
     }));
 }
 

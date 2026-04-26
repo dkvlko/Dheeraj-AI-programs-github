@@ -93,24 +93,20 @@ async def websocket_endpoint(ws: WebSocket):
 
             if action == "move":
 
-                x2, y2 = pyautogui.position()
-                #print(f"[BEFORE] x={x2}, y={y2}")
-                
-                raw_dx = msg.get("dx", 0)
-                raw_dy = msg.get("dy", 0)
-                #print(f"[RAW] dx={raw_dx}, dy={raw_dy}")
-
-                # --- tuning ---
-                dx = int(raw_dx * 1)
-                dy = int(raw_dy * 1)
-
+                dx = msg.get("dx", 0)
+                dy = msg.get("dy", 0)
+                mode = msg.get("mode")
                 # --- get current position ---
                 x, y = pyautogui.position()
                 screen_w, screen_h = pyautogui.size()
-
-                # --- clamp to avoid corners ---
-                new_x = max(10, min(screen_w - 10, x + dx))
-                new_y = max(10, min(screen_h - 10, y + dy))
+                
+                if mode == "relative":
+                    # --- clamp to avoid corners ---
+                    new_x = max(10, min(screen_w - 10, x + dx))
+                    new_y = max(10, min(screen_h - 10, y + dy))
+                elif mode == "absolute":
+                    new_x = max(10, min(screen_w - 10, dx))
+                    new_y = max(10, min(screen_h - 10, dy))
 
                 pyautogui.moveTo(new_x, new_y)
 
@@ -118,7 +114,8 @@ async def websocket_endpoint(ws: WebSocket):
                 await ws.send_text(json.dumps({
                     "action": "update_position",
                     "x": x2,
-                    "y": y2
+                    "y": y2,
+                    "mode": mode
                 }))
                 #print(f"[AFTER] x={x2}, y={y2}")
             elif action == "left_click":
