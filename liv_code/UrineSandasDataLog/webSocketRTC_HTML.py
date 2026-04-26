@@ -77,6 +77,14 @@ async def websocket_endpoint(ws: WebSocket):
     print("WebSocket Connected")
 
     try :
+     # Send position immediately on connect (onload)
+        x, y = pyautogui.position()
+        print("Immediate position :",x," ",y)
+        await ws.send_text(json.dumps({
+                "action": "update_position",
+                "x": x,
+                "y": y
+                }))
         while True:
             data = await ws.receive_text()
             msg = json.loads(data)
@@ -96,13 +104,6 @@ async def websocket_endpoint(ws: WebSocket):
                 dx = int(raw_dx * 1)
                 dy = int(raw_dy * 1)
 
-                # ignore tiny jitter
-                #if abs(dx) < 2:
-                #    dx = 0
-                #if abs(dy) < 2:
-                #    dy = 0
-
-                #print(f"[PROC] dx={dx}, dy={dy}")
                 # --- get current position ---
                 x, y = pyautogui.position()
                 screen_w, screen_h = pyautogui.size()
@@ -114,6 +115,11 @@ async def websocket_endpoint(ws: WebSocket):
                 pyautogui.moveTo(new_x, new_y)
 
                 x2, y2 = pyautogui.position()
+                await ws.send_text(json.dumps({
+                    "action": "update_position",
+                    "x": x2,
+                    "y": y2
+                }))
                 #print(f"[AFTER] x={x2}, y={y2}")
             elif action == "left_click":
                 pyautogui.click()

@@ -19,8 +19,9 @@
     <!-- Touchpad -->
     <div style="text-align:center;">
         <div id="pad"
-             style="width:180px; height:120px; background:#444; border-radius:10px; touch-action:none;">
+             style="width:180px; height:20px; background:#444; border-radius:10px; touch-action:none;">
         </div>
+<div id="log" style="height:100px; overflow:auto; border:1px solid black;"></div>
         <p>Touchpad</p>
     </div>
 
@@ -29,6 +30,7 @@
         <p>Precise Move</p>
         X: <input id="dx" type="number" value="0" style="width:60px;">
         Y: <input id="dy" type="number" value="0" style="width:60px;">
+        X-Y: <input id="cx-cy" type="text" value="0,0" style="width:80px;">
         <br><br>
         <button onclick="move()">Move</button>
         <br><br>
@@ -41,6 +43,20 @@
 
 <script>
 const ws = new WebSocket("wss://" + location.host + "/ws");
+    ws.onmessage = (event) => {
+                   
+                    let data = JSON.parse(event.data);
+
+                    if (data.action === "update_position") {
+                        
+                        //log("update_position received "+data.x+" "+data.y);
+                        cx=data.x-683
+                        cy=data.y-384
+
+                        document.getElementById("cx-cy").value =
+                            cx + "," + cy;
+                    }
+                };
 document.getElementById("leftBtn").addEventListener("click", () => {
     console.log("LEFT BUTTON PRESSED");
     ws.send(JSON.stringify({ action: "left_click" }));
@@ -85,7 +101,13 @@ pad.addEventListener("touchend", ()=>{
     ws.send(JSON.stringify({action:"left_click"}));
 });
 
+// --In browser logging---
 
+function log(msg) {
+    let div = document.getElementById("log");
+    div.innerHTML += msg + "<br>";
+    div.scrollTop = div.scrollHeight;
+}
 // -------- Precise Move --------
 function move(){
     let dx=parseInt(document.getElementById("dx").value);
