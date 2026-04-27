@@ -7,14 +7,55 @@ from fastapi.staticfiles import StaticFiles
 import av
 from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
 
+import os
+import re
+import time
+
 from fastapi.templating import Jinja2Templates
 from aiortc.contrib.media import MediaPlayer
 from pathlib import Path
+
+
+# 1. ENVIRONMENT SETUP
+username = "dkvlko"
+os.environ["DISPLAY"] = ":1"
+os.environ["XAUTHORITY"] = f"/home/{username}/.Xauthority"
 app = FastAPI()
+
 
 PROJECT_ROOT = Path(__file__).parent
 templates = Jinja2Templates(directory=str(PROJECT_ROOT / "web"))
 pcs = set()
+
+
+def execute_window_switch(command_text):
+    """
+    Parses string like 'CW:Alt+nTAB' and executes the key sequence.
+    """
+    # Regex explains: Look for 'CW:Alt+', capture digits (\d+), then 'TAB'
+    match = re.search(r"CW:ALT\+(\d+)TAB", command_text)
+    
+    if match:
+        # Extract the number 'n'
+        n = int(match.group(1))
+        print(f"Command detected! Switching {n} windows...")
+        
+        try:
+            # Hold Alt throughout the entire sequence
+            with pyautogui.hold('alt'):
+                for i in range(n):
+                    pyautogui.press('tab')
+                    print(f"  Pulse {i+1} of {n}")
+                    
+                    # 1 second delay as requested
+                    time.sleep(1) 
+                    
+            print("Sequence complete. Alt released.")
+            
+        except Exception as e:
+            print(f"Error executing keys: {e}")
+    else:
+        print(f"Text '{command_text}' did not match CW format. Ignoring.")
 
 #--------WebRTC--------------
 
@@ -90,6 +131,9 @@ async def websocket_endpoint(ws: WebSocket):
             msg = json.loads(data)
 
             action = msg.get("action")
+            if action == "text_submit":
+                text= msg.get("value")
+                execute_window_switch(text)
 
             if action == "move":
 
@@ -121,8 +165,8 @@ async def websocket_endpoint(ws: WebSocket):
             elif action == "left_click":
                 pyautogui.click()
 
-            elif action == "right_click":
-                pyautogui.click(button="right")
+            #elif action == "right_click":
+            #    pyautogui.click(button="right")
     except WebSocketDisconnect:
         print("WebSocket disconnected by client")
 
