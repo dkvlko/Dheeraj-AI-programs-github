@@ -11,9 +11,13 @@ import os
 import re
 import time
 
+from ewmhlib import EwmhRoot, EwmhWindow
+import subprocess
 from fastapi.templating import Jinja2Templates
 from aiortc.contrib.media import MediaPlayer
 from pathlib import Path
+import pyperclip
+
 
 
 # 1. ENVIRONMENT SETUP
@@ -27,6 +31,101 @@ PROJECT_ROOT = Path(__file__).parent
 templates = Jinja2Templates(directory=str(PROJECT_ROOT / "web"))
 pcs = set()
 
+
+    
+
+# Map common human inputs → pyautogui keys
+KEY_MAP = {
+    "CTRL": "ctrl",
+    "CONTROL": "ctrl",
+    "ALT": "alt",
+    "SHIFT": "shift",
+    "TAB": "tab",
+    "ENTER": "enter",
+    "ESC": "esc",
+    "ESCAPE": "esc",
+    "WIN": "win",
+    "SUPER": "win"
+}
+
+
+def is_firefox(win):
+    prop = win.getProperty("WM_CLASS")
+
+    if not prop or not hasattr(prop, "value"):
+        return False
+
+    val = prop.value
+
+    try:
+        if isinstance(val, tuple):
+            val = val[1]
+
+        if isinstance(val, (list, tuple)):
+            val = bytes(val).decode(errors="ignore")
+
+        if isinstance(val, bytes):
+            val = val.decode(errors="ignore")
+
+        return "firefox" in val.lower()
+
+    except Exception:
+        return False
+
+def focus_firefox(text):
+    root = EwmhRoot()
+
+    for win_id in root.getClientList():
+        try:
+            win = EwmhWindow(win_id)
+
+            if is_firefox(win):
+                title_prop = win.getProperty("_NET_WM_NAME")
+                title = title_prop.value[1] if title_prop else "Unknown"
+
+                print(f"Focusing: {title}")
+                #focus_window(win_id)
+                print("Win id : ",win_id)
+                subprocess.run(["wmctrl", "-i", "-a", hex(win_id)])
+                return True
+
+        except Exception:
+            continue
+
+    print("Firefox window not found.")
+    return False
+    
+def typeText(rtext):
+    """
+    Types the given text into the currently focused window.
+    """
+
+    if not rtext:
+        return
+
+    # Small delay to ensure target window is ready
+    time.sleep(1)
+
+    pyautogui.write(str(rtext), interval=0.02)  # interval controls typing speed
+
+def normalize(key):
+    if not key:
+        return None
+    key = key.strip().upper()
+    return KEY_MAP.get(key, key.lower())
+
+
+def executeKey(key1="", key2="", key3=""):
+    keys = [normalize(k) for k in (key1, key2, key3) if normalize(k)]
+
+    if not keys:
+        print("No keys provided")
+        return
+
+    # small delay helps reliability when switching windows
+    time.sleep(1)
+
+    pyautogui.hotkey(*keys)
 
 def execute_window_switch(command_text):
     """
@@ -117,56 +216,52 @@ async def websocket_endpoint(ws: WebSocket):
     await ws.accept()
     print("WebSocket Connected")
 
-    try :
-     # Send position immediately on connect (onload)
-        x, y = pyautogui.position()
-        print("Immediate position :",x," ",y)
-        await ws.send_text(json.dumps({
-                "action": "update_position",
-                "x": x,
-                "y": y
-                }))
+    try:
         while True:
             data = await ws.receive_text()
             msg = json.loads(data)
 
             action = msg.get("action")
             if action == "text_submit":
-                text= msg.get("value")
-                execute_window_switch(text)
+                text = msg.get("value")
+                match = re.match(r'^([A-Za-z]+):', text)
+                prefix=match.group(1)
+                text = re.sub(r'^[A-Za-z]+:\s*', '', text)
+                print("prefix : ",prefix)
+                print("text : ",text)
+                if prefix == "GPT":
+                    focus_firefox(text)
+                    executeKey("ALT", "1", "")
+                    executeKey("ALT", "D", "")
+                    typeText("https://chatgpt.com/")
+                    executeKey("ENTER", "", "")
+                    time.sleep(15)
+                    typeText(text)
+                    #executeKey("ENTER", "", "")
+                    executeKey("TAB","","")
+                    executeKey("TAB","","")
+                    executeKey("ENTER","","")
+                    time.sleep(15)
+                    pyautogui.moveTo(700,380,0.3)
+                    pyautogui.leftClick()
+                    time.sleep(1)
+                    pyautogui.rightClick()
+                    time.sleep(1)
+                    executeKey("A","","")
+                    time.sleep(5)
+                    pyautogui.rightClick()
+                    time.sleep(1)
+                    executeKey("C","","")
+                    time.sleep(5)
+                    ptext = pyperclip.paste()
+                    await ws.send_text(ptext)
+                    #print(ptext)
+                    #if value == "CW:ALT+nTAB"
+                    #    execute_window_switch(text)
+                    #elif value == 
+                    #anstext = getAnswerGPT(text)
+                    #print(anstext)
 
-            if action == "move":
-
-                dx = msg.get("dx", 0)
-                dy = msg.get("dy", 0)
-                mode = msg.get("mode")
-                # --- get current position ---
-                x, y = pyautogui.position()
-                screen_w, screen_h = pyautogui.size()
-                
-                if mode == "relative":
-                    # --- clamp to avoid corners ---
-                    new_x = max(10, min(screen_w - 10, x + dx))
-                    new_y = max(10, min(screen_h - 10, y + dy))
-                elif mode == "absolute":
-                    new_x = max(10, min(screen_w - 10, dx))
-                    new_y = max(10, min(screen_h - 10, dy))
-
-                pyautogui.moveTo(new_x, new_y)
-
-                x2, y2 = pyautogui.position()
-                await ws.send_text(json.dumps({
-                    "action": "update_position",
-                    "x": x2,
-                    "y": y2,
-                    "mode": mode
-                }))
-                #print(f"[AFTER] x={x2}, y={y2}")
-            elif action == "left_click":
-                pyautogui.click()
-
-            #elif action == "right_click":
-            #    pyautogui.click(button="right")
     except WebSocketDisconnect:
         print("WebSocket disconnected by client")
 
@@ -179,7 +274,6 @@ async def websocket_endpoint(ws: WebSocket):
         try:
             await ws.close()
         except RuntimeError:
-            # already closed → ignore
             pass
 
         print("Cleanup done")

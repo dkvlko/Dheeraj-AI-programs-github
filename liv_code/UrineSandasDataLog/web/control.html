@@ -6,151 +6,71 @@
 
 <body style="margin:0; font-family:sans-serif;">
 
-<!-- Top (empty for your video iframe if needed) -->
+<!-- Top Frame -->
 <div style="height:75vh; background:black;">
-    <!-- You can embed your existing WebRTC page here -->
     <iframe src="/web/stream.html"
             style="width:100%; height:100%; border:none;"></iframe>
 </div>
 
-<!-- Bottom Controls -->
-<div style="height:25vh; display:flex; justify-content:space-around; align-items:center; background:#222; color:white;">
-
-    <!-- Text submit -->
-    <div style="text-align:center;">
-<div id="pad"
-     style="
-        width:310px;
-        height:170px;
-        background:#444;
-        border-radius:10px;
-        padding:8px;
-        box-sizing:border-box;
-        display:flex;
-        flex-direction:column;
-        justify-content:space-between;
-     ">
+<!-- Bottom Frame (Cleaned) -->
+<div style="
+    height:25vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#222;
+">
 
     <textarea id="pad-text"
         placeholder="Enter text..."
         style="
-            width:100%;
-            height:110px;
+            width:95%;
+            height:70%;
             resize:none;
-            border-radius:6px;
+            border-radius:8px;
             border:none;
-            padding:6px;
-            font-size:14px;
+            padding:10px;
+            font-size:16px;
             box-sizing:border-box;
         "></textarea>
 
     <button onclick="submitPadText()"
         style="
-            width:100%;
-            height:36px;
+            margin-top:10px;
+            width:clamp(120px, 30vw, 220px);
+            height:clamp(38px, 6vh, 60px);
             border:none;
-            border-radius:6px;
+            border-radius:10px;
             background:#0a84ff;
             color:white;
             font-weight:bold;
+            font-size:clamp(14px, 2.5vw, 18px);
         ">
-        Submit Command
+        Submit
     </button>
-
-</div>
-        <div id="log" style="height:0px; overflow:auto; border:1px solid black;"></div>
-    </div>
-
-    <!-- Precise Movement -->
-    <div style="text-align:center;">
-        <p>Precise Move</p>
-        X: <input id="dx" type="number" value="0" style="width:30px;">
-        Y: <input id="dy" type="number" value="0" style="width:30px;">
-        X,Y: <input id="cx-cy" type="text" value="0,0" style="width:50px;">
-        <br><br>
-        <button onclick="move()">Move</button>
-        <!-- NEW DROPDOWN -->
-        <select id="moveMode" style="margin-left:10px;">
-        <option value="relative" selected>Relative</option>
-        <option value="absolute">Absolute</option>
-        </select>
-        <br><br>
-        <button id="leftBtn">Left Click</button>
-        <button onclick="nextwin()" >Next Window</button>
-    </div>
-
-
 </div>
 
 <script>
+
+// Keep only WebSocket required for text submission
 const ws = new WebSocket("wss://" + location.host + "/ws");
-    ws.onmessage = (event) => {
-                   
-                    let data = JSON.parse(event.data);
-
-                    if (data.action === "update_position") {
-                        
-                        //log("update_position received "+data.x+" "+data.y);
-                        if (data.mode === "relative"){
-                            cx=data.x-683
-                            cy=data.y-384}
-                        else{
-                            cx=data.x
-                            cy=data.y}
-
-                        document.getElementById("cx-cy").value =
-                            cx + "," + cy;
-                    }
-                };
-document.getElementById("leftBtn").addEventListener("click", () => {
-    console.log("LEFT BUTTON PRESSED");
-    ws.send(JSON.stringify({ action: "left_click" }));
-});
-
 
 function submitPadText() {
     const text = document.getElementById("pad-text").value;
 
     console.log("Submitted:", text);
 
-    // If using WebSocket (like your setup)
     if (ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({
             action: "text_submit",
             value: text
         }));
     }
-     document.getElementById("pad-text").value = "";
-}
-// --In browser logging---
 
-function log(msg) {
-    let div = document.getElementById("log");
-    div.innerHTML += msg + "<br>";
-    div.scrollTop = div.scrollHeight;
-}
-//--------Call Next Window-----
-function nextwin(){
-     ws.send(JSON.stringify({
-         action:"next_window"
-     }));
-}
-// -------- Precise Move --------
-function move(){
-    let dx=parseInt(document.getElementById("dx").value);
-    let dy=parseInt(document.getElementById("dy").value);
-    let mode = document.getElementById("moveMode").value;
-    
-    ws.send(JSON.stringify({
-        action:"move",
-        dx:dx,
-        dy:dy,
-        mode:mode
-    }));
+    document.getElementById("pad-text").value = "";
 }
 
-
-// -------- Clicks --------
 </script>
 
 </body>
