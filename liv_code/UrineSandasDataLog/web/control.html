@@ -35,29 +35,68 @@
             box-sizing:border-box;
         "></textarea>
 
-    <button onclick="submitPadText()"
-        style="
-            margin-top:10px;
-            width:clamp(120px, 30vw, 220px);
-            height:clamp(38px, 6vh, 60px);
-            border:none;
-            border-radius:10px;
-            background:#0a84ff;
-            color:white;
-            font-weight:bold;
-            font-size:clamp(14px, 2.5vw, 18px);
-        ">
-        Submit
-    </button>
+<button onclick="submitPadText()"
+    style="
+        margin-top:10px;
+        width:clamp(120px, 30vw, 220px);
+        height:clamp(38px, 6vh, 60px);
+        border:none;
+        border-radius:10px;
+        background:#0a84ff;
+        color:white;
+        font-weight:bold;
+        font-size:clamp(14px, 2.5vw, 18px);
+    ">
+    Submit
+</button>
+
+<!--<button onclick="copyPadText()"
+    style="
+        margin-top:10px;
+        width:clamp(120px, 30vw, 220px);
+        height:clamp(38px, 6vh, 60px);
+        border:none;
+        border-radius:10px;
+        background:#34c759;
+        color:white;
+        font-weight:bold;
+        font-size:clamp(14px, 2.5vw, 18px);
+    ">
+    Copy
+</button>-->
+<!--<button id="copyBtn" onclick="copyPadText()"
+    style="
+        margin-top:10px;
+        width:clamp(120px, 30vw, 220px);
+        height:clamp(38px, 6vh, 60px);
+        border:none;
+        border-radius:10px;
+        background:#34c759;
+        color:white;
+        font-weight:bold;
+        font-size:clamp(14px, 2.5vw, 18px);
+    ">
+    Disabled
+</button>-->
 </div>
 
 <script>
+let lastResponse = "";
+//const copyBtn = document.getElementById("copyBtn");
 
+//copyBtn.disabled = true;
+//copyBtn.textContent = "Disabled";
+//document.querySelector('button[onclick="copyPadText()"]').disabled = true;
 // Keep only WebSocket required for text submission
 const ws = new WebSocket("wss://" + location.host + "/ws");
 
 function submitPadText() {
     const text = document.getElementById("pad-text").value;
+    // 🔴 Open window during user click (important for Safari)
+    popupWindow = window.open("", "_blank");
+    const script = popupWindow.document.createElement("script");
+    script.src = "/static/marked.min.js";  // adjust path if needed
+    popupWindow.document.head.appendChild(script);
 
     console.log("Submitted:", text);
 
@@ -69,8 +108,65 @@ function submitPadText() {
     }
 
     document.getElementById("pad-text").value = "";
+    // Reset copy button
+    //copyBtn.disabled = true;
+    //copyBtn.textContent = "Disabled";
+    // Basic loading UI
+    popupWindow.document.body.innerHTML = `
+        <div style="font-family:sans-serif; padding:20px;">
+            <div>Waiting for response...</div>
+        </div>
+    `;
 }
 
+ws.onmessage = (event) => {
+    lastResponse = event.data;
+
+    if (popupWindow) {
+
+ // Build clean HTML (NO script tags here)
+    popupWindow.document.body.innerHTML = `
+        <div style="font-family:sans-serif; padding:20px;">
+            <div id="content"
+                 style="margin-bottom:20px; word-wrap:break-word;">
+            </div>
+
+            <button id="copyBtn"
+                style="
+                    width:100%;
+                    height:50px;
+                    border:none;
+                    border-radius:10px;
+                    background:#0a84ff;
+                    color:white;
+                    font-size:18px;
+                    font-weight:bold;
+                ">
+                Copy
+            </button>
+        </div>
+    `;
+
+    const contentDiv = popupWindow.document.getElementById("content");
+
+    // ✅ If marked.js is loaded → use it
+    if (popupWindow.marked) {
+        contentDiv.innerHTML = popupWindow.marked.parse(lastResponse);
+    } else {
+        // fallback (plain text)
+        contentDiv.innerText = lastResponse;
+    }
+    }
+};
+
+/*async function copyPadText() {
+    try {
+        await navigator.clipboard.writeText(lastResponse);
+        alert("Copied to clipboard!");
+    } catch (err) {
+        alert("Copy failed. Try again.");
+    }
+}*/
 </script>
 
 </body>
