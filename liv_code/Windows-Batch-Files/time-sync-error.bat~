@@ -1,0 +1,15 @@
+@echo off 
+sc config w32time start= auto
+timeout /t 3 /nobreak
+net start w32time
+timeout /t 3 /nobreak
+w32tm /config /manualpeerlist:"time.windows.com,0x8" /syncfromflags:manual /update
+timeout /t 3 /nobreak
+rem net stop w32time
+rem timeout /t 5 /nobreak
+rem net start w32time
+rem timeout /t 5 /nobreak
+w32tm /resync /rediscover 
+timeout /t 5 /nobreak
+pause
+
