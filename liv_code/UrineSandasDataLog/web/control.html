@@ -6,14 +6,38 @@
 
 <body style="margin:0; font-family:sans-serif;">
 
-<!-- Top Frame -->
-<div style="height:75vh; background:black;">
+ <!-- Top Frame -->
+<div id="top-frame" style="
+    height:100vh;
+    background:black;
+    position:relative;
+">
     <iframe src="/web/stream.html"
             style="width:100%; height:100%; border:none;"></iframe>
+
+    <!-- Floating Toggle -->
+    <div id="floating-toggle"
+        onclick="toggleBottomFrame()"
+        style="
+            position:absolute;
+            bottom:10px;
+            left:50%;
+            transform:translateX(-50%);
+            background:#0a84ff;
+            color:white;
+            padding:8px 14px;
+            border-radius:20px;
+            font-size:14px;
+            cursor:pointer;
+            user-select:none;
+            opacity:0.9;
+        ">
+        Type Text
+    </div>
 </div>
 
-<!-- Bottom Frame (Cleaned) -->
-<div style="
+<!-- Bottom Frame -->
+<div id="bottom-frame" style="
     height:25vh;
     display:flex;
     flex-direction:column;
@@ -35,60 +59,45 @@
             box-sizing:border-box;
         "></textarea>
 
-<button onclick="submitPadText()"
-    style="
-        margin-top:10px;
-        width:clamp(120px, 30vw, 220px);
-        height:clamp(38px, 6vh, 60px);
-        border:none;
-        border-radius:10px;
-        background:#0a84ff;
-        color:white;
-        font-weight:bold;
-        font-size:clamp(14px, 2.5vw, 18px);
-    ">
-    Submit
-</button>
-
-<!--<button onclick="copyPadText()"
-    style="
-        margin-top:10px;
-        width:clamp(120px, 30vw, 220px);
-        height:clamp(38px, 6vh, 60px);
-        border:none;
-        border-radius:10px;
-        background:#34c759;
-        color:white;
-        font-weight:bold;
-        font-size:clamp(14px, 2.5vw, 18px);
-    ">
-    Copy
-</button>-->
-<!--<button id="copyBtn" onclick="copyPadText()"
-    style="
-        margin-top:10px;
-        width:clamp(120px, 30vw, 220px);
-        height:clamp(38px, 6vh, 60px);
-        border:none;
-        border-radius:10px;
-        background:#34c759;
-        color:white;
-        font-weight:bold;
-        font-size:clamp(14px, 2.5vw, 18px);
-    ">
-    Disabled
-</button>-->
-</div>
+    <button onclick="submitPadText()"
+        style="
+            margin-top:10px;
+            border:none;
+            left:50%;
+            transform:translateX(-50%);
+            background:#0a84ff;
+            color:white;
+            padding:8px 14px;
+            border-radius:20px;
+            font-size:14px;
+            font-weight:bold;
+        ">
+        Submit
+    </button>
+</div>   
 
 <script>
 let lastResponse = "";
-//const copyBtn = document.getElementById("copyBtn");
-
-//copyBtn.disabled = true;
-//copyBtn.textContent = "Disabled";
-//document.querySelector('button[onclick="copyPadText()"]').disabled = true;
 // Keep only WebSocket required for text submission
 const ws = new WebSocket("wss://" + location.host + "/ws");
+
+function toggleBottomFrame() {
+    const bottom = document.getElementById("bottom-frame");
+    const top = document.getElementById("top-frame");
+    const toggle = document.getElementById("floating-toggle");
+
+    if (bottom.style.display === "none") {
+        // SHOW bottom frame
+        bottom.style.display = "flex";
+        top.style.height = "75vh";
+        toggle.textContent = "Hide Text";
+    } else {
+        // HIDE bottom frame
+        bottom.style.display = "none";
+        top.style.height = "100vh";
+        toggle.textContent = "Type Text";
+    }
+}
 
 function submitPadText() {
     const text = document.getElementById("pad-text").value;
@@ -108,9 +117,6 @@ function submitPadText() {
     }
 
     document.getElementById("pad-text").value = "";
-    // Reset copy button
-    //copyBtn.disabled = true;
-    //copyBtn.textContent = "Disabled";
     // Basic loading UI
     popupWindow.document.body.innerHTML = `
         <div style="font-family:sans-serif; padding:20px;">
@@ -159,14 +165,6 @@ ws.onmessage = (event) => {
     }
 };
 
-/*async function copyPadText() {
-    try {
-        await navigator.clipboard.writeText(lastResponse);
-        alert("Copied to clipboard!");
-    } catch (err) {
-        alert("Copy failed. Try again.");
-    }
-}*/
 </script>
 
 </body>

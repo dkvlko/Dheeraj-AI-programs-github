@@ -66,7 +66,8 @@ def main():
             continue
         # -------- Detect Answer ----------
         if "Answer" in line:
-            match = re.search(r'\)(.*)', line)
+            #match = re.search(r'\)(.*)', line)
+            match = re.search(r':\s*(.*)', line)
             if match:
                 ans[current_q] = match.group(1).strip()
 
@@ -93,6 +94,10 @@ def main():
         QuestionMoodle += " {="
 
         QuestionMoodle += ans[idx]
+        #result=" ".join(QuestionMoodle)
+        #print("Question : ",result)
+        #print("Question :",question[idx])
+        #print("Answer :",ans[idx])
 
         for opt in options[idx]:
             if opt != ans[idx]:
