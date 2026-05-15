@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from flask import Flask, render_template, request, jsonify,redirect
+from flask import Flask, render_template, request, jsonify,redirect,send_file,abort
 from datetime import datetime, timedelta
 from google import genai
 from google.genai import types
@@ -12,7 +12,7 @@ from ctypes import wintypes
 import markdown
 from pathlib import Path
 import subprocess
-
+import mimetypes
 
 import asyncio
 from playwright.async_api import async_playwright
@@ -36,6 +36,7 @@ PROJECT_ROOT_SSL = PROJECT_ROOT.parent
 #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = PROJECT_ROOT / "activities.db"
 
+BASE_PATH = Path("/").resolve()
 #DB_PATH = os.path.join(BASE_DIR, "activities.db")
 
 ai_api_dir = PROJECT_ROOT_SSL / "AI-key"
@@ -447,7 +448,8 @@ def url_directory():
         "/insert_entry",
         "/activity",
         "/memo",
-        "/screen-off"
+        "/screen-off",
+        "/ufiles/<path:req_path>"
     }    
 
     for rule in app.url_map.iter_rules():
@@ -790,6 +792,59 @@ def gptextract():
 
         return render_template("chatgptanswer.html", answer=html_answer)
 
+
+
+@app.route("/ufiles", defaults={"req_path": ""})
+@app.route("/ufiles/<path:req_path>")
+def ufiles(req_path):
+
+    full_path = (BASE_PATH / req_path).resolve()
+
+    # Security check
+    if not str(full_path).startswith(str(BASE_PATH)):
+        abort(403)
+
+    if not full_path.exists():
+        abort(404)
+
+    # File handling
+    if full_path.is_file():
+        mime_type, _ = mimetypes.guess_type(str(full_path))
+
+        return send_file(
+            full_path,
+            mimetype=mime_type
+        )
+
+    # Directory listing
+    items = []
+
+    try:
+        for item in sorted(full_path.iterdir()):
+
+            relative = item.relative_to(BASE_PATH)
+
+            items.append({
+                "name": item.name,
+                "is_dir": item.is_dir(),
+                "url": "/ufiles/" + str(relative)
+            })
+
+    except PermissionError:
+        return "Permission denied", 403
+
+    parent = None
+
+    if full_path != BASE_PATH:
+        parent_rel = full_path.parent.relative_to(BASE_PATH)
+        parent = "/ufiles/" + str(parent_rel)
+
+    return render_template(
+        "file_browser.html",
+        items=items,
+        current_path="/" + req_path,
+        parent=parent
+    )
 #@app.route("/utremote")
 #def utremote():
 #    return render_template("ubuntu_remote.html")
