@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="calculatedmulti">
+    <name>
+      <text>Dynamic Division with Quotient and Remainder</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Divide the following numbers and choose the correct quotient (Q) and remainder (R):</p><p>\({A} \div {B}\)</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <correctfeedback format="html"><text>Your answer is correct.</text></correctfeedback>
+    <partiallycorrectfeedback format="html"><text>Your answer is partially correct.</text></partiallycorrectfeedback>
+    <incorrectfeedback format="html"><text>Your answer is incorrect.</text></incorrectfeedback>
+
+    <answer fraction="100" feedbackformat="html">
+      <text><![CDATA[Q = {=floor({A}/{B})}, R = {={A}%{B}}]]></text>
+      <tolerance>0</tolerance>
+      <tolerancetype>1</tolerancetype>
+      <correctanswerformat>1</correctanswerformat>
+      <correctanswerlength>0</correctanswerlength>
+      <feedback><text>Excellent!</text></feedback>
+    </answer>
+
+    <answer fraction="0" feedbackformat="html">
+      <text><![CDATA[Q = {=floor({A}/{B})+1}, R = {={A}%{B}}]]></text>
+      <tolerance>0</tolerance>
+      <tolerancetype>1</tolerancetype>
+      <correctanswerformat>1</correctanswerformat>
+      <correctanswerlength>0</correctanswerlength>
+      <feedback><text>Incorrect quotient calculation.</text></feedback>
+    </answer>
+
+    <answer fraction="0" feedbackformat="html">
+      <text><![CDATA[Q = {=floor({A}/{B})}, R = {={A}%{B}+3}]]></text>
+      <tolerance>0</tolerance>
+      <tolerancetype>1</tolerancetype>
+      <correctanswerformat>1</correctanswerformat>
+      <correctanswerlength>0</correctanswerlength>
+      <feedback><text>Incorrect remainder calculation.</text></feedback>
+    </answer>
+
+    <answer fraction="0" feedbackformat="html">
+      <text><![CDATA[Q = {=floor({A}/{B})-1}, R = {={A}%{B}+10}]]></text>
+      <tolerance>0</tolerance>
+      <tolerancetype>1</tolerancetype>
+      <correctanswerformat>1</correctanswerformat>
+      <correctanswerlength>0</correctanswerlength>
+      <feedback><text>Incorrect.</text></feedback>
+    </answer>
+
+    <units></units>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+
+    <dataset_definitions>
+      <dataset_definition>
+        <status><text>private</text></status>
+        <name><text>A</text></name>
+        <type>calculated</type>
+        <distribution><text>uniform</text></distribution>
+        <minimum><text>10000</text></minimum>
+        <maximum><text>99999</text></maximum>
+        <decimals><text>0</text></decimals>
+        <itemcount>0</itemcount>
+      </dataset_definition>
+      <dataset_definition>
+        <status><text>private</text></status>
+        <name><text>B</text></name>
+        <type>calculated</type>
+        <distribution><text>uniform</text></distribution>
+        <minimum><text>100</text></minimum>
+        <maximum><text>999</text></maximum>
+        <decimals><text>0</text></decimals>
+        <itemcount>0</itemcount>
+      </dataset_definition>
+    </dataset_definitions>
+  </question>
+</quiz>

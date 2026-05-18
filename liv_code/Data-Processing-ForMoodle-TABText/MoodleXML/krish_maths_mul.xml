@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="calculated">
+    <name>
+      <text>Dynamic 5-Digit by 3-Digit Multiplication</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Calculate the product of the following numbers:</p><p>\({A} \times {B}\)</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.1000000</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    
+    <answer fraction="100" feedbackformat="html">
+      <text>{A} * {B}</text>
+      <tolerance>0</tolerance>
+      <tolerancetype>1</tolerancetype>
+      <correctanswerformat>1</correctanswerformat>
+      <correctanswerlength>0</correctanswerlength>
+      <feedback>
+        <text></text>
+      </feedback>
+    </answer>
+
+    <units></units>
+    <unitgradingtype>0</unitgradingtype>
+    <unitpenalty>0.1000000</unitpenalty>
+    <showunits>3</showunits>
+    <unitsleft>0</unitsleft>
+
+    <dataset_definitions>
+      <dataset_definition>
+        <status><text>private</text></status>
+        <name><text>A</text></name>
+        <type>calculated</type>
+        <distribution><text>uniform</text></distribution>
+        <minimum><text>10000</text></minimum>
+        <maximum><text>99999</text></maximum>
+        <decimals><text>0</text></decimals>
+        <itemcount>0</itemcount>
+      </dataset_definition>
+      <dataset_definition>
+        <status><text>private</text></status>
+        <name><text>B</text></name>
+        <type>calculated</type>
+        <distribution><text>uniform</text></distribution>
+        <minimum><text>100</text></minimum>
+        <maximum><text>999</text></maximum>
+        <decimals><text>0</text></decimals>
+        <itemcount>0</itemcount>
+      </dataset_definition>
+    </dataset_definitions>
+  </question>
+</quiz>

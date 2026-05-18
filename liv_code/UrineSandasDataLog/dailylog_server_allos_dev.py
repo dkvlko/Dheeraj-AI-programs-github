@@ -436,7 +436,9 @@ def getGPTAnswer(prompt):
     
     return text
 
-
+@app.route("/my/")
+def mypage():
+    return redirect("/")
 
 @app.route("/")
 def url_directory():
