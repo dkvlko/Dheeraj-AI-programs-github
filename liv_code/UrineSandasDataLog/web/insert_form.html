@@ -88,17 +88,55 @@
 
             <form method="POST" action="/insert_entry">
                 <!-- Keep table name hidden so server knows which table to insert into -->
-                <input type="hidden" name="activity" value="{{ activity }}">
+                <input type="hidden" name="activity" value="{{ entries[0].activity }}">
+                <input type="hidden" name="in_activity" value="{{ entries[0].in_activity }}">
+            <div class="field-group">
 
-                <div class="field-group">
-                    <div class="datetime-row">
-                        <label for="listc">Date Time :</label>
-                        <select id="listc" name="listc">
-                            <!-- Value is "Now"; visible text shows current time -->
-                            <option value="Now">Now ({{ now_display }})</option>
-                        </select>
-                    </div>
+                <!-- Date Time -->
+                <div class="datetime-row">
+                    <label for="listc">Date Time :</label>
+
+                    <select id="listc" name="listc">
+                        <option value="Now">
+                            Now ({{ entries[0].datetime }})
+                        </option>
+                    </select>
                 </div>
+
+                <!-- Amount -->
+                <div class="datetime-row">
+                    <label for="amount">Amount :</label>
+
+                    <select id="amount" name="amount">
+                        <option value="L">L</option>
+                        <option value="M" selected>M</option>
+                        <option value="S">S</option>
+                    </select>
+                </div>
+
+                <!-- Quality -->
+                <div class="datetime-row">
+                    <label for="quality">Quality :</label>
+
+                    <select id="quality" name="quality">
+                        <option value="V">V</option>
+                        <option value="G" selected>G</option>
+                        <option value="B">B</option>
+                    </select>
+                </div>
+
+                <!-- SRating -->
+                <div class="datetime-row">
+                    <label for="srating">SRating :</label>
+
+                    <select id="srating" name="srating">
+                        <option value="V">V</option>
+                        <option value="S" selected>S</option>
+                        <option value="U">U</option>
+                    </select>
+                </div>
+
+            </div>
 
                 <div class="button-wrapper">
                     <button type="submit">Go</button>

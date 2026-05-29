@@ -1,0 +1,84 @@
+::1::When was Shakespeare baptized? {=April 26, 1564 ~April 23, 1564 ~May 26, 1564 ~May 23, 1564}
+
+::2::How many of Shakespeare's siblings survived childhood? {=Four ~Three ~Five ~Six}
+
+::3::Which school did Shakespeare attend? {=Grammar School of Stratford ~Grammar School of London ~Trinity School ~Saint Paul's School}
+
+::4::What position did John Shakespeare hold in 1568? {=High Bailiff and Justice of Peace ~Mayor ~Governor ~Sheriff}
+
+::5::What occupations did John Shakespeare follow? {=Butcher, glover, and farmer ~Blacksmith, baker, and tailor ~Carpenter, mason, and fisherman ~Brewer, weaver, and tanner}
+
+::6::At what age did Shakespeare marry Anne Hathaway? {=18 ~16 ~20 ~22}
+
+::7::Where was Anne Hathaway from? {=Shottery ~Stratford ~London ~Warwick}
+
+::8::How many children did Shakespeare have? {=Three ~Two ~Four ~Five}
+
+::9::Who were Shakespeare's children? {=Susanna, Hamnet, and Judith ~Elizabeth, Hamnet, and Judith ~Susanna, Richard, and Judith ~Anne, Hamnet, and Judith}
+
+::10::When were Shakespeare’s twins baptized? {=February 2, 1585 ~May 26, 1583 ~April 23, 1582 ~January 31,1584}
+
+::11::Why is it believed that Shakespeare’s marriage was hasty? {=Anne Hathaway was pregnant ~Shakespeare had to leave town ~Financial issues ~Family pressure}
+
+::12::Why did Shakespeare leave his town in 1584? {=He was convicted of poaching ~He wanted to join the theatre ~He sought a better job ~He had a dispute with his father}
+
+::13::What was Shakespeare's first job in London? {=Horse keeper at the theatre ~Actor ~Playwright ~Director}
+
+::14::Who did Shakespeare serve with in the Low Countries? {=The Earl of Leicester ~Sir Thomas Lucy ~The Duke of Buckingham ~Lord Chamberlain}
+
+::15::In which year did Shakespeare become associated with Lord Chamberlain's Men? {=1594 ~1584 ~1603 ~1610}
+
+::16::When was The Globe Theatre built? {=1599 ~1594 ~1603 ~1610}
+
+::17::What new name did Shakespeare’s acting company take under King James I? {=The King's Men ~The Queen’s Men ~The Earl's Men ~The Royal Players}
+
+::18::Which theatres did Shakespeare own shares in? {=The Globe and The Blackfriars ~The Globe and The Swan ~The Curtain and The Rose ~The Theatre and The Fortune}
+
+::19::Which roles did Shakespeare play on stage? {=Adam in As You Like It and the Ghost in ~Hamlet and Macbeth ~Adam in As You Like It and the Ghost in Hamlet ~Richard III and Othello ~Romeo and Prospero}
+
+::20::Whose armies did Shakespeare serve in the law countries? {=The Earl of Leicester ~The Duke of Buckingham ~Lord Chamberlain ~The Earl of Essex}
+
+::21::What were some possible reasons for Shakespeare's hasty marriage? {=Anne Hathaway’s pregnancy ~Financial issues ~Family pressure ~Health issues}
+
+::22::When did Shakespeare's son Hamnet die? {=1596 ~1601 ~1607 ~1608}
+
+::23::Who was Shakespeare’s daughter Susanna married to? {=John Hall ~Thomas Queenie ~Richard Burbage ~Edward Alleyn}
+
+::24::Who did Shakespeare's daughter Judith marry in 1616? {=Thomas Queenie ~John Hall ~Robert Armin ~Thomas Dekker}
+
+::25::When was Shakespeare’s will dated? {=March 25, 1616 ~January 1, 1616 ~April 23, 1616 ~December 31, 1615}
+
+::26::To whom did Shakespeare leave most of his property? {=His daughter Susanna ~His wife Anne ~His daughter Judith ~His granddaughter Elizabeth}
+
+::27::When was Shakespeare’s granddaughter Elizabeth Hall christened? {=1608 ~1596 ~1601 ~1607}
+
+::28::What title was conferred to Shakespeare's family with the official coatofarms? {=Gentleman ~Knight ~Baron ~Lord}
+
+::29::When did Shakespeare leave London for Stratford? {=1610 ~1602 ~1608 ~1613}
+
+::30::What property did Shakespeare purchase in 1602? {=127 acres of land in Stratford ~A house in London ~The Globe Theatre ~A farm in Shottery}
+
+::31::With whom did Shakespeare stay in London? {=The Mountjoy family ~The Burbage family ~The Queenie family ~The Armin family}
+
+::32::When did Shakespeare die? {=April 23, 1616 ~April 23, 1615 ~April 23, 1617 ~April 23,1618}
+
+::33::Where was Shakespeare buried? {=Holy Trinity Church ~Westminster Abbey ~St. Paul’s Cathedral ~Southwark Cathedral}
+
+::34::What part did Shakespeare play in Ben Jonson's “Every Man in His Humour”? {=Unknown ~Adam ~The Ghost ~Prospero}
+
+::35::What was Shakespeare’s epitaph? {=Good friend, for Jesus' sake forbeare To ~Good friend, for Jesus' sake forbeare To dig the ~Here lies William Shakespeare, the bard of Avon, ~Rest in peace, William Shakespeare, whose ~Farewell, sweet bard, and take your place among}
+
+::36::What title did Shakespeare receive with the coatofarms grant in 1596? {=Gentleman ~Sir ~Duke ~Baron}
+
+::37::Where did Shakespeare stay while living in London? {=The Mountjoy family ~The Burbage family ~The Queenie family ~The Hall family}
+
+::38::Which theatre did Shakespeare’s company take over as a winter house in 1608? {=The Blackfriars ~The Swan ~The Globe ~The Curtain}
+
+::39::What were Shakespeare's roles as an actor? 511 @ 2% {=Adam in As You Like It and the Ghost in ~Macbeth and Hamlet ~Romeo and Julius Caesar ~Adam in As You Like It and the Ghost in Hamlet ~Othello and Richard III}
+
+::40::Which year did Shakespeare's father die? {=1601 ~1596 ~1607 ~1608}
+
+::41::What property did Shakespeare purchase in Learning reading speed. Page 13 of {=127 acres of land in Stratford ~Anew house in London ~The Globe Theatre ~A farm in Shottery}
+
+::42::Who was Shakespeare's mother? {=Mary Arden ~Anne Hathaway ~Judith Shakespeare ~Elizabeth Hall}
+

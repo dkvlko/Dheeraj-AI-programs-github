@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 01</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(112\) and \(40\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=8:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 112 and 40 is 8.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 02</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(234\) and \(60\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=6:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 234 and 60 is 6.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 03</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(217\) and \(42\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=7:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 217 and 42 is 7.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 04</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(147\) and \(207\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=3:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 147 and 207 is 3.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 05</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(216\) and \(216\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=216:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 216 and 216 is 216.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 06</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(35\) and \(215\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=5:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 35 and 215 is 5.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 07</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(144\) and \(165\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=3:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 144 and 165 is 3.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 08</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(51\) and \(24\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=3:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 51 and 24 is 3.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 09</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(48\) and \(18\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=6:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 48 and 18 is 6.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 10</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(130\) and \(100\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=10:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 130 and 100 is 10.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 11</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(85\) and \(153\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=17:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 85 and 153 is 17.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 12</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(154\) and \(132\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=22:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 154 and 132 is 22.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 13</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(165\) and \(174\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=3:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 165 and 174 is 3.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 14</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(183\) and \(138\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=3:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 183 and 138 is 3.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 15</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(48\) and \(222\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=6:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 48 and 222 is 6.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 16</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(77\) and \(209\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=11:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 77 and 209 is 11.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 17</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(30\) and \(141\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=3:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 30 and 141 is 3.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 18</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(69\) and \(45\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=3:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 69 and 45 is 3.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 19</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(184\) and \(52\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=4:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 184 and 52 is 4.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+  <question type="cloze">
+    <name>
+      <text>Dynamic HCF Question 20</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[
+        <p>Find the Highest Common Factor (HCF) of the following two positive numbers:</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #b45309;">\(180\) and \(156\)</p>
+        <p><strong>HCF = </strong> {1:NUMERICAL:=12:0}</p>
+      ]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p>The HCF of 180 and 156 is 12.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+  </question>
+</quiz>

@@ -19,13 +19,18 @@
             align-items: center;
             padding: 16px;
         }
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+        }
         .card {
             background: #ffffff;
             padding: 20px 16px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             width: 100%;
-            max-width: 520px;
+            max-width: 1400px;
+            overflow-x: auto;
         }
         .title {
             text-align: center;
@@ -45,9 +50,10 @@
             font-size: 0.9rem;
         }
         th, td {
-            padding: 8px 6px;
+            padding: 8px 10px;
             border-bottom: 1px solid #eee;
             text-align: left;
+            white-space: nowrap;
         }
         th {
             font-weight: 600;
@@ -75,24 +81,59 @@
             <div class="subtitle">Period: {{ period }}</div>
 
             {% if entries and entries|length > 0 %}
+            <div class="table-wrapper">
+            {% if activity == "Sandas" %}
                 <table>
                     <thead>
                         <tr>
                             <th>Serial</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Address</th>
                             <th>Activity</th>
+                            <th>DateTime</th>
+                            <th>Amount</th>
+                            <th>Quality</th>
+                            <th>SRating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for e in entries %}
+                            <tr>
+                                <td>{{ e.sno }}</td>
+                                <td>{{ e.name }}</td>
+                                <td>{{ e.age }}</td>
+                                <td>{{ e.address }}</td>
+                                <td>{{ e.activity }}</td>
+                                <td>{{ e.datetime }}</td>
+                                <td>{{ e.amount }}</td>
+                                <td>{{ e.quality }}</td>
+                                <td>{{ e.srating }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serial</th>
+                            <th>Note</th>
                             <th>DateTime</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for e in entries %}
                             <tr>
-                                <td>{{ e.serial }}</td>
-                                <td>{{ e.activity }}</td>
+                                <td>{{ e.sno }}</td>
+                                <td>{{ e.note }}</td>
                                 <td>{{ e.datetime }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                 {% endif %}
+               </div>
             {% else %}
                 <div class="no-data">No entries found.</div>
             {% endif %}

@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from flask import Flask, render_template, request, jsonify,redirect,send_file,abort
+from flask import Flask, render_template, request, jsonify,redirect,send_file,abort,template_rendered
 from datetime import datetime, timedelta
 from google import genai
 from google.genai import types
@@ -14,6 +14,8 @@ from pathlib import Path
 import subprocess
 import mimetypes
 
+from blinker import signal
+import re
 import asyncio
 from playwright.async_api import async_playwright
 from playwright_stealth import Stealth
@@ -55,14 +57,15 @@ TEMPLATE_FOLDER =  PROJECT_ROOT / "web"
 STATIC_FOLDER = TEMPLATE_FOLDER / "static"
 
 app = Flask(__name__, template_folder=TEMPLATE_FOLDER)
-#app = Flask(
-#    __name__,
-#    template_folder=str(TEMPLATE_FOLDER),
-#    static_folder=str(STATIC_FOLDER),
-#    static_url_path="/static"
-#)
 
-#socketio = SocketIO(app, cors_allowed_origins="*")
+# -------------------------
+# TEMPLATE TRACE LOGGER
+# -------------------------
+
+def template_logger(sender, template, context, **extra):
+    print(f"TEMPLATE USED: {template.name}")
+
+template_rendered.connect(template_logger, app)
 
 LRESULT = ctypes.c_ssize_t 
 
@@ -312,13 +315,35 @@ def getViewTable(activity):
 
 
 def getInsertTable(activity):
+
+    
+    match = re.match(r"Sandas",activity)
+    if match :
+        in_activity=activity.split("Sandas-", 1)[1].strip()
+        activity = "Sandas"
+    
     if activity=="Memo":
         return render_template("memo.html")
     else:
         # Renders a mobile-friendly form that asks for DateTime (listc)
         now = datetime.now()
         now_display = now.strftime("%Y-%m-%d %H:%M:%S")
-        return render_template("insert_form.html", activity=activity, now_display=now_display)
+        entries = [
+            {
+                "name": "Dheeraj",
+                "age": "48",
+                "address": "Lucknow",
+                "activity": activity,
+                "in_activity": in_activity,
+                "datetime": now_display,
+                "amount": "S",
+                "quality": "V",
+                "srating": "S"
+            }
+        ]
+
+        return render_template("insert_form.html", activity=activity, entries=entries)
+        #return render_template("insert_form.html", activity=activity, now_display=now_display)
 
 #def rawhtml_generate_search(query):
 
@@ -502,6 +527,16 @@ def copy_text():
 
 def index():
     tables = get_table_names()  # e.g. ["Sandas", "Urine"]
+    new_tables = []
+
+    for t in tables:
+        if t == "Sandas":
+            new_tables.append("Sandas-Sandas")
+            new_tables.append("Sandas-Urine")
+        else:
+            new_tables.append(t)
+
+    tables = new_tables    
     return render_template("activity.html", tables=tables)
 
 
@@ -522,17 +557,22 @@ def view_results():
     activity = request.form.get("activity", "")
     period = request.form.get("listb", "")
 
+    match = re.match(r"Sandas",activity)
+    if match :
+        in_activity=activity.split("Sandas", 1)[1].strip()
+        activity = "Sandas"
+
     if not is_valid_table(activity):
         return "<html><body><p>Unknown table.</p></body></html>"
 
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
-
+        
     # Base query
     if activity == "Memo":
         query = f"SELECT SNo, Note, DateTime FROM {activity}"
     else:
-        query = f"SELECT SerialNumber, Activity, DateTime FROM {activity}"
+        query = f"SELECT SNo, Name,Age,Address,Activity, DateTime,Amount,Quality,SRating FROM {activity}"
     params = []
     order_clause = " ORDER BY DateTime DESC"
 
@@ -555,11 +595,16 @@ def view_results():
     cur.execute(query, params)
     rows = cur.fetchall()
     conn.close()
-
-    entries = [
-        {"serial": r[0], "activity": r[1], "datetime": r[2]}
-        for r in rows
-    ]
+    if activity == "Memo" :
+        entries =[
+                {"sno":r[0],"note":r[1],"datetime":r[2]}
+                    for r in rows
+                ]
+    else:
+        entries = [
+            {"sno": r[0], "name": r[1], "age": r[2], "address": r[3], "activity": r[4], "datetime": r[5], "amount": r[6], "quality": r[7], "srating": r[8]}
+            for r in rows
+        ]
 
     return render_template(
         "view_results.html",
@@ -572,6 +617,13 @@ def view_results():
 def insert_entry():
     activity = request.form.get("activity", "")
     dt_choice = request.form.get("listc", "")
+    in_activity = request.form.get("in_activity", "")
+    name ="Dheeraj"
+    age ="48"
+    address="Lucknow"
+    amount = request.form.get("amount", "")
+    quality = request.form.get("quality", "")
+    srating = request.form.get("srating", "")
 
     if not is_valid_table(activity):
         return "<html><body><p>Unknown table.</p></body></html>"
@@ -584,8 +636,8 @@ def insert_entry():
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     cur.execute(
-        f"INSERT INTO {activity} (Activity, DateTime) VALUES (?, ?)",
-        (activity, dt_value.strftime("%Y-%m-%d %H:%M:%S")),
+        f"INSERT INTO {activity} (Name,Age,Address,Activity,DateTime,Amount,Quality,SRating) VALUES (?,?,?,?,?,?,?,?)",
+        (name,age,address,in_activity, dt_value.strftime("%Y-%m-%d %H:%M:%S"),amount,quality,srating),
     )
     conn.commit()
     conn.close()
