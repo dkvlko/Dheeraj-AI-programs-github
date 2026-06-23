@@ -38,7 +38,6 @@
 <button onclick="copyText()">Copy to Clipboard</button>
 
 <textarea id="output"></textarea>
-
 <script>
 
 const templates = {
@@ -52,7 +51,18 @@ function generate() {
 
   if (!name) return;
 
-  const finalText = templates[template] + name;
+  const today = new Date().toLocaleDateString(
+    'en-GB',
+    { day: '2-digit', month: 'long', year: 'numeric' }
+  );
+
+  const finalText =
+    templates[template] +
+    name +
+    ". Can you also tell its current BSE stock price and percentage return over the last 3 years beginning " +
+    today +
+    "?";
+
   document.getElementById("output").value = finalText;
 }
 
