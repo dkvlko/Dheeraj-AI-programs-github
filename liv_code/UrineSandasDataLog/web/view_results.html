@@ -94,6 +94,7 @@
                             <th>DateTime</th>
                             <th>Amount</th>
                             <th>Quality</th>
+                            <th>Duration(min)</th>
                             <th>SRating</th>
                         </tr>
                     </thead>
@@ -108,6 +109,7 @@
                                 <td>{{ e.datetime }}</td>
                                 <td>{{ e.amount }}</td>
                                 <td>{{ e.quality }}</td>
+                                <td>{{ e.duration }}</td>
                                 <td>{{ e.srating }}</td>
                             </tr>
                         {% endfor %}
@@ -139,7 +141,7 @@
             {% endif %}
 
             <div class="back-link">
-                <a href="/">&#8592; Back to Activity selection</a>
+                <a href="/log">&#8592; Back to Log selection</a>
             </div>
         </div>
     </div>

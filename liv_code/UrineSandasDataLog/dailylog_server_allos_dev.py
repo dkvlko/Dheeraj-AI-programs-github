@@ -572,7 +572,7 @@ def view_results():
     if activity == "Memo":
         query = f"SELECT SNo, Note, DateTime FROM {activity}"
     else:
-        query = f"SELECT SNo, Name,Age,Address,Activity, DateTime,Amount,Quality,SRating FROM {activity}"
+        query = f"SELECT SNo, Name,Age,Address,Activity, DateTime,Amount,Quality,SRating,Duration FROM {activity}"
     params = []
     order_clause = " ORDER BY DateTime DESC"
 
@@ -602,7 +602,7 @@ def view_results():
                 ]
     else:
         entries = [
-            {"sno": r[0], "name": r[1], "age": r[2], "address": r[3], "activity": r[4], "datetime": r[5], "amount": r[6], "quality": r[7], "srating": r[8]}
+                {"sno": r[0], "name": r[1], "age": r[2], "address": r[3], "activity": r[4], "datetime": r[5], "amount": r[6], "quality": r[7], "srating": r[8], "duration": r[9]}
             for r in rows
         ]
 
@@ -624,7 +624,7 @@ def insert_entry():
     amount = request.form.get("amount", "")
     quality = request.form.get("quality", "")
     srating = request.form.get("srating", "")
-
+    duration = request.form.get("duration","")
     if not is_valid_table(activity):
         return "<html><body><p>Unknown table.</p></body></html>"
 
@@ -636,8 +636,8 @@ def insert_entry():
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     cur.execute(
-        f"INSERT INTO {activity} (Name,Age,Address,Activity,DateTime,Amount,Quality,SRating) VALUES (?,?,?,?,?,?,?,?)",
-        (name,age,address,in_activity, dt_value.strftime("%Y-%m-%d %H:%M:%S"),amount,quality,srating),
+        f"INSERT INTO {activity} (Name,Age,Address,Activity,DateTime,Amount,Quality,SRating,Duration) VALUES (?,?,?,?,?,?,?,?,?)",
+        (name,age,address,in_activity, dt_value.strftime("%Y-%m-%d %H:%M:%S"),amount,quality,srating,duration),
     )
     conn.commit()
     conn.close()

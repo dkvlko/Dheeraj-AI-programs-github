@@ -39,6 +39,10 @@
             gap: 6px;
             margin-bottom: 16px;
         }
+        .two-digit {
+            width: 50px;
+            text-align: center;
+        }
         label {
             font-size: 0.95rem;
             font-weight: 600;
@@ -124,7 +128,17 @@
                         <option value="B">B</option>
                     </select>
                 </div>
-
+                <!--Duration -->
+                <div class="datetime-row">
+                    <label for="duration">Duration(min) :</label>
+                     <input
+                        type="text"
+                        class="two-digit"
+                        name="duration"
+                        maxlength="2"
+                        size="2"
+                        >
+                </div>
                 <!-- SRating -->
                 <div class="datetime-row">
                     <label for="srating">SRating :</label>

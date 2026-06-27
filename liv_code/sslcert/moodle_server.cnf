@@ -1,0 +1,21 @@
+[req]
+default_bits       = 2048
+prompt             = no
+default_md         = sha256
+req_extensions     = req_ext
+distinguished_name = dn
+
+[dn]
+C  = IN
+ST = Uttar Pradesh
+L  = Lucknow
+O  = NoClassLessons
+CN = moodle.noclasslessons.com
+
+[req_ext]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = moodle.noclasslessons.com
+DNS.2 = app.noclasslessons.com
+IP.1  = 192.168.29.25
