@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+name="viewport"
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no">
+
+<title>TV Mouse</title>
+
+<style>
+
+html,
+body{
+
+margin:0;
+padding:0;
+overflow:hidden;
+
+touch-action:none;
+
+background:#111;
+height:100%;
+
+}
+
+#pad{
+
+position:absolute;
+
+top:0;
+left:0;
+right:0;
+bottom:0;
+
+background:#222;
+
+}
+
+#status{
+
+position:absolute;
+
+top:8px;
+left:8px;
+
+color:white;
+
+font-family:Arial;
+
+font-size:16px;
+
+z-index:10;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="status">
+Connected
+</div>
+
+<div id="pad"></div>
+
+<script src="/static/socket.io.min.js"></script>
+
+<script>
+
+//const socket = io();
+const socket = io({
+    transports: ["websocket"]
+});
+
+const pad=document.getElementById("pad");
+
+let lastX=0;
+let lastY=0;
+
+let lastTap=0;
+
+pad.addEventListener(
+"touchstart",
+function(e){
+
+e.preventDefault();
+
+const t=e.touches[0];
+
+lastX=t.clientX;
+lastY=t.clientY;
+
+const now=Date.now();
+
+if(now-lastTap<300){
+
+socket.emit("mouse_double",{});
+
+lastTap=0;
+
+}else{
+
+lastTap=now;
+
+setTimeout(function(){
+
+if(Date.now()-lastTap>=300){
+
+socket.emit("mouse_click",{});
+
+}
+
+},300);
+
+}
+
+},
+{passive:false}
+);
+
+pad.addEventListener(
+"touchmove",
+function(e){
+
+e.preventDefault();
+
+const t=e.touches[0];
+
+const dx=t.clientX-lastX;
+const dy=t.clientY-lastY;
+
+lastX=t.clientX;
+lastY=t.clientY;
+
+socket.emit("mouse_move",
+{
+dx:dx,
+dy:dy
+});
+
+},
+{passive:false}
+);
+
+</script>
+
+</body>
+
+</html>
