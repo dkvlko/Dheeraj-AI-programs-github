@@ -37,15 +37,16 @@ def main():
 
     # Load all PNG images containing token
     images = sorted(
-        IMAGE_DIR.glob("class_10*.png")
+        IMAGE_DIR.glob("class_10_ieo_ans1*.png")
+
     )
 
     if not images:
-        print("No matching JPG images found.")
+        print("No matching PNG images found.")
         sys.exit(0)
 
     print(f"Found {len(images)} images to process.\n")
-
+    
     # Process each image
     for img_path in images:
         print(f"Processing: {img_path.name}")

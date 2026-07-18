@@ -31,7 +31,7 @@ def main():
 
     # Load all PNG images containing token
     images = sorted(
-        IMAGE_DIR.glob("class*.png")
+        IMAGE_DIR.glob("class_10_ieo_ans1*.png")
     )
 
     if not images:

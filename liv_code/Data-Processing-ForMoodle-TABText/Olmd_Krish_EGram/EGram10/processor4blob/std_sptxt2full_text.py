@@ -34,7 +34,7 @@ def main():
 
     # Load all matching txt files and sort them by name
     text_files = sorted(
-        TEXT_DIR.glob("class*.txt")
+        TEXT_DIR.glob("class_10_ieo_1*.txt")
     )
 
     if not text_files:
