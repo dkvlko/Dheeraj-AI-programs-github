@@ -1,6 +1,7 @@
 import os
+import random
 import sqlite3
-from flask import Flask, render_template, request, jsonify,redirect,send_file,abort,template_rendered
+from flask import Flask, render_template, request, jsonify,redirect,send_file,abort,template_rendered,Response
 from datetime import datetime, timedelta
 from google import genai
 from google.genai import types
@@ -61,6 +62,15 @@ server_key  = cert_dir / "ubuntu_server.key"
 
 TEMPLATE_FOLDER =  PROJECT_ROOT / "web"
 STATIC_FOLDER = TEMPLATE_FOLDER / "static"
+
+#For Music player
+
+DOWNLOAD_DIR = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SpotifyMusicRIP")
+AD_FILE = "Shaitaan.mp3"
+
+# Cached playlist
+_playlist = []
+_index = 0
 
 app = Flask(
         __name__,
@@ -492,6 +502,8 @@ def url_directory():
         "/activity",
         "/memo",
         "/screen-off",
+        "/flagship/current",
+        "/flagship/next",
         "/ufiles/<path:req_path>"
     }    
 
@@ -514,6 +526,59 @@ def url_directory():
 
     return render_template("url_directory.html", routes=routes)
 
+
+
+def rebuild_playlist():
+    """Create a playlist with shaitan.mp3 inserted after every 3-4 songs."""
+    global _playlist, _index
+
+    songs = [
+        p.name
+        for p in DOWNLOAD_DIR.glob("*.mp3")
+        if p.name.lower() != AD_FILE.lower()
+    ]
+
+    random.shuffle(songs)
+
+    playlist = []
+
+    while songs:
+        count = random.randint(3, 4)
+
+        for _ in range(count):
+            if not songs:
+                break
+            playlist.append(songs.pop())
+
+        ad = DOWNLOAD_DIR / AD_FILE
+        if ad.exists():
+            playlist.append(AD_FILE)
+
+    _playlist = playlist
+    _index = 0
+
+
+def current_song():
+    global _index
+
+    if not _playlist:
+        rebuild_playlist()
+
+    if _index >= len(_playlist):
+        rebuild_playlist()
+
+    return _playlist[_index]
+
+
+def next_song():
+    global _index
+
+    _index += 1
+
+    if _index >= len(_playlist):
+        rebuild_playlist()
+
+    return current_song()
 
 
 
@@ -951,6 +1016,65 @@ def connected():
 @socketio.on("disconnect")
 def disconnected():
     print("iPhone disconnected")
+
+
+@app.route("/flagship")
+def flagship():
+    return render_template("flagship.html")
+
+
+@app.route("/flagship/current")
+def flagship_current():
+    filename = current_song()
+
+    path = DOWNLOAD_DIR / filename
+
+    if not path.exists():
+        abort(404)
+
+    file_size = path.stat().st_size
+    range_header = request.headers.get("Range")
+
+    if not range_header:
+        return send_file(
+            path,
+            mimetype="audio/mpeg",
+            conditional=True,
+        )
+
+    start, end = range_header.replace("bytes=", "").split("-")
+
+    start = int(start)
+    end = file_size - 1 if end == "" else int(end)
+
+    length = end - start + 1
+
+    with open(path, "rb") as f:
+        f.seek(start)
+        data = f.read(length)
+
+    response = Response(
+        data,
+        206,
+        mimetype="audio/mpeg",
+        direct_passthrough=True,
+    )
+
+    response.headers.add(
+        "Content-Range",
+        f"bytes {start}-{end}/{file_size}",
+    )
+
+    response.headers.add("Accept-Ranges", "bytes")
+    response.headers.add("Content-Length", str(length))
+
+    return response
+
+
+@app.route("/flagship/next")
+def flagship_next():
+    next_song()
+    return ("", 204)
 
 #@app.route("/utremote")
 #def utremote():
