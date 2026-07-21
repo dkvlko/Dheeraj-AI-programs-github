@@ -13,22 +13,44 @@
     }
   </style>
   <script>
-    function updateTime() {
-      const now = new Date();
-      document.getElementById("time").textContent = now.toLocaleString();
+    const TOTAL_SECONDS = 1800; // 30 minutes
+    let secondsLeft = TOTAL_SECONDS;
+
+    function formatTime(totalSeconds) {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      
+      // Pads single digits with a leading zero (e.g., 05:09)
+      const formattedMins = String(minutes).padStart(2, '0');
+      const formattedSecs = String(seconds).padStart(2, '0');
+      
+      return `${formattedMins}:${formattedSecs}`;
     }
 
-    // Set initial time when page loads
+    function updateCountdown() {
+      const countdownElement = document.getElementById("countdown");
+      
+      if (secondsLeft <= 0) {
+        countdownElement.textContent = "00:00 - Reloading...";
+        return;
+      }
+
+      countdownElement.textContent = formatTime(secondsLeft);
+      secondsLeft--;
+    }
+
     window.addEventListener("DOMContentLoaded", () => {
-      updateTime();
-      // Update clock display every second
-      setInterval(updateTime, 1000);
+      // Display initial time immediately (30:00)
+      updateCountdown();
+      
+      // Tick down every second
+      setInterval(updateCountdown, 1000);
     });
   </script>
 </head>
 <body>
   <h2>Network Keep Alive</h2>
-  <p>Current Time:</p>
-  <h3 id="time">Loading...</h3>
+  <p>Next reload in:</p>
+  <h3 id="countdown">30:00</h3>
 </body>
 </html>
