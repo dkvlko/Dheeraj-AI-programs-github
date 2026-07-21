@@ -5,9 +5,9 @@
 <title>Keep Alive</title>
 
 <script>
-setTimeout(() => {
-    location.reload();
-}, 30 * 60 * 1000);
+    setTimeout(() => {
+    location.href = location.pathname + "?t=" + Date.now();
+}, 1800000);
 </script>
 
 </head>
