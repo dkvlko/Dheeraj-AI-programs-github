@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Refresh the page every 1800 seconds (30 minutes) -->
-  <meta http-equiv="refresh" content="1800">
   <title>Network Keep Alive</title>
   <style>
     body {
@@ -13,44 +11,58 @@
     }
   </style>
   <script>
-    const TOTAL_SECONDS = 1800; // 30 minutes
-    let secondsLeft = TOTAL_SECONDS;
+    const DURATION_MS = 10 * 60 * 1000; // 30 minutes in milliseconds
+    const targetTime = Date.now() + DURATION_MS;
+
+    function triggerUniqueReload() {
+      // Append or replace the unique timestamp query parameter
+      const baseUrl = location.origin + location.pathname;
+      const uniqueUrl = `${baseUrl}?t=${Date.now()}`;
+      location.href = uniqueUrl;
+    }
 
     function formatTime(totalSeconds) {
       const minutes = Math.floor(totalSeconds / 60);
       const seconds = totalSeconds % 60;
       
-      // Pads single digits with a leading zero (e.g., 05:09)
       const formattedMins = String(minutes).padStart(2, '0');
       const formattedSecs = String(seconds).padStart(2, '0');
       
       return `${formattedMins}:${formattedSecs}`;
     }
 
-    function updateCountdown() {
-      const countdownElement = document.getElementById("countdown");
-      
+    function updateTimer() {
+      const remainingMs = targetTime - Date.now();
+      const secondsLeft = Math.ceil(remainingMs / 1000);
+
       if (secondsLeft <= 0) {
-        countdownElement.textContent = "00:00 - Reloading...";
+        document.getElementById("countdown").textContent = "00:00 - Reloading...";
+        triggerUniqueReload();
         return;
       }
 
-      countdownElement.textContent = formatTime(secondsLeft);
-      secondsLeft--;
+      document.getElementById("countdown").textContent = formatTime(secondsLeft);
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      // Display initial time immediately (30:00)
-      updateCountdown();
-      
-      // Tick down every second
-      setInterval(updateCountdown, 1000);
+      // Initial render
+      updateTimer();
+
+      // Tick update every second
+      setInterval(updateTimer, 1000);
+
+      // Instantly catch up if the user brings an inactive tab back to focus
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+          updateTimer();
+        }
+      });
     });
   </script>
 </head>
 <body>
   <h2>Network Keep Alive</h2>
   <p>Next reload in:</p>
-  <h3 id="countdown">30:00</h3>
+  <h3 id="countdown">10:00</h3>
 </body>
 </html>
