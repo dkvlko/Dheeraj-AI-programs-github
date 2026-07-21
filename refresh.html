@@ -1,37 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Keep Alive</title>
+  <meta charset="UTF-8">
+  <!-- Refresh the page every 1800 seconds (30 minutes) -->
+  <meta http-equiv="refresh" content="1800">
+  <title>Network Keep Alive</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+  </style>
+  <script>
+    function updateTime() {
+      const now = new Date();
+      document.getElementById("time").textContent = now.toLocaleString();
+    }
 
-<script>
-function updateTime() {
-    const now = new Date();
-
-    document.getElementById("time").textContent =
-        now.toLocaleString();
-}
-
-// Update immediately
-updateTime();
-
-// Update every second
-setInterval(updateTime, 1000);
-
-// Reload every 30 minutes with a unique URL
-setTimeout(() => {
-    location.href = location.pathname + "?t=" + Date.now();
-}, 30 * 60 * 1000);
-</script>
-
+    // Set initial time when page loads
+    window.addEventListener("DOMContentLoaded", () => {
+      updateTime();
+      // Update clock display every second
+      setInterval(updateTime, 1000);
+    });
+  </script>
 </head>
-
 <body>
-
-<h2>Network Keep Alive</h2>
-
-<p>Current Time:</p>
-<h3 id="time"></h3>
-
+  <h2>Network Keep Alive</h2>
+  <p>Current Time:</p>
+  <h3 id="time">Loading...</h3>
 </body>
 </html>
