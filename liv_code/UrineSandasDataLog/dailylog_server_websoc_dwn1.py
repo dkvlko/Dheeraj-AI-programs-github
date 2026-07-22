@@ -70,11 +70,6 @@ STATIC_FOLDER = TEMPLATE_FOLDER / "static"
 DOWNLOAD_DIR = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SpotifyMusicRIP")
 AD_FILE = "Shaitaan.mp3"
 
-
-ANNOUNCEMENT_DIR = Path(
-    "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Announcements"
-)
-
 # Cached playlist
 _playlist = []
 _index = 0
@@ -521,71 +516,6 @@ def song_metadata(filename):
 
     return result
 
-def rebuild_playlist():
-    """
-    Playlist format:
-
-        Song1.wav
-        Song1.mp3
-        Song2.wav
-        Song2.mp3
-        Song3.wav
-        Song3.mp3
-        Shaitan.wav
-        Shaitan.mp3
-        Song4.wav
-        Song4.mp3
-        ...
-
-    Shaitan.mp3 is inserted after every 3–4 mainstream songs.
-    """
-
-    global _playlist, _index
-
-    songs = [
-        p.name
-        for p in DOWNLOAD_DIR.glob("*.mp3")
-        if p.name.lower() != AD_FILE.lower()
-    ]
-
-    random.shuffle(songs)
-
-    playlist = []
-
-    while songs:
-
-        count = random.randint(3, 4)
-
-        # Add 3-4 mainstream songs
-        for _ in range(count):
-
-            if not songs:
-                break
-
-            song = songs.pop()
-
-            wav = ANNOUNCEMENT_DIR / (Path(song).stem + ".wav")
-
-            if wav.exists():
-                playlist.append(wav)
-
-            playlist.append(DOWNLOAD_DIR / song)
-
-        # Insert Shaitan advertisement
-        ad_mp3 = DOWNLOAD_DIR / AD_FILE
-
-        if ad_mp3.exists():
-
-            ad_wav = ANNOUNCEMENT_DIR / (Path(AD_FILE).stem + ".wav")
-
-            if ad_wav.exists():
-                playlist.append(ad_wav)
-
-            playlist.append(ad_mp3)
-
-    _playlist = playlist
-    _index = 0
-
 #Url handlers beging here
 
 @app.route("/my/")
@@ -629,6 +559,35 @@ def url_directory():
     return render_template("url_directory.html", routes=routes)
 
 
+
+def rebuild_playlist():
+    """Create a playlist with shaitan.mp3 inserted after every 3-4 songs."""
+    global _playlist, _index
+
+    songs = [
+        p.name
+        for p in DOWNLOAD_DIR.glob("*.mp3")
+        if p.name.lower() != AD_FILE.lower()
+    ]
+
+    random.shuffle(songs)
+
+    playlist = []
+
+    while songs:
+        count = random.randint(3, 4)
+
+        for _ in range(count):
+            if not songs:
+                break
+            playlist.append(songs.pop())
+
+        ad = DOWNLOAD_DIR / AD_FILE
+        if ad.exists():
+            playlist.append(AD_FILE)
+
+    _playlist = playlist
+    _index = 0
 
 
 def current_song():
@@ -1095,15 +1054,15 @@ def disconnected():
 def flagship():
     return render_template("flagship.html")
 
+
 @app.route("/flagship/current")
 def flagship_current():
+    filename = current_song()
 
-    path = current_song()          # <-- Now returns a Path object
+    path = DOWNLOAD_DIR / filename
 
     if not path.exists():
         abort(404)
-
-    mimetype = "audio/wav" if path.suffix.lower() == ".wav" else "audio/mpeg"
 
     file_size = path.stat().st_size
     range_header = request.headers.get("Range")
@@ -1111,7 +1070,7 @@ def flagship_current():
     if not range_header:
         return send_file(
             path,
-            mimetype=mimetype,
+            mimetype="audio/mpeg",
             conditional=True,
         )
 
@@ -1129,15 +1088,20 @@ def flagship_current():
     response = Response(
         data,
         206,
-        mimetype=mimetype,
+        mimetype="audio/mpeg",
         direct_passthrough=True,
     )
 
-    response.headers["Content-Range"] = f"bytes {start}-{end}/{file_size}"
-    response.headers["Accept-Ranges"] = "bytes"
-    response.headers["Content-Length"] = str(length)
+    response.headers.add(
+        "Content-Range",
+        f"bytes {start}-{end}/{file_size}",
+    )
+
+    response.headers.add("Accept-Ranges", "bytes")
+    response.headers.add("Content-Length", str(length))
 
     return response
+
 
 @app.route("/flagship/next")
 def flagship_next():
