@@ -5,29 +5,6 @@
 <title>Flagship Music</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-.controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    margin-top: 20px;
-}
-
-.icon-btn {
-    border: none;
-    background: transparent;
-    padding: 0;
-    cursor: pointer;
-}
-.icon-btn img {
-    width: clamp(48px, 10vw, 72px);
-    height: clamp(48px, 10vw, 72px);
-    display: block;
-}
-
-.icon-btn:active {
-    transform: scale(0.95);
-}
 body{
     margin:0;
     padding:16px;
@@ -53,18 +30,10 @@ audio{
 <body>
 
 <h2>Flagship Player</h2>
+
 <audio id="player" controls autoplay></audio>
-
-<div class="controls">
-    <button id="prev" class="icon-btn">
-        <img src="/static/icons/rewind-button.png" alt="Previous">
-    </button>
-
-    <button id="next" class="icon-btn">
-        <img src="/static/icons/forward.png" alt="Next">
-    </button>
-</div>
-
+<button id="prev">⏮</button>
+<button id="next">⏭</button>
 <script>
 
 const player=document.getElementById("player");
@@ -90,7 +59,7 @@ document.getElementById("next").onclick = async () => {
 
 player.addEventListener("ended",async ()=>{
 
-    await fetch("/flagship/advance");
+    await fetch("/flagship/next");
 
     playCurrent();
 

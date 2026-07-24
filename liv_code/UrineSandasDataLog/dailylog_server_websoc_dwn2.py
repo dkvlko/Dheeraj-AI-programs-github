@@ -74,16 +74,6 @@ AD_FILE = "Shaitaan.mp3"
 ANNOUNCEMENT_DIR = Path(
     "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Announcements"
 )
-BLOBS_DIR =  Path(
-    "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Temp"
-)
-
-PLAYLIST_LOG = BLOBS_DIR / "FlagshipPlaylist.log"
-
-#Global pointers for songs
-_current_item = None
-_previous_item = None
-_next_item = None
 
 # Cached playlist
 _playlist = []
@@ -531,22 +521,24 @@ def song_metadata(filename):
 
     return result
 
-def advance_song():
-    """Normal playback: advance to the next playlist item."""
-
-    global _index
-
-    if not _playlist:
-        rebuild_playlist()
-
-    _index += 1
-
-    if _index >= len(_playlist):
-        rebuild_playlist()
-    
-    update_song_pointers()
-
 def rebuild_playlist():
+    """
+    Playlist format:
+
+        Song1.wav
+        Song1.mp3
+        Song2.wav
+        Song2.mp3
+        Song3.wav
+        Song3.mp3
+        Shaitan.wav
+        Shaitan.mp3
+        Song4.wav
+        Song4.mp3
+        ...
+
+    Shaitan.mp3 is inserted after every 3–4 mainstream songs.
+    """
 
     global _playlist, _index
 
@@ -564,6 +556,7 @@ def rebuild_playlist():
 
         count = random.randint(3, 4)
 
+        # Add 3-4 mainstream songs
         for _ in range(count):
 
             if not songs:
@@ -574,148 +567,26 @@ def rebuild_playlist():
             wav = ANNOUNCEMENT_DIR / (Path(song).stem + ".wav")
 
             if wav.exists():
-                playlist.append({
-                    "type": "announcement",
-                    "path": wav
-                })
+                playlist.append(wav)
 
-            playlist.append({
-                "type": "song",
-                "path": DOWNLOAD_DIR / song
-            })
+            playlist.append(DOWNLOAD_DIR / song)
 
-        ad_wav = ANNOUNCEMENT_DIR / (Path(AD_FILE).stem + ".wav")
+        # Insert Shaitan advertisement
         ad_mp3 = DOWNLOAD_DIR / AD_FILE
 
-        if ad_wav.exists():
-            playlist.append({
-                "type": "announcement",
-                "path": ad_wav
-            })
-
         if ad_mp3.exists():
-            playlist.append({
-                "type": "song",
-                "path": ad_mp3
-            })
+
+            ad_wav = ANNOUNCEMENT_DIR / (Path(AD_FILE).stem + ".wav")
+
+            if ad_wav.exists():
+                playlist.append(ad_wav)
+
+            playlist.append(ad_mp3)
 
     _playlist = playlist
     _index = 0
-    
-    update_song_pointers()
-    with open(PLAYLIST_LOG, "a", encoding="utf-8") as f:
-
-        f.write("\n")
-        f.write("=" * 80 + "\n")
-        f.write(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        f.write("\n")
-        f.write("=" * 80 + "\n")
-
-        for n, item in enumerate(_playlist, 1):
-            f.write(
-                f"{n:03d}  "
-                f"{item['type']:13s}  "
-                f"{item['path'].name}\n"
-            )
-
-
-def current_song():
-    global _index
-
-    if not _playlist:
-        rebuild_playlist()
-
-    if _index >= len(_playlist):
-        rebuild_playlist()
-    return _playlist[_index]["path"]
-
-
-def update_song_pointers():
-    """Update previous/current/next pointers and log them."""
-
-    global _current_item, _previous_item, _next_item
-
-    if not _playlist:
-        return
-
-    _current_item = _playlist[_index]
-
-    if _index > 0:
-        _previous_item = _playlist[_index - 1]
-    else:
-        _previous_item = None
-
-    if _index < len(_playlist) - 1:
-        _next_item = _playlist[_index + 1]
-    else:
-        _next_item = None
-
-    print()
-    print("=" * 70)
-    print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-
-    print("Previous :", _previous_item["path"].name if _previous_item else "<None>")
-    print("Current  :", _current_item["path"].name)
-    print("Next     :", _next_item["path"].name if _next_item else "<None>")
-
-    print("=" * 70)
-
-def next_song():
-    """Next button: jump to the next announcement."""
-
-    global _index
-
-    if not _playlist:
-        rebuild_playlist()
-
-    i = _index + 1
-
-    while i < len(_playlist):
-
-        if _playlist[i]["type"] == "announcement":
-            _index = i
-            found = True
-            break
-
-        i += 1
-
-    # End of playlist
-    if not found:
-        rebuild_playlist()
-
-    update_song_pointers()
-
-def previous_song():
-    """Previous button: jump to the previous song's announcement."""
-
-    global _index
-
-    if not _playlist:
-        rebuild_playlist()
-
-    # Start searching before the current item.
-    i = _index - 1
-
-    # If currently on a song, skip its own announcement.
-    if (
-        _playlist[_index]["type"] == "song"
-        and i >= 0
-        and _playlist[i]["type"] == "announcement"
-    ):
-        i -= 1
-
-    while i >= 0:
-        if _playlist[i]["type"] == "announcement":
-            _index = i
-            return
-        i -= 1
-
-    _index = 0
-
-    update_song_pointers()
-
+    print("Finished building playlist")
 #Url handlers beging here
-
 
 @app.route("/my/")
 def mypage():
@@ -735,8 +606,6 @@ def url_directory():
         "/flagship/current",
         "/flagship/info",
         "/flagship/next",
-        "/flagship/previous",
-        "/flagship/advance",
         "/ufiles/<path:req_path>"
     }    
 
@@ -758,6 +627,32 @@ def url_directory():
     routes = sorted(routes, key=lambda x: x["url"])
 
     return render_template("url_directory.html", routes=routes)
+
+
+
+
+def current_song():
+    global _index
+
+    if not _playlist:
+        rebuild_playlist()
+
+    if _index >= len(_playlist):
+        rebuild_playlist()
+    print("Returning Current Song :",_playlist[_index])
+    return _playlist[_index]
+
+
+def next_song():
+    global _index
+
+    _index += 1
+
+    if _index >= len(_playlist):
+        rebuild_playlist()
+
+    return current_song()
+
 
 
 @app.route("/copyText", methods=["GET", "POST"])
@@ -1254,29 +1149,12 @@ def flagship_current():
         app.logger.exception("Error serving %s", path)
         abort(500, description=str(e))
 
-@app.route("/flagship/advance")
-def flagship_advance():
-
-    advance_song()
-
-    app.logger.info("Now playing %s", current_song())
-
-    return ("", 204)
-
 @app.route("/flagship/next")
 def flagship_next():
     next_song()
     app.logger.info("Now playing %s", current_song())
     return ("", 204)
 
-@app.route("/flagship/previous")
-def flagship_previous():
-
-    previous_song()
-
-    app.logger.info("Now playing %s", current_song())
-
-    return ("", 204)
 #@app.route("/flagship/info")
 #def flagship_info():
 
