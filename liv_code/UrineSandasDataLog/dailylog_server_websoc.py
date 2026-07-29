@@ -652,11 +652,11 @@ def update_song_pointers():
 
     print()
     print("=" * 70)
-    print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    #print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
-    print("Previous :", _previous_item["path"].name if _previous_item else "<None>")
-    print("Current  :", _current_item["path"].name)
-    print("Next     :", _next_item["path"].name if _next_item else "<None>")
+    #print("Previous :", _previous_item["path"].name if _previous_item else "<None>")
+    #print("Current  :", _current_item["path"].name)
+    #print("Next     :", _next_item["path"].name if _next_item else "<None>")
 
     print("=" * 70)
 
@@ -737,6 +737,7 @@ def url_directory():
         "/flagship/next",
         "/flagship/previous",
         "/flagship/advance",
+        "/flagship/status",
         "/ufiles/<path:req_path>"
     }    
 
@@ -1196,9 +1197,18 @@ def disconnected():
     print("iPhone disconnected")
 
 
+#@app.route("/flagship")
+#def flagship():
+#    return render_template("flagship.html")
 @app.route("/flagship")
 def flagship():
-    return render_template("flagship.html")
+
+    ua = request.headers.get("User-Agent", "")
+
+    if "iPad" in ua and "CPU OS 12_" in ua:
+        return send_file("web/flagship_mini2.html")
+
+    return send_file("web/flagship.html")
 
 @app.route("/flagship/current")
 def flagship_current():
@@ -1259,14 +1269,14 @@ def flagship_advance():
 
     advance_song()
 
-    app.logger.info("Now playing %s", current_song())
+    #app.logger.info("Now playing %s", current_song())
 
     return ("", 204)
 
 @app.route("/flagship/next")
 def flagship_next():
     next_song()
-    app.logger.info("Now playing %s", current_song())
+    #app.logger.info("Now playing %s", current_song())
     return ("", 204)
 
 @app.route("/flagship/previous")
@@ -1274,9 +1284,19 @@ def flagship_previous():
 
     previous_song()
 
-    app.logger.info("Now playing %s", current_song())
+    #app.logger.info("Now playing %s", current_song())
 
     return ("", 204)
+
+@app.route("/flagship/status")
+def flagship_status():
+
+    return {
+        "previous": None if _previous_item is None else _previous_item["path"].name,
+        "current": None if _current_item is None else _current_item["path"].name,
+        "next": None if _next_item is None else _next_item["path"].name,
+    }
+
 #@app.route("/flagship/info")
 #def flagship_info():
 
