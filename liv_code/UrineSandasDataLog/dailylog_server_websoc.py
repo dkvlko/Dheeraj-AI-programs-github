@@ -14,6 +14,9 @@ import markdown
 from pathlib import Path
 import subprocess
 import mimetypes
+from flask import after_this_request
+import tempfile
+import zipfile
 
 from blinker import signal
 import re
@@ -29,6 +32,9 @@ from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3
 
 from flask_socketio import SocketIO,emit
+import uuid
+
+import shutil
 
 mouse_lock = threading.Lock()
 
@@ -80,6 +86,24 @@ BLOBS_DIR =  Path(
 
 PLAYLIST_LOG = BLOBS_DIR / "FlagshipPlaylist.log"
 
+LAN_CLOUD_FOLDER = Path(
+    "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SharedDataOnLan"
+)
+
+UPLOAD_TEMP_FOLDER = LAN_CLOUD_FOLDER / ".upload_temp"
+
+UPLOAD_TEMP_FOLDER.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+# ------------------------------------------------------------
+# Global data used by websocket handlers
+# ------------------------------------------------------------
+
+
+LANcloud_ID_MAP = {}
+LANcloud_JSON = {}
 #Global pointers for songs
 _current_item = None
 _previous_item = None
@@ -650,15 +674,15 @@ def update_song_pointers():
     else:
         _next_item = None
 
-    print()
-    print("=" * 70)
+    #print()
+    #print("=" * 70)
     #print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
     #print("Previous :", _previous_item["path"].name if _previous_item else "<None>")
     #print("Current  :", _current_item["path"].name)
     #print("Next     :", _next_item["path"].name if _next_item else "<None>")
 
-    print("=" * 70)
+    #print("=" * 70)
 
 def next_song():
     """Next button: jump to the next announcement."""
@@ -714,6 +738,96 @@ def previous_song():
 
     update_song_pointers()
 
+
+# ------------------------------------------------------------
+# Build directory listing
+# ------------------------------------------------------------
+
+def BuildLANcloudDirectoryJSON(folder=None):
+
+    global LANcloud_ID_MAP
+    global LANcloud_JSON
+
+    if folder is None:
+        folder = LAN_CLOUD_FOLDER
+
+    LANcloud_ID_MAP.clear()
+
+    entries = []
+
+    
+    ############################################################
+    # Parent Directory (..)
+    ############################################################
+
+    if folder != LAN_CLOUD_FOLDER:
+
+        LANcloud_ID_MAP["__PARENT__"] = folder.parent
+
+        entries.append(
+            {
+                "id": "__PARENT__",
+                "name": "..",
+                "type": "directory",
+                "size": 0,
+                "modified": ""
+            }
+        )
+
+    ############################################################
+    # Current Directory
+    ############################################################
+
+    for item in sorted(
+            folder.iterdir(),
+            key=lambda p: (p.is_file(), p.name.lower())):
+
+        item_id = uuid.uuid4().hex
+
+        LANcloud_ID_MAP[item_id] = item
+
+        stat = item.stat()
+
+        entries.append(
+            {
+                "id": item_id,
+                "name": item.name,
+                "type": "directory" if item.is_dir() else "file",
+                "size": stat.st_size,
+                "modified":
+                    datetime.fromtimestamp(
+                        stat.st_mtime
+                    ).strftime("%d-%b-%Y %H:%M:%S")
+            }
+        )
+
+    ############################################################
+    # Relative Path
+    ############################################################
+
+    if folder == LAN_CLOUD_FOLDER:
+
+        current_directory = ""
+
+    else:
+
+        current_directory = str(
+            folder.relative_to(LAN_CLOUD_FOLDER)
+        )
+
+    ############################################################
+    # JSON returned to JavaScript
+    ############################################################
+
+    LANcloud_JSON = {
+
+        "command": "directory_listing",
+
+        "current_directory": current_directory,
+
+        "entries": entries
+    }
+
 #Url handlers beging here
 
 
@@ -738,6 +852,12 @@ def url_directory():
         "/flagship/previous",
         "/flagship/advance",
         "/flagship/status",
+        "/LANcloud/list",
+        "/file-operation-upload",
+        "/file-operation-download",
+        "/file-operation",
+        "/LANcloud/change-directory",
+        "/file-operation-new-directory",
         "/ufiles/<path:req_path>"
     }    
 
@@ -1226,11 +1346,11 @@ def flagship_current():
         range_header = request.headers.get("Range")
 
         if not range_header:
-            app.logger.info(
-                "Serving %s (%s) with send_file()",
-                path.name,
-                mimetype,
-            )
+            #app.logger.info(
+            #    "Serving %s (%s) with send_file()",
+            #    path.name,
+            #    mimetype,
+            #)
             return send_file(
                 path,
                 mimetype=mimetype,
@@ -1297,25 +1417,505 @@ def flagship_status():
         "next": None if _next_item is None else _next_item["path"].name,
     }
 
-#@app.route("/flagship/info")
-#def flagship_info():
+@app.route("/file-operation-download")
+def file_operation_download():
 
-#    filename = current_song()
+    name = request.args.get("name")
 
-#    meta = song_metadata(filename)
+    if not name:
+        return "No file selected.", 400
 
-#    return jsonify(meta)
+    path = LAN_CLOUD_FOLDER / name
 
-#@app.route("/utremote")
-#def utremote():
-#    return render_template("ubuntu_remote.html")
-    
+    if not path.exists():
+        return "Selected file or directory not found.", 404
+
+
+    ###########################################################
+    # Create Temporary ZIP
+    ###########################################################
+
+    temp_zip = tempfile.NamedTemporaryFile(
+
+        suffix=".zip",
+
+        delete=False
+
+    )
+
+    temp_zip.close()
+
+    zip_filename = temp_zip.name
+
+
+    ###########################################################
+    # Build ZIP
+    ###########################################################
+
+    with zipfile.ZipFile(
+
+            zip_filename,
+
+            "w",
+
+            compression=zipfile.ZIP_DEFLATED,
+
+            compresslevel=9
+
+    ) as archive:
+
+
+        #######################################################
+        # Selected item is a FILE
+        #######################################################
+
+        if path.is_file():
+
+            archive.write(
+
+                path,
+
+                arcname=path.name
+
+            )
+
+
+        #######################################################
+        # Selected item is a DIRECTORY
+        #######################################################
+
+        else:
+
+            for root, dirs, files in os.walk(path):
+
+                for filename in files:
+
+                    full_path = Path(root) / filename
+
+                    archive_name = full_path.relative_to(path.parent)
+
+                    archive.write(
+
+                        full_path,
+
+                        arcname=archive_name
+
+                    )
+
+
+    ###########################################################
+    # Delete ZIP after download completes
+    ###########################################################
+
+    @after_this_request
+    def cleanup(response):
+
+        try:
+
+            os.remove(zip_filename)
+
+        except Exception as e:
+
+            print(e)
+
+        return response
+
+
+    ###########################################################
+    # Download ZIP
+    ###########################################################
+
+    return send_file(
+
+        zip_filename,
+
+        as_attachment=True,
+
+        download_name=path.name + ".zip",
+
+        mimetype="application/zip"
+
+    )
+
+@app.route(
+    "/file-operation-upload",
+    methods=["POST"]
+)
+def file_operation_upload():
+
+    try:
+
+        uploaded_chunk = request.files["file"]
+
+        filename = request.form["filename"]
+
+        current_directory = request.form[
+            "current_directory"
+        ]
+
+        chunk_number = int(
+            request.form["chunk_number"]
+        )
+
+        total_chunks = int(
+            request.form["total_chunks"]
+        )
+
+
+        ####################################################
+        # Destination Directory
+        ####################################################
+
+# If we are in the root shared folder, don't append it again.
+
+        if current_directory == LAN_CLOUD_FOLDER.name:
+
+            destination_directory = LAN_CLOUD_FOLDER
+
+        else:
+
+            destination_directory = (
+                LAN_CLOUD_FOLDER /
+                current_directory
+            )
+
+        destination_directory.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
+        ####################################################
+        # Temporary File
+        ####################################################
+
+        temporary_file = (
+
+            UPLOAD_TEMP_FOLDER /
+
+            (filename + ".part")
+
+        )
+
+
+        ####################################################
+        # First Chunk
+        ####################################################
+
+        if chunk_number == 0:
+
+            if temporary_file.exists():
+
+                temporary_file.unlink()
+
+
+        ####################################################
+        # Append Chunk
+        ####################################################
+
+        with open(
+
+                temporary_file,
+
+                "ab"
+
+        ) as output_file:
+
+            shutil.copyfileobj(
+
+                uploaded_chunk.stream,
+
+                output_file
+
+            )
+
+
+        ####################################################
+        # Last Chunk
+        ####################################################
+
+        if chunk_number == total_chunks - 1:
+
+            final_file = (
+
+                destination_directory /
+
+                filename
+
+            )
+
+            temporary_file.replace(
+
+                final_file
+
+            )
+
+            print(
+
+                f"Uploaded : {final_file}"
+
+            )
+
+            BuildLANcloudDirectoryJSON()
+
+
+        ####################################################
+        # Success
+        ####################################################
+
+        return jsonify(
+
+            {
+
+                "status": "ok"
+
+            }
+
+        )
+
+    except Exception as exception:
+
+        print(exception)
+
+        return jsonify(
+
+            {
+
+                "status": "error",
+
+                "message": str(exception)
+
+            }
+
+        ), 500
+
+@app.route("/file-operation", methods=["POST"])
+def file_operation():
+
+    data = request.get_json()
+
+    operation = data.get("operation")
+
+    selected = data.get("selected", [])
+
+    if operation != "delete":
+
+        return jsonify({
+
+            "status": "error",
+
+            "message": "Unsupported operation."
+
+        })
+
+    deleted = []
+
+    failed = []
+
+    for name in selected:
+
+        path = LAN_CLOUD_FOLDER / name
+
+        try:
+
+            if path.is_dir():
+
+                shutil.rmtree(path)
+
+            elif path.is_file():
+
+                path.unlink()
+
+            else:
+
+                failed.append(name)
+
+                continue
+
+            deleted.append(name)
+
+        except Exception as e:
+
+            failed.append(f"{name} ({e})")
+
+    BuildLANcloudDirectoryJSON()
+
+    return jsonify({
+
+        "status": "ok",
+
+        "deleted": deleted,
+
+        "failed": failed,
+
+        "message":
+            f"Deleted {len(deleted)} item(s)."
+
+    })
+
+#@app.route("/LANcloud/list")
+#def LANcloudList():
+#    return jsonify(LANcloud_JSON)
+
+@app.route("/LANcloud/list")
+def LANcloudList():
+
+    folder = request.args.get("folder", "")
+
+    requested = (LAN_CLOUD_FOLDER / folder).resolve()
+
+    #
+    # Prevent leaving the shared folder.
+    #
+    if not str(requested).startswith(str(LAN_CLOUD_FOLDER.resolve())):
+        return jsonify({"error": "Access denied"}), 403
+
+    if not requested.exists() or not requested.is_dir():
+        return jsonify({"error": "Directory not found"}), 404
+
+    BuildLANcloudDirectoryJSON(requested)
+
+    return jsonify(LANcloud_JSON)
+
+@app.route("/LANcloud")
+def LANcloud():
+
+    BuildLANcloudDirectoryJSON()
+
+    print(
+        f"[LANcloud] "
+        f"{len(LANcloud_JSON['entries'])} entries loaded."
+    )
+
+    return render_template("showdirfiles.html")  
+
+@app.route("/LANcloud/change-directory")
+def LANcloudChangeDirectory():
+
+    item_id = request.args.get("id")
+
+    if item_id not in LANcloud_ID_MAP:
+        return jsonify({"error": "Invalid directory"}), 404
+
+    destination = LANcloud_ID_MAP[item_id]
+
+    if not destination.is_dir():
+        return jsonify({"error": "Not a directory"}), 400
+
+    BuildLANcloudDirectoryJSON(destination)
+
+    return jsonify(LANcloud_JSON)
+
+@app.route(
+    "/file-operation-new-directory",
+    methods=["POST"]
+)
+def file_operation_new_directory():
+
+    try:
+
+        data = request.get_json()
+
+        current_directory = data[
+            "current_directory"
+        ]
+
+        directory_name = data[
+            "directory_name"
+        ].strip()
+
+
+        #######################################################
+        # Basic Validation
+        #######################################################
+
+        if (
+            "/" in directory_name or
+            "\\" in directory_name
+        ):
+
+            return jsonify(
+            {
+                "status":"error",
+                "message":
+                "Invalid directory name."
+            })
+
+
+        #######################################################
+        # Destination
+        #######################################################
+
+        if current_directory == "":
+
+            destination = LAN_CLOUD_FOLDER
+
+        else:
+
+            destination = (
+                LAN_CLOUD_FOLDER /
+                current_directory
+            )
+
+
+        new_directory = (
+            destination /
+            directory_name
+        )
+
+
+        #######################################################
+        # Already Exists
+        #######################################################
+
+        if new_directory.exists():
+
+            return jsonify(
+            {
+                "status":"error",
+
+                "message":
+                "Directory already exists."
+            })
+
+
+        #######################################################
+        # Create Directory
+        #######################################################
+
+        new_directory.mkdir(
+            parents=True,
+            exist_ok=False
+        )
+
+        BuildLANcloudDirectoryJSON(
+            destination
+        )
+
+        return jsonify(
+        {
+            "status":"ok",
+
+            "message":
+            "Directory created successfully."
+        })
+
+
+    except Exception as e:
+
+        return jsonify(
+        {
+            "status":"error",
+
+            "message":
+            str(e)
+        }),500
+
 if __name__ == "__main__":
     socketio.run(
         app,
         host="0.0.0.0",
         port=8000,
-        debug=True,
+        debug=False,
         ssl_context=(str(server_cert), str(server_key))
     )
     # You can change port if you want, e.g. port=8000

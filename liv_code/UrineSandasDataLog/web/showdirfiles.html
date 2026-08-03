@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>LAN Cloud</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='showdirfiles.css') }}">
+
+</head>
+
+<body>
+
+<div id="MainContainer">
+
+    <div id="TitleBar">
+
+        <span id="TitleText">
+            LAN Cloud
+        </span>
+
+        <span id="CurrentDirectory">
+            Current Directory : Loading ..
+        </span>
+
+    </div>
+
+    <div id="ToolBar">
+
+        <button id="UploadButton">
+            Upload
+        </button>
+
+        <button id="DownloadButton">
+            Download
+        </button>
+
+        <button id="DeleteButton">
+            Delete
+        </button>
+
+        <button id="NewFolderButton">
+            New Folder
+        </button>
+    </div>
+
+    <div id="HeaderRow">
+
+        <div class="HeaderCheck">
+            Select
+        </div>
+
+        <div class="HeaderName">
+            Name
+        </div>
+
+        <div class="HeaderType">
+            Type
+        </div>
+
+        <div class="HeaderSize">
+            Size
+        </div>
+
+        <div class="HeaderModified">
+            Modified
+        </div>
+
+    </div>
+
+    <div id="DirectoryList">
+
+        <!--
+            showdirfiles.js will dynamically insert rows here.
+        -->
+
+    </div>
+
+</div>
+
+<script
+src="{{ url_for('static', filename='showdirfiles.js') }}">
+</script>
+
+</body>
+
+</html>

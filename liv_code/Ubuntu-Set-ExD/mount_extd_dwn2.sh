@@ -4,8 +4,8 @@
 # Mount WD External Drives
 ##############################################################################
 
-MOUNT1="/media/Elements"
-MOUNT2="/media/My Passport"
+MOUNT1="/media/dkvlko/Elements"
+MOUNT2="/media/dkvlko/My Passport"
 
 DEV1="/dev/sdb1"
 DEV2="/dev/sdc1"
