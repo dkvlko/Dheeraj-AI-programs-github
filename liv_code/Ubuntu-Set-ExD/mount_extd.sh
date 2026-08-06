@@ -1,103 +1,107 @@
 #!/bin/bash
 
 ##############################################################################
-# Mount WD External Drives
+# Mount WD External Drives by UUID
 ##############################################################################
 
-MOUNT1="/media/Elements"
-MOUNT2="/media/My Passport"
+set -u
 
-DEV1="/dev/sdb1"
-DEV2="/dev/sdc1"
+##############################################################################
+# Configuration
+##############################################################################
 
-echo "------------------------------------------------------------"
-echo "Unmounting external drives (if mounted)..."
-echo "------------------------------------------------------------"
+ELEMENTS_UUID="18B6B61CB6B5F9F8"
+PASSPORT_UUID="1006E76C06E75170"
 
-# Unmount if mounted
-if mountpoint -q "$MOUNT1"; then
-    echo "Unmounting $MOUNT1..."
-    sudo umount "$MOUNT1"
+ELEMENTS_MOUNT="/media/Elements"
+PASSPORT_MOUNT="/media/My Passport"
+
+##############################################################################
+
+echo "============================================================"
+echo " WD External Drive Mount Utility"
+echo "============================================================"
+echo
+
+##############################################################################
+# Create mount points
+##############################################################################
+
+sudo mkdir -p "$ELEMENTS_MOUNT"
+sudo mkdir -p "$PASSPORT_MOUNT"
+
+##############################################################################
+# Unmount existing mounts
+##############################################################################
+
+echo "Unmounting drives (if mounted)..."
+
+if mountpoint -q "$ELEMENTS_MOUNT"; then
+    echo "  Unmounting Elements..."
+    sudo umount "$ELEMENTS_MOUNT"
 fi
 
-if mountpoint -q "$MOUNT2"; then
-    echo "Unmounting $MOUNT2..."
-    sudo umount "$MOUNT2"
-fi
-
-# Also unmount by device if mounted elsewhere
-if mount | grep -q "^$DEV1 "; then
-    echo "Unmounting $DEV1..."
-    sudo umount "$DEV1"
-fi
-
-if mount | grep -q "^$DEV2 "; then
-    echo "Unmounting $DEV2..."
-    sudo umount "$DEV2"
+if mountpoint -q "$PASSPORT_MOUNT"; then
+    echo "  Unmounting My Passport..."
+    sudo umount "$PASSPORT_MOUNT"
 fi
 
 echo
-read -rp "Is the LEFT USB port connected to an external drive? (y/n): " LEFT
 
-if [[ ! "$LEFT" =~ ^[Yy]$ ]]; then
-    echo
-    echo "Left drive not connected."
-    echo "Mount manually if required."
-    exit 0
-fi
+##############################################################################
+# Mount Elements
+##############################################################################
 
-read -rp "Is the RIGHT USB port connected to an external drive? (y/n): " RIGHT
+echo "Searching for Elements drive..."
 
-if [[ ! "$RIGHT" =~ ^[Yy]$ ]]; then
-    echo
-    echo "Right drive not connected."
-    echo "Mount manually if required."
-    exit 0
-fi
+ELEMENTS_DEV=$(blkid -U "$ELEMENTS_UUID" 2>/dev/null)
 
-echo
-echo "------------------------------------------------------------"
-echo "Creating mount points..."
-echo "------------------------------------------------------------"
+if [[ -n "$ELEMENTS_DEV" ]]; then
+    echo "Found: $ELEMENTS_DEV"
 
-sudo mkdir -p "$MOUNT1"
-sudo mkdir -p "$MOUNT2"
-
-echo
-echo "------------------------------------------------------------"
-echo "Mounting drives..."
-echo "------------------------------------------------------------"
-
-# Mount first drive
-if [ -b "$DEV1" ]; then
-    if sudo mount "$DEV1" "$MOUNT1"; then
-        echo "✓ Successfully mounted $DEV1 at $MOUNT1"
+    if sudo mount UUID="$ELEMENTS_UUID" "$ELEMENTS_MOUNT"; then
+        echo "✓ Elements mounted successfully."
     else
-        echo "✗ Failed to mount $DEV1"
+        echo "✗ Failed to mount Elements."
     fi
 else
-    echo "✗ Device $DEV1 does not exist."
+    echo "✗ Elements drive not connected."
 fi
 
 echo
 
-# Mount second drive
-if [ -b "$DEV2" ]; then
-    if sudo mount "$DEV2" "$MOUNT2"; then
-        echo "✓ Successfully mounted $DEV2 at $MOUNT2"
+##############################################################################
+# Mount My Passport
+##############################################################################
+
+echo "Searching for My Passport drive..."
+
+PASSPORT_DEV=$(blkid -U "$PASSPORT_UUID" 2>/dev/null)
+
+if [[ -n "$PASSPORT_DEV" ]]; then
+    echo "Found: $PASSPORT_DEV"
+
+    if sudo mount UUID="$PASSPORT_UUID" "$PASSPORT_MOUNT"; then
+        echo "✓ My Passport mounted successfully."
     else
-        echo "✗ Failed to mount $DEV2"
+        echo "✗ Failed to mount My Passport."
     fi
 else
-    echo "✗ Device $DEV2 does not exist."
+    echo "✗ My Passport drive not connected."
 fi
 
 echo
-echo "------------------------------------------------------------"
-echo "Current mounted external drives:"
-echo "------------------------------------------------------------"
 
-mount | grep -E "$DEV1|$DEV2"
+##############################################################################
+# Final Status
+##############################################################################
+
+echo "============================================================"
+echo "Mounted Drives"
+echo "============================================================"
+
+findmnt "$ELEMENTS_MOUNT"
+findmnt "$PASSPORT_MOUNT"
 
 echo
 echo "Done."
