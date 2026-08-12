@@ -20,7 +20,7 @@ def human(n):
 
 def convert(src,dst):
     dst.parent.mkdir(parents=True,exist_ok=True)
-    cmd=["ffmpeg","-hide_banner","-y","-i",str(src),"-map","0","-vf","scale=-2:720,format=yuv420p","-c:v","libx265","-preset",PRESET,"-crf",CRF,"-c:a","copy","-c:s","mov_text","-map_metadata","0","-map_chapters","0","-movflags","+faststart",str(dst)]
+    cmd=["ffmpeg","-hide_banner","-y","-i",str(src),"-map","0","-vf","scale=-2:720,format=yuv420p","-c:v","libx265","-preset",PRESET,"-crf",CRF,"-c:a","copy","-sn","-map_metadata","0","-map_chapters","0","-movflags","+faststart",str(dst)]
     return subprocess.run(cmd).returncode==0
 
 def main():

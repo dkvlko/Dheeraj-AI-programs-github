@@ -2,8 +2,9 @@ import os
 import random
 import sqlite3
 from flask import Flask, render_template, request, jsonify,redirect,send_file,abort,template_rendered,Response
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,timezone
 from google import genai
+import json
 from google.genai import types
 import threading
 from typing import Optional
@@ -17,6 +18,7 @@ import mimetypes
 from flask import after_this_request
 import tempfile
 import zipfile
+import requests
 
 from blinker import signal
 import re
@@ -96,7 +98,13 @@ UPLOAD_TEMP_FOLDER.mkdir(
     parents=True,
     exist_ok=True
 )
+#Open Maps settings
+MARTIN_URL = "http://127.0.0.1:3000"
 
+#Cache Directory#
+HOLIDAY_CACHE_FILE = PROJECT_ROOT / "BLOBS" / "holiday_cache.json"
+
+HOLIDAY_CACHE_LOCK = threading.Lock()
 # ------------------------------------------------------------
 # Global data used by websocket handlers
 # ------------------------------------------------------------
@@ -113,6 +121,8 @@ _next_item = None
 _playlist = []
 _index = 0
 
+#Server declaration#
+
 app = Flask(
         __name__,
         template_folder=TEMPLATE_FOLDER,
@@ -125,9 +135,13 @@ socketio = SocketIO(
     cors_allowed_origins="*",
     async_mode = "threading"
 )
+
+#Functions declaration#
+
 # -------------------------
 # TEMPLATE TRACE LOGGER
 # -------------------------
+
 
 def template_logger(sender, template, context, **extra):
     print(f"TEMPLATE USED: {template.name}")
@@ -136,6 +150,153 @@ template_rendered.connect(template_logger, app)
 
 LRESULT = ctypes.c_ssize_t 
 
+def get_cached_holiday_answer():
+    """
+    Return today's holiday answer.
+
+    Gemini is called only once per calendar day.
+    The result is permanently cached on disk until
+    a new date requires a new answer.
+    """
+
+    now = datetime.now().astimezone()
+
+    today = now.strftime("%Y-%m-%d")
+
+    # Make sure BLOBS exists
+    HOLIDAY_CACHE_FILE.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    with HOLIDAY_CACHE_LOCK:
+
+        # -------------------------------------------------
+        # Try existing cache
+        # -------------------------------------------------
+
+        if HOLIDAY_CACHE_FILE.exists():
+
+            try:
+
+                with open(
+                    HOLIDAY_CACHE_FILE,
+                    "r",
+                    encoding="utf-8"
+                ) as f:
+
+                    cache = json.load(f)
+
+                cached_date = cache.get("date")
+                cached_answer = cache.get("answer")
+
+                if (
+                    cached_date == today
+                    and cached_answer
+                ):
+
+                    print(
+                        f"Holiday cache HIT: {today}"
+                    )
+
+                    return cached_answer
+
+            except Exception as e:
+
+                print(
+                    f"Holiday cache read error: {e}"
+                )
+
+
+        # -------------------------------------------------
+        # Cache miss — call Gemini
+        # -------------------------------------------------
+
+        date_text = now.strftime(
+            "%A, %d %B %Y"
+        )
+
+        prompt = f"""
+Today is {date_text}.
+
+Answer the question:
+
+"Is there a bank or hindu holiday today and why?"
+
+Location:
+Lucknow, Uttar Pradesh, India.
+
+Give ONLY a very brief answer in exactly 2-3 lines.
+
+Line 1:
+Clearly say either:
+"Yes, today is a holiday."
+or
+"Today is not a holiday."
+
+Line 2-3:
+Give the reason and name of the holiday if applicable.
+If it is not a holiday, briefly state that no major public
+holiday is observed today.
+
+Do not use markdown.
+Do not use bullet points.
+Do not mention that you are an AI.
+Do not add any additional explanation.
+"""
+
+        print(
+            f"Holiday cache MISS: {today}"
+        )
+
+        print(
+            "Calling Gemini for today's holiday..."
+        )
+
+        answer_text = gemini_generate(
+            prompt
+        )
+
+        answer_text = answer_text.strip()
+
+
+        # -------------------------------------------------
+        # Save new answer
+        # -------------------------------------------------
+
+        cache = {
+            "date": today,
+            "generated_at": now.isoformat(),
+            "answer": answer_text
+        }
+
+        try:
+
+            with open(
+                HOLIDAY_CACHE_FILE,
+                "w",
+                encoding="utf-8"
+            ) as f:
+
+                json.dump(
+                    cache,
+                    f,
+                    ensure_ascii=False,
+                    indent=4
+                )
+
+            print(
+                f"Holiday answer cached for {today}"
+            )
+
+        except Exception as e:
+
+            print(
+                f"Holiday cache write error: {e}"
+            )
+
+
+        return answer_text
 
 def get_latest_file_url(directory: str) -> str:
     """
@@ -851,6 +1012,7 @@ def url_directory():
         "/flagship/next",
         "/flagship/previous",
         "/flagship/advance",
+        "/holiday-today",
         "/flagship/status",
         "/LANcloud/list",
         "/file-operation-upload",
@@ -1909,6 +2071,108 @@ def file_operation_new_directory():
             "message":
             str(e)
         }),500
+
+
+@socketio.on("clock_time")
+def send_clock_time():
+    now = datetime.now().astimezone()
+
+    emit(
+        "clock_time",
+        {
+            "timestamp": now.timestamp() * 1000
+        }
+    )
+
+@app.route("/holiday-today", methods=["GET"])
+def holiday_today():
+
+    try:
+
+        answer_text = get_cached_holiday_answer()
+
+        return jsonify({
+            "answer": answer_text
+        })
+
+    except Exception as e:
+
+        print(
+            f"\nHoliday Gemini error: {e}"
+        )
+
+        return jsonify({
+            "answer":
+                "Holiday information unavailable."
+        }), 500
+@app.route("/clock")
+def clock():
+    return render_template("clock.html")
+
+@socketio.on("mobile_location")
+def mobile_location(data):
+
+    print(
+        "Mobile GPS:",
+        f"lat={data.get('latitude')}",
+        f"lon={data.get('longitude')}",
+        f"accuracy={data.get('accuracy')} m"
+    )
+
+@app.route("/maps/martin/<path:subpath>")
+def martin_proxy(subpath):
+    """
+    Proxy requests from the HTTPS Flask server to the local
+    HTTP Martin server.
+
+    Browser:
+        https://192.168.0.25:8000/maps/martin/india/...
+
+    Martin:
+        http://127.0.0.1:3000/india/...
+    """
+
+    url = f"{MARTIN_URL}/{subpath}"
+
+    try:
+        response = requests.get(
+            url,
+            params=request.args,
+            timeout=30
+        )
+
+        excluded_headers = {
+            "content-encoding",
+            "transfer-encoding",
+            "connection",
+            "content-length"
+        }
+
+        headers = [
+            (key, value)
+            for key, value in response.headers.items()
+            if key.lower() not in excluded_headers
+        ]
+
+        return Response(
+            response.content,
+            status=response.status_code,
+            headers=headers
+        )
+
+    except requests.RequestException as e:
+
+        print(f"Martin proxy error: {e}")
+
+        return Response(
+            "Martin server unavailable",
+            status=502,
+            mimetype="text/plain"
+        )
+@app.route("/maps")
+def maps():
+    return render_template("maps.html")
+
 
 if __name__ == "__main__":
     socketio.run(

@@ -1,0 +1,966 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,
+                 initial-scale=1,
+                 maximum-scale=1,
+                 user-scalable=no">
+
+    <title>My Offline Map</title>
+
+
+    <!--
+        Local MapLibre CSS.
+    -->
+
+    <link
+        rel="stylesheet"
+        href="/static/maplibre/maplibre-gl.css">
+
+
+    <style>
+
+        html,
+        body {
+
+            margin: 0;
+            padding: 0;
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+        }
+
+
+        #map {
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 100%;
+
+        }
+
+
+        #status {
+
+            position: absolute;
+
+            left: 10px;
+            bottom: 10px;
+
+            z-index: 1000;
+
+            max-width: calc(100% - 20px);
+
+            background: rgba(0, 0, 0, 0.80);
+
+            color: white;
+
+            padding: 10px 14px;
+
+            border-radius: 7px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 13px;
+
+            line-height: 1.4;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div id="map"></div>
+
+
+<div id="status">
+    Starting...
+</div>
+
+
+<!--
+    Flask-SocketIO supplies this locally.
+
+    DO NOT use an Internet CDN here.
+-->
+
+<script src="/static/socket.io.min.js"></script>
+
+
+<!--
+    MapLibre is an ES module.
+-->
+
+<script type="module">
+
+
+/* =====================================================
+   IMPORT MAPLIBRE
+   ===================================================== */
+
+import * as maplibregl
+    from "/static/maplibre/maplibre-gl.mjs";
+
+
+/* =====================================================
+   STATUS ELEMENT
+   ===================================================== */
+
+const statusElement =
+    document.getElementById("status");
+
+
+function setStatus(message)
+{
+
+    statusElement.textContent = message;
+
+    console.log(message);
+
+}
+
+
+/* =====================================================
+   CHECK HTTPS / SECURE CONTEXT
+   ===================================================== */
+
+if (!window.isSecureContext)
+{
+
+    setStatus(
+        "ERROR: This page is not running over HTTPS."
+    );
+
+    console.error(
+        "window.isSecureContext = false"
+    );
+
+}
+
+
+/* =====================================================
+   SOCKET.IO
+   ===================================================== */
+
+let socket = null;
+
+
+if (typeof io === "undefined")
+{
+
+    setStatus(
+        "ERROR: Socket.IO client was not loaded."
+    );
+
+    console.error(
+        "window.io is undefined"
+    );
+
+}
+else
+{
+
+    socket = io();
+
+
+    socket.on(
+        "connect",
+        function ()
+        {
+
+            console.log(
+                "Socket.IO connected:",
+                socket.id
+            );
+
+            setStatus(
+                "WebSocket connected. Requesting GPS..."
+            );
+
+        }
+    );
+
+
+    socket.on(
+        "disconnect",
+        function ()
+        {
+
+            console.log(
+                "Socket.IO disconnected"
+            );
+
+            setStatus(
+                "WebSocket disconnected."
+            );
+
+        }
+    );
+
+
+    socket.on(
+        "connect_error",
+        function (error)
+        {
+
+            console.error(
+                "Socket.IO connection error:",
+                error
+            );
+
+            setStatus(
+                "WebSocket connection error."
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   MAP
+   ===================================================== */
+
+let map;
+
+
+try
+{
+
+    map = new maplibregl.Map({
+
+        container: "map",
+
+
+        /*
+         * Initial location.
+         *
+         * This is only used before GPS
+         * gives us the real location.
+         */
+
+        center: [
+            80.9462,
+            26.8467
+        ],
+
+
+        zoom: 12,
+
+
+        /*
+         * We are using Martin's vector
+         * tile endpoint through Flask.
+         *
+         * Browser:
+         *
+         * HTTPS :8000
+         *
+         * Flask proxy:
+         *
+         * /maps/martin/india/...
+         *
+         * Martin:
+         *
+         * HTTP :3000
+         */
+
+        style: {
+
+            version: 8,
+
+
+            sources: {
+
+                india: {
+
+                    type: "vector",
+
+                    tiles: [
+
+                        "/maps/martin/india/{z}/{x}/{y}"
+
+                    ],
+
+                    minzoom: 0,
+
+                    maxzoom: 14
+
+                }
+
+            },
+
+
+            layers: [
+
+
+                /* -------------------------------------
+                   Background
+                   ------------------------------------- */
+
+                {
+
+                    id: "background",
+
+                    type: "background",
+
+                    paint: {
+
+                        "background-color":
+                            "#eeeeee"
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Landcover
+                   ------------------------------------- */
+
+                {
+
+                    id: "landcover",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "landcover",
+
+                    paint: {
+
+                        "fill-color":
+                            "#dcebd5",
+
+                        "fill-opacity":
+                            0.6
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Landuse
+                   ------------------------------------- */
+
+                {
+
+                    id: "landuse",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "landuse",
+
+                    paint: {
+
+                        "fill-color":
+                            "#e8e8d8",
+
+                        "fill-opacity":
+                            0.5
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Water
+                   ------------------------------------- */
+
+                {
+
+                    id: "water",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "water",
+
+                    paint: {
+
+                        "fill-color":
+                            "#8fc9e8"
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Waterways
+                   ------------------------------------- */
+
+                {
+
+                    id: "waterway",
+
+                    type: "line",
+
+                    source: "india",
+
+                    "source-layer":
+                        "waterway",
+
+                    paint: {
+
+                        "line-color":
+                            "#6daed0",
+
+                        "line-width":
+                            1.5
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Roads
+                   ------------------------------------- */
+
+                {
+
+                    id: "roads",
+
+                    type: "line",
+
+                    source: "india",
+
+                    "source-layer":
+                        "transportation",
+
+                    paint: {
+
+                        "line-color":
+                            "#ffffff",
+
+                        "line-width": [
+
+                            "interpolate",
+
+                            ["linear"],
+                            ["zoom"],
+
+                            5, 0.5,
+                            10, 1.2,
+                            14, 4
+
+                        ]
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Major Roads
+                   ------------------------------------- */
+
+            {
+                id: "roads-major",
+
+                type: "line",
+
+                source: "india",
+
+                "source-layer": "transportation",
+
+                filter: [
+                    "match",
+                    ["get", "class"],
+                    [
+                        "motorway",
+                        "trunk",
+                        "primary",
+                        "secondary"
+                    ],
+                    true,
+                    false
+                ],
+
+                paint: {
+
+                    "line-color": "#d88b8b",
+
+                    "line-width": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+                        5, 1,
+                        10, 2,
+                        14, 5
+                    ]
+
+                }
+            },
+                        /* -------------------------------------
+                           Buildings
+                           ------------------------------------- */
+
+                {
+
+                    id: "buildings",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "building",
+
+                    minzoom: 13,
+
+                    paint: {
+
+                        "fill-color":
+                            "#d6c5b5",
+
+                        "fill-opacity":
+                            0.70
+
+                    }
+
+                }
+
+            ]
+
+        }
+
+    });
+
+
+    /* ---------------------------------------------
+       Navigation controls
+       --------------------------------------------- */
+
+    map.addControl(
+        new maplibregl.NavigationControl(),
+        "top-right"
+    );
+
+
+    /* ---------------------------------------------
+       Map errors
+       --------------------------------------------- */
+
+map.on("error", function (event) {
+
+    console.error("MAPLIBRE ERROR EVENT:", event);
+
+    if (event && event.error) {
+
+        console.error(
+            "MAPLIBRE ERROR MESSAGE:",
+            event.error.message
+        );
+
+        console.error(
+            "MAPLIBRE ERROR OBJECT:",
+            event.error
+        );
+
+        setStatus(
+            "Map error: " +
+            event.error.message
+        );
+
+    }
+    else {
+
+        setStatus("MapLibre error occurred.");
+
+    }
+
+});
+
+    /* ---------------------------------------------
+       Map loaded
+       --------------------------------------------- */
+
+    map.on(
+        "load",
+        function ()
+        {
+
+            console.log(
+                "MapLibre loaded."
+            );
+
+            setStatus(
+                "Map loaded. Waiting for GPS..."
+            );
+
+        }
+    );
+
+}
+catch (error)
+{
+
+    console.error(
+        "MapLibre initialization error:",
+        error
+    );
+
+    setStatus(
+        "MapLibre initialization failed."
+    );
+
+}
+
+
+/* =====================================================
+   GPS MARKER
+   ===================================================== */
+
+let gpsMarker = null;
+
+let firstLocation = true;
+
+
+/* =====================================================
+   GPS SUCCESS
+   ===================================================== */
+
+function gpsSuccess(position)
+{
+
+    const latitude =
+        position.coords.latitude;
+
+    const longitude =
+        position.coords.longitude;
+
+    const accuracy =
+        position.coords.accuracy;
+
+
+    console.log(
+        "GPS POSITION:",
+        latitude,
+        longitude,
+        "accuracy:",
+        accuracy
+    );
+
+
+    /* ---------------------------------------------
+       Update status
+       --------------------------------------------- */
+
+    setStatus(
+
+        "GPS: " +
+
+        latitude.toFixed(6) +
+
+        ", " +
+
+        longitude.toFixed(6) +
+
+        " ± " +
+
+        accuracy.toFixed(1) +
+
+        " m"
+
+    );
+
+
+    /* ---------------------------------------------
+       Create GPS marker
+       --------------------------------------------- */
+
+    if (!gpsMarker)
+    {
+
+        const markerElement =
+            document.createElement("div");
+
+
+        markerElement.style.width =
+            "22px";
+
+        markerElement.style.height =
+            "22px";
+
+        markerElement.style.borderRadius =
+            "50%";
+
+        markerElement.style.background =
+            "#1976d2";
+
+        markerElement.style.border =
+            "4px solid white";
+
+        markerElement.style.boxShadow =
+            "0 0 8px rgba(0,0,0,0.5)";
+
+
+        gpsMarker =
+            new maplibregl.Marker({
+
+                element:
+                    markerElement
+
+            })
+
+            .setLngLat([
+
+                longitude,
+                latitude
+
+            ])
+
+            .addTo(map);
+
+    }
+    else
+    {
+
+        gpsMarker.setLngLat([
+
+            longitude,
+            latitude
+
+        ]);
+
+    }
+
+
+    /* ---------------------------------------------
+       Center map on first GPS position
+       --------------------------------------------- */
+
+    if (firstLocation)
+    {
+
+        map.flyTo({
+
+            center: [
+
+                longitude,
+                latitude
+
+            ],
+
+            zoom: 17,
+
+            speed: 1.2
+
+        });
+
+        firstLocation = false;
+
+    }
+
+
+    /* ---------------------------------------------
+       Send GPS to Flask
+       --------------------------------------------- */
+
+    if (socket)
+    {
+
+        socket.emit(
+
+            "mobile_location",
+
+            {
+
+                latitude:
+                    latitude,
+
+                longitude:
+                    longitude,
+
+                accuracy:
+                    accuracy,
+
+                altitude:
+                    position.coords.altitude,
+
+                speed:
+                    position.coords.speed,
+
+                heading:
+                    position.coords.heading,
+
+                timestamp:
+                    position.timestamp
+
+            }
+
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   GPS ERROR
+   ===================================================== */
+
+function gpsError(error)
+{
+
+    console.error(
+        "GPS ERROR:",
+        error
+    );
+
+
+    let message;
+
+
+    switch (error.code)
+    {
+
+        case error.PERMISSION_DENIED:
+
+            message =
+                "GPS permission denied.";
+
+            break;
+
+
+        case error.POSITION_UNAVAILABLE:
+
+            message =
+                "GPS position unavailable.";
+
+            break;
+
+
+        case error.TIMEOUT:
+
+            message =
+                "GPS request timed out.";
+
+            break;
+
+
+        default:
+
+            message =
+                "Unknown GPS error.";
+
+            break;
+
+    }
+
+
+    setStatus(
+        message +
+        " Code: " +
+        error.code
+    );
+
+}
+
+
+/* =====================================================
+   START GPS
+   ===================================================== */
+
+if (!window.isSecureContext)
+{
+
+    setStatus(
+        "ERROR: Open this page using HTTPS."
+    );
+
+}
+else if (!navigator.geolocation)
+{
+
+    setStatus(
+        "ERROR: Browser does not support GPS."
+    );
+
+}
+else
+{
+
+    setStatus(
+        "Requesting GPS permission..."
+    );
+
+
+    navigator.geolocation.watchPosition(
+
+        gpsSuccess,
+
+        gpsError,
+
+        {
+
+            /*
+             * Ask the device for the
+             * highest accuracy available.
+             */
+
+            enableHighAccuracy:
+                true,
+
+            /*
+             * Do not deliberately use
+             * an old cached position.
+             */
+
+            maximumAge:
+                0,
+
+            /*
+             * Give the device 20 seconds
+             * to obtain a position.
+             */
+
+            timeout:
+                20000
+
+        }
+
+    );
+
+}
+
+
+</script>
+
+</body>
+
+</html>
