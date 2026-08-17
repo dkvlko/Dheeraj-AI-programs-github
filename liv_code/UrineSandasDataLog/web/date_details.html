@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0">
+
+    <title>Date Details</title>
+
+
+    <style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    html,
+    body {
+
+        width: 100%;
+        height: 100%;
+
+        margin: 0;
+        padding: 0;
+
+        background: #000000;
+
+        color: #ffffff;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        overflow: hidden;
+    }
+
+
+    /*
+     * =====================================================
+     * MAIN CONTAINER
+     * =====================================================
+     */
+
+    #details-container {
+
+        width: 96vw;
+
+        height: 96vh;
+
+        margin: 2vh auto;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    /*
+     * =====================================================
+     * MAIN HEADING
+     * =====================================================
+     */
+
+    h1 {
+
+        text-align: center;
+
+        font-size:
+            clamp(22px, 2.5vw, 38px);
+
+        margin: 0;
+
+        padding: 4px 0;
+
+        line-height: 1.1;
+
+        flex: 0 0 auto;
+    }
+
+
+    /*
+     * =====================================================
+     * SECTION HEADINGS
+     * =====================================================
+     */
+
+    h2 {
+
+        font-size:
+            clamp(17px, 1.7vw, 25px);
+
+        margin: 0 0 6px 0;
+
+        padding-bottom: 4px;
+
+        border-bottom: 1px solid #333333;
+
+        line-height: 1.1;
+    }
+
+
+    /*
+     * =====================================================
+     * HOLIDAY ROW
+     * =====================================================
+     */
+
+    #holiday-section {
+
+        flex: 0 0 30%;
+
+        min-height: 0;
+
+        overflow-y: auto;
+
+        padding: 5px 10px;
+    }
+
+
+    /*
+     * =====================================================
+     * NEWS ROW
+     * =====================================================
+     */
+
+    #news-row {
+
+        flex: 1;
+
+        min-height: 0;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 15px;
+    }
+
+
+    /*
+     * =====================================================
+     * NEWS COLUMNS
+     * =====================================================
+     */
+
+    .news-column {
+
+        min-width: 0;
+
+        min-height: 0;
+
+        overflow-y: auto;
+
+        padding: 5px 10px;
+    }
+
+
+    /*
+     * =====================================================
+     * HOLIDAY ITEM
+     * =====================================================
+     */
+
+    .item {
+
+        margin: 4px 0;
+
+        font-size:
+            clamp(13px, 1.2vw, 18px);
+
+        line-height: 1.25;
+    }
+
+
+    .date {
+
+        display: inline-block;
+
+        width: 135px;
+
+        font-weight: bold;
+    }
+
+
+    /*
+     * =====================================================
+     * HEADLINES
+     * =====================================================
+     */
+
+    .headline {
+
+        margin: 5px 0;
+
+        padding: 3px 0;
+
+        font-size:
+            clamp(13px, 1.2vw, 18px);
+
+        line-height: 1.25;
+    }
+
+
+    .source {
+
+        color: #888888;
+
+        font-size:
+            clamp(11px, 0.95vw, 14px);
+    }
+
+
+    /*
+     * =====================================================
+     * LOADING
+     * =====================================================
+     */
+
+    #loading {
+
+        position: absolute;
+
+        top: 45%;
+
+        left: 0;
+        right: 0;
+
+        text-align: center;
+
+        font-size: 20px;
+    }
+
+
+    #error {
+
+        text-align: center;
+
+        color: #ff6666;
+
+        font-size: 18px;
+
+        margin-top: 30px;
+
+        display: none;
+    }
+
+</style>
+
+</head>
+
+
+<body>
+
+<div id="details-container">
+
+    <h1>
+        TODAY &amp; NEXT 10 DAYS
+    </h1>
+
+
+    <div id="loading">
+        Getting latest information...
+    </div>
+
+
+    <div id="error">
+        Unable to load today's information.
+    </div>
+
+
+    <!-- =================================================
+         ROW 1 — HOLIDAYS
+         ================================================= -->
+
+    <div
+        id="holiday-section"
+        class="section"
+    >
+
+        <h2>
+            Holidays
+        </h2>
+
+        <div id="holidays"></div>
+
+    </div>
+
+
+    <!-- =================================================
+         ROW 2 — TWO COLUMNS
+         ================================================= -->
+
+    <div id="news-row">
+
+
+        <!-- =============================================
+             INDIAN NEWS
+             ============================================= -->
+
+        <div
+            id="indian-column"
+            class="news-column"
+        >
+
+            <h2>
+                Top 5 Indian Headlines
+            </h2>
+
+            <div id="indian-headlines"></div>
+
+        </div>
+
+
+        <!-- =============================================
+             INTERNATIONAL NEWS
+             ============================================= -->
+
+        <div
+            id="international-column"
+            class="news-column"
+        >
+
+            <h2>
+                Top 5 International Headlines
+            </h2>
+
+            <div id="international-headlines"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function loadDetails() {
+
+    const loadingElement =
+        document.getElementById("loading");
+
+    const errorElement =
+        document.getElementById("error");
+
+
+    console.log(
+        "Loading date details..."
+    );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/date-details-data",
+                {
+                    method: "GET",
+                    cache: "no-store"
+                }
+            );
+
+
+        console.log(
+            "Date details HTTP status:",
+            response.status
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Date details received:",
+            data
+        );
+
+
+        if (!Array.isArray(data.holidays)) {
+
+            throw new Error(
+                "Missing holidays array"
+            );
+
+        }
+
+
+        if (!Array.isArray(
+            data.indian_headlines
+        )) {
+
+            throw new Error(
+                "Missing Indian headlines array"
+            );
+
+        }
+
+
+        if (!Array.isArray(
+            data.international_headlines
+        )) {
+
+            throw new Error(
+                "Missing international headlines array"
+            );
+
+        }
+
+
+        displayDetails(data);
+
+
+        loadingElement.style.display =
+            "none";
+
+
+    } catch (err) {
+
+        console.error(
+            "Date details error:",
+            err
+        );
+
+
+        loadingElement.style.display =
+            "none";
+
+
+        errorElement.style.display =
+            "block";
+
+
+        errorElement.textContent =
+            "Unable to load today's information.";
+
+    }
+
+}
+
+/*
+ * =====================================================
+ * DISPLAY ALL DETAILS
+ * =====================================================
+ */
+
+function displayDetails(data) {
+
+
+    /*
+     * -------------------------------------------------
+     * Holidays
+     * -------------------------------------------------
+     */
+
+    const holidays =
+        document.getElementById(
+            "holidays"
+        );
+
+
+    holidays.innerHTML = "";
+
+
+    data.holidays.forEach(
+        function(item) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className = "item";
+
+
+            div.innerHTML =
+                `<span class="date">
+                    ${escapeHTML(item.date)}
+                </span>
+                <strong>
+                    ${escapeHTML(item.name)}
+                </strong>
+                -
+                ${escapeHTML(item.reason)}`;
+
+
+            holidays.appendChild(div);
+
+        }
+    );
+
+
+    /*
+     * -------------------------------------------------
+     * Indian headlines
+     * -------------------------------------------------
+     */
+
+    displayHeadlines(
+        "indian-headlines",
+        data.indian_headlines
+    );
+
+
+    /*
+     * -------------------------------------------------
+     * International headlines
+     * -------------------------------------------------
+     */
+
+    displayHeadlines(
+        "international-headlines",
+        data.international_headlines
+    );
+
+}
+
+
+/*
+ * =====================================================
+ * DISPLAY HEADLINES
+ * =====================================================
+ */
+
+function displayHeadlines(
+    elementID,
+    headlines
+) {
+
+    const container =
+        document.getElementById(
+            elementID
+        );
+
+
+    container.innerHTML = "";
+
+
+    headlines.forEach(
+        function(item, index) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "headline";
+
+
+            div.innerHTML =
+                `<strong>
+                    ${index + 1}.
+                    ${escapeHTML(item.title)}
+                </strong>
+                <br>
+                <span class="source">
+                    ${escapeHTML(item.source)}
+                </span>`;
+
+
+            container.appendChild(div);
+
+        }
+    );
+
+}
+
+
+/*
+ * =====================================================
+ * HTML ESCAPING
+ * =====================================================
+ */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/*
+ * =====================================================
+ * START
+ * =====================================================
+ */
+
+loadDetails();
+
+</script>
+
+</body>
+
+</html>

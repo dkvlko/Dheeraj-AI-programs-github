@@ -1,0 +1,63 @@
+{
+    "date": "2026-08-17",
+    "generated_timestamp": 1786961320.45118,
+    "generated_at": "2026-08-17T15:38:40.451180+05:30",
+    "data": {
+        "holidays": [
+            {
+                "date": "22 August 2026",
+                "name": "Fourth Saturday",
+                "reason": "Bank holiday in Uttar Pradesh"
+            },
+            {
+                "date": "25 August 2026",
+                "name": "Eid-e-Milad / Barawafat",
+                "reason": "Celebrates the Prophet Muhammad's birthday"
+            }
+        ],
+        "indian_headlines": [
+            {
+                "title": "At least seven dead in 'stampede-like' incident at India temple.",
+                "source": "Al Jazeera"
+            },
+            {
+                "title": "Supreme Court decides to watch progress on Cauvery water-sharing, tells Tamil Nadu water is being given.",
+                "source": "The Hindu"
+            },
+            {
+                "title": "2 more Air India pilots fail to clear dope test after Phuket-Delhi flight scare; taken off duty.",
+                "source": "The Times of India"
+            },
+            {
+                "title": "Jharkhand protesters threaten to gherao CM's residence, demand his resignation over 'exam irregularities'.",
+                "source": "Hindustan Times"
+            },
+            {
+                "title": "PM Modi urges all parties to ensure 33% women's quota.",
+                "source": "Hindustan Times"
+            }
+        ],
+        "international_headlines": [
+            {
+                "title": "US-Iran Ceasefire MoU Expires Today. Will War Resume Again?",
+                "source": "NDTV"
+            },
+            {
+                "title": "Trump says US to 'substantially reduce' military drills with South Korea.",
+                "source": "Al Jazeera"
+            },
+            {
+                "title": "Israeli minister calls for killing '30 to 40′ Palestinians in Gaza nightly.",
+                "source": "The Hindu"
+            },
+            {
+                "title": "Ebola outbreak in Democratic Republic of the Congo now deadliest in country's history.",
+                "source": "The Guardian"
+            },
+            {
+                "title": "Indonesia earthquake death toll rises to 53 as rescue operations continue.",
+                "source": "Business Standard"
+            }
+        ]
+    }
+}

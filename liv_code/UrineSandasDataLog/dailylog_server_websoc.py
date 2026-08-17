@@ -90,7 +90,7 @@ PLAYLIST_LOG = BLOBS_DIR / "FlagshipPlaylist.log"
 
 LAN_CLOUD_FOLDER = Path(
     "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SharedDataOnLan"
-)
+).resolve()
 
 UPLOAD_TEMP_FOLDER = LAN_CLOUD_FOLDER / ".upload_temp"
 
@@ -101,10 +101,18 @@ UPLOAD_TEMP_FOLDER.mkdir(
 #Open Maps settings
 MARTIN_URL = "http://127.0.0.1:3000"
 
-#Cache Directory#
+#Holiday and News Cache Directory#
 HOLIDAY_CACHE_FILE = PROJECT_ROOT / "BLOBS" / "holiday_cache.json"
 
 HOLIDAY_CACHE_LOCK = threading.Lock()
+DATE_DETAILS_CACHE_FILE = (
+    PROJECT_ROOT / "BLOBS" / "date_details_cache.json"
+)
+
+DATE_DETAILS_CACHE_LOCK = threading.Lock()
+
+DATE_DETAILS_CACHE_SECONDS = 60 * 60
+
 # ------------------------------------------------------------
 # Global data used by websocket handlers
 # ------------------------------------------------------------
@@ -135,7 +143,6 @@ socketio = SocketIO(
     cors_allowed_origins="*",
     async_mode = "threading"
 )
-
 #Functions declaration#
 
 # -------------------------
@@ -149,6 +156,7 @@ def template_logger(sender, template, context, **extra):
 template_rendered.connect(template_logger, app)
 
 LRESULT = ctypes.c_ssize_t 
+
 
 def get_cached_holiday_answer():
     """
@@ -221,12 +229,12 @@ Today is {date_text}.
 
 Answer the question:
 
-"Is there a bank or hindu holiday today and why?"
+"Is there a bank or major religious  holiday observed in India today and why?"
 
 Location:
 Lucknow, Uttar Pradesh, India.
 
-Give ONLY a very brief answer in exactly 2-3 lines.
+Give ONLY a very brief answer in around 3 lines.
 
 Line 1:
 Clearly say either:
@@ -253,7 +261,7 @@ Do not add any additional explanation.
             "Calling Gemini for today's holiday..."
         )
 
-        answer_text = gemini_generate(
+        answer_text = gemini_generate_search(
             prompt
         )
 
@@ -297,6 +305,316 @@ Do not add any additional explanation.
 
 
         return answer_text
+
+def get_cached_date_details():
+    """
+    Get detailed holiday and news information.
+
+    Cache lifetime: 1 hour.
+
+    Gemini Google Search grounding is used because
+    the headline information must be current.
+    """
+
+    now = datetime.now().astimezone()
+
+    today = now.strftime("%Y-%m-%d")
+
+    DATE_DETAILS_CACHE_FILE.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    with DATE_DETAILS_CACHE_LOCK:
+
+        # -------------------------------------------------
+        # Check existing cache
+        # -------------------------------------------------
+
+        if DATE_DETAILS_CACHE_FILE.exists():
+
+            try:
+
+                with open(
+                    DATE_DETAILS_CACHE_FILE,
+                    "r",
+                    encoding="utf-8"
+                ) as f:
+
+                    cache = json.load(f)
+
+                cached_timestamp = cache.get(
+                    "generated_timestamp"
+                )
+
+                cached_date = cache.get(
+                    "date"
+                )
+
+                cached_data = cache.get(
+                    "data"
+                )
+
+
+                if (
+                    cached_date == today
+                    and cached_timestamp
+                    and cached_data
+                ):
+
+                    age = (
+                        now.timestamp() -
+                        float(cached_timestamp)
+                    )
+
+                    if age < DATE_DETAILS_CACHE_SECONDS:
+
+                        print(
+                            "Date details cache HIT"
+                        )
+
+                        return cached_data
+
+
+            except Exception as e:
+
+                print(
+                    f"Date details cache read error: {e}"
+                )
+
+
+        # -------------------------------------------------
+        # Cache miss
+        # -------------------------------------------------
+
+        print(
+            "Date details cache MISS"
+        )
+
+        print(
+            "Calling Gemini Search for date details..."
+        )
+
+
+        date_text = now.strftime(
+            "%A, %d %B %Y"
+        )
+
+
+        prompt = f"""
+Today is {date_text}.
+
+The location is Lucknow, Uttar Pradesh, India.
+
+Using Google Search grounding, provide current and
+accurate information for the following three sections.
+
+SECTION 1 — HOLIDAYS
+
+List Indian, Uttar Pradesh, and locally relevant public/
+government holidays for every calendar date from today
+through the next 9 days, giving exactly 10 calendar days
+including today.
+
+Do not invent holidays.
+
+If there is no relevant holiday on a date, do not create
+an entry for that date.
+
+For each holiday provide:
+- date
+- holiday name
+- short reason
+
+SECTION 2 — TOP 5 INDIAN HEADLINES
+
+Find the 5 most significant current Indian news stories
+available as of now.
+
+Prefer reliable established news sources.
+
+For each provide:
+- headline
+- source
+
+SECTION 3 — TOP 5 INTERNATIONAL HEADLINES
+
+Find the 5 most significant current international news
+stories available as of now.
+
+Prefer reliable established international news sources.
+
+For each provide:
+- headline
+- source
+
+IMPORTANT:
+
+Return ONLY valid JSON.
+
+Do not use Markdown.
+Do not use ```json.
+Do not add explanations before or after the JSON.
+
+Use exactly this structure:
+
+{{
+    "holidays": [
+        {{
+            "date": "DD Month YYYY",
+            "name": "Holiday name",
+            "reason": "Short reason"
+        }}
+    ],
+
+    "indian_headlines": [
+        {{
+            "title": "Headline",
+            "source": "Source"
+        }}
+    ],
+
+    "international_headlines": [
+        {{
+            "title": "Headline",
+            "source": "Source"
+        }}
+    ]
+}}
+"""
+
+
+        # -------------------------------------------------
+        # Gemini + Google Search
+        # -------------------------------------------------
+
+        answer_text = gemini_generate_search(
+            prompt
+        )
+
+
+        # -------------------------------------------------
+        # Parse Gemini JSON
+        # -------------------------------------------------
+
+        try:
+
+            cleaned_text = answer_text.strip()
+
+            # -------------------------------------------------
+            # Remove Markdown JSON code fences if Gemini
+            # returns ```json ... ```
+            # -------------------------------------------------
+
+            if cleaned_text.startswith("```"):
+
+                lines = cleaned_text.splitlines()
+
+                # Remove first line: ```json or ```
+                if lines:
+                    lines = lines[1:]
+
+                # Remove final line: ```
+                if lines and lines[-1].strip() == "```":
+                    lines = lines[:-1]
+
+                cleaned_text = "\n".join(lines).strip()
+
+
+            # -------------------------------------------------
+            # Parse JSON
+            # -------------------------------------------------
+
+            data = json.loads(cleaned_text)
+
+
+        except json.JSONDecodeError as e:
+
+            print(
+                "Gemini returned invalid JSON:"
+            )
+
+            print(answer_text)
+
+            raise RuntimeError(
+                f"Invalid Gemini JSON: {e}"
+            )
+
+        # -------------------------------------------------
+        # Basic validation
+        # -------------------------------------------------
+
+        if not isinstance(data, dict):
+
+            raise RuntimeError(
+                "Gemini response is not a JSON object"
+            )
+
+
+        data.setdefault(
+            "holidays",
+            []
+        )
+
+        data.setdefault(
+            "indian_headlines",
+            []
+        )
+
+        data.setdefault(
+            "international_headlines",
+            []
+        )
+
+
+        # -------------------------------------------------
+        # Save cache
+        # -------------------------------------------------
+
+        cache = {
+
+            "date": today,
+
+            "generated_timestamp":
+                now.timestamp(),
+
+            "generated_at":
+                now.isoformat(),
+
+            "data":
+                data
+        }
+
+
+        try:
+
+            with open(
+                DATE_DETAILS_CACHE_FILE,
+                "w",
+                encoding="utf-8"
+            ) as f:
+
+                json.dump(
+                    cache,
+                    f,
+                    ensure_ascii=False,
+                    indent=4
+                )
+
+
+            print(
+                "Date details cached successfully"
+            )
+
+
+        except Exception as e:
+
+            print(
+                f"Date details cache write error: {e}"
+            )
+
+
+        return data
 
 def get_latest_file_url(directory: str) -> str:
     """
@@ -989,7 +1307,38 @@ def BuildLANcloudDirectoryJSON(folder=None):
         "entries": entries
     }
 
-#Url handlers beging here
+def date_details_prefetch_loop():
+
+    print(
+        "Date details prefetch thread started."
+    )
+
+    while True:
+
+        try:
+
+            print(
+                "Prefetching date details..."
+            )
+
+            get_cached_date_details()
+
+            print(
+                "Date details prefetch completed."
+            )
+
+        except Exception as e:
+
+            print(
+                f"Date details prefetch error: {e}"
+            )
+
+
+        time.sleep(3600)
+
+
+#Url handlers begin here
+
 
 
 @app.route("/my/")
@@ -1020,7 +1369,8 @@ def url_directory():
         "/file-operation",
         "/LANcloud/change-directory",
         "/file-operation-new-directory",
-        "/ufiles/<path:req_path>"
+        "/ufiles/<path:req_path>",
+        "/maps/martin/<path:subpath>"
     }    
 
     for rule in app.url_map.iter_rules():
@@ -2173,8 +2523,38 @@ def martin_proxy(subpath):
 def maps():
     return render_template("maps.html")
 
+@app.route("/date-details")
+def date_details():
+
+    return render_template(
+        "date_details.html"
+    )
+@app.route("/date-details-data", methods=["GET"])
+def date_details_data():
+
+    try:
+
+        data = get_cached_date_details()
+
+        #print("Sending date details to browser:")
+        #print(json.dumps(data, indent=2, ensure_ascii=False))
+
+        return jsonify(data)
+
+    except Exception as e:
+
+        print(
+            f"Date details error: {e}"
+        )
+
+        return jsonify({
+            "error": "Unable to obtain current details."
+        }), 500
 
 if __name__ == "__main__":
+    socketio.start_background_task(
+        date_details_prefetch_loop
+    )
     socketio.run(
         app,
         host="0.0.0.0",

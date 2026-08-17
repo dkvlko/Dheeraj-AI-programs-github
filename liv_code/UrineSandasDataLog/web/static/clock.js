@@ -22,6 +22,54 @@ socket.on("connect", function () {
 
 });
 
+/* Toggle - Date Details*/
+
+function toggleDateDetails() {
+
+    const overlay =
+        document.getElementById(
+            "details-overlay"
+        );
+
+    const bar =
+        document.getElementById(
+            "details-bar"
+        );
+
+
+    const isOpen =
+        overlay.classList.contains(
+            "details-open"
+        );
+
+
+    if (!isOpen) {
+
+        /*
+         * Open details.
+         */
+
+        overlay.classList.add(
+            "details-open"
+        );
+
+        bar.textContent =
+            "Hide\nDetails";
+
+    } else {
+
+        /*
+         * Close details.
+         */
+
+        overlay.classList.remove(
+            "details-open"
+        );
+
+        bar.textContent =
+            "See\nDetails";
+    }
+}
 /*Get Is Holiday*/
 async function loadHoliday() {
 
