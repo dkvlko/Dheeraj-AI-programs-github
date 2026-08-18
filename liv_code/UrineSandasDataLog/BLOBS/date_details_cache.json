@@ -1,62 +1,62 @@
 {
-    "date": "2026-08-17",
-    "generated_timestamp": 1786961320.45118,
-    "generated_at": "2026-08-17T15:38:40.451180+05:30",
+    "date": "2026-08-18",
+    "generated_timestamp": 1787040120.865526,
+    "generated_at": "2026-08-18T13:32:00.865526+05:30",
     "data": {
         "holidays": [
             {
-                "date": "22 August 2026",
-                "name": "Fourth Saturday",
-                "reason": "Bank holiday in Uttar Pradesh"
+                "date": "26 August 2026",
+                "name": "Eid-e-Milad / Milad-un-Nabi",
+                "reason": "Commemorates the birthday of the Islamic Prophet Muhammad."
             },
             {
-                "date": "25 August 2026",
-                "name": "Eid-e-Milad / Barawafat",
-                "reason": "Celebrates the Prophet Muhammad's birthday"
+                "date": "28 August 2026",
+                "name": "Raksha Bandhan",
+                "reason": "Hindu festival celebrating the bond between brothers and sisters."
             }
         ],
         "indian_headlines": [
             {
-                "title": "At least seven dead in 'stampede-like' incident at India temple.",
-                "source": "Al Jazeera"
+                "title": "Jharkhand Government Cancels JSSC-CGL and All Exams Conducted by Tainted Firm; Probe Ordered",
+                "source": "The Indian Express, The Hindu, Times Now"
             },
             {
-                "title": "Supreme Court decides to watch progress on Cauvery water-sharing, tells Tamil Nadu water is being given.",
-                "source": "The Hindu"
+                "title": "Eight Labourers Killed, 32 Injured in Madhya Pradesh Road Accident",
+                "source": "The Indian Express"
             },
             {
-                "title": "2 more Air India pilots fail to clear dope test after Phuket-Delhi flight scare; taken off duty.",
-                "source": "The Times of India"
+                "title": "Tamil Nadu Announces Agricultural Loan Waiver Up to ₹75,000 for Eligible Farmers",
+                "source": "Careerindia, WION, The Indian Express"
             },
             {
-                "title": "Jharkhand protesters threaten to gherao CM's residence, demand his resignation over 'exam irregularities'.",
-                "source": "Hindustan Times"
+                "title": "Supreme Court Halts High Court Proceedings Against Rahul Gandhi in Disproportionate Assets Case",
+                "source": "Best Colleges, The Economic Times"
             },
             {
-                "title": "PM Modi urges all parties to ensure 33% women's quota.",
-                "source": "Hindustan Times"
+                "title": "Cauvery Water Dispute: Supreme Court Directs Karnataka to Comply with Water Management Authority's Order on Releasing Water to Tamil Nadu",
+                "source": "Careerindia, Best Colleges, The Economic Times"
             }
         ],
         "international_headlines": [
             {
-                "title": "US-Iran Ceasefire MoU Expires Today. Will War Resume Again?",
-                "source": "NDTV"
-            },
-            {
-                "title": "Trump says US to 'substantially reduce' military drills with South Korea.",
-                "source": "Al Jazeera"
-            },
-            {
-                "title": "Israeli minister calls for killing '30 to 40′ Palestinians in Gaza nightly.",
+                "title": "Vessel Struck by Unknown Projectile in Strait of Hormuz, Crew Casualty Reported Amidst US-Iran Tensions",
                 "source": "The Hindu"
             },
             {
-                "title": "Ebola outbreak in Democratic Republic of the Congo now deadliest in country's history.",
-                "source": "The Guardian"
+                "title": "Iran to Shift to 'Fully Offensive' Posture as US Peace Talks Stall",
+                "source": "Mena FN, Mint"
             },
             {
-                "title": "Indonesia earthquake death toll rises to 53 as rescue operations continue.",
-                "source": "Business Standard"
+                "title": "Trump Orders Pentagon to Scale Back Joint Military Exercises with South Korea; Discusses Iran Denuclearization",
+                "source": "WNG.org, Best Colleges, Times Now, The Economic Times"
+            },
+            {
+                "title": "Jared Kushner Meets with Hamas Chief on Gaza Road Map, to Meet Netanyahu Next for Ceasefire Efforts",
+                "source": "WNG.org, Best Colleges, The Economic Times"
+            },
+            {
+                "title": "Deadly Earthquake in Eastern Indonesia Leaves Thousands Displaced, Kills at Least 68",
+                "source": "WSLS 10, KSAT"
             }
         ]
     }

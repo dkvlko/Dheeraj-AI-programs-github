@@ -111,7 +111,7 @@ DATE_DETAILS_CACHE_FILE = (
 
 DATE_DETAILS_CACHE_LOCK = threading.Lock()
 
-DATE_DETAILS_CACHE_SECONDS = 60 * 60
+DATE_DETAILS_CACHE_SECONDS = 4 * 60 * 60
 
 # ------------------------------------------------------------
 # Global data used by websocket handlers
@@ -1334,7 +1334,7 @@ def date_details_prefetch_loop():
             )
 
 
-        time.sleep(3600)
+        time.sleep(4 * 3600)
 
 
 #Url handlers begin here
