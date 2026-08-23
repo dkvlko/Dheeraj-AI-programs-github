@@ -152,7 +152,7 @@ socketio = SocketIO(
 
 def template_logger(sender, template, context, **extra):
     print(f"TEMPLATE USED: {template.name}")
-
+#########
 template_rendered.connect(template_logger, app)
 
 LRESULT = ctypes.c_ssize_t 
@@ -1312,30 +1312,30 @@ def date_details_prefetch_loop():
     print(
         "Date details prefetch thread started."
     )
-
-    while True:
-
-        try:
-
-            print(
-                "Prefetching date details..."
-            )
-
-            get_cached_date_details()
-
-            print(
-                "Date details prefetch completed."
-            )
-
-        except Exception as e:
-
-            print(
-                f"Date details prefetch error: {e}"
-            )
-
-
-        time.sleep(4 * 3600)
-
+#
+#    while True:
+#
+#        try:
+#
+#            print(
+#                "Prefetching date details..."
+#            )
+#
+#            get_cached_date_details()
+#
+#            print(
+#                "Date details prefetch completed."
+#            )
+#
+#        except Exception as e:
+#
+#            print(
+#                f"Date details prefetch error: {e}"
+#            )
+#
+#
+#        time.sleep(4 * 3600)
+#
 
 #Url handlers begin here
 
@@ -1370,7 +1370,8 @@ def url_directory():
         "/LANcloud/change-directory",
         "/file-operation-new-directory",
         "/ufiles/<path:req_path>",
-        "/maps/martin/<path:subpath>"
+        "/maps/martin/<path:subpath>",
+        "/clock"
     }    
 
     for rule in app.url_map.iter_rules():
@@ -2529,6 +2530,8 @@ def date_details():
     return render_template(
         "date_details.html"
     )
+
+#=======
 @app.route("/date-details-data", methods=["GET"])
 def date_details_data():
 
@@ -2536,10 +2539,26 @@ def date_details_data():
 
         data = get_cached_date_details()
 
-        #print("Sending date details to browser:")
-        #print(json.dumps(data, indent=2, ensure_ascii=False))
+        # Read the cache so we can tell the browser
+        # exactly when Gemini generated this data.
+        with open(
+            DATE_DETAILS_CACHE_FILE,
+            "r",
+            encoding="utf-8"
+        ) as f:
 
-        return jsonify(data)
+            cache = json.load(f)
+
+        return jsonify({
+            "generated_at": cache.get("generated_at"),
+            "holidays": data.get("holidays", []),
+            "indian_headlines": data.get(
+                "indian_headlines", []
+            ),
+            "international_headlines": data.get(
+                "international_headlines", []
+            )
+        })
 
     except Exception as e:
 
@@ -2548,13 +2567,14 @@ def date_details_data():
         )
 
         return jsonify({
-            "error": "Unable to obtain current details."
+            "error":
+                "Unable to obtain current details."
         }), 500
-
+#=====
 if __name__ == "__main__":
-    socketio.start_background_task(
-        date_details_prefetch_loop
-    )
+    #socketio.start_background_task(
+    #    date_details_prefetch_loop
+    #)
     socketio.run(
         app,
         host="0.0.0.0",

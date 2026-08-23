@@ -1,0 +1,21 @@
+[2026-08-21 06:27:36 IST] Starting Gemini NHCN fetch
+[2026-08-21 06:27:36 IST] Date: 21 August 2026
+[2026-08-21 06:27:36 IST] Model: gemini-3.7-flash
+[2026-08-21 06:27:47 IST] ERROR: Gemini HTTP status 429
+[2026-08-21 06:27:47 IST] Gemini error status: RESOURCE_EXHAUSTED
+[2026-08-21 06:27:47 IST] Gemini error message: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+[2026-08-21 06:27:47 IST] Gemini error written to /home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/BLOBS/gemini_nhcn.json
+[2026-08-21 16:02:50 IST] Starting Gemini NHCN fetch
+[2026-08-21 16:02:50 IST] Date: 21 August 2026
+[2026-08-21 16:02:50 IST] Model: gemini-3.7-flash
+[2026-08-21 16:03:01 IST] ERROR: Gemini HTTP status 429
+[2026-08-21 16:03:01 IST] Gemini error status: RESOURCE_EXHAUSTED
+[2026-08-21 16:03:01 IST] Gemini error message: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+[2026-08-21 16:03:01 IST] Gemini error written to /home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/BLOBS/gemini_nhcn.json
+[2026-08-21 18:09:58 IST] Starting Gemini NHCN fetch
+[2026-08-21 18:09:58 IST] Date: 21 August 2026
+[2026-08-21 18:09:58 IST] Model: gemini-3.7-flash
+[2026-08-21 18:10:09 IST] ERROR: Gemini HTTP status 429
+[2026-08-21 18:10:09 IST] Gemini error status: RESOURCE_EXHAUSTED
+[2026-08-21 18:10:09 IST] Gemini error message: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+[2026-08-21 18:10:09 IST] Gemini error written to /home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/BLOBS/gemini_nhcn.json

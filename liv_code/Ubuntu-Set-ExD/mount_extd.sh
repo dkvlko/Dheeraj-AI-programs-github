@@ -30,12 +30,20 @@ sudo mkdir -p "$PASSPORT_MOUNT"
 
 echo "Mounting Elements..."
 
-if sudo mount UUID="$ELEMENTS_UUID" "$ELEMENTS_MOUNT"; then
-    echo "✓ Elements mounted successfully."
+#if sudo mount UUID="$ELEMENTS_UUID" "$ELEMENTS_MOUNT"; then
+#    echo "✓ Elements mounted successfully."
+#    echo "  UUID      : $ELEMENTS_UUID"
+#    echo "  Mount     : $ELEMENTS_MOUNT"
+#else
+#    echo "✗ Failed to mount Elements."
+#fi
+if sudo mount -t ntfs-3g UUID="$ELEMENTS_UUID" "$ELEMENTS_MOUNT" \
+    -o uid=$(id -u dkvlko),gid=$(id -g dkvlko),umask=000; then
+    echo "✓ ELEMENTS  mounted successfully."
     echo "  UUID      : $ELEMENTS_UUID"
     echo "  Mount     : $ELEMENTS_MOUNT"
 else
-    echo "✗ Failed to mount Elements."
+    echo "✗ Failed to mount ELEMENTS."
 fi
 
 echo
@@ -46,7 +54,16 @@ echo
 
 echo "Mounting My Passport..."
 
-if sudo mount UUID="$PASSPORT_UUID" "$PASSPORT_MOUNT"; then
+#if sudo mount UUID="$PASSPORT_UUID" "$PASSPORT_MOUNT"; then
+#    echo "✓ My Passport mounted successfully."
+#    echo "  UUID      : $PASSPORT_UUID"
+#    echo "  Mount     : $PASSPORT_MOUNT"
+#else
+#    echo "✗ Failed to mount My Passport."
+#fi
+
+if sudo mount -t ntfs-3g UUID="$PASSPORT_UUID" "$PASSPORT_MOUNT" \
+    -o uid=$(id -u dkvlko),gid=$(id -g dkvlko),umask=000; then
     echo "✓ My Passport mounted successfully."
     echo "  UUID      : $PASSPORT_UUID"
     echo "  Mount     : $PASSPORT_MOUNT"

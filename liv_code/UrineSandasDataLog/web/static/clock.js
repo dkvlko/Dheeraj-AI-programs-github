@@ -23,7 +23,6 @@ socket.on("connect", function () {
 });
 
 /* Toggle - Date Details*/
-
 function toggleDateDetails() {
 
     const overlay =
@@ -36,6 +35,11 @@ function toggleDateDetails() {
             "details-bar"
         );
 
+    const frame =
+        document.getElementById(
+            "details-frame"
+        );
+
 
     const isOpen =
         overlay.classList.contains(
@@ -46,30 +50,48 @@ function toggleDateDetails() {
     if (!isOpen) {
 
         /*
-         * Open details.
+         * -------------------------------------------------
+         * Refresh the Details page BEFORE displaying it.
+         *
+         * The timestamp prevents the browser from reusing
+         * the previously loaded date_details.html page.
+         * -------------------------------------------------
+         */
+
+        frame.src =
+            "/date-details?refresh=" +
+            Date.now();
+
+
+        /*
+         * Open the overlay.
          */
 
         overlay.classList.add(
             "details-open"
         );
 
-        bar.textContent =
-            "Hide\nDetails";
+
+        bar.innerHTML =
+            "Hide<br>Details";
+
 
     } else {
 
         /*
-         * Close details.
+         * Close the overlay.
          */
 
         overlay.classList.remove(
             "details-open"
         );
 
-        bar.textContent =
-            "See\nDetails";
+
+        bar.innerHTML =
+            "See<br>Details";
     }
 }
+
 /*Get Is Holiday*/
 async function loadHoliday() {
 
