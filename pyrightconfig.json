@@ -1,0 +1,8 @@
+{
+    "venvPath": "/home/dkvlko/python314_projects",
+    "venv": "venv_3.14",
+    "include": [
+        "."
+    ],
+    "typeCheckingMode": "basic"
+}
