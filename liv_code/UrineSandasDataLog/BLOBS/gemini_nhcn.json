@@ -1,11 +1,11 @@
 {
-  "date": "2026-08-21",
-  "generated_timestamp": 1787315998,
-  "generated_at": "2026-08-21T18:09:58+05:30",
+  "date": "2026-08-26",
+  "generated_timestamp": 1787703471,
+  "generated_at": "2026-08-26T05:47:51+05:30",
   "data": {
     "holidays": [
       {
-        "date": "21 August 2026",
+        "date": "26 August 2026",
         "name": "Gemini API Error",
         "reason": "HTTP 429 RESOURCE_EXHAUSTED: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. "
       }

@@ -15,6 +15,8 @@ PROJECT_ROOT = CURRENT_FILE.parents[2]
 
 PROJECT_ROOT_SSL = PROJECT_ROOT.parent
 
+#External BLOB#
+EXT_BLOB = PROJECT_ROOT.parent / "BLOBS"
 
 # ------------------------------------------------------------
 # Web
@@ -29,7 +31,7 @@ STATIC_FOLDER = TEMPLATE_FOLDER / "static"
 # Database
 # ------------------------------------------------------------
 
-DB_PATH = PROJECT_ROOT / "activities.db"
+DB_PATH = EXT_BLOB / "SandasServ_BLOB" / "activities.db"
 
 
 # ------------------------------------------------------------
@@ -57,20 +59,17 @@ SERVER_KEY = CERT_DIR / "ubuntu_server.key"
 # ------------------------------------------------------------
 
 DOWNLOAD_DIR = (
-    PROJECT_ROOT /
-    "BLOBS" /
+    EXT_BLOB /
     "SpotifyMusicRIP"
 )
 
 ANNOUNCEMENT_DIR = (
-    PROJECT_ROOT /
-    "BLOBS" /
+    EXT_BLOB /
     "Announcements"
 )
 
 BLOBS_DIR = (
-    PROJECT_ROOT /
-    "BLOBS" /
+    EXT_BLOB /
     "Temp"
 )
 
@@ -85,8 +84,7 @@ PLAYLIST_LOG = (
 # ------------------------------------------------------------
 
 LAN_CLOUD_FOLDER = (
-    PROJECT_ROOT /
-    "BLOBS" /
+    EXT_BLOB /
     "SharedDataOnLan"
 )
 
@@ -101,13 +99,13 @@ UPLOAD_TEMP_FOLDER = (
 # ------------------------------------------------------------
 
 HOLIDAY_CACHE_FILE = (
-    PROJECT_ROOT /
-    "BLOBS" /
+    EXT_BLOB /
+    "SandasServ_BLOB" /
     "holiday_cache.json"
 )
 
 DATE_DETAILS_CACHE_FILE = (
-    PROJECT_ROOT /
-    "BLOBS" /
+    EXT_BLOB /
+    "SandasServ_BLOB" /
     "date_details_cache.json"
 )

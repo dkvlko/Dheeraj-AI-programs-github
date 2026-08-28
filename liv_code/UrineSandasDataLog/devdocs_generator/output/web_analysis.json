@@ -1,0 +1,2215 @@
+{
+  "analyzer_version": "2.0",
+  "input_directory": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web",
+  "summary": {
+    "total_files": 47,
+    "html_files": 38,
+    "javascript_files": 9,
+    "total_urls_and_references": 69,
+    "urls_by_type": {
+      "redirect": 1,
+      "link": 10,
+      "resource": 14,
+      "websocket": 2,
+      "form": 10,
+      "fetch": 27,
+      "module": 1,
+      "xhr": 2,
+      "navigation": 2
+    }
+  },
+  "files": {
+    "html": [
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/activity.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": null,
+            "type": "redirect",
+            "line": 113,
+            "expression": "url;\n    }\n\n    function onGoClick() {\n        var eventSelect   = document.getElementById(\"eventSel",
+            "source": "inline <script>",
+            "resolved": false,
+            "api": "location"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "redirect": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/activity.html",
+        "source_file_relative": "activity.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/chatgptanswer.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/gpt2txt",
+            "type": "link",
+            "line": 63,
+            "source": "<a href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "a",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "link": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/chatgptanswer.html",
+        "source_file_relative": "chatgptanswer.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/clock.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/static/socket.io.min.js",
+            "type": "resource",
+            "line": 418,
+            "source": "<script src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "script",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/static/clock.js",
+            "type": "resource",
+            "line": 422,
+            "source": "<script src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "script",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "by_type": {
+            "resource": 2
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/clock.html",
+        "source_file_relative": "clock.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/clock_dwn2.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/static/socket.io.min.js",
+            "type": "resource",
+            "line": 160,
+            "source": "<script src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "script",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/static/clock.js",
+            "type": "resource",
+            "line": 164,
+            "source": "<script src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "script",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "by_type": {
+            "resource": 2
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/clock_dwn2.html",
+        "source_file_relative": "clock_dwn2.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/control.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/web/stream.html",
+            "type": "resource",
+            "line": 15,
+            "source": "<iframe src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "iframe",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "wss://\" + location.host + \"/ws",
+            "type": "websocket",
+            "line": 82,
+            "expression": "\"wss://\" + location.host + \"/ws\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "WebSocket",
+            "url_kind": "websocket"
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "by_type": {
+            "resource": 1,
+            "websocket": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/control.html",
+        "source_file_relative": "control.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/controlTV.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/static/socket.io.min.js",
+            "type": "resource",
+            "line": 75,
+            "source": "<script src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "script",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "resource": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/controlTV.html",
+        "source_file_relative": "controlTV.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/control_junk.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/your-existing-stream-page",
+            "type": "resource",
+            "line": 11,
+            "source": "<iframe src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "iframe",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "wss://\" + location.host + \"/ws",
+            "type": "websocket",
+            "line": 68,
+            "expression": "\"wss://\" + location.host + \"/ws\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "WebSocket",
+            "url_kind": "websocket"
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "by_type": {
+            "resource": 1,
+            "websocket": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/control_junk.html",
+        "source_file_relative": "control_junk.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/copytext.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/copyText",
+            "type": "form",
+            "line": 31,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "form": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/copytext.html",
+        "source_file_relative": "copytext.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/date_details.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/date-details-data",
+            "type": "fetch",
+            "line": 390,
+            "method": "GET",
+            "expression": "\"/date-details-data\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "fetch": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/date_details.html",
+        "source_file_relative": "date_details.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/file_browser.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/",
+            "type": "link",
+            "line": 72,
+            "source": "<a href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "a",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "link": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/file_browser.html",
+        "source_file_relative": "file_browser.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/static/icons/rewind-button.png",
+            "type": "resource",
+            "line": 82,
+            "source": "<img src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "img",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/static/icons/forward.png",
+            "type": "resource",
+            "line": 86,
+            "source": "<img src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "img",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/status",
+            "type": "fetch",
+            "line": 115,
+            "method": "GET",
+            "expression": "\"/flagship/status\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/previous",
+            "type": "fetch",
+            "line": 135,
+            "method": "GET",
+            "expression": "\"/flagship/previous\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/next",
+            "type": "fetch",
+            "line": 140,
+            "method": "GET",
+            "expression": "\"/flagship/next\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/advance",
+            "type": "fetch",
+            "line": 146,
+            "method": "GET",
+            "expression": "\"/flagship/advance\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 6,
+          "by_type": {
+            "resource": 2,
+            "fetch": 4
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship.html",
+        "source_file_relative": "flagship.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_dwn1.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/flagship/previous",
+            "type": "fetch",
+            "line": 51,
+            "method": "GET",
+            "expression": "\"/flagship/previous\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/next",
+            "type": "fetch",
+            "line": 56,
+            "method": "GET",
+            "expression": "\"/flagship/next\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/next",
+            "type": "fetch",
+            "line": 62,
+            "method": "GET",
+            "expression": "\"/flagship/next\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 3,
+          "by_type": {
+            "fetch": 3
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_dwn1.html",
+        "source_file_relative": "flagship_dwn1.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_dwn2.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/flagship/info",
+            "type": "fetch",
+            "line": 48,
+            "method": "GET",
+            "expression": "\"/flagship/info\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/next",
+            "type": "fetch",
+            "line": 83,
+            "method": "GET",
+            "expression": "\"/flagship/next\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "by_type": {
+            "fetch": 2
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_dwn2.html",
+        "source_file_relative": "flagship_dwn2.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_mini2.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/static/icons/rewind-button.png",
+            "type": "resource",
+            "line": 82,
+            "source": "<img src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "img",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/static/icons/forward.png",
+            "type": "resource",
+            "line": 86,
+            "source": "<img src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "img",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/status",
+            "type": "fetch",
+            "line": 116,
+            "method": "GET",
+            "expression": "\"/flagship/status\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/previous",
+            "type": "fetch",
+            "line": 136,
+            "method": "GET",
+            "expression": "\"/flagship/previous\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/next",
+            "type": "fetch",
+            "line": 142,
+            "method": "GET",
+            "expression": "\"/flagship/next\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/flagship/advance",
+            "type": "fetch",
+            "line": 149,
+            "method": "GET",
+            "expression": "\"/flagship/advance\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 6,
+          "by_type": {
+            "resource": 2,
+            "fetch": 4
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_mini2.html",
+        "source_file_relative": "flagship_mini2.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/game_help.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/game-help",
+            "type": "form",
+            "line": 99,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "form": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/game_help.html",
+        "source_file_relative": "game_help.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/game_help_v1.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/game-help",
+            "type": "form",
+            "line": 99,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "form": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/game_help_v1.html",
+        "source_file_relative": "game_help_v1.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ganswer.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/game-help",
+            "type": "link",
+            "line": 63,
+            "source": "<a href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "a",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "link": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ganswer.html",
+        "source_file_relative": "ganswer.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ganswerhindi2marathi.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/hindi2marathi-transcribe",
+            "type": "link",
+            "line": 63,
+            "source": "<a href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "a",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "link": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ganswerhindi2marathi.html",
+        "source_file_relative": "ganswerhindi2marathi.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/gemini_help.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/gemini-call",
+            "type": "form",
+            "line": 107,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "form": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/gemini_help.html",
+        "source_file_relative": "gemini_help.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/geminianswer.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/gemini-call",
+            "type": "link",
+            "line": 63,
+            "source": "<a href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "a",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "link": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/geminianswer.html",
+        "source_file_relative": "geminianswer.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/gpt_query.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/gpt2txt",
+            "type": "form",
+            "line": 103,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "form": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/gpt_query.html",
+        "source_file_relative": "gpt_query.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/index.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/offer",
+            "type": "fetch",
+            "line": 45,
+            "method": "POST",
+            "expression": "'/offer'",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "fetch": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/index.html",
+        "source_file_relative": "index.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/index_websocketworking.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/offer",
+            "type": "fetch",
+            "line": 17,
+            "method": "POST",
+            "expression": "\"/offer\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "fetch": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/index_websocketworking.html",
+        "source_file_relative": "index_websocketworking.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/insert_form.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/insert_entry",
+            "type": "form",
+            "line": 93,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "form": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/insert_form.html",
+        "source_file_relative": "insert_form.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/maps.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/static/maplibre/maplibre-gl.css",
+            "type": "link",
+            "line": 24,
+            "source": "<link href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "link",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/static/socket.io.min.js",
+            "type": "resource",
+            "line": 109,
+            "source": "<script src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "script",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/static/maplibre/maplibre-gl.mjs",
+            "type": "module",
+            "line": 123,
+            "expression": "import * as maplibregl\n    from \"/static/maplibre/maplibre-gl.mjs\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "import",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 3,
+          "by_type": {
+            "link": 1,
+            "resource": 1,
+            "module": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/maps.html",
+        "source_file_relative": "maps.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/memo.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/memo",
+            "type": "form",
+            "line": 87,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "form": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/memo.html",
+        "source_file_relative": "memo.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/raw_request.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/rawhtml",
+            "type": "form",
+            "line": 107,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "form": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/raw_request.html",
+        "source_file_relative": "raw_request.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/rawhtmlresult.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/rawhtml",
+            "type": "link",
+            "line": 63,
+            "source": "<a href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "a",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "link": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/rawhtmlresult.html",
+        "source_file_relative": "rawhtmlresult.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/set-clock.html",
+        "file_type": "html",
+        "urls": [],
+        "summary": {
+          "total": 0,
+          "by_type": {}
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/set-clock.html",
+        "source_file_relative": "set-clock.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/showdirfiles.html",
+        "file_type": "html",
+        "urls": [],
+        "summary": {
+          "total": 0,
+          "by_type": {}
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/showdirfiles.html",
+        "source_file_relative": "showdirfiles.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/showfiles.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/download/{{ file }}",
+            "type": "link",
+            "line": 17,
+            "source": "<a href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "a",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "link": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/showfiles.html",
+        "source_file_relative": "showfiles.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/stream.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/offer",
+            "type": "fetch",
+            "line": 45,
+            "method": "POST",
+            "expression": "'/offer'",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "fetch": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/stream.html",
+        "source_file_relative": "stream.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/success.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/log",
+            "type": "link",
+            "line": 47,
+            "source": "<a href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "a",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "link": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/success.html",
+        "source_file_relative": "success.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/transcribe.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/hindi2marathi-transcribe",
+            "type": "form",
+            "line": 106,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/submit_transcript",
+            "type": "fetch",
+            "line": 130,
+            "method": "POST",
+            "expression": "\"/submit_transcript\"",
+            "source": "inline <script>",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "by_type": {
+            "form": 1,
+            "fetch": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/transcribe.html",
+        "source_file_relative": "transcribe.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ubuntu_remote.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "https://cdn.socket.io/4.7.2/socket.io.min.js",
+            "type": "resource",
+            "line": 28,
+            "source": "<script src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "script",
+            "url_kind": "https"
+          },
+          {
+            "url": "/static/remote.js",
+            "type": "resource",
+            "line": 29,
+            "source": "<script src>",
+            "resolved": true,
+            "attribute": "src",
+            "tag": "script",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "by_type": {
+            "resource": 2
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ubuntu_remote.html",
+        "source_file_relative": "ubuntu_remote.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/url_directory.html",
+        "file_type": "html",
+        "urls": [],
+        "summary": {
+          "total": 0,
+          "by_type": {}
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/url_directory.html",
+        "source_file_relative": "url_directory.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/view_form.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/view_results",
+            "type": "form",
+            "line": 89,
+            "source": "<form action>",
+            "resolved": true,
+            "attribute": "action",
+            "tag": "form",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "form": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/view_form.html",
+        "source_file_relative": "view_form.html"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/view_results.html",
+        "file_type": "html",
+        "urls": [
+          {
+            "url": "/log",
+            "type": "link",
+            "line": 144,
+            "source": "<a href>",
+            "resolved": true,
+            "attribute": "href",
+            "tag": "a",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "link": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/view_results.html",
+        "source_file_relative": "view_results.html"
+      }
+    ],
+    "javascript": [
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/clock.js",
+        "file_type": "javascript",
+        "urls": [
+          {
+            "url": "/holiday-today",
+            "type": "fetch",
+            "line": 104,
+            "method": "GET",
+            "expression": "\"/holiday-today\"",
+            "source": "javascript",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "fetch": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/clock.js",
+        "source_file_relative": "static/clock.js"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/leaflet/leaflet.js",
+        "file_type": "javascript",
+        "urls": [],
+        "summary": {
+          "total": 0,
+          "by_type": {}
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/leaflet/leaflet.js",
+        "source_file_relative": "static/leaflet/leaflet.js"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/maplibre/maplibre-gl-shared.mjs",
+        "file_type": "javascript",
+        "urls": [
+          {
+            "url": null,
+            "type": "fetch",
+            "line": 5,
+            "method": "GET",
+            "expression": "n",
+            "source": "javascript",
+            "resolved": false,
+            "api": "fetch"
+          },
+          {
+            "url": null,
+            "type": "xhr",
+            "line": 5,
+            "method": "UNKNOWN",
+            "expression": "e.url",
+            "source": "javascript",
+            "resolved": false,
+            "api": "XMLHttpRequest.open"
+          }
+        ],
+        "summary": {
+          "total": 2,
+          "by_type": {
+            "fetch": 1,
+            "xhr": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/maplibre/maplibre-gl-shared.mjs",
+        "source_file_relative": "static/maplibre/maplibre-gl-shared.mjs"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/maplibre/maplibre-gl-worker.mjs",
+        "file_type": "javascript",
+        "urls": [
+          {
+            "url": null,
+            "type": "fetch",
+            "line": 5,
+            "method": "GET",
+            "expression": "e",
+            "source": "javascript",
+            "resolved": false,
+            "api": "fetch"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "fetch": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/maplibre/maplibre-gl-worker.mjs",
+        "source_file_relative": "static/maplibre/maplibre-gl-worker.mjs"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/maplibre/maplibre-gl.mjs",
+        "file_type": "javascript",
+        "urls": [
+          {
+            "url": null,
+            "type": "fetch",
+            "line": 5,
+            "method": "GET",
+            "expression": "e",
+            "source": "javascript",
+            "resolved": false,
+            "api": "fetch"
+          },
+          {
+            "url": null,
+            "type": "navigation",
+            "line": 805,
+            "expression": "e",
+            "source": "javascript",
+            "resolved": false,
+            "api": "history.replaceState"
+          },
+          {
+            "url": null,
+            "type": "navigation",
+            "line": 805,
+            "expression": "r",
+            "source": "javascript",
+            "resolved": false,
+            "api": "history.replaceState"
+          }
+        ],
+        "summary": {
+          "total": 3,
+          "by_type": {
+            "fetch": 1,
+            "navigation": 2
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/maplibre/maplibre-gl.mjs",
+        "source_file_relative": "static/maplibre/maplibre-gl.mjs"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/marked.min.js",
+        "file_type": "javascript",
+        "urls": [],
+        "summary": {
+          "total": 0,
+          "by_type": {}
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/marked.min.js",
+        "source_file_relative": "static/marked.min.js"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/remote.js",
+        "file_type": "javascript",
+        "urls": [],
+        "summary": {
+          "total": 0,
+          "by_type": {}
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/remote.js",
+        "source_file_relative": "static/remote.js"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/showdirfiles.js",
+        "file_type": "javascript",
+        "urls": [
+          {
+            "url": "/LANcloud/list",
+            "type": "fetch",
+            "line": 21,
+            "method": "GET",
+            "expression": "\"/LANcloud/list\"",
+            "source": "javascript",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": null,
+            "type": "fetch",
+            "line": 125,
+            "method": "GET",
+            "expression": "\"/LANcloud/change-directory?id=\" +\n                    encodeURIComponent(entry.id)",
+            "source": "javascript",
+            "resolved": false,
+            "api": "fetch"
+          },
+          {
+            "url": "/file-operation-upload",
+            "type": "fetch",
+            "line": 376,
+            "method": "POST",
+            "expression": "\"/file-operation-upload\"",
+            "source": "javascript",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/file-operation",
+            "type": "fetch",
+            "line": 473,
+            "method": "POST",
+            "expression": "\"/file-operation\"",
+            "source": "javascript",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          },
+          {
+            "url": "/file-operation-new-directory",
+            "type": "fetch",
+            "line": 536,
+            "method": "POST",
+            "expression": "\"/file-operation-new-directory\"",
+            "source": "javascript",
+            "resolved": true,
+            "api": "fetch",
+            "url_kind": "absolute_path"
+          }
+        ],
+        "summary": {
+          "total": 5,
+          "by_type": {
+            "fetch": 5
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/showdirfiles.js",
+        "source_file_relative": "static/showdirfiles.js"
+      },
+      {
+        "analyzer_version": "2.0",
+        "source_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/socket.io.min.js",
+        "file_type": "javascript",
+        "urls": [
+          {
+            "url": null,
+            "type": "xhr",
+            "line": 6,
+            "method": "UNKNOWN",
+            "expression": "this.m",
+            "source": "javascript",
+            "resolved": false,
+            "api": "XMLHttpRequest.open"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "by_type": {
+            "xhr": 1
+          }
+        },
+        "source_file_absolute": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/static/socket.io.min.js",
+        "source_file_relative": "static/socket.io.min.js"
+      }
+    ]
+  },
+  "all_urls": [
+    {
+      "url": null,
+      "type": "redirect",
+      "line": 113,
+      "expression": "url;\n    }\n\n    function onGoClick() {\n        var eventSelect   = document.getElementById(\"eventSel",
+      "source": "inline <script>",
+      "resolved": false,
+      "api": "location",
+      "source_file": "activity.html"
+    },
+    {
+      "url": "/gpt2txt",
+      "type": "link",
+      "line": 63,
+      "source": "<a href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "a",
+      "url_kind": "absolute_path",
+      "source_file": "chatgptanswer.html"
+    },
+    {
+      "url": "/static/socket.io.min.js",
+      "type": "resource",
+      "line": 418,
+      "source": "<script src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "script",
+      "url_kind": "absolute_path",
+      "source_file": "clock.html"
+    },
+    {
+      "url": "/static/clock.js",
+      "type": "resource",
+      "line": 422,
+      "source": "<script src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "script",
+      "url_kind": "absolute_path",
+      "source_file": "clock.html"
+    },
+    {
+      "url": "/static/socket.io.min.js",
+      "type": "resource",
+      "line": 160,
+      "source": "<script src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "script",
+      "url_kind": "absolute_path",
+      "source_file": "clock_dwn2.html"
+    },
+    {
+      "url": "/static/clock.js",
+      "type": "resource",
+      "line": 164,
+      "source": "<script src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "script",
+      "url_kind": "absolute_path",
+      "source_file": "clock_dwn2.html"
+    },
+    {
+      "url": "/web/stream.html",
+      "type": "resource",
+      "line": 15,
+      "source": "<iframe src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "iframe",
+      "url_kind": "absolute_path",
+      "source_file": "control.html"
+    },
+    {
+      "url": "wss://\" + location.host + \"/ws",
+      "type": "websocket",
+      "line": 82,
+      "expression": "\"wss://\" + location.host + \"/ws\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "WebSocket",
+      "url_kind": "websocket",
+      "source_file": "control.html"
+    },
+    {
+      "url": "/static/socket.io.min.js",
+      "type": "resource",
+      "line": 75,
+      "source": "<script src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "script",
+      "url_kind": "absolute_path",
+      "source_file": "controlTV.html"
+    },
+    {
+      "url": "/your-existing-stream-page",
+      "type": "resource",
+      "line": 11,
+      "source": "<iframe src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "iframe",
+      "url_kind": "absolute_path",
+      "source_file": "control_junk.html"
+    },
+    {
+      "url": "wss://\" + location.host + \"/ws",
+      "type": "websocket",
+      "line": 68,
+      "expression": "\"wss://\" + location.host + \"/ws\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "WebSocket",
+      "url_kind": "websocket",
+      "source_file": "control_junk.html"
+    },
+    {
+      "url": "/copyText",
+      "type": "form",
+      "line": 31,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "copytext.html"
+    },
+    {
+      "url": "/date-details-data",
+      "type": "fetch",
+      "line": 390,
+      "method": "GET",
+      "expression": "\"/date-details-data\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "date_details.html"
+    },
+    {
+      "url": "/",
+      "type": "link",
+      "line": 72,
+      "source": "<a href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "a",
+      "url_kind": "absolute_path",
+      "source_file": "file_browser.html"
+    },
+    {
+      "url": "/static/icons/rewind-button.png",
+      "type": "resource",
+      "line": 82,
+      "source": "<img src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "img",
+      "url_kind": "absolute_path",
+      "source_file": "flagship.html"
+    },
+    {
+      "url": "/static/icons/forward.png",
+      "type": "resource",
+      "line": 86,
+      "source": "<img src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "img",
+      "url_kind": "absolute_path",
+      "source_file": "flagship.html"
+    },
+    {
+      "url": "/flagship/status",
+      "type": "fetch",
+      "line": 115,
+      "method": "GET",
+      "expression": "\"/flagship/status\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship.html"
+    },
+    {
+      "url": "/flagship/previous",
+      "type": "fetch",
+      "line": 135,
+      "method": "GET",
+      "expression": "\"/flagship/previous\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship.html"
+    },
+    {
+      "url": "/flagship/next",
+      "type": "fetch",
+      "line": 140,
+      "method": "GET",
+      "expression": "\"/flagship/next\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship.html"
+    },
+    {
+      "url": "/flagship/advance",
+      "type": "fetch",
+      "line": 146,
+      "method": "GET",
+      "expression": "\"/flagship/advance\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship.html"
+    },
+    {
+      "url": "/flagship/previous",
+      "type": "fetch",
+      "line": 51,
+      "method": "GET",
+      "expression": "\"/flagship/previous\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_dwn1.html"
+    },
+    {
+      "url": "/flagship/next",
+      "type": "fetch",
+      "line": 56,
+      "method": "GET",
+      "expression": "\"/flagship/next\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_dwn1.html"
+    },
+    {
+      "url": "/flagship/next",
+      "type": "fetch",
+      "line": 62,
+      "method": "GET",
+      "expression": "\"/flagship/next\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_dwn1.html"
+    },
+    {
+      "url": "/flagship/info",
+      "type": "fetch",
+      "line": 48,
+      "method": "GET",
+      "expression": "\"/flagship/info\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_dwn2.html"
+    },
+    {
+      "url": "/flagship/next",
+      "type": "fetch",
+      "line": 83,
+      "method": "GET",
+      "expression": "\"/flagship/next\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_dwn2.html"
+    },
+    {
+      "url": "/static/icons/rewind-button.png",
+      "type": "resource",
+      "line": 82,
+      "source": "<img src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "img",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_mini2.html"
+    },
+    {
+      "url": "/static/icons/forward.png",
+      "type": "resource",
+      "line": 86,
+      "source": "<img src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "img",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_mini2.html"
+    },
+    {
+      "url": "/flagship/status",
+      "type": "fetch",
+      "line": 116,
+      "method": "GET",
+      "expression": "\"/flagship/status\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_mini2.html"
+    },
+    {
+      "url": "/flagship/previous",
+      "type": "fetch",
+      "line": 136,
+      "method": "GET",
+      "expression": "\"/flagship/previous\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_mini2.html"
+    },
+    {
+      "url": "/flagship/next",
+      "type": "fetch",
+      "line": 142,
+      "method": "GET",
+      "expression": "\"/flagship/next\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_mini2.html"
+    },
+    {
+      "url": "/flagship/advance",
+      "type": "fetch",
+      "line": 149,
+      "method": "GET",
+      "expression": "\"/flagship/advance\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "flagship_mini2.html"
+    },
+    {
+      "url": "/game-help",
+      "type": "form",
+      "line": 99,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "game_help.html"
+    },
+    {
+      "url": "/game-help",
+      "type": "form",
+      "line": 99,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "game_help_v1.html"
+    },
+    {
+      "url": "/game-help",
+      "type": "link",
+      "line": 63,
+      "source": "<a href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "a",
+      "url_kind": "absolute_path",
+      "source_file": "ganswer.html"
+    },
+    {
+      "url": "/hindi2marathi-transcribe",
+      "type": "link",
+      "line": 63,
+      "source": "<a href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "a",
+      "url_kind": "absolute_path",
+      "source_file": "ganswerhindi2marathi.html"
+    },
+    {
+      "url": "/gemini-call",
+      "type": "form",
+      "line": 107,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "gemini_help.html"
+    },
+    {
+      "url": "/gemini-call",
+      "type": "link",
+      "line": 63,
+      "source": "<a href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "a",
+      "url_kind": "absolute_path",
+      "source_file": "geminianswer.html"
+    },
+    {
+      "url": "/gpt2txt",
+      "type": "form",
+      "line": 103,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "gpt_query.html"
+    },
+    {
+      "url": "/offer",
+      "type": "fetch",
+      "line": 45,
+      "method": "POST",
+      "expression": "'/offer'",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "index.html"
+    },
+    {
+      "url": "/offer",
+      "type": "fetch",
+      "line": 17,
+      "method": "POST",
+      "expression": "\"/offer\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "index_websocketworking.html"
+    },
+    {
+      "url": "/insert_entry",
+      "type": "form",
+      "line": 93,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "insert_form.html"
+    },
+    {
+      "url": "/static/maplibre/maplibre-gl.css",
+      "type": "link",
+      "line": 24,
+      "source": "<link href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "link",
+      "url_kind": "absolute_path",
+      "source_file": "maps.html"
+    },
+    {
+      "url": "/static/socket.io.min.js",
+      "type": "resource",
+      "line": 109,
+      "source": "<script src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "script",
+      "url_kind": "absolute_path",
+      "source_file": "maps.html"
+    },
+    {
+      "url": "/static/maplibre/maplibre-gl.mjs",
+      "type": "module",
+      "line": 123,
+      "expression": "import * as maplibregl\n    from \"/static/maplibre/maplibre-gl.mjs\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "import",
+      "url_kind": "absolute_path",
+      "source_file": "maps.html"
+    },
+    {
+      "url": "/memo",
+      "type": "form",
+      "line": 87,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "memo.html"
+    },
+    {
+      "url": "/rawhtml",
+      "type": "form",
+      "line": 107,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "raw_request.html"
+    },
+    {
+      "url": "/rawhtml",
+      "type": "link",
+      "line": 63,
+      "source": "<a href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "a",
+      "url_kind": "absolute_path",
+      "source_file": "rawhtmlresult.html"
+    },
+    {
+      "url": "/download/{{ file }}",
+      "type": "link",
+      "line": 17,
+      "source": "<a href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "a",
+      "url_kind": "absolute_path",
+      "source_file": "showfiles.html"
+    },
+    {
+      "url": "/holiday-today",
+      "type": "fetch",
+      "line": 104,
+      "method": "GET",
+      "expression": "\"/holiday-today\"",
+      "source": "javascript",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "static/clock.js"
+    },
+    {
+      "url": null,
+      "type": "fetch",
+      "line": 5,
+      "method": "GET",
+      "expression": "n",
+      "source": "javascript",
+      "resolved": false,
+      "api": "fetch",
+      "source_file": "static/maplibre/maplibre-gl-shared.mjs"
+    },
+    {
+      "url": null,
+      "type": "xhr",
+      "line": 5,
+      "method": "UNKNOWN",
+      "expression": "e.url",
+      "source": "javascript",
+      "resolved": false,
+      "api": "XMLHttpRequest.open",
+      "source_file": "static/maplibre/maplibre-gl-shared.mjs"
+    },
+    {
+      "url": null,
+      "type": "fetch",
+      "line": 5,
+      "method": "GET",
+      "expression": "e",
+      "source": "javascript",
+      "resolved": false,
+      "api": "fetch",
+      "source_file": "static/maplibre/maplibre-gl-worker.mjs"
+    },
+    {
+      "url": null,
+      "type": "fetch",
+      "line": 5,
+      "method": "GET",
+      "expression": "e",
+      "source": "javascript",
+      "resolved": false,
+      "api": "fetch",
+      "source_file": "static/maplibre/maplibre-gl.mjs"
+    },
+    {
+      "url": null,
+      "type": "navigation",
+      "line": 805,
+      "expression": "e",
+      "source": "javascript",
+      "resolved": false,
+      "api": "history.replaceState",
+      "source_file": "static/maplibre/maplibre-gl.mjs"
+    },
+    {
+      "url": null,
+      "type": "navigation",
+      "line": 805,
+      "expression": "r",
+      "source": "javascript",
+      "resolved": false,
+      "api": "history.replaceState",
+      "source_file": "static/maplibre/maplibre-gl.mjs"
+    },
+    {
+      "url": "/LANcloud/list",
+      "type": "fetch",
+      "line": 21,
+      "method": "GET",
+      "expression": "\"/LANcloud/list\"",
+      "source": "javascript",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "static/showdirfiles.js"
+    },
+    {
+      "url": null,
+      "type": "fetch",
+      "line": 125,
+      "method": "GET",
+      "expression": "\"/LANcloud/change-directory?id=\" +\n                    encodeURIComponent(entry.id)",
+      "source": "javascript",
+      "resolved": false,
+      "api": "fetch",
+      "source_file": "static/showdirfiles.js"
+    },
+    {
+      "url": "/file-operation-upload",
+      "type": "fetch",
+      "line": 376,
+      "method": "POST",
+      "expression": "\"/file-operation-upload\"",
+      "source": "javascript",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "static/showdirfiles.js"
+    },
+    {
+      "url": "/file-operation",
+      "type": "fetch",
+      "line": 473,
+      "method": "POST",
+      "expression": "\"/file-operation\"",
+      "source": "javascript",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "static/showdirfiles.js"
+    },
+    {
+      "url": "/file-operation-new-directory",
+      "type": "fetch",
+      "line": 536,
+      "method": "POST",
+      "expression": "\"/file-operation-new-directory\"",
+      "source": "javascript",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "static/showdirfiles.js"
+    },
+    {
+      "url": null,
+      "type": "xhr",
+      "line": 6,
+      "method": "UNKNOWN",
+      "expression": "this.m",
+      "source": "javascript",
+      "resolved": false,
+      "api": "XMLHttpRequest.open",
+      "source_file": "static/socket.io.min.js"
+    },
+    {
+      "url": "/offer",
+      "type": "fetch",
+      "line": 45,
+      "method": "POST",
+      "expression": "'/offer'",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "stream.html"
+    },
+    {
+      "url": "/log",
+      "type": "link",
+      "line": 47,
+      "source": "<a href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "a",
+      "url_kind": "absolute_path",
+      "source_file": "success.html"
+    },
+    {
+      "url": "/hindi2marathi-transcribe",
+      "type": "form",
+      "line": 106,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "transcribe.html"
+    },
+    {
+      "url": "/submit_transcript",
+      "type": "fetch",
+      "line": 130,
+      "method": "POST",
+      "expression": "\"/submit_transcript\"",
+      "source": "inline <script>",
+      "resolved": true,
+      "api": "fetch",
+      "url_kind": "absolute_path",
+      "source_file": "transcribe.html"
+    },
+    {
+      "url": "https://cdn.socket.io/4.7.2/socket.io.min.js",
+      "type": "resource",
+      "line": 28,
+      "source": "<script src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "script",
+      "url_kind": "https",
+      "source_file": "ubuntu_remote.html"
+    },
+    {
+      "url": "/static/remote.js",
+      "type": "resource",
+      "line": 29,
+      "source": "<script src>",
+      "resolved": true,
+      "attribute": "src",
+      "tag": "script",
+      "url_kind": "absolute_path",
+      "source_file": "ubuntu_remote.html"
+    },
+    {
+      "url": "/view_results",
+      "type": "form",
+      "line": 89,
+      "source": "<form action>",
+      "resolved": true,
+      "attribute": "action",
+      "tag": "form",
+      "url_kind": "absolute_path",
+      "source_file": "view_form.html"
+    },
+    {
+      "url": "/log",
+      "type": "link",
+      "line": 144,
+      "source": "<a href>",
+      "resolved": true,
+      "attribute": "href",
+      "tag": "a",
+      "url_kind": "absolute_path",
+      "source_file": "view_results.html"
+    }
+  ],
+  "errors": []
+}

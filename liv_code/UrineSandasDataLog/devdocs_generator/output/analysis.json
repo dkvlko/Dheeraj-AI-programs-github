@@ -1,0 +1,8463 @@
+{
+  "analyzer_version": "4.0",
+  "source_file": "/home/dkvlko/live_code/UrineSandasDataLog/dailylog_server_websoc.py",
+  "python_version": "3.14.6",
+  "imports": [
+    {
+      "type": "import",
+      "module": "os",
+      "name": null,
+      "alias": null,
+      "line": 1
+    },
+    {
+      "type": "import",
+      "module": "random",
+      "name": null,
+      "alias": null,
+      "line": 2
+    },
+    {
+      "type": "import",
+      "module": "sqlite3",
+      "name": null,
+      "alias": null,
+      "line": 3
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "Flask",
+      "alias": null,
+      "line": 4
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "render_template",
+      "alias": null,
+      "line": 4
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "request",
+      "alias": null,
+      "line": 4
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "jsonify",
+      "alias": null,
+      "line": 4
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "redirect",
+      "alias": null,
+      "line": 4
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "send_file",
+      "alias": null,
+      "line": 4
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "abort",
+      "alias": null,
+      "line": 4
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "template_rendered",
+      "alias": null,
+      "line": 4
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "Response",
+      "alias": null,
+      "line": 4
+    },
+    {
+      "type": "from",
+      "module": "datetime",
+      "name": "datetime",
+      "alias": null,
+      "line": 5
+    },
+    {
+      "type": "from",
+      "module": "datetime",
+      "name": "timedelta",
+      "alias": null,
+      "line": 5
+    },
+    {
+      "type": "from",
+      "module": "datetime",
+      "name": "timezone",
+      "alias": null,
+      "line": 5
+    },
+    {
+      "type": "from",
+      "module": "google",
+      "name": "genai",
+      "alias": null,
+      "line": 6
+    },
+    {
+      "type": "import",
+      "module": "json",
+      "name": null,
+      "alias": null,
+      "line": 7
+    },
+    {
+      "type": "from",
+      "module": "google.genai",
+      "name": "types",
+      "alias": null,
+      "line": 8
+    },
+    {
+      "type": "import",
+      "module": "threading",
+      "name": null,
+      "alias": null,
+      "line": 9
+    },
+    {
+      "type": "from",
+      "module": "typing",
+      "name": "Optional",
+      "alias": null,
+      "line": 10
+    },
+    {
+      "type": "import",
+      "module": "platform",
+      "name": null,
+      "alias": null,
+      "line": 11
+    },
+    {
+      "type": "import",
+      "module": "ctypes",
+      "name": null,
+      "alias": null,
+      "line": 12
+    },
+    {
+      "type": "from",
+      "module": "ctypes",
+      "name": "wintypes",
+      "alias": null,
+      "line": 13
+    },
+    {
+      "type": "import",
+      "module": "markdown",
+      "name": null,
+      "alias": null,
+      "line": 14
+    },
+    {
+      "type": "from",
+      "module": "pathlib",
+      "name": "Path",
+      "alias": null,
+      "line": 15
+    },
+    {
+      "type": "import",
+      "module": "subprocess",
+      "name": null,
+      "alias": null,
+      "line": 16
+    },
+    {
+      "type": "import",
+      "module": "mimetypes",
+      "name": null,
+      "alias": null,
+      "line": 17
+    },
+    {
+      "type": "from",
+      "module": "flask",
+      "name": "after_this_request",
+      "alias": null,
+      "line": 18
+    },
+    {
+      "type": "import",
+      "module": "tempfile",
+      "name": null,
+      "alias": null,
+      "line": 19
+    },
+    {
+      "type": "import",
+      "module": "zipfile",
+      "name": null,
+      "alias": null,
+      "line": 20
+    },
+    {
+      "type": "import",
+      "module": "requests",
+      "name": null,
+      "alias": null,
+      "line": 21
+    },
+    {
+      "type": "from",
+      "module": "blinker",
+      "name": "signal",
+      "alias": null,
+      "line": 23
+    },
+    {
+      "type": "import",
+      "module": "re",
+      "name": null,
+      "alias": null,
+      "line": 24
+    },
+    {
+      "type": "import",
+      "module": "asyncio",
+      "name": null,
+      "alias": null,
+      "line": 25
+    },
+    {
+      "type": "from",
+      "module": "playwright.async_api",
+      "name": "async_playwright",
+      "alias": null,
+      "line": 26
+    },
+    {
+      "type": "from",
+      "module": "playwright_stealth",
+      "name": "Stealth",
+      "alias": null,
+      "line": 27
+    },
+    {
+      "type": "import",
+      "module": "trafilatura",
+      "name": null,
+      "alias": null,
+      "line": 28
+    },
+    {
+      "type": "import",
+      "module": "pyautogui",
+      "name": null,
+      "alias": null,
+      "line": 31
+    },
+    {
+      "type": "import",
+      "module": "time",
+      "name": null,
+      "alias": null,
+      "line": 32
+    },
+    {
+      "type": "from",
+      "module": "mutagen.easyid3",
+      "name": "EasyID3",
+      "alias": null,
+      "line": 33
+    },
+    {
+      "type": "from",
+      "module": "mutagen.mp3",
+      "name": "MP3",
+      "alias": null,
+      "line": 34
+    },
+    {
+      "type": "from",
+      "module": "flask_socketio",
+      "name": "SocketIO",
+      "alias": null,
+      "line": 36
+    },
+    {
+      "type": "from",
+      "module": "flask_socketio",
+      "name": "emit",
+      "alias": null,
+      "line": 36
+    },
+    {
+      "type": "import",
+      "module": "uuid",
+      "name": null,
+      "alias": null,
+      "line": 37
+    },
+    {
+      "type": "import",
+      "module": "shutil",
+      "name": null,
+      "alias": null,
+      "line": 39
+    }
+  ],
+  "module_globals": [
+    {
+      "name": "AD_FILE",
+      "line": 79,
+      "resolved_value": "Shaitaan.mp3"
+    },
+    {
+      "name": "ANNOUNCEMENT_DIR",
+      "line": 82,
+      "resolved_value": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Announcements"
+    },
+    {
+      "name": "BASE_PATH",
+      "line": 58,
+      "resolved_value": null
+    },
+    {
+      "name": "BLOBS_DIR",
+      "line": 85,
+      "resolved_value": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Temp"
+    },
+    {
+      "name": "CURRENT_FILE",
+      "line": 46,
+      "resolved_value": null
+    },
+    {
+      "name": "DATE_DETAILS_CACHE_FILE",
+      "line": 108,
+      "resolved_value": null
+    },
+    {
+      "name": "DATE_DETAILS_CACHE_LOCK",
+      "line": 112,
+      "resolved_value": null
+    },
+    {
+      "name": "DATE_DETAILS_CACHE_SECONDS",
+      "line": 114,
+      "resolved_value": null
+    },
+    {
+      "name": "DB_PATH",
+      "line": 56,
+      "resolved_value": null
+    },
+    {
+      "name": "DOWNLOAD_DIR",
+      "line": 78,
+      "resolved_value": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SpotifyMusicRIP"
+    },
+    {
+      "name": "HOLIDAY_CACHE_FILE",
+      "line": 105,
+      "resolved_value": null
+    },
+    {
+      "name": "HOLIDAY_CACHE_LOCK",
+      "line": 107,
+      "resolved_value": null
+    },
+    {
+      "name": "LAN_CLOUD_FOLDER",
+      "line": 91,
+      "resolved_value": null
+    },
+    {
+      "name": "LANcloud_ID_MAP",
+      "line": 121,
+      "resolved_value": null
+    },
+    {
+      "name": "LANcloud_JSON",
+      "line": 122,
+      "resolved_value": null
+    },
+    {
+      "name": "LRESULT",
+      "line": 158,
+      "resolved_value": null
+    },
+    {
+      "name": "MARTIN_URL",
+      "line": 102,
+      "resolved_value": "http://127.0.0.1:3000"
+    },
+    {
+      "name": "PLAYLIST_LOG",
+      "line": 89,
+      "resolved_value": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Temp/FlagshipPlaylist.log"
+    },
+    {
+      "name": "PROJECT_ROOT",
+      "line": 49,
+      "resolved_value": null
+    },
+    {
+      "name": "PROJECT_ROOT_SSL",
+      "line": 52,
+      "resolved_value": null
+    },
+    {
+      "name": "STATIC_FOLDER",
+      "line": 74,
+      "resolved_value": null
+    },
+    {
+      "name": "TEMPLATE_FOLDER",
+      "line": 73,
+      "resolved_value": null
+    },
+    {
+      "name": "UPLOAD_TEMP_FOLDER",
+      "line": 95,
+      "resolved_value": null
+    },
+    {
+      "name": "_current_item",
+      "line": 124,
+      "resolved_value": null
+    },
+    {
+      "name": "_gemini_client",
+      "line": 684,
+      "resolved_value": null
+    },
+    {
+      "name": "_gemini_client_lock",
+      "line": 683,
+      "resolved_value": null
+    },
+    {
+      "name": "_index",
+      "line": 130,
+      "resolved_value": 0
+    },
+    {
+      "name": "_next_item",
+      "line": 126,
+      "resolved_value": null
+    },
+    {
+      "name": "_playlist",
+      "line": 129,
+      "resolved_value": null
+    },
+    {
+      "name": "_previous_item",
+      "line": 125,
+      "resolved_value": null
+    },
+    {
+      "name": "ai_api_dir",
+      "line": 61,
+      "resolved_value": null
+    },
+    {
+      "name": "app",
+      "line": 134,
+      "resolved_value": null
+    },
+    {
+      "name": "cert_dir",
+      "line": 68,
+      "resolved_value": null
+    },
+    {
+      "name": "directory",
+      "line": 640,
+      "resolved_value": "/home/dkvlko/Downloads/Telegram Desktop"
+    },
+    {
+      "name": "key_file_path",
+      "line": 63,
+      "resolved_value": null
+    },
+    {
+      "name": "mouse_lock",
+      "line": 41,
+      "resolved_value": null
+    },
+    {
+      "name": "server_cert",
+      "line": 70,
+      "resolved_value": null
+    },
+    {
+      "name": "server_key",
+      "line": 71,
+      "resolved_value": null
+    },
+    {
+      "name": "socketio",
+      "line": 141,
+      "resolved_value": null
+    }
+  ],
+  "functions": [
+    {
+      "name": "template_logger",
+      "line": 153,
+      "end_line": 154,
+      "parameters": [
+        "sender",
+        "template",
+        "context",
+        "extra"
+      ],
+      "calls": [
+        {
+          "name": "print",
+          "line": 154
+        }
+      ],
+      "names_read": [
+        "print",
+        "template"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "get_cached_holiday_answer",
+      "line": 161,
+      "end_line": 307,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "astimezone",
+          "line": 170
+        },
+        {
+          "name": "datetime.now",
+          "line": 170
+        },
+        {
+          "name": "now.strftime",
+          "line": 172
+        },
+        {
+          "name": "HOLIDAY_CACHE_FILE.parent.mkdir",
+          "line": 175
+        },
+        {
+          "name": "HOLIDAY_CACHE_FILE.exists",
+          "line": 186
+        },
+        {
+          "name": "open",
+          "line": 190
+        },
+        {
+          "name": "json.load",
+          "line": 196
+        },
+        {
+          "name": "cache.get",
+          "line": 198
+        },
+        {
+          "name": "cache.get",
+          "line": 199
+        },
+        {
+          "name": "print",
+          "line": 206
+        },
+        {
+          "name": "print",
+          "line": 214
+        },
+        {
+          "name": "now.strftime",
+          "line": 223
+        },
+        {
+          "name": "print",
+          "line": 256
+        },
+        {
+          "name": "print",
+          "line": 260
+        },
+        {
+          "name": "gemini_generate_search",
+          "line": 264
+        },
+        {
+          "name": "answer_text.strip",
+          "line": 268
+        },
+        {
+          "name": "now.isoformat",
+          "line": 277
+        },
+        {
+          "name": "open",
+          "line": 283
+        },
+        {
+          "name": "json.dump",
+          "line": 289
+        },
+        {
+          "name": "print",
+          "line": 296
+        },
+        {
+          "name": "print",
+          "line": 302
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "HOLIDAY_CACHE_FILE",
+        "HOLIDAY_CACHE_LOCK",
+        "answer_text",
+        "cache",
+        "cached_answer",
+        "cached_date",
+        "date_text",
+        "datetime",
+        "e",
+        "f",
+        "gemini_generate_search",
+        "json",
+        "now",
+        "open",
+        "print",
+        "prompt",
+        "today"
+      ],
+      "names_written": [
+        "answer_text",
+        "cache",
+        "cached_answer",
+        "cached_date",
+        "date_text",
+        "f",
+        "now",
+        "prompt",
+        "today"
+      ],
+      "global_declarations": [],
+      "file_operations": [
+        {
+          "operation": "open",
+          "line": 190,
+          "path_expression": "HOLIDAY_CACHE_FILE"
+        },
+        {
+          "operation": "open",
+          "line": 283,
+          "path_expression": "HOLIDAY_CACHE_FILE"
+        }
+      ],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "HOLIDAY_CACHE_FILE",
+        "HOLIDAY_CACHE_LOCK"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "get_cached_date_details",
+      "line": 309,
+      "end_line": 617,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "astimezone",
+          "line": 319
+        },
+        {
+          "name": "datetime.now",
+          "line": 319
+        },
+        {
+          "name": "now.strftime",
+          "line": 321
+        },
+        {
+          "name": "DATE_DETAILS_CACHE_FILE.parent.mkdir",
+          "line": 323
+        },
+        {
+          "name": "DATE_DETAILS_CACHE_FILE.exists",
+          "line": 334
+        },
+        {
+          "name": "open",
+          "line": 338
+        },
+        {
+          "name": "json.load",
+          "line": 344
+        },
+        {
+          "name": "cache.get",
+          "line": 346
+        },
+        {
+          "name": "cache.get",
+          "line": 350
+        },
+        {
+          "name": "cache.get",
+          "line": 354
+        },
+        {
+          "name": "now.timestamp",
+          "line": 366
+        },
+        {
+          "name": "float",
+          "line": 367
+        },
+        {
+          "name": "print",
+          "line": 372
+        },
+        {
+          "name": "print",
+          "line": 381
+        },
+        {
+          "name": "print",
+          "line": 390
+        },
+        {
+          "name": "print",
+          "line": 394
+        },
+        {
+          "name": "now.strftime",
+          "line": 399
+        },
+        {
+          "name": "gemini_generate_search",
+          "line": 491
+        },
+        {
+          "name": "answer_text.strip",
+          "line": 502
+        },
+        {
+          "name": "cleaned_text.startswith",
+          "line": 509
+        },
+        {
+          "name": "cleaned_text.splitlines",
+          "line": 511
+        },
+        {
+          "name": "strip",
+          "line": 518
+        },
+        {
+          "name": "strip",
+          "line": 521
+        },
+        {
+          "name": "join",
+          "line": 521
+        },
+        {
+          "name": "json.loads",
+          "line": 528
+        },
+        {
+          "name": "print",
+          "line": 533
+        },
+        {
+          "name": "print",
+          "line": 537
+        },
+        {
+          "name": "RuntimeError",
+          "line": 539
+        },
+        {
+          "name": "isinstance",
+          "line": 547
+        },
+        {
+          "name": "RuntimeError",
+          "line": 549
+        },
+        {
+          "name": "data.setdefault",
+          "line": 554
+        },
+        {
+          "name": "data.setdefault",
+          "line": 559
+        },
+        {
+          "name": "data.setdefault",
+          "line": 564
+        },
+        {
+          "name": "now.timestamp",
+          "line": 579
+        },
+        {
+          "name": "now.isoformat",
+          "line": 582
+        },
+        {
+          "name": "open",
+          "line": 591
+        },
+        {
+          "name": "json.dump",
+          "line": 597
+        },
+        {
+          "name": "print",
+          "line": 605
+        },
+        {
+          "name": "print",
+          "line": 612
+        }
+      ],
+      "names_read": [
+        "DATE_DETAILS_CACHE_FILE",
+        "DATE_DETAILS_CACHE_LOCK",
+        "DATE_DETAILS_CACHE_SECONDS",
+        "Exception",
+        "RuntimeError",
+        "age",
+        "answer_text",
+        "cache",
+        "cached_data",
+        "cached_date",
+        "cached_timestamp",
+        "cleaned_text",
+        "data",
+        "date_text",
+        "datetime",
+        "dict",
+        "e",
+        "f",
+        "float",
+        "gemini_generate_search",
+        "isinstance",
+        "json",
+        "lines",
+        "now",
+        "open",
+        "print",
+        "prompt",
+        "today"
+      ],
+      "names_written": [
+        "age",
+        "answer_text",
+        "cache",
+        "cached_data",
+        "cached_date",
+        "cached_timestamp",
+        "cleaned_text",
+        "data",
+        "date_text",
+        "f",
+        "lines",
+        "now",
+        "prompt",
+        "today"
+      ],
+      "global_declarations": [],
+      "file_operations": [
+        {
+          "operation": "open",
+          "line": 338,
+          "path_expression": "DATE_DETAILS_CACHE_FILE"
+        },
+        {
+          "operation": "open",
+          "line": 591,
+          "path_expression": "DATE_DETAILS_CACHE_FILE"
+        }
+      ],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "DATE_DETAILS_CACHE_FILE",
+        "DATE_DETAILS_CACHE_LOCK",
+        "DATE_DETAILS_CACHE_SECONDS"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "get_latest_file_url",
+      "line": 619,
+      "end_line": 638,
+      "parameters": [
+        "directory"
+      ],
+      "calls": [
+        {
+          "name": "Path",
+          "line": 623
+        },
+        {
+          "name": "path.exists",
+          "line": 625
+        },
+        {
+          "name": "path.is_dir",
+          "line": 625
+        },
+        {
+          "name": "ValueError",
+          "line": 626
+        },
+        {
+          "name": "path.iterdir",
+          "line": 629
+        },
+        {
+          "name": "f.is_file",
+          "line": 629
+        },
+        {
+          "name": "ValueError",
+          "line": 632
+        },
+        {
+          "name": "max",
+          "line": 635
+        },
+        {
+          "name": "as_uri",
+          "line": 638
+        },
+        {
+          "name": "latest_file.resolve",
+          "line": 638
+        }
+      ],
+      "names_read": [
+        "Path",
+        "ValueError",
+        "directory",
+        "f",
+        "files",
+        "latest_file",
+        "max",
+        "path"
+      ],
+      "names_written": [
+        "f",
+        "files",
+        "latest_file",
+        "path"
+      ],
+      "global_declarations": [],
+      "file_operations": [
+        {
+          "operation": "Path",
+          "line": 623,
+          "path_expression": "directory"
+        }
+      ],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "load_ai_keys",
+      "line": 644,
+      "end_line": 674,
+      "parameters": [
+        "file_path"
+      ],
+      "calls": [
+        {
+          "name": "file_path.exists",
+          "line": 657
+        },
+        {
+          "name": "FileNotFoundError",
+          "line": 658
+        },
+        {
+          "name": "file_path.open",
+          "line": 660
+        },
+        {
+          "name": "line.strip",
+          "line": 662
+        },
+        {
+          "name": "line.startswith",
+          "line": 665
+        },
+        {
+          "name": "ValueError",
+          "line": 669
+        },
+        {
+          "name": "line.split",
+          "line": 671
+        },
+        {
+          "name": "ai_name.strip",
+          "line": 672
+        },
+        {
+          "name": "api_key.strip",
+          "line": 672
+        }
+      ],
+      "names_read": [
+        "FileNotFoundError",
+        "ValueError",
+        "ai_keys",
+        "ai_name",
+        "api_key",
+        "f",
+        "file_path",
+        "line"
+      ],
+      "names_written": [
+        "ai_keys",
+        "ai_name",
+        "api_key",
+        "f",
+        "line"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "get_gemini_client",
+      "line": 687,
+      "end_line": 714,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "load_ai_keys",
+          "line": 699
+        },
+        {
+          "name": "keys.get",
+          "line": 700
+        },
+        {
+          "name": "KeyError",
+          "line": 703
+        },
+        {
+          "name": "print",
+          "line": 705
+        },
+        {
+          "name": "genai.Client",
+          "line": 708
+        },
+        {
+          "name": "print",
+          "line": 711
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "KeyError",
+        "_gemini_client",
+        "_gemini_client_lock",
+        "e",
+        "gemini_api_key",
+        "genai",
+        "key_file_path",
+        "keys",
+        "load_ai_keys",
+        "print"
+      ],
+      "names_written": [
+        "_gemini_client",
+        "gemini_api_key",
+        "keys"
+      ],
+      "global_declarations": [
+        "_gemini_client"
+      ],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "_gemini_client",
+        "_gemini_client_lock",
+        "key_file_path"
+      ],
+      "global_writes": [
+        "_gemini_client"
+      ],
+      "resolved_globals": {}
+    },
+    {
+      "name": "gemini_generate",
+      "line": 717,
+      "end_line": 747,
+      "parameters": [
+        "prompt",
+        "model",
+        "max_retries"
+      ],
+      "calls": [
+        {
+          "name": "get_gemini_client",
+          "line": 727
+        },
+        {
+          "name": "range",
+          "line": 731
+        },
+        {
+          "name": "client.models.generate_content",
+          "line": 733
+        },
+        {
+          "name": "RuntimeError",
+          "line": 739
+        },
+        {
+          "name": "response.text.strip",
+          "line": 741
+        },
+        {
+          "name": "print",
+          "line": 745
+        },
+        {
+          "name": "RuntimeError",
+          "line": 747
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "RuntimeError",
+        "attempt",
+        "client",
+        "e",
+        "get_gemini_client",
+        "last_error",
+        "max_retries",
+        "model",
+        "print",
+        "prompt",
+        "range",
+        "response"
+      ],
+      "names_written": [
+        "attempt",
+        "client",
+        "last_error",
+        "response"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "gemini_generate_search",
+      "line": 750,
+      "end_line": 792,
+      "parameters": [
+        "prompt",
+        "model",
+        "max_retries"
+      ],
+      "calls": [
+        {
+          "name": "get_gemini_client",
+          "line": 760
+        },
+        {
+          "name": "types.Tool",
+          "line": 764
+        },
+        {
+          "name": "types.GoogleSearch",
+          "line": 765
+        },
+        {
+          "name": "range",
+          "line": 768
+        },
+        {
+          "name": "client.models.generate_content",
+          "line": 771
+        },
+        {
+          "name": "types.GenerateContentConfig",
+          "line": 774
+        },
+        {
+          "name": "RuntimeError",
+          "line": 784
+        },
+        {
+          "name": "response.text.strip",
+          "line": 786
+        },
+        {
+          "name": "print",
+          "line": 790
+        },
+        {
+          "name": "RuntimeError",
+          "line": 792
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "RuntimeError",
+        "attempt",
+        "client",
+        "e",
+        "get_gemini_client",
+        "google_search_tool",
+        "last_error",
+        "max_retries",
+        "model",
+        "print",
+        "prompt",
+        "range",
+        "response",
+        "types"
+      ],
+      "names_written": [
+        "attempt",
+        "client",
+        "google_search_tool",
+        "last_error",
+        "response"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "render_markdown",
+      "line": 794,
+      "end_line": 798,
+      "parameters": [
+        "md_text"
+      ],
+      "calls": [
+        {
+          "name": "markdown.markdown",
+          "line": 795
+        }
+      ],
+      "names_read": [
+        "markdown",
+        "md_text"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "turn_off_screen",
+      "line": 801,
+      "end_line": 834,
+      "parameters": [
+        "timeout_ms"
+      ],
+      "calls": [
+        {
+          "name": "platform.system",
+          "line": 802
+        },
+        {
+          "name": "OSError",
+          "line": 803
+        },
+        {
+          "name": "ctypes.WinDLL",
+          "line": 805
+        },
+        {
+          "name": "wintypes.HWND",
+          "line": 807
+        },
+        {
+          "name": "wintypes.UINT",
+          "line": 808
+        },
+        {
+          "name": "wintypes.WPARAM",
+          "line": 809
+        },
+        {
+          "name": "wintypes.LPARAM",
+          "line": 810
+        },
+        {
+          "name": "ctypes.POINTER",
+          "line": 816
+        },
+        {
+          "name": "wintypes.DWORD",
+          "line": 820
+        },
+        {
+          "name": "SendMessageTimeout",
+          "line": 822
+        },
+        {
+          "name": "wintypes.UINT",
+          "line": 828
+        },
+        {
+          "name": "ctypes.byref",
+          "line": 829
+        },
+        {
+          "name": "ctypes.get_last_error",
+          "line": 833
+        },
+        {
+          "name": "OSError",
+          "line": 834
+        }
+      ],
+      "names_read": [
+        "HWND_BROADCAST",
+        "LRESULT",
+        "OSError",
+        "SC_MONITORPOWER",
+        "SMTO_ABORTIFHUNG",
+        "SendMessageTimeout",
+        "WM_SYSCOMMAND",
+        "ctypes",
+        "err",
+        "lparam",
+        "platform",
+        "result",
+        "ret",
+        "timeout_ms",
+        "user32",
+        "wintypes"
+      ],
+      "names_written": [
+        "HWND_BROADCAST",
+        "SC_MONITORPOWER",
+        "SMTO_ABORTIFHUNG",
+        "SendMessageTimeout",
+        "WM_SYSCOMMAND",
+        "err",
+        "lparam",
+        "result",
+        "ret",
+        "user32"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "LRESULT"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "get_table_names",
+      "line": 838,
+      "end_line": 852,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "sqlite3.connect",
+          "line": 843
+        },
+        {
+          "name": "conn.cursor",
+          "line": 844
+        },
+        {
+          "name": "cur.execute",
+          "line": 845
+        },
+        {
+          "name": "cur.fetchall",
+          "line": 850
+        },
+        {
+          "name": "conn.close",
+          "line": 851
+        }
+      ],
+      "names_read": [
+        "DB_PATH",
+        "conn",
+        "cur",
+        "r",
+        "rows",
+        "sqlite3"
+      ],
+      "names_written": [
+        "conn",
+        "cur",
+        "r",
+        "rows"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [
+        {
+          "operation": "connect",
+          "line": 843,
+          "database_expression": "DB_PATH"
+        }
+      ],
+      "global_reads": [
+        "DB_PATH"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "is_valid_table",
+      "line": 854,
+      "end_line": 855,
+      "parameters": [
+        "name"
+      ],
+      "calls": [
+        {
+          "name": "get_table_names",
+          "line": 855
+        }
+      ],
+      "names_read": [
+        "get_table_names",
+        "name"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "getViewTable",
+      "line": 858,
+      "end_line": 860,
+      "parameters": [
+        "activity"
+      ],
+      "calls": [
+        {
+          "name": "render_template",
+          "line": 860
+        }
+      ],
+      "names_read": [
+        "activity",
+        "render_template"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "view_form.html",
+          "line": 860
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "getInsertTable",
+      "line": 863,
+      "end_line": 891,
+      "parameters": [
+        "activity"
+      ],
+      "calls": [
+        {
+          "name": "re.match",
+          "line": 866
+        },
+        {
+          "name": "strip",
+          "line": 868
+        },
+        {
+          "name": "activity.split",
+          "line": 868
+        },
+        {
+          "name": "render_template",
+          "line": 872
+        },
+        {
+          "name": "datetime.now",
+          "line": 875
+        },
+        {
+          "name": "now.strftime",
+          "line": 876
+        },
+        {
+          "name": "render_template",
+          "line": 891
+        }
+      ],
+      "names_read": [
+        "activity",
+        "datetime",
+        "entries",
+        "in_activity",
+        "match",
+        "now",
+        "now_display",
+        "re",
+        "render_template"
+      ],
+      "names_written": [
+        "activity",
+        "entries",
+        "in_activity",
+        "match",
+        "now",
+        "now_display"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "memo.html",
+          "line": 872
+        },
+        {
+          "template": "insert_form.html",
+          "line": 891
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "bing_search_raw",
+      "line": 898,
+      "end_line": 926,
+      "parameters": [
+        "query"
+      ],
+      "calls": [
+        {
+          "name": "use_async",
+          "line": 899
+        },
+        {
+          "name": "Stealth",
+          "line": 899
+        },
+        {
+          "name": "async_playwright",
+          "line": 899
+        },
+        {
+          "name": "p.chromium.launch",
+          "line": 900
+        },
+        {
+          "name": "browser.new_page",
+          "line": 901
+        },
+        {
+          "name": "page.goto",
+          "line": 903
+        },
+        {
+          "name": "page.locator",
+          "line": 907
+        },
+        {
+          "name": "accept_btn.count",
+          "line": 908
+        },
+        {
+          "name": "accept_btn.click",
+          "line": 909
+        },
+        {
+          "name": "page.wait_for_timeout",
+          "line": 910
+        },
+        {
+          "name": "page.wait_for_selector",
+          "line": 915
+        },
+        {
+          "name": "page.fill",
+          "line": 918
+        },
+        {
+          "name": "page.keyboard.press",
+          "line": 919
+        },
+        {
+          "name": "page.wait_for_selector",
+          "line": 922
+        },
+        {
+          "name": "page.content",
+          "line": 924
+        },
+        {
+          "name": "browser.close",
+          "line": 925
+        }
+      ],
+      "names_read": [
+        "Stealth",
+        "accept_btn",
+        "async_playwright",
+        "browser",
+        "p",
+        "page",
+        "query",
+        "raw_html"
+      ],
+      "names_written": [
+        "accept_btn",
+        "browser",
+        "p",
+        "page",
+        "raw_html"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "extract_readable_text",
+      "line": 928,
+      "end_line": 941,
+      "parameters": [
+        "html"
+      ],
+      "calls": [
+        {
+          "name": "trafilatura.extract",
+          "line": 931
+        }
+      ],
+      "names_read": [
+        "html",
+        "text",
+        "trafilatura"
+      ],
+      "names_written": [
+        "text"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "extract_text_gpt",
+      "line": 944,
+      "end_line": 964,
+      "parameters": [
+        "file_path_ubuntu"
+      ],
+      "calls": [
+        {
+          "name": "async_playwright",
+          "line": 945
+        },
+        {
+          "name": "p.chromium.launch",
+          "line": 946
+        },
+        {
+          "name": "browser.new_page",
+          "line": 947
+        },
+        {
+          "name": "print",
+          "line": 949
+        },
+        {
+          "name": "page.goto",
+          "line": 951
+        },
+        {
+          "name": "page.wait_for_timeout",
+          "line": 954
+        },
+        {
+          "name": "page.content",
+          "line": 957
+        },
+        {
+          "name": "browser.close",
+          "line": 959
+        },
+        {
+          "name": "trafilatura.extract",
+          "line": 962
+        }
+      ],
+      "names_read": [
+        "async_playwright",
+        "browser",
+        "extracted",
+        "file_path_ubuntu",
+        "html",
+        "p",
+        "page",
+        "print",
+        "trafilatura"
+      ],
+      "names_written": [
+        "browser",
+        "extracted",
+        "html",
+        "p",
+        "page"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "callAutoSave",
+      "line": 967,
+      "end_line": 1000,
+      "parameters": [
+        "prompt"
+      ],
+      "calls": [
+        {
+          "name": "time.sleep",
+          "line": 973
+        },
+        {
+          "name": "pyautogui.moveTo",
+          "line": 976
+        },
+        {
+          "name": "pyautogui.click",
+          "line": 977
+        },
+        {
+          "name": "time.sleep",
+          "line": 978
+        },
+        {
+          "name": "pyautogui.moveTo",
+          "line": 981
+        },
+        {
+          "name": "pyautogui.click",
+          "line": 982
+        },
+        {
+          "name": "time.sleep",
+          "line": 983
+        },
+        {
+          "name": "pyautogui.write",
+          "line": 986
+        },
+        {
+          "name": "pyautogui.moveTo",
+          "line": 989
+        },
+        {
+          "name": "pyautogui.click",
+          "line": 990
+        },
+        {
+          "name": "time.sleep",
+          "line": 991
+        },
+        {
+          "name": "pyautogui.hotkey",
+          "line": 994
+        },
+        {
+          "name": "pyautogui.moveTo",
+          "line": 997
+        },
+        {
+          "name": "pyautogui.click",
+          "line": 998
+        },
+        {
+          "name": "time.sleep",
+          "line": 999
+        }
+      ],
+      "names_read": [
+        "prompt",
+        "pyautogui",
+        "time"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "getGPTAnswer",
+      "line": 1002,
+      "end_line": 1008,
+      "parameters": [
+        "prompt"
+      ],
+      "calls": [
+        {
+          "name": "callAutoSave",
+          "line": 1003
+        },
+        {
+          "name": "print",
+          "line": 1004
+        },
+        {
+          "name": "get_latest_file_url",
+          "line": 1005
+        },
+        {
+          "name": "asyncio.run",
+          "line": 1006
+        },
+        {
+          "name": "extract_text_gpt",
+          "line": 1006
+        }
+      ],
+      "names_read": [
+        "FILE_PATH_GPT",
+        "asyncio",
+        "callAutoSave",
+        "directory",
+        "extract_text_gpt",
+        "get_latest_file_url",
+        "print",
+        "prompt",
+        "text"
+      ],
+      "names_written": [
+        "FILE_PATH_GPT",
+        "text"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "directory"
+      ],
+      "global_writes": [],
+      "resolved_globals": {
+        "directory": "/home/dkvlko/Downloads/Telegram Desktop"
+      }
+    },
+    {
+      "name": "song_metadata",
+      "line": 1010,
+      "end_line": 1035,
+      "parameters": [
+        "filename"
+      ],
+      "calls": [
+        {
+          "name": "EasyID3",
+          "line": 1020
+        },
+        {
+          "name": "tags.get",
+          "line": 1022
+        },
+        {
+          "name": "tags.get",
+          "line": 1023
+        },
+        {
+          "name": "tags.get",
+          "line": 1024
+        },
+        {
+          "name": "MP3",
+          "line": 1028
+        },
+        {
+          "name": "audio.get",
+          "line": 1029
+        },
+        {
+          "name": "audio.get",
+          "line": 1030
+        },
+        {
+          "name": "audio.get",
+          "line": 1031
+        }
+      ],
+      "names_read": [
+        "DOWNLOAD_DIR",
+        "EasyID3",
+        "Exception",
+        "MP3",
+        "audio",
+        "filename",
+        "path",
+        "result",
+        "tags"
+      ],
+      "names_written": [
+        "audio",
+        "path",
+        "result",
+        "tags"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "DOWNLOAD_DIR"
+      ],
+      "global_writes": [],
+      "resolved_globals": {
+        "DOWNLOAD_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SpotifyMusicRIP"
+      }
+    },
+    {
+      "name": "advance_song",
+      "line": 1037,
+      "end_line": 1050,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "rebuild_playlist",
+          "line": 1043
+        },
+        {
+          "name": "len",
+          "line": 1047
+        },
+        {
+          "name": "rebuild_playlist",
+          "line": 1048
+        },
+        {
+          "name": "update_song_pointers",
+          "line": 1050
+        }
+      ],
+      "names_read": [
+        "_index",
+        "_playlist",
+        "len",
+        "rebuild_playlist",
+        "update_song_pointers"
+      ],
+      "names_written": [
+        "_index"
+      ],
+      "global_declarations": [
+        "_index"
+      ],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "_index",
+        "_playlist"
+      ],
+      "global_writes": [
+        "_index"
+      ],
+      "resolved_globals": {
+        "_index": 0
+      }
+    },
+    {
+      "name": "rebuild_playlist",
+      "line": 1052,
+      "end_line": 1122,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "DOWNLOAD_DIR.glob",
+          "line": 1058
+        },
+        {
+          "name": "p.name.lower",
+          "line": 1059
+        },
+        {
+          "name": "AD_FILE.lower",
+          "line": 1059
+        },
+        {
+          "name": "random.shuffle",
+          "line": 1062
+        },
+        {
+          "name": "random.randint",
+          "line": 1068
+        },
+        {
+          "name": "range",
+          "line": 1070
+        },
+        {
+          "name": "songs.pop",
+          "line": 1075
+        },
+        {
+          "name": "Path",
+          "line": 1077
+        },
+        {
+          "name": "wav.exists",
+          "line": 1079
+        },
+        {
+          "name": "playlist.append",
+          "line": 1080
+        },
+        {
+          "name": "playlist.append",
+          "line": 1085
+        },
+        {
+          "name": "Path",
+          "line": 1090
+        },
+        {
+          "name": "ad_wav.exists",
+          "line": 1093
+        },
+        {
+          "name": "playlist.append",
+          "line": 1094
+        },
+        {
+          "name": "ad_mp3.exists",
+          "line": 1099
+        },
+        {
+          "name": "playlist.append",
+          "line": 1100
+        },
+        {
+          "name": "update_song_pointers",
+          "line": 1108
+        },
+        {
+          "name": "open",
+          "line": 1109
+        },
+        {
+          "name": "f.write",
+          "line": 1111
+        },
+        {
+          "name": "f.write",
+          "line": 1112
+        },
+        {
+          "name": "f.write",
+          "line": 1113
+        },
+        {
+          "name": "strftime",
+          "line": 1113
+        },
+        {
+          "name": "datetime.now",
+          "line": 1113
+        },
+        {
+          "name": "f.write",
+          "line": 1114
+        },
+        {
+          "name": "f.write",
+          "line": 1115
+        },
+        {
+          "name": "enumerate",
+          "line": 1117
+        },
+        {
+          "name": "f.write",
+          "line": 1118
+        }
+      ],
+      "names_read": [
+        "AD_FILE",
+        "ANNOUNCEMENT_DIR",
+        "DOWNLOAD_DIR",
+        "PLAYLIST_LOG",
+        "Path",
+        "_playlist",
+        "ad_mp3",
+        "ad_wav",
+        "count",
+        "datetime",
+        "enumerate",
+        "f",
+        "item",
+        "n",
+        "open",
+        "p",
+        "playlist",
+        "random",
+        "range",
+        "song",
+        "songs",
+        "update_song_pointers",
+        "wav"
+      ],
+      "names_written": [
+        "_",
+        "_index",
+        "_playlist",
+        "ad_mp3",
+        "ad_wav",
+        "count",
+        "f",
+        "item",
+        "n",
+        "p",
+        "playlist",
+        "song",
+        "songs",
+        "wav"
+      ],
+      "global_declarations": [
+        "_index",
+        "_playlist"
+      ],
+      "file_operations": [
+        {
+          "operation": "Path",
+          "line": 1077,
+          "path_expression": "song"
+        },
+        {
+          "operation": "Path",
+          "line": 1090,
+          "path_expression": "AD_FILE"
+        },
+        {
+          "operation": "open",
+          "line": 1109,
+          "path_expression": "PLAYLIST_LOG"
+        }
+      ],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "AD_FILE",
+        "ANNOUNCEMENT_DIR",
+        "DOWNLOAD_DIR",
+        "PLAYLIST_LOG",
+        "_playlist"
+      ],
+      "global_writes": [
+        "_index",
+        "_playlist"
+      ],
+      "resolved_globals": {
+        "AD_FILE": "Shaitaan.mp3",
+        "_index": 0,
+        "ANNOUNCEMENT_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Announcements",
+        "PLAYLIST_LOG": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Temp/FlagshipPlaylist.log",
+        "DOWNLOAD_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SpotifyMusicRIP"
+      }
+    },
+    {
+      "name": "current_song",
+      "line": 1125,
+      "end_line": 1133,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "rebuild_playlist",
+          "line": 1129
+        },
+        {
+          "name": "len",
+          "line": 1131
+        },
+        {
+          "name": "rebuild_playlist",
+          "line": 1132
+        }
+      ],
+      "names_read": [
+        "_index",
+        "_playlist",
+        "len",
+        "rebuild_playlist"
+      ],
+      "names_written": [],
+      "global_declarations": [
+        "_index"
+      ],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "_index",
+        "_playlist"
+      ],
+      "global_writes": [],
+      "resolved_globals": {
+        "_index": 0
+      }
+    },
+    {
+      "name": "update_song_pointers",
+      "line": 1136,
+      "end_line": 1154,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "len",
+          "line": 1151
+        }
+      ],
+      "names_read": [
+        "_index",
+        "_playlist",
+        "len"
+      ],
+      "names_written": [
+        "_current_item",
+        "_next_item",
+        "_previous_item"
+      ],
+      "global_declarations": [
+        "_current_item",
+        "_next_item",
+        "_previous_item"
+      ],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "_index",
+        "_playlist"
+      ],
+      "global_writes": [
+        "_current_item",
+        "_next_item",
+        "_previous_item"
+      ],
+      "resolved_globals": {
+        "_index": 0
+      }
+    },
+    {
+      "name": "next_song",
+      "line": 1166,
+      "end_line": 1189,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "rebuild_playlist",
+          "line": 1172
+        },
+        {
+          "name": "len",
+          "line": 1176
+        },
+        {
+          "name": "rebuild_playlist",
+          "line": 1187
+        },
+        {
+          "name": "update_song_pointers",
+          "line": 1189
+        }
+      ],
+      "names_read": [
+        "_index",
+        "_playlist",
+        "found",
+        "i",
+        "len",
+        "rebuild_playlist",
+        "update_song_pointers"
+      ],
+      "names_written": [
+        "_index",
+        "found",
+        "i"
+      ],
+      "global_declarations": [
+        "_index"
+      ],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "_index",
+        "_playlist"
+      ],
+      "global_writes": [
+        "_index"
+      ],
+      "resolved_globals": {
+        "_index": 0
+      }
+    },
+    {
+      "name": "previous_song",
+      "line": 1191,
+      "end_line": 1218,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "rebuild_playlist",
+          "line": 1197
+        },
+        {
+          "name": "update_song_pointers",
+          "line": 1218
+        }
+      ],
+      "names_read": [
+        "_index",
+        "_playlist",
+        "i",
+        "rebuild_playlist",
+        "update_song_pointers"
+      ],
+      "names_written": [
+        "_index",
+        "i"
+      ],
+      "global_declarations": [
+        "_index"
+      ],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "_index",
+        "_playlist"
+      ],
+      "global_writes": [
+        "_index"
+      ],
+      "resolved_globals": {
+        "_index": 0
+      }
+    },
+    {
+      "name": "BuildLANcloudDirectoryJSON",
+      "line": 1225,
+      "end_line": 1308,
+      "parameters": [
+        "folder"
+      ],
+      "calls": [
+        {
+          "name": "LANcloud_ID_MAP.clear",
+          "line": 1233
+        },
+        {
+          "name": "entries.append",
+          "line": 1246
+        },
+        {
+          "name": "sorted",
+          "line": 1260
+        },
+        {
+          "name": "folder.iterdir",
+          "line": 1261
+        },
+        {
+          "name": "uuid.uuid4",
+          "line": 1264
+        },
+        {
+          "name": "item.stat",
+          "line": 1268
+        },
+        {
+          "name": "entries.append",
+          "line": 1270
+        },
+        {
+          "name": "item.is_dir",
+          "line": 1274
+        },
+        {
+          "name": "strftime",
+          "line": 1277
+        },
+        {
+          "name": "datetime.fromtimestamp",
+          "line": 1277
+        },
+        {
+          "name": "str",
+          "line": 1293
+        },
+        {
+          "name": "folder.relative_to",
+          "line": 1294
+        }
+      ],
+      "names_read": [
+        "LAN_CLOUD_FOLDER",
+        "LANcloud_ID_MAP",
+        "current_directory",
+        "datetime",
+        "entries",
+        "folder",
+        "item",
+        "item_id",
+        "sorted",
+        "stat",
+        "str",
+        "uuid"
+      ],
+      "names_written": [
+        "LANcloud_JSON",
+        "current_directory",
+        "entries",
+        "folder",
+        "item",
+        "item_id",
+        "stat"
+      ],
+      "global_declarations": [
+        "LANcloud_ID_MAP",
+        "LANcloud_JSON"
+      ],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "LAN_CLOUD_FOLDER",
+        "LANcloud_ID_MAP"
+      ],
+      "global_writes": [
+        "LANcloud_JSON"
+      ],
+      "resolved_globals": {}
+    },
+    {
+      "name": "date_details_prefetch_loop",
+      "line": 1310,
+      "end_line": 1314,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "print",
+          "line": 1312
+        }
+      ],
+      "names_read": [
+        "print"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "mypage",
+      "line": 1345,
+      "end_line": 1346,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "redirect",
+          "line": 1346
+        }
+      ],
+      "names_read": [
+        "redirect"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "url_directory",
+      "line": 1349,
+      "end_line": 1394,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "app.url_map.iter_rules",
+          "line": 1377
+        },
+        {
+          "name": "str",
+          "line": 1383
+        },
+        {
+          "name": "routes.append",
+          "line": 1386
+        },
+        {
+          "name": "str",
+          "line": 1388
+        },
+        {
+          "name": "sorted",
+          "line": 1392
+        },
+        {
+          "name": "render_template",
+          "line": 1394
+        }
+      ],
+      "names_read": [
+        "EXCLUDED_PATHS",
+        "app",
+        "render_template",
+        "routes",
+        "rule",
+        "sorted",
+        "str"
+      ],
+      "names_written": [
+        "EXCLUDED_PATHS",
+        "routes",
+        "rule"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "url_directory.html",
+          "line": 1394
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [
+        "app"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "copy_text",
+      "line": 1398,
+      "end_line": 1417,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "render_template",
+          "line": 1401
+        },
+        {
+          "name": "os.path.abspath",
+          "line": 1404
+        },
+        {
+          "name": "os.path.join",
+          "line": 1404
+        },
+        {
+          "name": "request.form.get",
+          "line": 1406
+        },
+        {
+          "name": "communicate",
+          "line": 1408
+        },
+        {
+          "name": "subprocess.Popen",
+          "line": 1408
+        },
+        {
+          "name": "redirect",
+          "line": 1417
+        }
+      ],
+      "names_read": [
+        "SCRIPT_PATH",
+        "TEMPLATE_FOLDER",
+        "os",
+        "redirect",
+        "render_template",
+        "request",
+        "subprocess",
+        "text"
+      ],
+      "names_written": [
+        "SCRIPT_PATH",
+        "text"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "copytext.html",
+          "line": 1401
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [
+        "TEMPLATE_FOLDER"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "index",
+      "line": 1421,
+      "end_line": 1433,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "get_table_names",
+          "line": 1422
+        },
+        {
+          "name": "new_tables.append",
+          "line": 1427
+        },
+        {
+          "name": "new_tables.append",
+          "line": 1428
+        },
+        {
+          "name": "new_tables.append",
+          "line": 1430
+        },
+        {
+          "name": "render_template",
+          "line": 1433
+        }
+      ],
+      "names_read": [
+        "get_table_names",
+        "new_tables",
+        "render_template",
+        "t",
+        "tables"
+      ],
+      "names_written": [
+        "new_tables",
+        "t",
+        "tables"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "activity.html",
+          "line": 1433
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "activity_action",
+      "line": 1437,
+      "end_line": 1446,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "request.args.get",
+          "line": 1438
+        },
+        {
+          "name": "request.args.get",
+          "line": 1439
+        },
+        {
+          "name": "getViewTable",
+          "line": 1442
+        },
+        {
+          "name": "getInsertTable",
+          "line": 1444
+        }
+      ],
+      "names_read": [
+        "event_value",
+        "execute_value",
+        "getInsertTable",
+        "getViewTable",
+        "request"
+      ],
+      "names_written": [
+        "event_value",
+        "execute_value"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "view_results",
+      "line": 1449,
+      "end_line": 1507,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "request.form.get",
+          "line": 1450
+        },
+        {
+          "name": "request.form.get",
+          "line": 1451
+        },
+        {
+          "name": "re.match",
+          "line": 1453
+        },
+        {
+          "name": "strip",
+          "line": 1455
+        },
+        {
+          "name": "activity.split",
+          "line": 1455
+        },
+        {
+          "name": "is_valid_table",
+          "line": 1458
+        },
+        {
+          "name": "sqlite3.connect",
+          "line": 1461
+        },
+        {
+          "name": "conn.cursor",
+          "line": 1462
+        },
+        {
+          "name": "datetime.now",
+          "line": 1475
+        },
+        {
+          "name": "timedelta",
+          "line": 1475
+        },
+        {
+          "name": "params.append",
+          "line": 1477
+        },
+        {
+          "name": "cutoff.strftime",
+          "line": 1477
+        },
+        {
+          "name": "datetime.now",
+          "line": 1479
+        },
+        {
+          "name": "timedelta",
+          "line": 1479
+        },
+        {
+          "name": "params.append",
+          "line": 1481
+        },
+        {
+          "name": "cutoff.strftime",
+          "line": 1481
+        },
+        {
+          "name": "conn.close",
+          "line": 1485
+        },
+        {
+          "name": "cur.execute",
+          "line": 1488
+        },
+        {
+          "name": "cur.fetchall",
+          "line": 1489
+        },
+        {
+          "name": "conn.close",
+          "line": 1490
+        },
+        {
+          "name": "render_template",
+          "line": 1502
+        }
+      ],
+      "names_read": [
+        "DB_PATH",
+        "activity",
+        "conn",
+        "cur",
+        "cutoff",
+        "datetime",
+        "entries",
+        "is_valid_table",
+        "match",
+        "order_clause",
+        "params",
+        "period",
+        "query",
+        "r",
+        "re",
+        "render_template",
+        "request",
+        "rows",
+        "sqlite3",
+        "timedelta"
+      ],
+      "names_written": [
+        "activity",
+        "conn",
+        "cur",
+        "cutoff",
+        "entries",
+        "in_activity",
+        "match",
+        "order_clause",
+        "params",
+        "period",
+        "query",
+        "r",
+        "rows"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "view_results.html",
+          "line": 1502
+        }
+      ],
+      "database_operations": [
+        {
+          "operation": "connect",
+          "line": 1461,
+          "database_expression": "DB_PATH"
+        }
+      ],
+      "global_reads": [
+        "DB_PATH"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "insert_entry",
+      "line": 1510,
+      "end_line": 1539,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "request.form.get",
+          "line": 1511
+        },
+        {
+          "name": "request.form.get",
+          "line": 1512
+        },
+        {
+          "name": "request.form.get",
+          "line": 1513
+        },
+        {
+          "name": "request.form.get",
+          "line": 1517
+        },
+        {
+          "name": "request.form.get",
+          "line": 1518
+        },
+        {
+          "name": "request.form.get",
+          "line": 1519
+        },
+        {
+          "name": "request.form.get",
+          "line": 1520
+        },
+        {
+          "name": "is_valid_table",
+          "line": 1521
+        },
+        {
+          "name": "datetime.now",
+          "line": 1525
+        },
+        {
+          "name": "sqlite3.connect",
+          "line": 1529
+        },
+        {
+          "name": "conn.cursor",
+          "line": 1530
+        },
+        {
+          "name": "cur.execute",
+          "line": 1531
+        },
+        {
+          "name": "dt_value.strftime",
+          "line": 1533
+        },
+        {
+          "name": "conn.commit",
+          "line": 1535
+        },
+        {
+          "name": "conn.close",
+          "line": 1536
+        },
+        {
+          "name": "render_template",
+          "line": 1539
+        }
+      ],
+      "names_read": [
+        "DB_PATH",
+        "activity",
+        "address",
+        "age",
+        "amount",
+        "conn",
+        "cur",
+        "datetime",
+        "dt_choice",
+        "dt_value",
+        "duration",
+        "in_activity",
+        "is_valid_table",
+        "name",
+        "quality",
+        "render_template",
+        "request",
+        "sqlite3",
+        "srating"
+      ],
+      "names_written": [
+        "activity",
+        "address",
+        "age",
+        "amount",
+        "conn",
+        "cur",
+        "dt_choice",
+        "dt_value",
+        "duration",
+        "in_activity",
+        "name",
+        "quality",
+        "srating"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "success.html",
+          "line": 1539
+        }
+      ],
+      "database_operations": [
+        {
+          "operation": "connect",
+          "line": 1529,
+          "database_expression": "DB_PATH"
+        }
+      ],
+      "global_reads": [
+        "DB_PATH"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "memo",
+      "line": 1542,
+      "end_line": 1557,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "strip",
+          "line": 1544
+        },
+        {
+          "name": "request.form.get",
+          "line": 1544
+        },
+        {
+          "name": "sqlite3.connect",
+          "line": 1547
+        },
+        {
+          "name": "conn.cursor",
+          "line": 1548
+        },
+        {
+          "name": "cur.execute",
+          "line": 1549
+        },
+        {
+          "name": "conn.commit",
+          "line": 1550
+        },
+        {
+          "name": "conn.close",
+          "line": 1551
+        },
+        {
+          "name": "render_template",
+          "line": 1554
+        },
+        {
+          "name": "render_template",
+          "line": 1557
+        }
+      ],
+      "names_read": [
+        "DB_PATH",
+        "conn",
+        "cur",
+        "note",
+        "render_template",
+        "request",
+        "sqlite3"
+      ],
+      "names_written": [
+        "conn",
+        "cur",
+        "note"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "success.html",
+          "line": 1554
+        },
+        {
+          "template": "memo.html",
+          "line": 1557
+        }
+      ],
+      "database_operations": [
+        {
+          "operation": "connect",
+          "line": 1547,
+          "database_expression": "DB_PATH"
+        }
+      ],
+      "global_reads": [
+        "DB_PATH"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "game_help",
+      "line": 1560,
+      "end_line": 1593,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "strip",
+          "line": 1564
+        },
+        {
+          "name": "request.form.get",
+          "line": 1564
+        },
+        {
+          "name": "strip",
+          "line": 1565
+        },
+        {
+          "name": "request.form.get",
+          "line": 1565
+        },
+        {
+          "name": "print",
+          "line": 1567
+        },
+        {
+          "name": "print",
+          "line": 1568
+        },
+        {
+          "name": "gemini_generate",
+          "line": 1580
+        },
+        {
+          "name": "print",
+          "line": 1583
+        },
+        {
+          "name": "render_markdown",
+          "line": 1588
+        },
+        {
+          "name": "render_template",
+          "line": 1590
+        },
+        {
+          "name": "render_template",
+          "line": 1593
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "answer_text",
+        "e",
+        "final_answer",
+        "gemini_generate",
+        "html_answer",
+        "print",
+        "prompt",
+        "render_markdown",
+        "render_template",
+        "request",
+        "text",
+        "text_choice"
+      ],
+      "names_written": [
+        "answer_text",
+        "final_answer",
+        "html_answer",
+        "prompt",
+        "text",
+        "text_choice"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "ganswer.html",
+          "line": 1590
+        },
+        {
+          "template": "game_help.html",
+          "line": 1593
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "hindi2marathi_transcribe",
+      "line": 1597,
+      "end_line": 1619,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "render_template",
+          "line": 1599
+        },
+        {
+          "name": "strip",
+          "line": 1602
+        },
+        {
+          "name": "request.form.get",
+          "line": 1602
+        },
+        {
+          "name": "print",
+          "line": 1603
+        },
+        {
+          "name": "gemini_generate",
+          "line": 1613
+        },
+        {
+          "name": "print",
+          "line": 1616
+        },
+        {
+          "name": "render_template",
+          "line": 1619
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "answer_text",
+        "e",
+        "gemini_generate",
+        "print",
+        "prompt",
+        "render_template",
+        "request",
+        "text"
+      ],
+      "names_written": [
+        "answer_text",
+        "prompt",
+        "text"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "transcribe.html",
+          "line": 1599
+        },
+        {
+          "template": "ganswerhindi2marathi.html",
+          "line": 1619
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "screen_off_handler",
+      "line": 1623,
+      "end_line": 1632,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "turn_off_screen",
+          "line": 1629
+        },
+        {
+          "name": "jsonify",
+          "line": 1630
+        },
+        {
+          "name": "jsonify",
+          "line": 1632
+        },
+        {
+          "name": "str",
+          "line": 1632
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "exc",
+        "jsonify",
+        "str",
+        "turn_off_screen"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "gemini_help",
+      "line": 1635,
+      "end_line": 1668,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "strip",
+          "line": 1639
+        },
+        {
+          "name": "request.form.get",
+          "line": 1639
+        },
+        {
+          "name": "request.form.get",
+          "line": 1640
+        },
+        {
+          "name": "print",
+          "line": 1642
+        },
+        {
+          "name": "gemini_generate",
+          "line": 1651
+        },
+        {
+          "name": "gemini_generate_search",
+          "line": 1653
+        },
+        {
+          "name": "print",
+          "line": 1657
+        },
+        {
+          "name": "render_markdown",
+          "line": 1664
+        },
+        {
+          "name": "render_template",
+          "line": 1666
+        },
+        {
+          "name": "render_template",
+          "line": 1668
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "answer_text",
+        "e",
+        "gemini_generate",
+        "gemini_generate_search",
+        "html_answer",
+        "print",
+        "prompt",
+        "render_markdown",
+        "render_template",
+        "request",
+        "submit_type",
+        "text"
+      ],
+      "names_written": [
+        "answer_text",
+        "html_answer",
+        "prompt",
+        "submit_type",
+        "text"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "geminianswer.html",
+          "line": 1666
+        },
+        {
+          "template": "gemini_help.html",
+          "line": 1668
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "raw_html",
+      "line": 1672,
+      "end_line": 1712,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "render_template",
+          "line": 1675
+        },
+        {
+          "name": "strip",
+          "line": 1682
+        },
+        {
+          "name": "request.form.get",
+          "line": 1682
+        },
+        {
+          "name": "request.form.get",
+          "line": 1683
+        },
+        {
+          "name": "print",
+          "line": 1685
+        },
+        {
+          "name": "asyncio.run",
+          "line": 1695
+        },
+        {
+          "name": "bing_search_raw",
+          "line": 1695
+        },
+        {
+          "name": "asyncio.run",
+          "line": 1698
+        },
+        {
+          "name": "bing_search_raw",
+          "line": 1698
+        },
+        {
+          "name": "print",
+          "line": 1702
+        },
+        {
+          "name": "extract_readable_text",
+          "line": 1708
+        },
+        {
+          "name": "render_markdown",
+          "line": 1710
+        },
+        {
+          "name": "render_template",
+          "line": 1712
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "asyncio",
+        "bing_search_raw",
+        "e",
+        "extract_readable_text",
+        "html_raw",
+        "print",
+        "prompt",
+        "raw_html",
+        "readable_text",
+        "render_markdown",
+        "render_template",
+        "request",
+        "submit_type",
+        "text"
+      ],
+      "names_written": [
+        "answer_text",
+        "html_raw",
+        "prompt",
+        "raw_html",
+        "readable_text",
+        "submit_type",
+        "text"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "raw_request.html",
+          "line": 1675
+        },
+        {
+          "template": "rawhtmlresult.html",
+          "line": 1712
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "gptextract",
+      "line": 1716,
+      "end_line": 1740,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "render_template",
+          "line": 1718
+        },
+        {
+          "name": "strip",
+          "line": 1723
+        },
+        {
+          "name": "request.form.get",
+          "line": 1723
+        },
+        {
+          "name": "request.form.get",
+          "line": 1724
+        },
+        {
+          "name": "print",
+          "line": 1726
+        },
+        {
+          "name": "getGPTAnswer",
+          "line": 1729
+        },
+        {
+          "name": "print",
+          "line": 1732
+        },
+        {
+          "name": "render_markdown",
+          "line": 1738
+        },
+        {
+          "name": "render_template",
+          "line": 1740
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "answer_text",
+        "e",
+        "getGPTAnswer",
+        "html_answer",
+        "print",
+        "render_markdown",
+        "render_template",
+        "request",
+        "text"
+      ],
+      "names_written": [
+        "answer_text",
+        "html_answer",
+        "submit_type",
+        "text"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "gpt_query.html",
+          "line": 1718
+        },
+        {
+          "template": "chatgptanswer.html",
+          "line": 1740
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "ufiles",
+      "line": 1746,
+      "end_line": 1794,
+      "parameters": [
+        "req_path"
+      ],
+      "calls": [
+        {
+          "name": "resolve",
+          "line": 1748
+        },
+        {
+          "name": "startswith",
+          "line": 1751
+        },
+        {
+          "name": "str",
+          "line": 1751
+        },
+        {
+          "name": "str",
+          "line": 1751
+        },
+        {
+          "name": "abort",
+          "line": 1752
+        },
+        {
+          "name": "full_path.exists",
+          "line": 1754
+        },
+        {
+          "name": "abort",
+          "line": 1755
+        },
+        {
+          "name": "full_path.is_file",
+          "line": 1758
+        },
+        {
+          "name": "mimetypes.guess_type",
+          "line": 1759
+        },
+        {
+          "name": "str",
+          "line": 1759
+        },
+        {
+          "name": "send_file",
+          "line": 1761
+        },
+        {
+          "name": "sorted",
+          "line": 1770
+        },
+        {
+          "name": "full_path.iterdir",
+          "line": 1770
+        },
+        {
+          "name": "item.relative_to",
+          "line": 1772
+        },
+        {
+          "name": "items.append",
+          "line": 1774
+        },
+        {
+          "name": "item.is_dir",
+          "line": 1776
+        },
+        {
+          "name": "str",
+          "line": 1777
+        },
+        {
+          "name": "full_path.parent.relative_to",
+          "line": 1786
+        },
+        {
+          "name": "str",
+          "line": 1787
+        },
+        {
+          "name": "render_template",
+          "line": 1789
+        }
+      ],
+      "names_read": [
+        "BASE_PATH",
+        "PermissionError",
+        "abort",
+        "full_path",
+        "item",
+        "items",
+        "mime_type",
+        "mimetypes",
+        "parent",
+        "parent_rel",
+        "relative",
+        "render_template",
+        "req_path",
+        "send_file",
+        "sorted",
+        "str"
+      ],
+      "names_written": [
+        "_",
+        "full_path",
+        "item",
+        "items",
+        "mime_type",
+        "parent",
+        "parent_rel",
+        "relative"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "file_browser.html",
+          "line": 1789
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [
+        "BASE_PATH"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "control_tv",
+      "line": 1796,
+      "end_line": 1797,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "render_template",
+          "line": 1797
+        }
+      ],
+      "names_read": [
+        "render_template"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "controlTV.html",
+          "line": 1797
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "mouse_move",
+      "line": 1801,
+      "end_line": 1812,
+      "parameters": [
+        "data"
+      ],
+      "calls": [
+        {
+          "name": "float",
+          "line": 1802
+        },
+        {
+          "name": "float",
+          "line": 1803
+        },
+        {
+          "name": "pyautogui.moveRel",
+          "line": 1808
+        }
+      ],
+      "names_read": [
+        "data",
+        "dx",
+        "dy",
+        "float",
+        "gain",
+        "mouse_lock",
+        "pyautogui"
+      ],
+      "names_written": [
+        "dx",
+        "dy",
+        "gain"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "mouse_lock"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "mouse_click",
+      "line": 1814,
+      "end_line": 1816,
+      "parameters": [
+        "data"
+      ],
+      "calls": [
+        {
+          "name": "pyautogui.click",
+          "line": 1816
+        }
+      ],
+      "names_read": [
+        "mouse_lock",
+        "pyautogui"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "mouse_lock"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "mouse_double",
+      "line": 1820,
+      "end_line": 1822,
+      "parameters": [
+        "data"
+      ],
+      "calls": [
+        {
+          "name": "pyautogui.doubleClick",
+          "line": 1822
+        }
+      ],
+      "names_read": [
+        "mouse_lock",
+        "pyautogui"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "mouse_lock"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "connected",
+      "line": 1825,
+      "end_line": 1826,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "print",
+          "line": 1826
+        }
+      ],
+      "names_read": [
+        "print"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "disconnected",
+      "line": 1829,
+      "end_line": 1830,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "print",
+          "line": 1830
+        }
+      ],
+      "names_read": [
+        "print"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "flagship",
+      "line": 1837,
+      "end_line": 1844,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "request.headers.get",
+          "line": 1839
+        },
+        {
+          "name": "send_file",
+          "line": 1842
+        },
+        {
+          "name": "send_file",
+          "line": 1844
+        }
+      ],
+      "names_read": [
+        "request",
+        "send_file",
+        "ua"
+      ],
+      "names_written": [
+        "ua"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "flagship_current",
+      "line": 1847,
+      "end_line": 1898,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "current_song",
+          "line": 1850
+        },
+        {
+          "name": "path.exists",
+          "line": 1852
+        },
+        {
+          "name": "app.logger.error",
+          "line": 1853
+        },
+        {
+          "name": "abort",
+          "line": 1854
+        },
+        {
+          "name": "path.suffix.lower",
+          "line": 1856
+        },
+        {
+          "name": "path.stat",
+          "line": 1858
+        },
+        {
+          "name": "request.headers.get",
+          "line": 1859
+        },
+        {
+          "name": "send_file",
+          "line": 1867
+        },
+        {
+          "name": "split",
+          "line": 1873
+        },
+        {
+          "name": "range_header.replace",
+          "line": 1873
+        },
+        {
+          "name": "int",
+          "line": 1875
+        },
+        {
+          "name": "int",
+          "line": 1876
+        },
+        {
+          "name": "open",
+          "line": 1880
+        },
+        {
+          "name": "f.seek",
+          "line": 1881
+        },
+        {
+          "name": "f.read",
+          "line": 1882
+        },
+        {
+          "name": "Response",
+          "line": 1884
+        },
+        {
+          "name": "str",
+          "line": 1893
+        },
+        {
+          "name": "app.logger.exception",
+          "line": 1897
+        },
+        {
+          "name": "abort",
+          "line": 1898
+        },
+        {
+          "name": "str",
+          "line": 1898
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "Response",
+        "abort",
+        "app",
+        "current_song",
+        "data",
+        "e",
+        "end",
+        "f",
+        "file_size",
+        "int",
+        "length",
+        "mimetype",
+        "open",
+        "path",
+        "range_header",
+        "request",
+        "response",
+        "send_file",
+        "start",
+        "str"
+      ],
+      "names_written": [
+        "data",
+        "end",
+        "f",
+        "file_size",
+        "length",
+        "mimetype",
+        "path",
+        "range_header",
+        "response",
+        "start"
+      ],
+      "global_declarations": [],
+      "file_operations": [
+        {
+          "operation": "open",
+          "line": 1880,
+          "path_expression": "path"
+        }
+      ],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "app"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "flagship_advance",
+      "line": 1901,
+      "end_line": 1907,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "advance_song",
+          "line": 1903
+        }
+      ],
+      "names_read": [
+        "advance_song"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "flagship_next",
+      "line": 1910,
+      "end_line": 1913,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "next_song",
+          "line": 1911
+        }
+      ],
+      "names_read": [
+        "next_song"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "flagship_previous",
+      "line": 1916,
+      "end_line": 1922,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "previous_song",
+          "line": 1918
+        }
+      ],
+      "names_read": [
+        "previous_song"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "flagship_status",
+      "line": 1925,
+      "end_line": 1931,
+      "parameters": [],
+      "calls": [],
+      "names_read": [
+        "_current_item",
+        "_next_item",
+        "_previous_item"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "_current_item",
+        "_next_item",
+        "_previous_item"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "file_operation_download",
+      "line": 1934,
+      "end_line": 2051,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "request.args.get",
+          "line": 1936
+        },
+        {
+          "name": "path.exists",
+          "line": 1943
+        },
+        {
+          "name": "tempfile.NamedTemporaryFile",
+          "line": 1951
+        },
+        {
+          "name": "temp_zip.close",
+          "line": 1959
+        },
+        {
+          "name": "zipfile.ZipFile",
+          "line": 1968
+        },
+        {
+          "name": "path.is_file",
+          "line": 1985
+        },
+        {
+          "name": "archive.write",
+          "line": 1987
+        },
+        {
+          "name": "os.walk",
+          "line": 2002
+        },
+        {
+          "name": "Path",
+          "line": 2006
+        },
+        {
+          "name": "full_path.relative_to",
+          "line": 2008
+        },
+        {
+          "name": "archive.write",
+          "line": 2010
+        },
+        {
+          "name": "send_file",
+          "line": 2041
+        }
+      ],
+      "names_read": [
+        "LAN_CLOUD_FOLDER",
+        "Path",
+        "archive",
+        "archive_name",
+        "filename",
+        "files",
+        "full_path",
+        "name",
+        "os",
+        "path",
+        "request",
+        "root",
+        "send_file",
+        "temp_zip",
+        "tempfile",
+        "zip_filename",
+        "zipfile"
+      ],
+      "names_written": [
+        "archive",
+        "archive_name",
+        "dirs",
+        "filename",
+        "files",
+        "full_path",
+        "name",
+        "path",
+        "root",
+        "temp_zip",
+        "zip_filename"
+      ],
+      "global_declarations": [],
+      "file_operations": [
+        {
+          "operation": "Path",
+          "line": 2006,
+          "path_expression": "root"
+        }
+      ],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "LAN_CLOUD_FOLDER"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "file_operation_upload",
+      "line": 2057,
+      "end_line": 2202,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "int",
+          "line": 2069
+        },
+        {
+          "name": "int",
+          "line": 2073
+        },
+        {
+          "name": "destination_directory.mkdir",
+          "line": 2095
+        },
+        {
+          "name": "temporary_file.exists",
+          "line": 2119
+        },
+        {
+          "name": "temporary_file.unlink",
+          "line": 2121
+        },
+        {
+          "name": "open",
+          "line": 2128
+        },
+        {
+          "name": "shutil.copyfileobj",
+          "line": 2136
+        },
+        {
+          "name": "temporary_file.replace",
+          "line": 2159
+        },
+        {
+          "name": "print",
+          "line": 2165
+        },
+        {
+          "name": "BuildLANcloudDirectoryJSON",
+          "line": 2171
+        },
+        {
+          "name": "jsonify",
+          "line": 2178
+        },
+        {
+          "name": "print",
+          "line": 2190
+        },
+        {
+          "name": "jsonify",
+          "line": 2192
+        },
+        {
+          "name": "str",
+          "line": 2198
+        }
+      ],
+      "names_read": [
+        "BuildLANcloudDirectoryJSON",
+        "Exception",
+        "LAN_CLOUD_FOLDER",
+        "UPLOAD_TEMP_FOLDER",
+        "chunk_number",
+        "current_directory",
+        "destination_directory",
+        "exception",
+        "filename",
+        "final_file",
+        "int",
+        "jsonify",
+        "open",
+        "output_file",
+        "print",
+        "request",
+        "shutil",
+        "str",
+        "temporary_file",
+        "total_chunks",
+        "uploaded_chunk"
+      ],
+      "names_written": [
+        "chunk_number",
+        "current_directory",
+        "destination_directory",
+        "filename",
+        "final_file",
+        "output_file",
+        "temporary_file",
+        "total_chunks",
+        "uploaded_chunk"
+      ],
+      "global_declarations": [],
+      "file_operations": [
+        {
+          "operation": "open",
+          "line": 2128,
+          "path_expression": "temporary_file"
+        }
+      ],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "LAN_CLOUD_FOLDER",
+        "UPLOAD_TEMP_FOLDER"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "file_operation",
+      "line": 2205,
+      "end_line": 2266,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "request.get_json",
+          "line": 2207
+        },
+        {
+          "name": "data.get",
+          "line": 2209
+        },
+        {
+          "name": "data.get",
+          "line": 2211
+        },
+        {
+          "name": "jsonify",
+          "line": 2215
+        },
+        {
+          "name": "path.is_dir",
+          "line": 2233
+        },
+        {
+          "name": "shutil.rmtree",
+          "line": 2235
+        },
+        {
+          "name": "path.is_file",
+          "line": 2237
+        },
+        {
+          "name": "path.unlink",
+          "line": 2239
+        },
+        {
+          "name": "failed.append",
+          "line": 2243
+        },
+        {
+          "name": "deleted.append",
+          "line": 2247
+        },
+        {
+          "name": "failed.append",
+          "line": 2251
+        },
+        {
+          "name": "BuildLANcloudDirectoryJSON",
+          "line": 2253
+        },
+        {
+          "name": "jsonify",
+          "line": 2255
+        },
+        {
+          "name": "len",
+          "line": 2264
+        }
+      ],
+      "names_read": [
+        "BuildLANcloudDirectoryJSON",
+        "Exception",
+        "LAN_CLOUD_FOLDER",
+        "data",
+        "deleted",
+        "e",
+        "failed",
+        "jsonify",
+        "len",
+        "name",
+        "operation",
+        "path",
+        "request",
+        "selected",
+        "shutil"
+      ],
+      "names_written": [
+        "data",
+        "deleted",
+        "failed",
+        "name",
+        "operation",
+        "path",
+        "selected"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "LAN_CLOUD_FOLDER"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "LANcloudList",
+      "line": 2273,
+      "end_line": 2290,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "request.args.get",
+          "line": 2275
+        },
+        {
+          "name": "resolve",
+          "line": 2277
+        },
+        {
+          "name": "startswith",
+          "line": 2282
+        },
+        {
+          "name": "str",
+          "line": 2282
+        },
+        {
+          "name": "str",
+          "line": 2282
+        },
+        {
+          "name": "LAN_CLOUD_FOLDER.resolve",
+          "line": 2282
+        },
+        {
+          "name": "jsonify",
+          "line": 2283
+        },
+        {
+          "name": "requested.exists",
+          "line": 2285
+        },
+        {
+          "name": "requested.is_dir",
+          "line": 2285
+        },
+        {
+          "name": "jsonify",
+          "line": 2286
+        },
+        {
+          "name": "BuildLANcloudDirectoryJSON",
+          "line": 2288
+        },
+        {
+          "name": "jsonify",
+          "line": 2290
+        }
+      ],
+      "names_read": [
+        "BuildLANcloudDirectoryJSON",
+        "LAN_CLOUD_FOLDER",
+        "LANcloud_JSON",
+        "folder",
+        "jsonify",
+        "request",
+        "requested",
+        "str"
+      ],
+      "names_written": [
+        "folder",
+        "requested"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "LAN_CLOUD_FOLDER",
+        "LANcloud_JSON"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "LANcloud",
+      "line": 2293,
+      "end_line": 2302,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "BuildLANcloudDirectoryJSON",
+          "line": 2295
+        },
+        {
+          "name": "print",
+          "line": 2297
+        },
+        {
+          "name": "len",
+          "line": 2299
+        },
+        {
+          "name": "render_template",
+          "line": 2302
+        }
+      ],
+      "names_read": [
+        "BuildLANcloudDirectoryJSON",
+        "LANcloud_JSON",
+        "len",
+        "print",
+        "render_template"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "showdirfiles.html",
+          "line": 2302
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [
+        "LANcloud_JSON"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "LANcloudChangeDirectory",
+      "line": 2305,
+      "end_line": 2319,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "request.args.get",
+          "line": 2307
+        },
+        {
+          "name": "jsonify",
+          "line": 2310
+        },
+        {
+          "name": "destination.is_dir",
+          "line": 2314
+        },
+        {
+          "name": "jsonify",
+          "line": 2315
+        },
+        {
+          "name": "BuildLANcloudDirectoryJSON",
+          "line": 2317
+        },
+        {
+          "name": "jsonify",
+          "line": 2319
+        }
+      ],
+      "names_read": [
+        "BuildLANcloudDirectoryJSON",
+        "LANcloud_ID_MAP",
+        "LANcloud_JSON",
+        "destination",
+        "item_id",
+        "jsonify",
+        "request"
+      ],
+      "names_written": [
+        "destination",
+        "item_id"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "LANcloud_ID_MAP",
+        "LANcloud_JSON"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "file_operation_new_directory",
+      "line": 2325,
+      "end_line": 2424,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "request.get_json",
+          "line": 2329
+        },
+        {
+          "name": "strip",
+          "line": 2335
+        },
+        {
+          "name": "jsonify",
+          "line": 2349
+        },
+        {
+          "name": "new_directory.exists",
+          "line": 2383
+        },
+        {
+          "name": "jsonify",
+          "line": 2385
+        },
+        {
+          "name": "new_directory.mkdir",
+          "line": 2398
+        },
+        {
+          "name": "BuildLANcloudDirectoryJSON",
+          "line": 2403
+        },
+        {
+          "name": "jsonify",
+          "line": 2407
+        },
+        {
+          "name": "jsonify",
+          "line": 2418
+        },
+        {
+          "name": "str",
+          "line": 2423
+        }
+      ],
+      "names_read": [
+        "BuildLANcloudDirectoryJSON",
+        "Exception",
+        "LAN_CLOUD_FOLDER",
+        "current_directory",
+        "data",
+        "destination",
+        "directory_name",
+        "e",
+        "jsonify",
+        "new_directory",
+        "request",
+        "str"
+      ],
+      "names_written": [
+        "current_directory",
+        "data",
+        "destination",
+        "directory_name",
+        "new_directory"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "LAN_CLOUD_FOLDER"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "send_clock_time",
+      "line": 2428,
+      "end_line": 2436,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "astimezone",
+          "line": 2429
+        },
+        {
+          "name": "datetime.now",
+          "line": 2429
+        },
+        {
+          "name": "emit",
+          "line": 2431
+        },
+        {
+          "name": "now.timestamp",
+          "line": 2434
+        }
+      ],
+      "names_read": [
+        "datetime",
+        "emit",
+        "now"
+      ],
+      "names_written": [
+        "now"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "holiday_today",
+      "line": 2439,
+      "end_line": 2458,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "get_cached_holiday_answer",
+          "line": 2443
+        },
+        {
+          "name": "jsonify",
+          "line": 2445
+        },
+        {
+          "name": "print",
+          "line": 2451
+        },
+        {
+          "name": "jsonify",
+          "line": 2455
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "answer_text",
+        "e",
+        "get_cached_holiday_answer",
+        "jsonify",
+        "print"
+      ],
+      "names_written": [
+        "answer_text"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "clock",
+      "line": 2460,
+      "end_line": 2461,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "render_template",
+          "line": 2461
+        }
+      ],
+      "names_read": [
+        "render_template"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "clock.html",
+          "line": 2461
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "mobile_location",
+      "line": 2464,
+      "end_line": 2471,
+      "parameters": [
+        "data"
+      ],
+      "calls": [
+        {
+          "name": "print",
+          "line": 2466
+        },
+        {
+          "name": "data.get",
+          "line": 2468
+        },
+        {
+          "name": "data.get",
+          "line": 2469
+        },
+        {
+          "name": "data.get",
+          "line": 2470
+        }
+      ],
+      "names_read": [
+        "data",
+        "print"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "martin_proxy",
+      "line": 2474,
+      "end_line": 2522,
+      "parameters": [
+        "subpath"
+      ],
+      "calls": [
+        {
+          "name": "requests.get",
+          "line": 2489
+        },
+        {
+          "name": "response.headers.items",
+          "line": 2504
+        },
+        {
+          "name": "key.lower",
+          "line": 2505
+        },
+        {
+          "name": "Response",
+          "line": 2508
+        },
+        {
+          "name": "print",
+          "line": 2516
+        },
+        {
+          "name": "Response",
+          "line": 2518
+        }
+      ],
+      "names_read": [
+        "MARTIN_URL",
+        "Response",
+        "e",
+        "excluded_headers",
+        "headers",
+        "key",
+        "print",
+        "request",
+        "requests",
+        "response",
+        "subpath",
+        "url",
+        "value"
+      ],
+      "names_written": [
+        "excluded_headers",
+        "headers",
+        "key",
+        "response",
+        "url",
+        "value"
+      ],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "MARTIN_URL"
+      ],
+      "global_writes": [],
+      "resolved_globals": {
+        "MARTIN_URL": "http://127.0.0.1:3000"
+      }
+    },
+    {
+      "name": "maps",
+      "line": 2524,
+      "end_line": 2525,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "render_template",
+          "line": 2525
+        }
+      ],
+      "names_read": [
+        "render_template"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "maps.html",
+          "line": 2525
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "date_details",
+      "line": 2528,
+      "end_line": 2532,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "render_template",
+          "line": 2530
+        }
+      ],
+      "names_read": [
+        "render_template"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [
+        {
+          "template": "date_details.html",
+          "line": 2530
+        }
+      ],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "date_details_data",
+      "line": 2536,
+      "end_line": 2572,
+      "parameters": [],
+      "calls": [
+        {
+          "name": "get_cached_date_details",
+          "line": 2540
+        },
+        {
+          "name": "open",
+          "line": 2544
+        },
+        {
+          "name": "json.load",
+          "line": 2550
+        },
+        {
+          "name": "jsonify",
+          "line": 2552
+        },
+        {
+          "name": "cache.get",
+          "line": 2553
+        },
+        {
+          "name": "data.get",
+          "line": 2554
+        },
+        {
+          "name": "data.get",
+          "line": 2555
+        },
+        {
+          "name": "data.get",
+          "line": 2558
+        },
+        {
+          "name": "print",
+          "line": 2565
+        },
+        {
+          "name": "jsonify",
+          "line": 2569
+        }
+      ],
+      "names_read": [
+        "DATE_DETAILS_CACHE_FILE",
+        "Exception",
+        "cache",
+        "data",
+        "e",
+        "f",
+        "get_cached_date_details",
+        "json",
+        "jsonify",
+        "open",
+        "print"
+      ],
+      "names_written": [
+        "cache",
+        "data",
+        "f"
+      ],
+      "global_declarations": [],
+      "file_operations": [
+        {
+          "operation": "open",
+          "line": 2544,
+          "path_expression": "DATE_DETAILS_CACHE_FILE"
+        }
+      ],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [
+        "DATE_DETAILS_CACHE_FILE"
+      ],
+      "global_writes": [],
+      "resolved_globals": {}
+    },
+    {
+      "name": "cleanup",
+      "line": 2024,
+      "end_line": 2034,
+      "parameters": [
+        "response"
+      ],
+      "calls": [
+        {
+          "name": "os.remove",
+          "line": 2028
+        },
+        {
+          "name": "print",
+          "line": 2032
+        }
+      ],
+      "names_read": [
+        "Exception",
+        "e",
+        "os",
+        "print",
+        "response",
+        "zip_filename"
+      ],
+      "names_written": [],
+      "global_declarations": [],
+      "file_operations": [],
+      "template_operations": [],
+      "database_operations": [],
+      "global_reads": [],
+      "global_writes": [],
+      "resolved_globals": {}
+    }
+  ],
+  "routes": [
+    {
+      "route": "/my/",
+      "methods": [
+        "GET"
+      ],
+      "function": "mypage",
+      "line": 1345
+    },
+    {
+      "route": "/",
+      "methods": [
+        "GET"
+      ],
+      "function": "url_directory",
+      "line": 1349
+    },
+    {
+      "route": "/copyText",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "copy_text",
+      "line": 1398
+    },
+    {
+      "route": "/log",
+      "methods": [
+        "GET"
+      ],
+      "function": "index",
+      "line": 1421
+    },
+    {
+      "route": "/activity",
+      "methods": [
+        "GET"
+      ],
+      "function": "activity_action",
+      "line": 1437
+    },
+    {
+      "route": "/view_results",
+      "methods": [
+        "POST"
+      ],
+      "function": "view_results",
+      "line": 1449
+    },
+    {
+      "route": "/insert_entry",
+      "methods": [
+        "POST"
+      ],
+      "function": "insert_entry",
+      "line": 1510
+    },
+    {
+      "route": "/memo",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "memo",
+      "line": 1542
+    },
+    {
+      "route": "/game-help",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "game_help",
+      "line": 1560
+    },
+    {
+      "route": "/hindi2marathi-transcribe",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "hindi2marathi_transcribe",
+      "line": 1597
+    },
+    {
+      "route": "/screen-off",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "function": "screen_off_handler",
+      "line": 1623
+    },
+    {
+      "route": "/gemini-call",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "gemini_help",
+      "line": 1635
+    },
+    {
+      "route": "/rawhtml",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "raw_html",
+      "line": 1672
+    },
+    {
+      "route": "/gpt2txt",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "gptextract",
+      "line": 1716
+    },
+    {
+      "route": "/ufiles",
+      "methods": [
+        "GET"
+      ],
+      "function": "ufiles",
+      "line": 1746
+    },
+    {
+      "route": "/ufiles/<path:req_path>",
+      "methods": [
+        "GET"
+      ],
+      "function": "ufiles",
+      "line": 1746
+    },
+    {
+      "route": "/controlTV",
+      "methods": [
+        "GET"
+      ],
+      "function": "control_tv",
+      "line": 1796
+    },
+    {
+      "route": "/flagship",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship",
+      "line": 1837
+    },
+    {
+      "route": "/flagship/current",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_current",
+      "line": 1847
+    },
+    {
+      "route": "/flagship/advance",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_advance",
+      "line": 1901
+    },
+    {
+      "route": "/flagship/next",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_next",
+      "line": 1910
+    },
+    {
+      "route": "/flagship/previous",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_previous",
+      "line": 1916
+    },
+    {
+      "route": "/flagship/status",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_status",
+      "line": 1925
+    },
+    {
+      "route": "/file-operation-download",
+      "methods": [
+        "GET"
+      ],
+      "function": "file_operation_download",
+      "line": 1934
+    },
+    {
+      "route": "/file-operation-upload",
+      "methods": [
+        "POST"
+      ],
+      "function": "file_operation_upload",
+      "line": 2057
+    },
+    {
+      "route": "/file-operation",
+      "methods": [
+        "POST"
+      ],
+      "function": "file_operation",
+      "line": 2205
+    },
+    {
+      "route": "/LANcloud/list",
+      "methods": [
+        "GET"
+      ],
+      "function": "LANcloudList",
+      "line": 2273
+    },
+    {
+      "route": "/LANcloud",
+      "methods": [
+        "GET"
+      ],
+      "function": "LANcloud",
+      "line": 2293
+    },
+    {
+      "route": "/LANcloud/change-directory",
+      "methods": [
+        "GET"
+      ],
+      "function": "LANcloudChangeDirectory",
+      "line": 2305
+    },
+    {
+      "route": "/file-operation-new-directory",
+      "methods": [
+        "POST"
+      ],
+      "function": "file_operation_new_directory",
+      "line": 2325
+    },
+    {
+      "route": "/holiday-today",
+      "methods": [
+        "GET"
+      ],
+      "function": "holiday_today",
+      "line": 2439
+    },
+    {
+      "route": "/clock",
+      "methods": [
+        "GET"
+      ],
+      "function": "clock",
+      "line": 2460
+    },
+    {
+      "route": "/maps/martin/<path:subpath>",
+      "methods": [
+        "GET"
+      ],
+      "function": "martin_proxy",
+      "line": 2474
+    },
+    {
+      "route": "/maps",
+      "methods": [
+        "GET"
+      ],
+      "function": "maps",
+      "line": 2524
+    },
+    {
+      "route": "/date-details",
+      "methods": [
+        "GET"
+      ],
+      "function": "date_details",
+      "line": 2528
+    },
+    {
+      "route": "/date-details-data",
+      "methods": [
+        "GET"
+      ],
+      "function": "date_details_data",
+      "line": 2536
+    }
+  ],
+  "handlers": [
+    {
+      "route": "/my/",
+      "methods": [
+        "GET"
+      ],
+      "function": "mypage",
+      "line": 1345,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "mypage"
+        ],
+        "call_tree": {
+          "function": "mypage",
+          "line": 1345,
+          "calls": []
+        },
+        "global_state": {
+          "read": [],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "redirect",
+              "function": "redirect",
+              "line": 1346,
+              "target": "/"
+            }
+          ],
+          "summary": {
+            "types": [
+              "redirect"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": [
+              "/"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "route": "/",
+      "methods": [
+        "GET"
+      ],
+      "function": "url_directory",
+      "line": 1349,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "url_directory"
+        ],
+        "call_tree": {
+          "function": "url_directory",
+          "line": 1349,
+          "calls": []
+        },
+        "global_state": {
+          "read": [
+            "app"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "url_directory.html",
+            "line": 1394
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1394,
+              "template": "url_directory.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/url_directory.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "url_directory.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/url_directory.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/copyText",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "copy_text",
+      "line": 1398,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "copy_text"
+        ],
+        "call_tree": {
+          "function": "copy_text",
+          "line": 1398,
+          "calls": []
+        },
+        "global_state": {
+          "read": [
+            "TEMPLATE_FOLDER"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "copytext.html",
+            "line": 1401
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1401,
+              "template": "copytext.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/copytext.html"
+            },
+            {
+              "type": "redirect",
+              "function": "redirect",
+              "line": 1417,
+              "target": "/"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template",
+              "redirect"
+            ],
+            "templates": [
+              "copytext.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/copytext.html"
+            ],
+            "files": [],
+            "redirects": [
+              "/"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "route": "/log",
+      "methods": [
+        "GET"
+      ],
+      "function": "index",
+      "line": 1421,
+      "dependencies": {
+        "direct_functions": [
+          "get_table_names"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "index",
+          "get_table_names"
+        ],
+        "call_tree": {
+          "function": "index",
+          "line": 1421,
+          "calls": [
+            {
+              "function": "get_table_names",
+              "line": 838,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "DB_PATH"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "activity.html",
+            "line": 1433
+          }
+        ],
+        "databases": [
+          {
+            "operation": "connect",
+            "line": 843,
+            "database_expression": "DB_PATH"
+          }
+        ],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1433,
+              "template": "activity.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/activity.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "activity.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/activity.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/activity",
+      "methods": [
+        "GET"
+      ],
+      "function": "activity_action",
+      "line": 1437,
+      "dependencies": {
+        "direct_functions": [
+          "getViewTable",
+          "getInsertTable"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "activity_action",
+          "getViewTable",
+          "getInsertTable"
+        ],
+        "call_tree": {
+          "function": "activity_action",
+          "line": 1437,
+          "calls": [
+            {
+              "function": "getViewTable",
+              "line": 858,
+              "calls": []
+            },
+            {
+              "function": "getInsertTable",
+              "line": 863,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "view_form.html",
+            "line": 860
+          },
+          {
+            "template": "memo.html",
+            "line": 872
+          },
+          {
+            "template": "insert_form.html",
+            "line": 891
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "function_result",
+              "function": "getViewTable",
+              "expression": "getViewTable(event_value)",
+              "line": 1442
+            },
+            {
+              "type": "function_result",
+              "function": "getInsertTable",
+              "expression": "getInsertTable(event_value)",
+              "line": 1444
+            },
+            {
+              "type": "html",
+              "value": "<html><body><p>Unknown action</p></body></html>",
+              "line": 1446
+            }
+          ],
+          "summary": {
+            "types": [
+              "function_result",
+              "html"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/view_results",
+      "methods": [
+        "POST"
+      ],
+      "function": "view_results",
+      "line": 1449,
+      "dependencies": {
+        "direct_functions": [
+          "is_valid_table"
+        ],
+        "indirect_functions": [
+          "get_table_names"
+        ],
+        "all_functions": [
+          "view_results",
+          "get_table_names",
+          "is_valid_table"
+        ],
+        "call_tree": {
+          "function": "view_results",
+          "line": 1449,
+          "calls": [
+            {
+              "function": "is_valid_table",
+              "line": 854,
+              "calls": [
+                {
+                  "function": "get_table_names",
+                  "line": 838,
+                  "calls": []
+                }
+              ]
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "DB_PATH"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "view_results.html",
+            "line": 1502
+          }
+        ],
+        "databases": [
+          {
+            "operation": "connect",
+            "line": 1461,
+            "database_expression": "DB_PATH"
+          },
+          {
+            "operation": "connect",
+            "line": 843,
+            "database_expression": "DB_PATH"
+          }
+        ],
+        "response": {
+          "responses": [
+            {
+              "type": "html",
+              "value": "<html><body><p>Unknown table.</p></body></html>",
+              "line": 1459
+            },
+            {
+              "type": "html",
+              "value": "<html><body><p>Unknown period.</p></body></html>",
+              "line": 1486
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1502,
+              "template": "view_results.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/view_results.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html",
+              "html_template"
+            ],
+            "templates": [
+              "view_results.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/view_results.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/insert_entry",
+      "methods": [
+        "POST"
+      ],
+      "function": "insert_entry",
+      "line": 1510,
+      "dependencies": {
+        "direct_functions": [
+          "is_valid_table"
+        ],
+        "indirect_functions": [
+          "get_table_names"
+        ],
+        "all_functions": [
+          "insert_entry",
+          "get_table_names",
+          "is_valid_table"
+        ],
+        "call_tree": {
+          "function": "insert_entry",
+          "line": 1510,
+          "calls": [
+            {
+              "function": "is_valid_table",
+              "line": 854,
+              "calls": [
+                {
+                  "function": "get_table_names",
+                  "line": 838,
+                  "calls": []
+                }
+              ]
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "DB_PATH"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "success.html",
+            "line": 1539
+          }
+        ],
+        "databases": [
+          {
+            "operation": "connect",
+            "line": 1529,
+            "database_expression": "DB_PATH"
+          },
+          {
+            "operation": "connect",
+            "line": 843,
+            "database_expression": "DB_PATH"
+          }
+        ],
+        "response": {
+          "responses": [
+            {
+              "type": "html",
+              "value": "<html><body><p>Unknown table.</p></body></html>",
+              "line": 1522
+            },
+            {
+              "type": "html",
+              "value": "<html><body><p>Unknown date selection.</p></body></html>",
+              "line": 1527
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1539,
+              "template": "success.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/success.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html",
+              "html_template"
+            ],
+            "templates": [
+              "success.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/success.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/memo",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "memo",
+      "line": 1542,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "memo"
+        ],
+        "call_tree": {
+          "function": "memo",
+          "line": 1542,
+          "calls": []
+        },
+        "global_state": {
+          "read": [
+            "DB_PATH"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "success.html",
+            "line": 1554
+          },
+          {
+            "template": "memo.html",
+            "line": 1557
+          }
+        ],
+        "databases": [
+          {
+            "operation": "connect",
+            "line": 1547,
+            "database_expression": "DB_PATH"
+          }
+        ],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1554,
+              "template": "success.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/success.html"
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1557,
+              "template": "memo.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/memo.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "success.html",
+              "memo.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/success.html",
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/memo.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/game-help",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "game_help",
+      "line": 1560,
+      "dependencies": {
+        "direct_functions": [
+          "gemini_generate",
+          "render_markdown"
+        ],
+        "indirect_functions": [
+          "load_ai_keys",
+          "get_gemini_client"
+        ],
+        "all_functions": [
+          "game_help",
+          "load_ai_keys",
+          "get_gemini_client",
+          "gemini_generate",
+          "render_markdown"
+        ],
+        "call_tree": {
+          "function": "game_help",
+          "line": 1560,
+          "calls": [
+            {
+              "function": "gemini_generate",
+              "line": 717,
+              "calls": [
+                {
+                  "function": "get_gemini_client",
+                  "line": 687,
+                  "calls": [
+                    {
+                      "function": "load_ai_keys",
+                      "line": 644,
+                      "calls": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "render_markdown",
+              "line": 794,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "_gemini_client_lock",
+            "key_file_path"
+          ],
+          "write": [],
+          "read_write": [
+            "_gemini_client"
+          ],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "ganswer.html",
+            "line": 1590
+          },
+          {
+            "template": "game_help.html",
+            "line": 1593
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "text",
+              "value": "Gemini API error",
+              "status_code": 500,
+              "line": 1584
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1590,
+              "template": "ganswer.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ganswer.html"
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1593,
+              "template": "game_help.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/game_help.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "text",
+              "html_template"
+            ],
+            "templates": [
+              "ganswer.html",
+              "game_help.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ganswer.html",
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/game_help.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/hindi2marathi-transcribe",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "hindi2marathi_transcribe",
+      "line": 1597,
+      "dependencies": {
+        "direct_functions": [
+          "gemini_generate"
+        ],
+        "indirect_functions": [
+          "load_ai_keys",
+          "get_gemini_client"
+        ],
+        "all_functions": [
+          "hindi2marathi_transcribe",
+          "load_ai_keys",
+          "get_gemini_client",
+          "gemini_generate"
+        ],
+        "call_tree": {
+          "function": "hindi2marathi_transcribe",
+          "line": 1597,
+          "calls": [
+            {
+              "function": "gemini_generate",
+              "line": 717,
+              "calls": [
+                {
+                  "function": "get_gemini_client",
+                  "line": 687,
+                  "calls": [
+                    {
+                      "function": "load_ai_keys",
+                      "line": 644,
+                      "calls": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "_gemini_client_lock",
+            "key_file_path"
+          ],
+          "write": [],
+          "read_write": [
+            "_gemini_client"
+          ],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "transcribe.html",
+            "line": 1599
+          },
+          {
+            "template": "ganswerhindi2marathi.html",
+            "line": 1619
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1599,
+              "template": "transcribe.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/transcribe.html"
+            },
+            {
+              "type": "text",
+              "value": "Gemini API error",
+              "status_code": 500,
+              "line": 1617
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1619,
+              "template": "ganswerhindi2marathi.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ganswerhindi2marathi.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template",
+              "text"
+            ],
+            "templates": [
+              "transcribe.html",
+              "ganswerhindi2marathi.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/transcribe.html",
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/ganswerhindi2marathi.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/screen-off",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "function": "screen_off_handler",
+      "line": 1623,
+      "dependencies": {
+        "direct_functions": [
+          "turn_off_screen"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "screen_off_handler",
+          "turn_off_screen"
+        ],
+        "call_tree": {
+          "function": "screen_off_handler",
+          "line": 1623,
+          "calls": [
+            {
+              "function": "turn_off_screen",
+              "line": 801,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "LRESULT"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 1630,
+              "status_code": 200
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 1632,
+              "status_code": 500
+            }
+          ],
+          "summary": {
+            "types": [
+              "json"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/gemini-call",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "gemini_help",
+      "line": 1635,
+      "dependencies": {
+        "direct_functions": [
+          "gemini_generate",
+          "gemini_generate_search",
+          "render_markdown"
+        ],
+        "indirect_functions": [
+          "load_ai_keys",
+          "get_gemini_client"
+        ],
+        "all_functions": [
+          "gemini_help",
+          "load_ai_keys",
+          "get_gemini_client",
+          "gemini_generate",
+          "gemini_generate_search",
+          "render_markdown"
+        ],
+        "call_tree": {
+          "function": "gemini_help",
+          "line": 1635,
+          "calls": [
+            {
+              "function": "gemini_generate",
+              "line": 717,
+              "calls": [
+                {
+                  "function": "get_gemini_client",
+                  "line": 687,
+                  "calls": [
+                    {
+                      "function": "load_ai_keys",
+                      "line": 644,
+                      "calls": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "gemini_generate_search",
+              "line": 750,
+              "calls": [
+                {
+                  "function": "get_gemini_client",
+                  "line": 687,
+                  "calls": [
+                    {
+                      "function": "load_ai_keys",
+                      "line": 644,
+                      "calls": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "function": "render_markdown",
+              "line": 794,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "_gemini_client_lock",
+            "key_file_path"
+          ],
+          "write": [],
+          "read_write": [
+            "_gemini_client"
+          ],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "geminianswer.html",
+            "line": 1666
+          },
+          {
+            "template": "gemini_help.html",
+            "line": 1668
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1666,
+              "template": "geminianswer.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/geminianswer.html"
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1668,
+              "template": "gemini_help.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/gemini_help.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "geminianswer.html",
+              "gemini_help.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/geminianswer.html",
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/gemini_help.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/rawhtml",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "raw_html",
+      "line": 1672,
+      "dependencies": {
+        "direct_functions": [
+          "bing_search_raw",
+          "extract_readable_text",
+          "render_markdown"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "raw_html",
+          "bing_search_raw",
+          "extract_readable_text",
+          "render_markdown"
+        ],
+        "call_tree": {
+          "function": "raw_html",
+          "line": 1672,
+          "calls": [
+            {
+              "function": "bing_search_raw",
+              "line": 898,
+              "calls": []
+            },
+            {
+              "function": "extract_readable_text",
+              "line": 928,
+              "calls": []
+            },
+            {
+              "function": "render_markdown",
+              "line": 794,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "raw_request.html",
+            "line": 1675
+          },
+          {
+            "template": "rawhtmlresult.html",
+            "line": 1712
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1675,
+              "template": "raw_request.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/raw_request.html"
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1712,
+              "template": "rawhtmlresult.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/rawhtmlresult.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "raw_request.html",
+              "rawhtmlresult.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/raw_request.html",
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/rawhtmlresult.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/gpt2txt",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "function": "gptextract",
+      "line": 1716,
+      "dependencies": {
+        "direct_functions": [
+          "getGPTAnswer",
+          "render_markdown"
+        ],
+        "indirect_functions": [
+          "callAutoSave",
+          "get_latest_file_url",
+          "extract_text_gpt"
+        ],
+        "all_functions": [
+          "gptextract",
+          "callAutoSave",
+          "get_latest_file_url",
+          "extract_text_gpt",
+          "getGPTAnswer",
+          "render_markdown"
+        ],
+        "call_tree": {
+          "function": "gptextract",
+          "line": 1716,
+          "calls": [
+            {
+              "function": "getGPTAnswer",
+              "line": 1002,
+              "calls": [
+                {
+                  "function": "callAutoSave",
+                  "line": 967,
+                  "calls": []
+                },
+                {
+                  "function": "get_latest_file_url",
+                  "line": 619,
+                  "calls": []
+                },
+                {
+                  "function": "extract_text_gpt",
+                  "line": 944,
+                  "calls": []
+                }
+              ]
+            },
+            {
+              "function": "render_markdown",
+              "line": 794,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "directory"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {
+            "directory": "/home/dkvlko/Downloads/Telegram Desktop"
+          }
+        },
+        "files": [
+          {
+            "operation": "Path",
+            "line": 623,
+            "path_expression": "directory"
+          }
+        ],
+        "templates": [
+          {
+            "template": "gpt_query.html",
+            "line": 1718
+          },
+          {
+            "template": "chatgptanswer.html",
+            "line": 1740
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1718,
+              "template": "gpt_query.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/gpt_query.html"
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1740,
+              "template": "chatgptanswer.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/chatgptanswer.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "gpt_query.html",
+              "chatgptanswer.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/gpt_query.html",
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/chatgptanswer.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/ufiles",
+      "methods": [
+        "GET"
+      ],
+      "function": "ufiles",
+      "line": 1746,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "ufiles"
+        ],
+        "call_tree": {
+          "function": "ufiles",
+          "line": 1746,
+          "calls": []
+        },
+        "global_state": {
+          "read": [
+            "BASE_PATH"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "file_browser.html",
+            "line": 1789
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "file",
+              "function": "send_file",
+              "line": 1761,
+              "file_expression": "full_path"
+            },
+            {
+              "type": "text",
+              "value": "Permission denied",
+              "status_code": 403,
+              "line": 1781
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1789,
+              "template": "file_browser.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/file_browser.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "file",
+              "text",
+              "html_template"
+            ],
+            "templates": [
+              "file_browser.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/file_browser.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/ufiles/<path:req_path>",
+      "methods": [
+        "GET"
+      ],
+      "function": "ufiles",
+      "line": 1746,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "ufiles"
+        ],
+        "call_tree": {
+          "function": "ufiles",
+          "line": 1746,
+          "calls": []
+        },
+        "global_state": {
+          "read": [
+            "BASE_PATH"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "file_browser.html",
+            "line": 1789
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "file",
+              "function": "send_file",
+              "line": 1761,
+              "file_expression": "full_path"
+            },
+            {
+              "type": "text",
+              "value": "Permission denied",
+              "status_code": 403,
+              "line": 1781
+            },
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1789,
+              "template": "file_browser.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/file_browser.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "file",
+              "text",
+              "html_template"
+            ],
+            "templates": [
+              "file_browser.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/file_browser.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/controlTV",
+      "methods": [
+        "GET"
+      ],
+      "function": "control_tv",
+      "line": 1796,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "control_tv"
+        ],
+        "call_tree": {
+          "function": "control_tv",
+          "line": 1796,
+          "calls": []
+        },
+        "global_state": {
+          "read": [],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "controlTV.html",
+            "line": 1797
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 1797,
+              "template": "controlTV.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/controlTV.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "controlTV.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/controlTV.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/flagship",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship",
+      "line": 1837,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "flagship"
+        ],
+        "call_tree": {
+          "function": "flagship",
+          "line": 1837,
+          "calls": []
+        },
+        "global_state": {
+          "read": [],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_file",
+              "function": "send_file",
+              "line": 1842,
+              "file_expression": "'web/flagship_mini2.html'",
+              "resolved_file": "web/flagship_mini2.html",
+              "file_path": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_mini2.html",
+              "file_exists": true,
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_mini2.html"
+            },
+            {
+              "type": "html_file",
+              "function": "send_file",
+              "line": 1844,
+              "file_expression": "'web/flagship.html'",
+              "resolved_file": "web/flagship.html",
+              "file_path": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship.html",
+              "file_exists": true,
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_file"
+            ],
+            "templates": [],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_mini2.html",
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship.html"
+            ],
+            "files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship_mini2.html",
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/flagship.html"
+            ],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/flagship/current",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_current",
+      "line": 1847,
+      "dependencies": {
+        "direct_functions": [
+          "current_song"
+        ],
+        "indirect_functions": [
+          "update_song_pointers",
+          "rebuild_playlist"
+        ],
+        "all_functions": [
+          "flagship_current",
+          "update_song_pointers",
+          "rebuild_playlist",
+          "current_song"
+        ],
+        "call_tree": {
+          "function": "flagship_current",
+          "line": 1847,
+          "calls": [
+            {
+              "function": "current_song",
+              "line": 1125,
+              "calls": [
+                {
+                  "function": "rebuild_playlist",
+                  "line": 1052,
+                  "calls": [
+                    {
+                      "function": "update_song_pointers",
+                      "line": 1136,
+                      "calls": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "AD_FILE",
+            "ANNOUNCEMENT_DIR",
+            "DOWNLOAD_DIR",
+            "PLAYLIST_LOG",
+            "app"
+          ],
+          "write": [
+            "_current_item",
+            "_next_item",
+            "_previous_item"
+          ],
+          "read_write": [
+            "_index",
+            "_playlist"
+          ],
+          "resolved": {
+            "AD_FILE": "Shaitaan.mp3",
+            "_index": 0,
+            "ANNOUNCEMENT_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Announcements",
+            "DOWNLOAD_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SpotifyMusicRIP",
+            "PLAYLIST_LOG": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Temp/FlagshipPlaylist.log"
+          }
+        },
+        "files": [
+          {
+            "operation": "open",
+            "line": 1880,
+            "path_expression": "path"
+          },
+          {
+            "operation": "Path",
+            "line": 1077,
+            "path_expression": "song"
+          },
+          {
+            "operation": "Path",
+            "line": 1090,
+            "path_expression": "AD_FILE"
+          },
+          {
+            "operation": "open",
+            "line": 1109,
+            "path_expression": "PLAYLIST_LOG"
+          }
+        ],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "file",
+              "function": "send_file",
+              "line": 1867,
+              "file_expression": "path"
+            },
+            {
+              "type": "response",
+              "function": "Response",
+              "line": 1895,
+              "body_expression": "data",
+              "mimetype": "mimetype",
+              "returned_variable": "response"
+            }
+          ],
+          "summary": {
+            "types": [
+              "file",
+              "response"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/flagship/advance",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_advance",
+      "line": 1901,
+      "dependencies": {
+        "direct_functions": [
+          "advance_song"
+        ],
+        "indirect_functions": [
+          "update_song_pointers",
+          "rebuild_playlist"
+        ],
+        "all_functions": [
+          "flagship_advance",
+          "update_song_pointers",
+          "rebuild_playlist",
+          "advance_song"
+        ],
+        "call_tree": {
+          "function": "flagship_advance",
+          "line": 1901,
+          "calls": [
+            {
+              "function": "advance_song",
+              "line": 1037,
+              "calls": [
+                {
+                  "function": "rebuild_playlist",
+                  "line": 1052,
+                  "calls": [
+                    {
+                      "function": "update_song_pointers",
+                      "line": 1136,
+                      "calls": []
+                    }
+                  ]
+                },
+                {
+                  "function": "update_song_pointers",
+                  "line": 1136,
+                  "calls": []
+                }
+              ]
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "AD_FILE",
+            "ANNOUNCEMENT_DIR",
+            "DOWNLOAD_DIR",
+            "PLAYLIST_LOG"
+          ],
+          "write": [
+            "_current_item",
+            "_next_item",
+            "_previous_item"
+          ],
+          "read_write": [
+            "_index",
+            "_playlist"
+          ],
+          "resolved": {
+            "AD_FILE": "Shaitaan.mp3",
+            "_index": 0,
+            "ANNOUNCEMENT_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Announcements",
+            "DOWNLOAD_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SpotifyMusicRIP",
+            "PLAYLIST_LOG": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Temp/FlagshipPlaylist.log"
+          }
+        },
+        "files": [
+          {
+            "operation": "Path",
+            "line": 1077,
+            "path_expression": "song"
+          },
+          {
+            "operation": "Path",
+            "line": 1090,
+            "path_expression": "AD_FILE"
+          },
+          {
+            "operation": "open",
+            "line": 1109,
+            "path_expression": "PLAYLIST_LOG"
+          }
+        ],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "text",
+              "value": "",
+              "status_code": 204,
+              "line": 1907
+            }
+          ],
+          "summary": {
+            "types": [
+              "text"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/flagship/next",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_next",
+      "line": 1910,
+      "dependencies": {
+        "direct_functions": [
+          "next_song"
+        ],
+        "indirect_functions": [
+          "update_song_pointers",
+          "rebuild_playlist"
+        ],
+        "all_functions": [
+          "flagship_next",
+          "update_song_pointers",
+          "rebuild_playlist",
+          "next_song"
+        ],
+        "call_tree": {
+          "function": "flagship_next",
+          "line": 1910,
+          "calls": [
+            {
+              "function": "next_song",
+              "line": 1166,
+              "calls": [
+                {
+                  "function": "rebuild_playlist",
+                  "line": 1052,
+                  "calls": [
+                    {
+                      "function": "update_song_pointers",
+                      "line": 1136,
+                      "calls": []
+                    }
+                  ]
+                },
+                {
+                  "function": "update_song_pointers",
+                  "line": 1136,
+                  "calls": []
+                }
+              ]
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "AD_FILE",
+            "ANNOUNCEMENT_DIR",
+            "DOWNLOAD_DIR",
+            "PLAYLIST_LOG"
+          ],
+          "write": [
+            "_current_item",
+            "_next_item",
+            "_previous_item"
+          ],
+          "read_write": [
+            "_index",
+            "_playlist"
+          ],
+          "resolved": {
+            "AD_FILE": "Shaitaan.mp3",
+            "_index": 0,
+            "ANNOUNCEMENT_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Announcements",
+            "DOWNLOAD_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SpotifyMusicRIP",
+            "PLAYLIST_LOG": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Temp/FlagshipPlaylist.log"
+          }
+        },
+        "files": [
+          {
+            "operation": "Path",
+            "line": 1077,
+            "path_expression": "song"
+          },
+          {
+            "operation": "Path",
+            "line": 1090,
+            "path_expression": "AD_FILE"
+          },
+          {
+            "operation": "open",
+            "line": 1109,
+            "path_expression": "PLAYLIST_LOG"
+          }
+        ],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "text",
+              "value": "",
+              "status_code": 204,
+              "line": 1913
+            }
+          ],
+          "summary": {
+            "types": [
+              "text"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/flagship/previous",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_previous",
+      "line": 1916,
+      "dependencies": {
+        "direct_functions": [
+          "previous_song"
+        ],
+        "indirect_functions": [
+          "update_song_pointers",
+          "rebuild_playlist"
+        ],
+        "all_functions": [
+          "flagship_previous",
+          "update_song_pointers",
+          "rebuild_playlist",
+          "previous_song"
+        ],
+        "call_tree": {
+          "function": "flagship_previous",
+          "line": 1916,
+          "calls": [
+            {
+              "function": "previous_song",
+              "line": 1191,
+              "calls": [
+                {
+                  "function": "rebuild_playlist",
+                  "line": 1052,
+                  "calls": [
+                    {
+                      "function": "update_song_pointers",
+                      "line": 1136,
+                      "calls": []
+                    }
+                  ]
+                },
+                {
+                  "function": "update_song_pointers",
+                  "line": 1136,
+                  "calls": []
+                }
+              ]
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "AD_FILE",
+            "ANNOUNCEMENT_DIR",
+            "DOWNLOAD_DIR",
+            "PLAYLIST_LOG"
+          ],
+          "write": [
+            "_current_item",
+            "_next_item",
+            "_previous_item"
+          ],
+          "read_write": [
+            "_index",
+            "_playlist"
+          ],
+          "resolved": {
+            "AD_FILE": "Shaitaan.mp3",
+            "_index": 0,
+            "ANNOUNCEMENT_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Announcements",
+            "DOWNLOAD_DIR": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/SpotifyMusicRIP",
+            "PLAYLIST_LOG": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS/Temp/FlagshipPlaylist.log"
+          }
+        },
+        "files": [
+          {
+            "operation": "Path",
+            "line": 1077,
+            "path_expression": "song"
+          },
+          {
+            "operation": "Path",
+            "line": 1090,
+            "path_expression": "AD_FILE"
+          },
+          {
+            "operation": "open",
+            "line": 1109,
+            "path_expression": "PLAYLIST_LOG"
+          }
+        ],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "text",
+              "value": "",
+              "status_code": 204,
+              "line": 1922
+            }
+          ],
+          "summary": {
+            "types": [
+              "text"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/flagship/status",
+      "methods": [
+        "GET"
+      ],
+      "function": "flagship_status",
+      "line": 1925,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "flagship_status"
+        ],
+        "call_tree": {
+          "function": "flagship_status",
+          "line": 1925,
+          "calls": []
+        },
+        "global_state": {
+          "read": [
+            "_current_item",
+            "_next_item",
+            "_previous_item"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "unknown",
+              "expression": "{'previous': None if _previous_item is None else _previous_item['path'].name, 'current': None if _current_item is None else _current_item['path'].name, 'next': None if _next_item is None else _next_item['path'].name}",
+              "line": 1927
+            }
+          ],
+          "summary": {
+            "types": [
+              "unknown"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/file-operation-download",
+      "methods": [
+        "GET"
+      ],
+      "function": "file_operation_download",
+      "line": 1934,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "file_operation_download"
+        ],
+        "call_tree": {
+          "function": "file_operation_download",
+          "line": 1934,
+          "calls": []
+        },
+        "global_state": {
+          "read": [
+            "LAN_CLOUD_FOLDER"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [
+          {
+            "operation": "Path",
+            "line": 2006,
+            "path_expression": "root"
+          }
+        ],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "text",
+              "value": "No file selected.",
+              "status_code": 400,
+              "line": 1939
+            },
+            {
+              "type": "text",
+              "value": "Selected file or directory not found.",
+              "status_code": 404,
+              "line": 1944
+            },
+            {
+              "type": "file",
+              "function": "send_file",
+              "line": 2041,
+              "file_expression": "zip_filename"
+            }
+          ],
+          "summary": {
+            "types": [
+              "text",
+              "file"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/file-operation-upload",
+      "methods": [
+        "POST"
+      ],
+      "function": "file_operation_upload",
+      "line": 2057,
+      "dependencies": {
+        "direct_functions": [
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "file_operation_upload",
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "call_tree": {
+          "function": "file_operation_upload",
+          "line": 2057,
+          "calls": [
+            {
+              "function": "BuildLANcloudDirectoryJSON",
+              "line": 1225,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "LAN_CLOUD_FOLDER",
+            "LANcloud_ID_MAP",
+            "UPLOAD_TEMP_FOLDER"
+          ],
+          "write": [
+            "LANcloud_JSON"
+          ],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [
+          {
+            "operation": "open",
+            "line": 2128,
+            "path_expression": "temporary_file"
+          }
+        ],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2178
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2192,
+              "status_code": 500
+            }
+          ],
+          "summary": {
+            "types": [
+              "json"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/file-operation",
+      "methods": [
+        "POST"
+      ],
+      "function": "file_operation",
+      "line": 2205,
+      "dependencies": {
+        "direct_functions": [
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "file_operation",
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "call_tree": {
+          "function": "file_operation",
+          "line": 2205,
+          "calls": [
+            {
+              "function": "BuildLANcloudDirectoryJSON",
+              "line": 1225,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "LAN_CLOUD_FOLDER",
+            "LANcloud_ID_MAP"
+          ],
+          "write": [
+            "LANcloud_JSON"
+          ],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2215
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2255
+            }
+          ],
+          "summary": {
+            "types": [
+              "json"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/LANcloud/list",
+      "methods": [
+        "GET"
+      ],
+      "function": "LANcloudList",
+      "line": 2273,
+      "dependencies": {
+        "direct_functions": [
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "LANcloudList",
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "call_tree": {
+          "function": "LANcloudList",
+          "line": 2273,
+          "calls": [
+            {
+              "function": "BuildLANcloudDirectoryJSON",
+              "line": 1225,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "LAN_CLOUD_FOLDER",
+            "LANcloud_ID_MAP"
+          ],
+          "write": [],
+          "read_write": [
+            "LANcloud_JSON"
+          ],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2283,
+              "status_code": 403
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2286,
+              "status_code": 404
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2290
+            }
+          ],
+          "summary": {
+            "types": [
+              "json"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/LANcloud",
+      "methods": [
+        "GET"
+      ],
+      "function": "LANcloud",
+      "line": 2293,
+      "dependencies": {
+        "direct_functions": [
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "LANcloud",
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "call_tree": {
+          "function": "LANcloud",
+          "line": 2293,
+          "calls": [
+            {
+              "function": "BuildLANcloudDirectoryJSON",
+              "line": 1225,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "LAN_CLOUD_FOLDER",
+            "LANcloud_ID_MAP"
+          ],
+          "write": [],
+          "read_write": [
+            "LANcloud_JSON"
+          ],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "showdirfiles.html",
+            "line": 2302
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 2302,
+              "template": "showdirfiles.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/showdirfiles.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "showdirfiles.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/showdirfiles.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/LANcloud/change-directory",
+      "methods": [
+        "GET"
+      ],
+      "function": "LANcloudChangeDirectory",
+      "line": 2305,
+      "dependencies": {
+        "direct_functions": [
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "LANcloudChangeDirectory",
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "call_tree": {
+          "function": "LANcloudChangeDirectory",
+          "line": 2305,
+          "calls": [
+            {
+              "function": "BuildLANcloudDirectoryJSON",
+              "line": 1225,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "LAN_CLOUD_FOLDER",
+            "LANcloud_ID_MAP"
+          ],
+          "write": [],
+          "read_write": [
+            "LANcloud_JSON"
+          ],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2310,
+              "status_code": 404
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2315,
+              "status_code": 400
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2319
+            }
+          ],
+          "summary": {
+            "types": [
+              "json"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/file-operation-new-directory",
+      "methods": [
+        "POST"
+      ],
+      "function": "file_operation_new_directory",
+      "line": 2325,
+      "dependencies": {
+        "direct_functions": [
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "indirect_functions": [],
+        "all_functions": [
+          "file_operation_new_directory",
+          "BuildLANcloudDirectoryJSON"
+        ],
+        "call_tree": {
+          "function": "file_operation_new_directory",
+          "line": 2325,
+          "calls": [
+            {
+              "function": "BuildLANcloudDirectoryJSON",
+              "line": 1225,
+              "calls": []
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "LAN_CLOUD_FOLDER",
+            "LANcloud_ID_MAP"
+          ],
+          "write": [
+            "LANcloud_JSON"
+          ],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2349
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2385
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2407
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2418,
+              "status_code": 500
+            }
+          ],
+          "summary": {
+            "types": [
+              "json"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/holiday-today",
+      "methods": [
+        "GET"
+      ],
+      "function": "holiday_today",
+      "line": 2439,
+      "dependencies": {
+        "direct_functions": [
+          "get_cached_holiday_answer"
+        ],
+        "indirect_functions": [
+          "load_ai_keys",
+          "get_gemini_client",
+          "gemini_generate_search"
+        ],
+        "all_functions": [
+          "holiday_today",
+          "load_ai_keys",
+          "get_gemini_client",
+          "gemini_generate_search",
+          "get_cached_holiday_answer"
+        ],
+        "call_tree": {
+          "function": "holiday_today",
+          "line": 2439,
+          "calls": [
+            {
+              "function": "get_cached_holiday_answer",
+              "line": 161,
+              "calls": [
+                {
+                  "function": "gemini_generate_search",
+                  "line": 750,
+                  "calls": [
+                    {
+                      "function": "get_gemini_client",
+                      "line": 687,
+                      "calls": [
+                        {
+                          "function": "load_ai_keys",
+                          "line": 644,
+                          "calls": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "HOLIDAY_CACHE_FILE",
+            "HOLIDAY_CACHE_LOCK",
+            "_gemini_client_lock",
+            "key_file_path"
+          ],
+          "write": [],
+          "read_write": [
+            "_gemini_client"
+          ],
+          "resolved": {}
+        },
+        "files": [
+          {
+            "operation": "open",
+            "line": 190,
+            "path_expression": "HOLIDAY_CACHE_FILE"
+          },
+          {
+            "operation": "open",
+            "line": 283,
+            "path_expression": "HOLIDAY_CACHE_FILE"
+          }
+        ],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2445
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2455,
+              "status_code": 500
+            }
+          ],
+          "summary": {
+            "types": [
+              "json"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/clock",
+      "methods": [
+        "GET"
+      ],
+      "function": "clock",
+      "line": 2460,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "clock"
+        ],
+        "call_tree": {
+          "function": "clock",
+          "line": 2460,
+          "calls": []
+        },
+        "global_state": {
+          "read": [],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "clock.html",
+            "line": 2461
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 2461,
+              "template": "clock.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/clock.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "clock.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/clock.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/maps/martin/<path:subpath>",
+      "methods": [
+        "GET"
+      ],
+      "function": "martin_proxy",
+      "line": 2474,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "martin_proxy"
+        ],
+        "call_tree": {
+          "function": "martin_proxy",
+          "line": 2474,
+          "calls": []
+        },
+        "global_state": {
+          "read": [
+            "MARTIN_URL"
+          ],
+          "write": [],
+          "read_write": [],
+          "resolved": {
+            "MARTIN_URL": "http://127.0.0.1:3000"
+          }
+        },
+        "files": [],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "response",
+              "function": "Response",
+              "line": 2508,
+              "body_expression": "response.content"
+            },
+            {
+              "type": "response",
+              "function": "Response",
+              "line": 2518,
+              "body_expression": "'Martin server unavailable'",
+              "mimetype": "text/plain"
+            }
+          ],
+          "summary": {
+            "types": [
+              "response"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/maps",
+      "methods": [
+        "GET"
+      ],
+      "function": "maps",
+      "line": 2524,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "maps"
+        ],
+        "call_tree": {
+          "function": "maps",
+          "line": 2524,
+          "calls": []
+        },
+        "global_state": {
+          "read": [],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "maps.html",
+            "line": 2525
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 2525,
+              "template": "maps.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/maps.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "maps.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/maps.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/date-details",
+      "methods": [
+        "GET"
+      ],
+      "function": "date_details",
+      "line": 2528,
+      "dependencies": {
+        "direct_functions": [],
+        "indirect_functions": [],
+        "all_functions": [
+          "date_details"
+        ],
+        "call_tree": {
+          "function": "date_details",
+          "line": 2528,
+          "calls": []
+        },
+        "global_state": {
+          "read": [],
+          "write": [],
+          "read_write": [],
+          "resolved": {}
+        },
+        "files": [],
+        "templates": [
+          {
+            "template": "date_details.html",
+            "line": 2530
+          }
+        ],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "html_template",
+              "function": "render_template",
+              "line": 2530,
+              "template": "date_details.html",
+              "html_file": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/date_details.html"
+            }
+          ],
+          "summary": {
+            "types": [
+              "html_template"
+            ],
+            "templates": [
+              "date_details.html"
+            ],
+            "html_files": [
+              "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/web/date_details.html"
+            ],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    },
+    {
+      "route": "/date-details-data",
+      "methods": [
+        "GET"
+      ],
+      "function": "date_details_data",
+      "line": 2536,
+      "dependencies": {
+        "direct_functions": [
+          "get_cached_date_details"
+        ],
+        "indirect_functions": [
+          "load_ai_keys",
+          "get_gemini_client",
+          "gemini_generate_search"
+        ],
+        "all_functions": [
+          "date_details_data",
+          "load_ai_keys",
+          "get_gemini_client",
+          "gemini_generate_search",
+          "get_cached_date_details"
+        ],
+        "call_tree": {
+          "function": "date_details_data",
+          "line": 2536,
+          "calls": [
+            {
+              "function": "get_cached_date_details",
+              "line": 309,
+              "calls": [
+                {
+                  "function": "gemini_generate_search",
+                  "line": 750,
+                  "calls": [
+                    {
+                      "function": "get_gemini_client",
+                      "line": 687,
+                      "calls": [
+                        {
+                          "function": "load_ai_keys",
+                          "line": 644,
+                          "calls": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "global_state": {
+          "read": [
+            "DATE_DETAILS_CACHE_FILE",
+            "DATE_DETAILS_CACHE_LOCK",
+            "DATE_DETAILS_CACHE_SECONDS",
+            "_gemini_client_lock",
+            "key_file_path"
+          ],
+          "write": [],
+          "read_write": [
+            "_gemini_client"
+          ],
+          "resolved": {}
+        },
+        "files": [
+          {
+            "operation": "open",
+            "line": 2544,
+            "path_expression": "DATE_DETAILS_CACHE_FILE"
+          },
+          {
+            "operation": "open",
+            "line": 338,
+            "path_expression": "DATE_DETAILS_CACHE_FILE"
+          },
+          {
+            "operation": "open",
+            "line": 591,
+            "path_expression": "DATE_DETAILS_CACHE_FILE"
+          }
+        ],
+        "templates": [],
+        "databases": [],
+        "response": {
+          "responses": [
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2552
+            },
+            {
+              "type": "json",
+              "function": "jsonify",
+              "line": 2569,
+              "status_code": 500
+            }
+          ],
+          "summary": {
+            "types": [
+              "json"
+            ],
+            "templates": [],
+            "html_files": [],
+            "files": [],
+            "redirects": []
+          }
+        }
+      }
+    }
+  ]
+}

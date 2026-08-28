@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Applications</title>
+
+</head>
+
+<body>
+
+    <h1>Applications</h1>
+
+    <ul id="applications"></ul>
+
+
+    <script>
+
+        const applications =
+            {{ applications | tojson }};
+
+
+        const list =
+            document.getElementById(
+                "applications"
+            );
+
+
+        /*
+         * Example:
+         *
+         * https://192.168.0.25:8000
+         */
+        const serverURL =
+            window.location.origin;
+
+
+        for (const application of applications) {
+
+            const fullURL =
+                new URL(
+                    application.url,
+                    serverURL
+                ).href;
+
+
+            const link =
+                document.createElement("a");
+
+
+            link.href = fullURL;
+
+            link.textContent =
+                application.name;
+
+
+            const item =
+                document.createElement("li");
+
+
+            item.appendChild(link);
+
+            list.appendChild(item);
+        }
+
+    </script>
+
+</body>
+
+</html>

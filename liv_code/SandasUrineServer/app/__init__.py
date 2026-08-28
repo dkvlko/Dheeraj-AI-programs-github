@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_socketio import test_client
 
 from .common.paths import (
     TEMPLATE_FOLDER,
@@ -24,5 +25,22 @@ def create_app():
     )
 
     # Register application modules here.
+    #from .modules.music import music_bp
+
+    #app.register_blueprint(music_bp)
+
+    from .modules.testbp import test_bp
+    from app.common.blueprint_browser import blueprint_browser
+
+
+    app.register_blueprint(
+        blueprint_browser
+    )
+    app.register_blueprint(
+        test_bp,
+        url_prefix=test_bp.app_url
+    )
+
 
     return app
+

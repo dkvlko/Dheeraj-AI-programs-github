@@ -1,0 +1,52 @@
+Can you give me the python code and html file to list the registered
+blueprint applications in my server?
+Following information might be useful:
+I am using python 3.14 on Ubuntu Nobel with flask-websocket sever
+(already configured and running at https://192.168.0.25:8000/). 
+I prefer Vanilla JavaScript with web-socket.
+I have recently moved from my previous python architecture to Application factory
+architecture with the following directory structure:
+
+├── app
+│   ├── common
+│   └── modules
+│       ├── dailylog
+│       │   ├── static
+│       │   └── templates
+│       ├── lan_cloud
+│       ├── music
+│       │   ├── static
+│       │   └── templates
+│       ├── remote_mouse
+│       │   ├── static
+│       │   └── templates
+│       └── testbp
+│           ├── static
+│           └── templates
+├── BLOBS
+│   ├── Announcements
+│   └── Icons
+├── logs
+├── secrets
+├── static
+│   └── common
+└── tests
+    ├── common
+    ├── dailylog
+    ├── music
+    └── remote_mouse
+
+Following are the  server initilization 
+functions(present in /app/__init__.py):
+app = Flask(
+        __name__,
+        template_folder=TEMPLATE_FOLDER,
+        static_folder=STATIC_FOLDER,
+        static_url_path="/static"
+        )
+
+socketio = SocketIO(
+    app,
+    cors_allowed_origins="*",
+    async_mode = "threading"
+)

@@ -1,0 +1,722 @@
+
+================================================================================
+FLASK APPLICATION AST ANALYSIS
+================================================================================
+
+SOURCE
+--------------------------------------------------------------------------------
+dailylog_server_websoc.py
+
+URL HANDLERS
+--------------------------------------------------------------------------------
+
+/my/ → mypage() (line 1345)
+    Methods: GET
+
+    Functions used:
+        mypage()
+
+    Global state:
+
+    Files:
+
+    Templates:
+
+    Databases:
+
+/ → url_directory() (line 1349)
+    Methods: GET
+
+    Functions used:
+        url_directory()
+
+    Global state:
+        READ       app
+
+    Files:
+
+    Templates:
+        url_directory.html (line 1394)
+
+    Databases:
+
+/copyText → copy_text() (line 1398)
+    Methods: GET, POST
+
+    Functions used:
+        copy_text()
+
+    Global state:
+        READ       TEMPLATE_FOLDER
+
+    Files:
+
+    Templates:
+        copytext.html (line 1401)
+
+    Databases:
+
+/log → index() (line 1421)
+    Methods: GET
+
+    Functions used:
+        index()
+        get_table_names()
+
+    Global state:
+        READ       DB_PATH
+
+    Files:
+
+    Templates:
+        activity.html (line 1433)
+
+    Databases:
+        connect: DB_PATH (line 843)
+
+/activity → activity_action() (line 1437)
+    Methods: GET
+
+    Functions used:
+        activity_action()
+        getViewTable()
+        getInsertTable()
+
+    Global state:
+
+    Files:
+
+    Templates:
+        view_form.html (line 860)
+        memo.html (line 872)
+        insert_form.html (line 891)
+
+    Databases:
+
+/view_results → view_results() (line 1449)
+    Methods: POST
+
+    Functions used:
+        view_results()
+        is_valid_table()
+        get_table_names()
+
+    Global state:
+        READ       DB_PATH
+
+    Files:
+
+    Templates:
+        view_results.html (line 1502)
+
+    Databases:
+        connect: DB_PATH (line 1461)
+        connect: DB_PATH (line 843)
+
+/insert_entry → insert_entry() (line 1510)
+    Methods: POST
+
+    Functions used:
+        insert_entry()
+        is_valid_table()
+        get_table_names()
+
+    Global state:
+        READ       DB_PATH
+
+    Files:
+
+    Templates:
+        success.html (line 1539)
+
+    Databases:
+        connect: DB_PATH (line 1529)
+        connect: DB_PATH (line 843)
+
+/memo → memo() (line 1542)
+    Methods: GET, POST
+
+    Functions used:
+        memo()
+
+    Global state:
+        READ       DB_PATH
+
+    Files:
+
+    Templates:
+        success.html (line 1554)
+        memo.html (line 1557)
+
+    Databases:
+        connect: DB_PATH (line 1547)
+
+/game-help → game_help() (line 1560)
+    Methods: GET, POST
+
+    Functions used:
+        game_help()
+        gemini_generate()
+        get_gemini_client()
+        load_ai_keys()
+        render_markdown()
+
+    Global state:
+        READ       _gemini_client_lock
+        READ       key_file_path
+        READ/WRITE _gemini_client
+
+    Files:
+
+    Templates:
+        ganswer.html (line 1590)
+        game_help.html (line 1593)
+
+    Databases:
+
+/hindi2marathi-transcribe → hindi2marathi_transcribe() (line 1597)
+    Methods: GET, POST
+
+    Functions used:
+        hindi2marathi_transcribe()
+        gemini_generate()
+        get_gemini_client()
+        load_ai_keys()
+
+    Global state:
+        READ       _gemini_client_lock
+        READ       key_file_path
+        READ/WRITE _gemini_client
+
+    Files:
+
+    Templates:
+        transcribe.html (line 1599)
+        ganswerhindi2marathi.html (line 1619)
+
+    Databases:
+
+/screen-off → screen_off_handler() (line 1623)
+    Methods: POST, GET
+
+    Functions used:
+        screen_off_handler()
+        turn_off_screen()
+
+    Global state:
+        READ       LRESULT
+
+    Files:
+
+    Templates:
+
+    Databases:
+
+/gemini-call → gemini_help() (line 1635)
+    Methods: GET, POST
+
+    Functions used:
+        gemini_help()
+        gemini_generate()
+        get_gemini_client()
+        load_ai_keys()
+        gemini_generate_search()
+        render_markdown()
+
+    Global state:
+        READ       _gemini_client_lock
+        READ       key_file_path
+        READ/WRITE _gemini_client
+
+    Files:
+
+    Templates:
+        geminianswer.html (line 1666)
+        gemini_help.html (line 1668)
+
+    Databases:
+
+/rawhtml → raw_html() (line 1672)
+    Methods: GET, POST
+
+    Functions used:
+        raw_html()
+        bing_search_raw()
+        extract_readable_text()
+        render_markdown()
+
+    Global state:
+
+    Files:
+
+    Templates:
+        raw_request.html (line 1675)
+        rawhtmlresult.html (line 1712)
+
+    Databases:
+
+/gpt2txt → gptextract() (line 1716)
+    Methods: GET, POST
+
+    Functions used:
+        gptextract()
+        getGPTAnswer()
+        callAutoSave()
+        get_latest_file_url()
+        extract_text_gpt()
+        render_markdown()
+
+    Global state:
+        READ       directory
+
+    Files:
+        Path: directory (line 623)
+
+    Templates:
+        gpt_query.html (line 1718)
+        chatgptanswer.html (line 1740)
+
+    Databases:
+
+/ufiles → ufiles() (line 1746)
+    Methods: GET
+
+    Functions used:
+        ufiles()
+
+    Global state:
+        READ       BASE_PATH
+
+    Files:
+
+    Templates:
+        file_browser.html (line 1789)
+
+    Databases:
+
+/ufiles/<path:req_path> → ufiles() (line 1746)
+    Methods: GET
+
+    Functions used:
+        ufiles()
+
+    Global state:
+        READ       BASE_PATH
+
+    Files:
+
+    Templates:
+        file_browser.html (line 1789)
+
+    Databases:
+
+/controlTV → control_tv() (line 1796)
+    Methods: GET
+
+    Functions used:
+        control_tv()
+
+    Global state:
+
+    Files:
+
+    Templates:
+        controlTV.html (line 1797)
+
+    Databases:
+
+/flagship → flagship() (line 1837)
+    Methods: GET
+
+    Functions used:
+        flagship()
+
+    Global state:
+
+    Files:
+
+    Templates:
+
+    Databases:
+
+/flagship/current → flagship_current() (line 1847)
+    Methods: GET
+
+    Functions used:
+        flagship_current()
+        current_song()
+        rebuild_playlist()
+        update_song_pointers()
+
+    Global state:
+        READ       AD_FILE
+        READ       ANNOUNCEMENT_DIR
+        READ       DOWNLOAD_DIR
+        READ       PLAYLIST_LOG
+        READ       app
+        READ/WRITE _current_item
+        READ/WRITE _index
+        READ/WRITE _next_item
+        READ/WRITE _playlist
+        READ/WRITE _previous_item
+
+    Files:
+        open: path (line 1880)
+        Path: song (line 1077)
+        Path: AD_FILE (line 1090)
+        open: PLAYLIST_LOG (line 1109)
+
+    Templates:
+
+    Databases:
+
+/flagship/advance → flagship_advance() (line 1901)
+    Methods: GET
+
+    Functions used:
+        flagship_advance()
+        advance_song()
+        rebuild_playlist()
+        update_song_pointers()
+
+    Global state:
+        READ       AD_FILE
+        READ       ANNOUNCEMENT_DIR
+        READ       DOWNLOAD_DIR
+        READ       PLAYLIST_LOG
+        READ/WRITE _current_item
+        READ/WRITE _index
+        READ/WRITE _next_item
+        READ/WRITE _playlist
+        READ/WRITE _previous_item
+
+    Files:
+        Path: song (line 1077)
+        Path: AD_FILE (line 1090)
+        open: PLAYLIST_LOG (line 1109)
+
+    Templates:
+
+    Databases:
+
+/flagship/next → flagship_next() (line 1910)
+    Methods: GET
+
+    Functions used:
+        flagship_next()
+        next_song()
+        rebuild_playlist()
+        update_song_pointers()
+
+    Global state:
+        READ       AD_FILE
+        READ       ANNOUNCEMENT_DIR
+        READ       DOWNLOAD_DIR
+        READ       PLAYLIST_LOG
+        READ/WRITE _current_item
+        READ/WRITE _index
+        READ/WRITE _next_item
+        READ/WRITE _playlist
+        READ/WRITE _previous_item
+
+    Files:
+        Path: song (line 1077)
+        Path: AD_FILE (line 1090)
+        open: PLAYLIST_LOG (line 1109)
+
+    Templates:
+
+    Databases:
+
+/flagship/previous → flagship_previous() (line 1916)
+    Methods: GET
+
+    Functions used:
+        flagship_previous()
+        previous_song()
+        rebuild_playlist()
+        update_song_pointers()
+
+    Global state:
+        READ       AD_FILE
+        READ       ANNOUNCEMENT_DIR
+        READ       DOWNLOAD_DIR
+        READ       PLAYLIST_LOG
+        READ/WRITE _current_item
+        READ/WRITE _index
+        READ/WRITE _next_item
+        READ/WRITE _playlist
+        READ/WRITE _previous_item
+
+    Files:
+        Path: song (line 1077)
+        Path: AD_FILE (line 1090)
+        open: PLAYLIST_LOG (line 1109)
+
+    Templates:
+
+    Databases:
+
+/flagship/status → flagship_status() (line 1925)
+    Methods: GET
+
+    Functions used:
+        flagship_status()
+
+    Global state:
+        READ       _current_item
+        READ       _next_item
+        READ       _previous_item
+
+    Files:
+
+    Templates:
+
+    Databases:
+
+/file-operation-download → file_operation_download() (line 1934)
+    Methods: GET
+
+    Functions used:
+        file_operation_download()
+
+    Global state:
+        READ       LAN_CLOUD_FOLDER
+
+    Files:
+        Path: root (line 2006)
+
+    Templates:
+
+    Databases:
+
+/file-operation-upload → file_operation_upload() (line 2057)
+    Methods: POST
+
+    Functions used:
+        file_operation_upload()
+        BuildLANcloudDirectoryJSON()
+
+    Global state:
+        READ       LAN_CLOUD_FOLDER
+        READ       LANcloud_ID_MAP
+        READ       UPLOAD_TEMP_FOLDER
+        READ/WRITE LANcloud_JSON
+
+    Files:
+        open: temporary_file (line 2128)
+
+    Templates:
+
+    Databases:
+
+/file-operation → file_operation() (line 2205)
+    Methods: POST
+
+    Functions used:
+        file_operation()
+        BuildLANcloudDirectoryJSON()
+
+    Global state:
+        READ       LAN_CLOUD_FOLDER
+        READ       LANcloud_ID_MAP
+        READ/WRITE LANcloud_JSON
+
+    Files:
+
+    Templates:
+
+    Databases:
+
+/LANcloud/list → LANcloudList() (line 2273)
+    Methods: GET
+
+    Functions used:
+        LANcloudList()
+        BuildLANcloudDirectoryJSON()
+
+    Global state:
+        READ       LAN_CLOUD_FOLDER
+        READ       LANcloud_ID_MAP
+        READ/WRITE LANcloud_JSON
+
+    Files:
+
+    Templates:
+
+    Databases:
+
+/LANcloud → LANcloud() (line 2293)
+    Methods: GET
+
+    Functions used:
+        LANcloud()
+        BuildLANcloudDirectoryJSON()
+
+    Global state:
+        READ       LAN_CLOUD_FOLDER
+        READ       LANcloud_ID_MAP
+        READ/WRITE LANcloud_JSON
+
+    Files:
+
+    Templates:
+        showdirfiles.html (line 2302)
+
+    Databases:
+
+/LANcloud/change-directory → LANcloudChangeDirectory() (line 2305)
+    Methods: GET
+
+    Functions used:
+        LANcloudChangeDirectory()
+        BuildLANcloudDirectoryJSON()
+
+    Global state:
+        READ       LAN_CLOUD_FOLDER
+        READ       LANcloud_ID_MAP
+        READ/WRITE LANcloud_JSON
+
+    Files:
+
+    Templates:
+
+    Databases:
+
+/file-operation-new-directory → file_operation_new_directory() (line 2325)
+    Methods: POST
+
+    Functions used:
+        file_operation_new_directory()
+        BuildLANcloudDirectoryJSON()
+
+    Global state:
+        READ       LAN_CLOUD_FOLDER
+        READ       LANcloud_ID_MAP
+        READ/WRITE LANcloud_JSON
+
+    Files:
+
+    Templates:
+
+    Databases:
+
+/holiday-today → holiday_today() (line 2439)
+    Methods: GET
+
+    Functions used:
+        holiday_today()
+        get_cached_holiday_answer()
+        gemini_generate_search()
+        get_gemini_client()
+        load_ai_keys()
+
+    Global state:
+        READ       HOLIDAY_CACHE_FILE
+        READ       HOLIDAY_CACHE_LOCK
+        READ       _gemini_client_lock
+        READ       key_file_path
+        READ/WRITE _gemini_client
+
+    Files:
+        open: HOLIDAY_CACHE_FILE (line 190)
+        open: HOLIDAY_CACHE_FILE (line 283)
+
+    Templates:
+
+    Databases:
+
+/clock → clock() (line 2460)
+    Methods: GET
+
+    Functions used:
+        clock()
+
+    Global state:
+
+    Files:
+
+    Templates:
+        clock.html (line 2461)
+
+    Databases:
+
+/maps/martin/<path:subpath> → martin_proxy() (line 2474)
+    Methods: GET
+
+    Functions used:
+        martin_proxy()
+
+    Global state:
+        READ       MARTIN_URL
+
+    Files:
+
+    Templates:
+
+    Databases:
+
+/maps → maps() (line 2524)
+    Methods: GET
+
+    Functions used:
+        maps()
+
+    Global state:
+
+    Files:
+
+    Templates:
+        maps.html (line 2525)
+
+    Databases:
+
+/date-details → date_details() (line 2528)
+    Methods: GET
+
+    Functions used:
+        date_details()
+
+    Global state:
+
+    Files:
+
+    Templates:
+        date_details.html (line 2530)
+
+    Databases:
+
+/date-details-data → date_details_data() (line 2536)
+    Methods: GET
+
+    Functions used:
+        date_details_data()
+        get_cached_date_details()
+        gemini_generate_search()
+        get_gemini_client()
+        load_ai_keys()
+
+    Global state:
+        READ       DATE_DETAILS_CACHE_FILE
+        READ       DATE_DETAILS_CACHE_LOCK
+        READ       DATE_DETAILS_CACHE_SECONDS
+        READ       _gemini_client_lock
+        READ       key_file_path
+        READ/WRITE _gemini_client
+
+    Files:
+        open: DATE_DETAILS_CACHE_FILE (line 2544)
+        open: DATE_DETAILS_CACHE_FILE (line 338)
+        open: DATE_DETAILS_CACHE_FILE (line 591)
+
+    Templates:
+
+    Databases:
+
+================================================================================
+SUMMARY
+================================================================================
+Routes:          36
+Functions:       71
+Module globals:  39
+Imports:         45
