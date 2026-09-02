@@ -17,14 +17,14 @@ PROJECT_ROOT_SSL = PROJECT_ROOT.parent
 
 #External BLOB#
 EXT_BLOB = PROJECT_ROOT.parent / "BLOBS"
-
+EXT_BLOB = EXT_BLOB.resolve()
 # ------------------------------------------------------------
 # Web
 # ------------------------------------------------------------
 
-TEMPLATE_FOLDER = PROJECT_ROOT / "web"
+#TEMPLATE_FOLDER = PROJECT_ROOT / "web"
 
-STATIC_FOLDER = TEMPLATE_FOLDER / "static"
+#STATIC_FOLDER = TEMPLATE_FOLDER / "static"
 
 
 # ------------------------------------------------------------
@@ -49,9 +49,11 @@ AI_KEY_FILE = AI_API_DIR / "AI-keys.key"
 
 CERT_DIR = PROJECT_ROOT_SSL / "sslcert"
 
-SERVER_CERT = CERT_DIR / "ubuntu_server.crt"
+#SERVER_CERT = CERT_DIR / "ubuntu_server.crt"
+SERVER_CERT = CERT_DIR / "ubuntu_server_192_168_0_25.crt"
+#SERVER_KEY = CERT_DIR / "ubuntu_server.key"
+SERVER_KEY = CERT_DIR / "ubuntu_server_192_168_0_25.key"
 
-SERVER_KEY = CERT_DIR / "ubuntu_server.key"
 
 
 # ------------------------------------------------------------
@@ -62,6 +64,9 @@ DOWNLOAD_DIR = (
     EXT_BLOB /
     "SpotifyMusicRIP"
 )
+
+
+AD_FILE = "Shaitaan.mp3"
 
 ANNOUNCEMENT_DIR = (
     EXT_BLOB /
@@ -93,6 +98,9 @@ UPLOAD_TEMP_FOLDER = (
     ".upload_temp"
 )
 
+
+#Open Maps settings
+MARTIN_URL = "http://127.0.0.1:3000"
 
 # ------------------------------------------------------------
 # Holiday/date caches

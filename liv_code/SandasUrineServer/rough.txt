@@ -1,11 +1,27 @@
-Can you give me the python code and html file to list the registered
-blueprint applications in my server?
+Can you suggest me how to place the following python url handler
+(and the html) file and register the blueprint applications in my server?
+The url should belong to music module.
 Following information might be useful:
 I am using python 3.14 on Ubuntu Nobel with flask-websocket sever
 (already configured and running at https://192.168.0.25:8000/). 
 I prefer Vanilla JavaScript with web-socket.
 I have recently moved from my previous python architecture to Application factory
 architecture with the following directory structure:
+URL Handler to port :
+
+
+
+@app.route("/flagship")
+def flagship():
+
+    ua = request.headers.get("User-Agent", "")
+
+    if "iPad" in ua and "CPU OS 12_" in ua:
+        return send_file("web/flagship_mini2.html")
+
+    return send_file("web/flagship.html")
+========================================
+Directory Structure:
 
 ├── app
 │   ├── common
@@ -35,18 +51,25 @@ architecture with the following directory structure:
     ├── dailylog
     ├── music
     └── remote_mouse
-
+=============================
 Following are the  server initilization 
 functions(present in /app/__init__.py):
-app = Flask(
+
+from .extensions import socketio
+
+
+def create_app():
+
+    app = Flask(
         __name__,
         template_folder=TEMPLATE_FOLDER,
         static_folder=STATIC_FOLDER,
         static_url_path="/static"
-        )
+    )
 
-socketio = SocketIO(
-    app,
-    cors_allowed_origins="*",
-    async_mode = "threading"
-)
+    socketio.init_app(
+        app,
+        cors_allowed_origins="*",
+        async_mode="threading"
+    )
+

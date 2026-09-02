@@ -1,13 +1,14 @@
 from flask import Blueprint
 
-music_bp = Blueprint(
-    "music",
+remotelap_bp = Blueprint(
+    "remote_lap",
     __name__,
     template_folder="templates",
     static_folder="static",
-    static_url_path="/static"
+    static_url_path="/static",
 )
 
-music_bp.app_url = "/flagship"
+remotelap_bp.app_url = "/remote_lap"
 
 from . import routes
+

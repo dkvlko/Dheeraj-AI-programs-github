@@ -79,11 +79,11 @@ audio{
 
 <div class="controls">
     <button id="prev" class="icon-btn">
-        <img src="/static/icons/rewind-button.png" alt="Previous">
+        <img src="/flagship/static/icons/rewind-button.png" alt="Previous">
     </button>
 
     <button id="next" class="icon-btn">
-        <img src="/static/icons/forward.png" alt="Next">
+        <img src="/flagship/static/icons/forward.png" alt="Next">
     </button>
 </div>
 
@@ -108,17 +108,18 @@ audio{
 
 
 <script>
+document.addEventListener('DOMContentLoaded', function(){
 
-const player=document.getElementById("player");
+var player=document.getElementById("player");
 async function updateStatus()
 {
-    const r = await fetch("/flagship/status");
+    var r = await fetch("/flagship/status");
 
-    const s = await r.json();
+    var s = await r.json();
 
-    previousSong.textContent = s.previous ?? "";
-    currentSong.textContent  = s.current  ?? "";
-    nextSong.textContent     = s.next     ?? "";
+    previousSong.textContent = s.previous || "";
+    currentSong.textContent  = s.current  || "";
+    nextSong.textContent     = s.next     || "";
 }
 
 function playCurrent()
@@ -128,20 +129,22 @@ function playCurrent()
     player.load();
 
     updateStatus();
-    player.play().catch(()=>{});
+    player.play().catch(function () {});
 }
 
-document.getElementById("prev").onclick = async () => {
-    await fetch("/flagship/previous");
-    playCurrent();
+document.getElementById("prev").onclick = function () {
+    fetch("/flagship/previous").then(function(){
+        playCurrent();
+    });
 };
 
-document.getElementById("next").onclick = async () => {
-    await fetch("/flagship/next");
-    playCurrent();
+document.getElementById("next").onclick = function () {
+    fetch("/flagship/next").then(function(){
+        playCurrent();
+    });
 };
 
-player.addEventListener("ended",async ()=>{
+player.addEventListener("ended",async function () {
 
     await fetch("/flagship/advance");
 
@@ -149,32 +152,34 @@ player.addEventListener("ended",async ()=>{
 
 });
 
-player.addEventListener("error", () => {
+player.addEventListener("error", function () {
     console.log("Audio error:", player.error);
 });
 
-player.addEventListener("stalled", () => {
+player.addEventListener("stalled", function () {
     console.log("Playback stalled");
 });
 
-player.addEventListener("waiting", () => {
+player.addEventListener("waiting", function () {
     console.log("Waiting for data");
 });
 
-player.addEventListener("pause", () => {
+player.addEventListener("pause", function () {
     console.log("Paused");
 });
 
-player.addEventListener("abort", () => {
+player.addEventListener("abort", function () {
     console.log("Aborted");
 });
 
-player.addEventListener("suspend", () => {
+player.addEventListener("suspend", function () {
     console.log("Suspended");
 });
 
 playCurrent();
 
+
+});
 </script>
 
 </body>

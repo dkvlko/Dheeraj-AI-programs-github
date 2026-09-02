@@ -11,15 +11,15 @@ set -o pipefail
 
 SCRIPT_DIR="/home/dkvlko/Dheeraj-AI-programs-github/liv_code"
 
-OUTPUT_DIR="/home/dkvlko/Dheeraj-AI-programs-github/liv_code/UrineSandasDataLog/BLOBS"
+OUTPUT_DIR="/home/dkvlko/Dheeraj-AI-programs-github/liv_code/BLOBS"
 
-OUTPUT_FILE="${OUTPUT_DIR}/gemini_nhcn.json"
+OUTPUT_FILE="${OUTPUT_DIR}/CalAndHolidays/gemini_nhcn.json"
 
 LOG_FILE="${OUTPUT_DIR}/gemini_nhcn.log"
 
 ENV_FILE="/home/dkvlko/.config/gemini.env"
 
-MODEL="gemini-3.7-flash"
+MODEL="gemini-3.6-flash"
 
 API_URL="https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent"
 

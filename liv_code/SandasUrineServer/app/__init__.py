@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_socketio import test_client
 
-from .common.paths import (
-    TEMPLATE_FOLDER,
-    STATIC_FOLDER,
-)
+#from flask_socketio import SocketIO
+
+#from .common.paths import (
+#    TEMPLATE_FOLDER,
+#    STATIC_FOLDER,
+#)
 
 from .extensions import socketio
 
@@ -13,9 +15,9 @@ def create_app():
 
     app = Flask(
         __name__,
-        template_folder=TEMPLATE_FOLDER,
-        static_folder=STATIC_FOLDER,
-        static_url_path="/static"
+        #template_folder=TEMPLATE_FOLDER,
+        #static_folder=STATIC_FOLDER,
+        #static_url_path="/static"
     )
 
     socketio.init_app(
@@ -41,6 +43,39 @@ def create_app():
         url_prefix=test_bp.app_url
     )
 
+    from app.modules.music import music_bp
+    app.register_blueprint(
+        music_bp,
+        url_prefix=music_bp.app_url
+    )
+
+
+    from app.modules.lan_cloud import lancloud_bp
+    app.register_blueprint(
+        lancloud_bp,
+        url_prefix=lancloud_bp.app_url
+    )
+
+
+    from app.modules.lan_maps import lanmaps_bp
+    app.register_blueprint(
+        lanmaps_bp,
+        url_prefix=lanmaps_bp.app_url
+    )
+
+
+    from app.modules.remote_lap import remotelap_bp
+    from app.modules.remote_lap.routes import register_socket_handlers 
+
+    app.register_blueprint(
+        remotelap_bp,
+        url_prefix=remotelap_bp.app_url
+    )
+
+    register_socket_handlers(socketio)
+
+    print("Static folder:", app.static_folder)
+    print("Static URL path:", app.static_url_path)
 
     return app
 

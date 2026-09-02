@@ -1106,20 +1106,7 @@ def rebuild_playlist():
     _index = 0
     
     update_song_pointers()
-    with open(PLAYLIST_LOG, "a", encoding="utf-8") as f:
 
-        f.write("\n")
-        f.write("=" * 80 + "\n")
-        f.write(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        f.write("\n")
-        f.write("=" * 80 + "\n")
-
-        for n, item in enumerate(_playlist, 1):
-            f.write(
-                f"{n:03d}  "
-                f"{item['type']:13s}  "
-                f"{item['path'].name}\n"
-            )
 
 
 def current_song():
@@ -1153,15 +1140,6 @@ def update_song_pointers():
     else:
         _next_item = None
 
-    #print()
-    #print("=" * 70)
-    #print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-
-    #print("Previous :", _previous_item["path"].name if _previous_item else "<None>")
-    #print("Current  :", _current_item["path"].name)
-    #print("Next     :", _next_item["path"].name if _next_item else "<None>")
-
-    #print("=" * 70)
 
 def next_song():
     """Next button: jump to the next announcement."""
@@ -1859,11 +1837,6 @@ def flagship_current():
         range_header = request.headers.get("Range")
 
         if not range_header:
-            #app.logger.info(
-            #    "Serving %s (%s) with send_file()",
-            #    path.name,
-            #    mimetype,
-            #)
             return send_file(
                 path,
                 mimetype=mimetype,

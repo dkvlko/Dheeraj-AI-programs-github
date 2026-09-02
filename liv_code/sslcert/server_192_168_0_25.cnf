@@ -1,0 +1,21 @@
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+C = IN
+ST = Uttar Pradesh
+L = Lucknow
+O = FlaskLAN
+OU = LAN Server
+CN = 192.168.0.25
+
+[v3_req]
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+IP.1 = 192.168.0.25
+DNS.1 = flask.local
