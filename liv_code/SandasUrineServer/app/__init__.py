@@ -38,10 +38,11 @@ def create_app():
     app.register_blueprint(
         blueprint_browser
     )
-    app.register_blueprint(
-        test_bp,
-        url_prefix=test_bp.app_url
-    )
+
+    #app.register_blueprint(
+    #    test_bp,
+    #    url_prefix=test_bp.app_url
+    #)
 
     from app.modules.music import music_bp
     app.register_blueprint(
@@ -74,8 +75,10 @@ def create_app():
 
     register_socket_handlers(socketio)
 
-    print("Static folder:", app.static_folder)
-    print("Static URL path:", app.static_url_path)
+    #print("Static folder:", app.static_folder)
+    #Static folder: /home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/static
+    #Static URL path: /static
+    #print("Static URL path:", app.static_url_path)
 
     return app
 
