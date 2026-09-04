@@ -66,14 +66,14 @@ def create_app():
 
 
     from app.modules.remote_lap import remotelap_bp
-    from app.modules.remote_lap.routes import register_socket_handlers 
+    #from app.modules.remote_lap.routes import register_socket_handlers 
 
     app.register_blueprint(
         remotelap_bp,
         url_prefix=remotelap_bp.app_url
     )
 
-    register_socket_handlers(socketio)
+    #register_socket_handlers(socketio)
 
     #print("Static folder:", app.static_folder)
     #Static folder: /home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/static

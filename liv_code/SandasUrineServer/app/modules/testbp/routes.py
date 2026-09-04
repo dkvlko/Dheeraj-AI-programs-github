@@ -12,10 +12,6 @@ from app import socketio
 # Laptop screen dimensions
 SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 
-dxo=0.0
-dyo=0.0
-
-
 # Protect PyAutoGUI/X11 operations from concurrent Socket.IO handlers
 pyautogui_lock = threading.Lock()
 
@@ -76,17 +72,9 @@ def mouse_test():
 
 @socketio.on("mouse_test_move")
 def mouse_test_move(data):
-    #global dxo, dyo
     dx = data.get("dx", 0)
     dy = data.get("dy", 0)
-
-
     with pyautogui_lock:
-
-        #print("old x,y ",dxo,",",dyo,flush=True)
-        #print("new x,y ",dx,",",dy,flush=True)
-        #dxo = float(dx)
-        #dyo = float(dy)
         move_laptop_cursor(dx, dy)
 
 @socketio.on("mouse_test_click")

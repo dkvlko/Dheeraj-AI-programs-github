@@ -1,6 +1,27 @@
 "use strict";
 
 
+
+let touchInputEnabled = true;
+let movementTimer = null;
+
+function startTouchInputCycle() {
+    setInterval(() => {
+        // Disable touch input after 2 seconds
+        touchInputEnabled = false;
+        console.log("TOUCH INPUT: DISABLED");
+
+        setTimeout(() => {
+            // Enable touch input after 1 second
+            touchInputEnabled = true;
+            console.log("TOUCH INPUT: ENABLED");
+        }, 1000);
+
+    }, 3000);
+}
+
+//startTouchInputCycle();
+
 /* ============================================================
    LANDING PAGE
    ============================================================ */
@@ -87,7 +108,7 @@ if (window.REMOTE_PAGE === "mouse") {
        Fullscreen
        -------------------------------------------------------- */
 
-    fullscreenButton.addEventListener(
+/*    fullscreenButton.addEventListener(
         "click",
         async (event) => {
 
@@ -116,55 +137,12 @@ if (window.REMOTE_PAGE === "mouse") {
         }
     );
 
-
-    /* --------------------------------------------------------
-       Prevent browser gestures
-       -------------------------------------------------------- */
-
-    document.addEventListener(
-        "touchmove",
-        event => event.preventDefault(),
-        { passive: false }
-    );
-
-
-    document.addEventListener(
-        "gesturestart",
-        event => event.preventDefault(),
-        { passive: false }
-    );
-
-
-    document.addEventListener(
-        "gesturechange",
-        event => event.preventDefault(),
-        { passive: false }
-    );
-
-
-    document.addEventListener(
-        "gestureend",
-        event => event.preventDefault(),
-        { passive: false }
-    );
+*/
 
 
     /* --------------------------------------------------------
        Settings
-       -------------------------------------------------------- */
-    const SCREEN_WIDTH = 1366;
-    const SCREEN_HEIGHT = 768;
-
-
-    let remoteCursorX = 683;
-    let remoteCursorY = 384;
-    const MOUSE_SENSITIVITY = 1.5;
-
-
-    const SCROLL_SENSITIVITY = 1;
-
-
-    /* --------------------------------------------------------
+     --------------------------------------------------------
        Touch state
        -------------------------------------------------------- */
 
@@ -174,418 +152,311 @@ if (window.REMOTE_PAGE === "mouse") {
 
     let lastTapTime = 0;
 
-    let gestureStarted = false;
-
 
     /* ========================================================
        TOUCH START
        ======================================================== */
 
-    pad.addEventListener(
-        "touchstart",
-        event => {
 
-            event.preventDefault();
+pad.addEventListener(
+    "touchstart",
+    event => {
 
-            const now =
-                performance.now();
+        if (!touchInputEnabled) {
+            return;
+        }
+        event.preventDefault();
 
+        const now = performance.now();
 
-            if (fingers.size === 0) {
+        if (fingers.size === 0) {
+            startTime = now;
+        }
 
-                startTime = now;
+        for (const touch of event.changedTouches) {
 
-                gestureStarted = false;
-            }
+            fingers.set(touch.identifier, {
+                x: touch.clientX,
+                y: touch.clientY,
 
+                lastX: touch.clientX,
+                lastY: touch.clientY,
 
-            for (
-                const touch of event.changedTouches
-            ) {
+                startX: touch.clientX,
+                startY: touch.clientY
+            });
+        }
 
-                fingers.set(
-                    touch.identifier,
-                    {
-
-                        x: touch.clientX,
-                        y: touch.clientY,
-
-                        lastX: touch.clientX,
-                        lastY: touch.clientY,
-
-                        startX: touch.clientX,
-                        startY: touch.clientY
-                    }
-                );
-            }
-
-
-            /*
-             * Two fingers means scrolling.
-             */
-
-            if (fingers.size >= 2) {
-
-                gestureStarted = true;
-
-                for (
-                    const finger of fingers.values()
-                ) {
-
-                    finger.lastX = finger.x;
-                    finger.lastY = finger.y;
-                }
-            }
-
-        },
-        { passive: false }
-    );
-
+    },
+    { passive: false }
+);
 
     /* ========================================================
        TOUCH MOVE
        ======================================================== */
 
-    pad.addEventListener(
-        "touchmove",
-        event => {
 
-            event.preventDefault();
+pad.addEventListener(
+    "touchmove",
+    event => {
 
+        if (!touchInputEnabled) {
+            return;
+        }
+        event.preventDefault();
 
-            /*
-             * Update finger positions.
-             */
+        for (const touch of event.changedTouches) {
 
-            for (
-                const touch of event.changedTouches
-            ) {
+            const finger =
+                fingers.get(touch.identifier);
 
-                const finger =
-                    fingers.get(touch.identifier);
-
-                if (!finger) {
-                    continue;
-                }
-
-                finger.x = touch.clientX;
-                finger.y = touch.clientY;
+            if (!finger) {
+                continue;
             }
 
+            const dx =
+                touch.clientX - finger.lastX;
 
-            /* ------------------------------------------------
-               ONE FINGER = CURSOR
-               ------------------------------------------------ */
+            const dy =
+                touch.clientY - finger.lastY;
+            
+            /*if (movementTimer === null){
+               movementTimer= startTouchInputCycle();         
+            }*/
+            /*if (dx !== 0 || dy !== 0) {*/
 
-            if (fingers.size === 1) {
-
-                const finger =
-                    fingers.values()
-                        .next()
-                        .value;
-
-
-                const totalDx =
-                    finger.x - finger.startX;
-
-                const totalDy =
-                    finger.y - finger.startY;
-
-
-                /*
-                 * Ignore tiny involuntary movements.
-                 */
-
-
-
-                const dx =
-                    (finger.x - finger.lastX)
-                    * MOUSE_SENSITIVITY;
-
-                const dy =
-                    (finger.y - finger.lastY)
-                    * MOUSE_SENSITIVITY;
-                
-
-                const newX = Math.max(
-                    0,
-                    Math.min(SCREEN_WIDTH - 1, remoteCursorX + dx)
+                socket.emit(
+                    "mouse_move",
+                    {
+                        dx: dx,
+                        dy: dy
+                    }
                 );
-
-                const newY = Math.max(
-                    0,
-                    Math.min(SCREEN_HEIGHT - 1, remoteCursorY + dy)
-                );
-
-                const actualDx = newX - remoteCursorX;
-                const actualDy = newY - remoteCursorY;
-
-                if (actualDx !== 0 || actualDy !== 0) {
-                    socket.emit("mouse_move", {
-                        dx: actualDx,
-                        dy: actualDy
-                    });
-                    remoteCursorX = newX;
-                    remoteCursorY = newY;
-
-                    gestureStarted = true;
-                }
+            /*}*/
 
 
+            finger.x = touch.clientX;
+            finger.y = touch.clientY;
 
-                finger.lastX = finger.x;
-                finger.lastY = finger.y;
-            }
+            finger.lastX = touch.clientX;
+            finger.lastY = touch.clientY;
+        }
 
-
-            /* ------------------------------------------------
-               TWO FINGERS = SCROLL
-               ------------------------------------------------ */
-
-            else if (fingers.size === 2) {
-
-                const points =
-                    [...fingers.values()];
-
-
-                const currentY =
-                    (
-                        points[0].y +
-                        points[1].y
-                    ) / 2;
-
-
-                const previousY =
-                    (
-                        points[0].lastY +
-                        points[1].lastY
-                    ) / 2;
-
-
-                const dy =
-                    currentY - previousY;
-
-
-                if (Math.abs(dy) > 0.5) {
-
-                    socket.emit(
-                        "scroll",
-                        {
-                            amount:
-                                -dy *
-                                SCROLL_SENSITIVITY
-                        }
-                    );
-                }
-
-
-                for (
-                    const finger of points
-                ) {
-
-                    finger.lastX = finger.x;
-                    finger.lastY = finger.y;
-                }
-
-
-                gestureStarted = true;
-            }
-
-        },
-        { passive: false }
-    );
-
+    },
+    { passive: false }
+);
 
     /* ========================================================
        TOUCH END
        ======================================================== */
 
-    pad.addEventListener(
-        "touchend",
-        event => {
 
-            event.preventDefault();
+pad.addEventListener(
+    "touchend",
+    event => {
 
+        if (!touchInputEnabled) {
+            return;
+        }
+        event.preventDefault();
 
-            const now =
-                performance.now();
+        const now = performance.now();
 
+        const fingerCount = fingers.size;
 
-            const fingerCount =
-                fingers.size;
+        let moved = false;
 
+        /*if (movementTimer !== null) {
+            clearInterval(movementTimer);
+            movementTimer = null;
+        }*/
 
-            /*
-             * Determine whether finger moved.
-             */
+        /*
+         * Determine whether the finger moved significantly.
+         */
 
-            let moved = false;
+        for (const touch of event.changedTouches) {
 
+            const finger =
+                fingers.get(touch.identifier);
 
-            for (
-                const touch of event.changedTouches
-            ) {
-
-                const finger =
-                    fingers.get(touch.identifier);
-
-
-                if (!finger) {
-                    continue;
-                }
-
-
-                const dx =
-                    touch.clientX -
-                    finger.startX;
-
-
-                const dy =
-                    touch.clientY -
-                    finger.startY;
-
-
+            if (!finger) {
+                continue;
             }
 
+            const dx =
+                touch.clientX - finger.startX;
 
-            /*
-             * Remove fingers.
-             */
+            const dy =
+                touch.clientY - finger.startY;
 
-            for (
-                const touch of event.changedTouches
-            ) {
-
-                fingers.delete(
-                    touch.identifier
-                );
-            }
-
-
-            /* ------------------------------------------------
-               ONE FINGER = CLICK / DOUBLE CLICK
-               ------------------------------------------------ */
 
             if (
-                fingerCount === 1 &&
-                !moved &&
-                !gestureStarted
+                Math.abs(dx) > 10 ||
+                Math.abs(dy) > 10
             ) {
-
-                const elapsed =
-                    now - startTime;
-
-
-                if (elapsed < 350) {
-
-                    /*
-                     * Double click.
-                     */
-
-                    if (
-                        now - lastTapTime < 350
-                    ) {
-
-                        socket.emit(
-                            "mouse_double_click"
-                        );
-
-                        lastTapTime = 0;
-
-                    } else {
-
-                        socket.emit(
-                            "mouse_click",
-                            {
-                                button: "left"
-                            }
-                        );
-
-                        lastTapTime = now;
-                    }
-                }
+                moved = true;
             }
+        }
 
 
-            /* ------------------------------------------------
-               TWO FINGER TAP = RIGHT CLICK
-               ------------------------------------------------ */
+        /*
+         * Remove the fingers.
+         */
 
-            else if (
-                fingerCount === 2 &&
-                !moved &&
-                !gestureStarted
-            ) {
-
-                socket.emit(
-                    "mouse_click",
-                    {
-                        button: "right"
-                    }
-                );
-            }
+        for (const touch of event.changedTouches) {
+            fingers.delete(touch.identifier);
+        }
 
 
-            /* ------------------------------------------------
-               THREE FINGER TAP = MIDDLE CLICK
-               ------------------------------------------------ */
+        /*
+         * One-finger tap.
+         */
 
-            else if (
-                fingerCount === 3 &&
-                !moved &&
-                !gestureStarted
-            ) {
-
-                socket.emit(
-                    "mouse_click",
-                    {
-                        button: "middle"
-                    }
-                );
-            }
-
+        if (
+            fingerCount === 1 &&
+            !moved &&
+            now - startTime < 400
+        ) {
 
             /*
-             * Reset when all fingers are gone.
+             * Double click.
              */
 
-            if (fingers.size === 0) {
+            if (
+                now - lastTapTime < 400
+            ) {
+                /*alert("Double Click")*/
+                socket.emit(
+                    "mouse_double_click"
+                );
 
-                gestureStarted = false;
+                console.log("DOUBLE TAP");
+
+                lastTapTime = 0;
+
             }
 
-        },
-        { passive: false }
-    );
+            /*
+             * Single click.
+             */
 
+            else {
+                /*alert("Single Click")*/
+
+                socket.emit(
+                    "mouse_click",
+                    {
+                        button: "left"
+                    }
+                );
+
+                console.log("SINGLE TAP");
+
+                lastTapTime = now;
+            }
+        }
+
+
+        /*
+         * Two-finger tap = right click.
+         */
+
+        else if (
+            fingerCount === 2 &&
+            !moved
+        ) {
+            socket.emit(
+                "mouse_click_right",
+                {
+                    button: "right"
+                }
+            );
+
+            console.log("TWO-FINGER TAP");
+        }
+    },
+    { passive: false }
+);
 
     /* ========================================================
        TOUCH CANCEL
        ======================================================== */
 
-    pad.addEventListener(
-        "touchcancel",
-        event => {
-
-            event.preventDefault();
-
-            fingers.clear();
-
-            gestureStarted = false;
-        },
-        { passive: false }
-    );
 
 
     /* ========================================================
        Context menu
        ======================================================== */
 
-    pad.addEventListener(
-        "contextmenu",
-        event => {
-            event.preventDefault();
+/* ------------------------------------------------------------
+   Two-finger scrolling
+   ------------------------------------------------------------ */
+
+pad.addEventListener(
+    "touchmove",
+    event => {
+
+        if (!touchInputEnabled) {
+            return;
         }
-    );
+        if (fingers.size !== 2) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const points = [...fingers.values()];
+
+        if (points.length !== 2) {
+            return;
+        }
+
+        const currentY =
+            (points[0].y + points[1].y) / 2;
+
+        const previousY =
+            (points[0].lastY + points[1].lastY) / 2;
+
+        const dy =
+            currentY - previousY;
+
+
+        if (Math.abs(dy) > 1) {
+
+            socket.emit(
+                "mouse_scroll",
+                {
+                    amount: -dy
+                }
+            );
+        }
+
+    },
+    { passive: false }
+);
+
+
+/* ------------------------------------------------------------
+   Prevent browser gestures
+   ------------------------------------------------------------ */
+
+pad.addEventListener(
+    "gesturestart",
+    event => event.preventDefault(),
+    { passive: false }
+);
+
+pad.addEventListener(
+    "gesturechange",
+    event => event.preventDefault(),
+    { passive: false }
+);
+
+pad.addEventListener(
+    "gestureend",
+    event => event.preventDefault(),
+    { passive: false }
+);
 
 }
