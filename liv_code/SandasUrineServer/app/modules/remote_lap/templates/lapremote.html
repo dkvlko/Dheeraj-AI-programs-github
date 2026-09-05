@@ -33,8 +33,8 @@
 
             overflow: hidden;
 
-
             user-select: none;
+            -webkit-user-select: none;
 
             font-family: Arial, sans-serif;
 
@@ -42,9 +42,9 @@
         }
 
 
-        /* ----------------------------------------------------
-           Landing page
-           ---------------------------------------------------- */
+        /* =========================================================
+           LANDING PAGE
+           ========================================================= */
 
         #remoteMenu {
 
@@ -75,6 +75,8 @@
 
             font-size: 28px;
             font-weight: bold;
+
+            touch-action: manipulation;
         }
 
 
@@ -86,9 +88,9 @@
         }
 
 
-        /* ----------------------------------------------------
-           Mousepad
-           ---------------------------------------------------- */
+        /* =========================================================
+           MOUSEPAD
+           ========================================================= */
 
         #mousePad {
 
@@ -109,9 +111,9 @@
         }
 
 
-        /* ----------------------------------------------------
-           Top buttons
-           ---------------------------------------------------- */
+        /* =========================================================
+           COMMON TOP BUTTON
+           ========================================================= */
 
         .topButton {
 
@@ -159,6 +161,168 @@
             );
         }
 
+
+        /* =========================================================
+           KEYBOARD
+           ========================================================= */
+
+        #keyboardScreen {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 100vw;
+            height: 100vh;
+
+            padding-top: max(
+                70px,
+                calc(env(safe-area-inset-top) + 58px)
+            );
+
+            padding-left: max(
+                6px,
+                env(safe-area-inset-left)
+            );
+
+            padding-right: max(
+                6px,
+                env(safe-area-inset-right)
+            );
+
+            padding-bottom: max(
+                8px,
+                env(safe-area-inset-bottom)
+            );
+
+            background: #181818;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: flex-start;
+
+            gap: 7px;
+
+            touch-action: manipulation;
+        }
+
+
+        .keyboardRow {
+
+            width: 100%;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 5px;
+
+            flex: 1;
+        }
+
+
+        .key {
+
+            flex: 1;
+
+            min-width: 0;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #3a3a3a;
+
+            color: white;
+
+            font-size: clamp(
+                17px,
+                5vw,
+                28px
+            );
+
+            font-weight: 500;
+
+            padding: 0;
+
+            touch-action: manipulation;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        .key:active {
+
+            background: #666;
+
+            transform: scale(0.96);
+        }
+
+
+        .keyWide {
+
+            flex: 1.8;
+        }
+
+
+        .keyExtraWide {
+
+            flex: 3;
+        }
+
+
+        .specialKey {
+
+            background: #505050;
+
+            font-size: clamp(
+                14px,
+                4vw,
+                21px
+            );
+        }
+
+
+        /* =========================================================
+           ZOOM BUTTON
+           ========================================================= */
+
+        #zoomKey {
+
+            position: absolute;
+
+            right: 10px;
+            bottom: max(
+                10px,
+                env(safe-area-inset-bottom)
+            );
+
+            width: 82px;
+            height: 48px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: #505050;
+
+            color: white;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            touch-action: manipulation;
+        }
+
+
+        #zoomKey:active {
+
+            background: #707070;
+
+            transform: scale(0.96);
+        }
+
+
     </style>
 
 </head>
@@ -166,11 +330,12 @@
 
 <body>
 
+
 {% if page == "remote" %}
 
-    <!-- ================================================
+    <!-- =========================================================
          LANDING PAGE
-         ================================================ -->
+         ========================================================= -->
 
     <div id="remoteMenu">
 
@@ -194,11 +359,151 @@
     </div>
 
 
+    <!-- =========================================================
+         KEYBOARD
+         ========================================================= -->
+
+    <div
+        id="keyboardScreen"
+        style="display: none;"
+    >
+
+        <button
+            id="keyboardBackButton"
+            class="topButton"
+            type="button"
+        >
+            ← Back
+        </button>
+
+
+        <!-- QWERTY -->
+
+        <div class="keyboardRow">
+
+            <button class="key" data-key="q">Q</button>
+            <button class="key" data-key="w">W</button>
+            <button class="key" data-key="e">E</button>
+            <button class="key" data-key="r">R</button>
+            <button class="key" data-key="t">T</button>
+            <button class="key" data-key="y">Y</button>
+            <button class="key" data-key="u">U</button>
+            <button class="key" data-key="i">I</button>
+            <button class="key" data-key="o">O</button>
+            <button class="key" data-key="p">P</button>
+
+        </div>
+
+
+        <div class="keyboardRow">
+
+            <button class="key" data-key="a">A</button>
+            <button class="key" data-key="s">S</button>
+            <button class="key" data-key="d">D</button>
+            <button class="key" data-key="f">F</button>
+            <button class="key" data-key="g">G</button>
+            <button class="key" data-key="h">H</button>
+            <button class="key" data-key="j">J</button>
+            <button class="key" data-key="k">K</button>
+            <button class="key" data-key="l">L</button>
+
+        </div>
+
+
+        <div class="keyboardRow">
+
+            <button class="key" data-key="z">Z</button>
+            <button class="key" data-key="x">X</button>
+            <button class="key" data-key="c">C</button>
+            <button class="key" data-key="v">V</button>
+            <button class="key" data-key="b">B</button>
+            <button class="key" data-key="n">N</button>
+            <button class="key" data-key="m">M</button>
+
+        </div>
+
+
+        <!-- NUMBERS -->
+
+        <div class="keyboardRow">
+
+            <button class="key" data-key="1">1</button>
+            <button class="key" data-key="2">2</button>
+            <button class="key" data-key="3">3</button>
+            <button class="key" data-key="4">4</button>
+            <button class="key" data-key="5">5</button>
+            <button class="key" data-key="6">6</button>
+            <button class="key" data-key="7">7</button>
+            <button class="key" data-key="8">8</button>
+            <button class="key" data-key="9">9</button>
+            <button class="key" data-key="0">0</button>
+
+        </div>
+
+
+        <!-- SPECIAL CHARACTERS -->
+
+        <div class="keyboardRow">
+
+            <button class="key" data-key="-">-</button>
+            <button class="key" data-key="_">_</button>
+            <button class="key" data-key=".">.</button>
+            <button class="key" data-key=",">,</button>
+            <button class="key" data-key="/">/</button>
+            <button class="key" data-key="?">?</button>
+            <button class="key" data-key=":">:</button>
+            <button class="key" data-key=";">;</button>
+
+        </div>
+
+
+        <!-- CONTROL KEYS -->
+
+        <div class="keyboardRow">
+
+            <button
+                class="key specialKey keyWide"
+                data-key="Backspace"
+            >
+                ⌫
+            </button>
+
+
+            <button
+                class="key specialKey keyWide"
+                data-key="Enter"
+            >
+                Enter
+            </button>
+
+
+            <button
+                class="key specialKey keyExtraWide"
+                data-key=" "
+            >
+                Space
+            </button>
+
+        </div>
+
+
+        <!-- ZOOM -->
+
+        <button
+            id="zoomKey"
+            type="button"
+        >
+            Zoom
+        </button>
+
+    </div>
+
+
 {% else %}
 
-    <!-- ================================================
+    <!-- =========================================================
          MOUSEPAD
-         ================================================ -->
+         ========================================================= -->
 
     <div id="mousePad"></div>
 
@@ -220,6 +525,7 @@
         ⛶ Fullscreen
     </button>
 
+
 {% endif %}
 
 
@@ -230,7 +536,9 @@
 
 
 <script>
+
     window.REMOTE_PAGE = "{{ page }}";
+
 </script>
 
 

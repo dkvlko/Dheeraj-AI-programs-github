@@ -1,59 +1,151 @@
 from flask import render_template
 from flask_socketio import emit
-import pyautogui 
+#import pyautogui 
 from . import remotelap_bp
 from . import static
 import threading
 import math
 import sys
+import subprocess
+
+# False -> next Zoom sends Super+W
+# True  -> next Zoom sends Super+Z
+zoom_state = False
 from app import socketio
 
-SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
+
+def get_screen_size():
+    result = subprocess.run(
+        ["xdotool", "getdisplaygeometry"],
+        capture_output=True,
+        text=True,
+        check=True
+    )
+
+    return map(int, result.stdout.split())
+
+SCREEN_WIDTH, SCREEN_HEIGHT = get_screen_size()
 pyautogui_lock = threading.Lock()
 SCROLL_SENSITIVITY = 1.0 
 
 
 def scroll_laptop_mouse(amount):
-        pyautogui.scroll(amount * SCROLL_SENSITIVITY)
+    """
+    Scroll the mouse wheel using xdotool.
+    Positive amount = scroll up
+    Negative amount = scroll down
+    """
+
+    clicks = abs(int(amount * SCROLL_SENSITIVITY))
+
+    if clicks == 0:
+        return
+
+    # xdotool button 4 = scroll up
+    # xdotool button 5 = scroll down
+    button = "4" if amount > 0 else "5"
+
+    subprocess.run(
+        ["xdotool", "click", "--repeat", str(clicks), button],
+        check=False
+    )
+
 
 def click_laptop_mouse(button="left"):
-        pyautogui.click(button=button)
+    """
+    Perform a single mouse click using xdotool.
+    """
+
+    button_map = {
+        "left": "1",
+        "middle": "2",
+        "right": "3"
+    }
+
+    xdotool_button = button_map.get(button, "1")
+
+    subprocess.run(
+        ["xdotool", "click", xdotool_button],
+        check=False
+    )
+
 
 def double_click_laptop_mouse(button="left"):
-        pyautogui.doubleClick(button=button, interval=0.1)
+    """
+    Perform a double mouse click using xdotool.
+    """
+
+    button_map = {
+        "left": "1",
+        "middle": "2",
+        "right": "3"
+    }
+
+    xdotool_button = button_map.get(button, "1")
+
+    subprocess.run(
+        [
+            "xdotool",
+            "click",
+            "--repeat", "2",
+            "--delay", "100",
+            xdotool_button
+        ],
+        check=False
+    )
+
 
 def move_laptop_cursor(dx, dy):
     """
-    Move the laptop cursor relatively by dx, dy.
-
-    The movement is constrained to the actual laptop screen size.
+    Move the laptop cursor relatively by dx, dy using xdotool.
+    Movement is constrained to the actual screen boundaries.
     """
-    
-    # Current actual cursor position
-    current_x, current_y = pyautogui.position()
 
-    # Calculate desired new position
-    new_x = current_x + dx
-    new_y = current_y + dy
+    # Get current cursor position
+    result = subprocess.run(
+        ["xdotool", "getmouselocation", "--shell"],
+        capture_output=True,
+        text=True,
+        check=False
+    )
 
-    # Keep cursor inside the screen
+    # Parse X and Y from xdotool output
+    x = y = None
+
+    for line in result.stdout.splitlines():
+        if line.startswith("X="):
+            x = int(line[2:])
+        elif line.startswith("Y="):
+            y = int(line[2:])
+
+    # If cursor position could not be obtained, do nothing
+    if x is None or y is None:
+        return
+
+    # Calculate desired position
+    new_x = x + int(dx)
+    new_y = y + int(dy)
+
+    # Boundary check
     new_x = max(0, min(SCREEN_WIDTH - 1, new_x))
     new_y = max(0, min(SCREEN_HEIGHT - 1, new_y))
 
-    # Calculate actual movement after boundary clipping
-    actual_dx = new_x - current_x
-    actual_dy = new_y - current_y
+    # Calculate actual movement after clipping
+    actual_dx = new_x - x
+    actual_dy = new_y - y
 
     # Move only if there is actual movement
-    #if actual_dx != 0 or actual_dy != 0:
-    pyautogui.moveRel(
-        actual_dx,
-        actual_dy,
-        duration=0
-    )
-
-    sys.stdout.flush()
-    return
+    if actual_dx != 0 or actual_dy != 0:
+        subprocess.run(
+            [
+                "xdotool",
+                "mousemove_relative",
+                "--",
+                str(actual_dx),
+                str(actual_dy)
+            ],
+            check=False
+        )
 
 @remotelap_bp.route("/")
 def lapremote():
@@ -66,12 +158,62 @@ def lapmouse():
 
 #def register_socket_handlers(socketio):
 
+def send_key(key):
+    """
+    Send a key/key combination to the
+    currently focused X11 window.
+    """
+    subprocess.run(
+        ["xdotool", "key", key],
+        check=False
+    )
+
+
+@socketio.on("keyboard_key")
+def handle_keyboard_key(data):
+
+    key = data.get("key")
+
+    if key == "q":
+        send_key("q")
+
+    elif key == "w":
+        send_key("w")
+
+    elif key == "Enter":
+        send_key("Return")
+
+
+@socketio.on("keyboard_zoom")
+def handle_keyboard_zoom():
+
+    global zoom_state
+
+    if not zoom_state:
+
+        # Super + W
+        send_key("super+w")
+
+        zoom_state = True
+
+        print("Keyboard: Super+W")
+
+    else:
+
+        # Super + Z
+        send_key("super+z")
+
+        zoom_state = False
+
+        print("Keyboard: Super+Z")
+
 @socketio.on("mouse_move")
 def mouse_move(data):
     dx = data.get("dx", 0)
     dy = data.get("dy", 0)
     with pyautogui_lock:
         move_laptop_cursor(dx, dy)
+
 
 @socketio.on("mouse_click")
 def mouse_click(data):

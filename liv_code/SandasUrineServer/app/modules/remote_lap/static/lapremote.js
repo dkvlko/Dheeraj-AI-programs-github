@@ -1,32 +1,54 @@
 "use strict";
 
 
-
 let touchInputEnabled = true;
 let movementTimer = null;
 
+
+/* ============================================================
+   TOUCH INPUT CYCLE
+   ============================================================ */
+
 function startTouchInputCycle() {
+
     setInterval(() => {
-        // Disable touch input after 2 seconds
+
         touchInputEnabled = false;
-        console.log("TOUCH INPUT: DISABLED");
+
+        console.log(
+            "TOUCH INPUT: DISABLED"
+        );
+
 
         setTimeout(() => {
-            // Enable touch input after 1 second
+
             touchInputEnabled = true;
-            console.log("TOUCH INPUT: ENABLED");
+
+            console.log(
+                "TOUCH INPUT: ENABLED"
+            );
+
         }, 1000);
 
     }, 3000);
 }
 
-//startTouchInputCycle();
+
+// startTouchInputCycle();
+
 
 /* ============================================================
-   LANDING PAGE
+   LANDING PAGE + KEYBOARD
    ============================================================ */
 
 if (window.REMOTE_PAGE === "remote") {
+
+    const socket = io();
+
+
+    /* --------------------------------------------------------
+       Landing page controls
+       -------------------------------------------------------- */
 
     const mouseButton =
         document.getElementById("mouseButton");
@@ -35,17 +57,184 @@ if (window.REMOTE_PAGE === "remote") {
         document.getElementById("keyboardButton");
 
 
-    mouseButton.addEventListener("click", () => {
+    const remoteMenu =
+        document.getElementById("remoteMenu");
 
-        window.location.href =
-            "/remote_lap/lapmouse";
+    const keyboardScreen =
+        document.getElementById("keyboardScreen");
+
+
+    const keyboardBackButton =
+        document.getElementById(
+            "keyboardBackButton"
+        );
+
+
+    const zoomKey =
+        document.getElementById("zoomKey");
+
+
+    /* --------------------------------------------------------
+       Socket connection
+       -------------------------------------------------------- */
+
+    socket.on("connect", () => {
+
+        console.log(
+            "Keyboard remote connected:",
+            socket.id
+        );
+
     });
 
 
-    keyboardButton.addEventListener("click", () => {
+    socket.on("disconnect", () => {
 
-        alert("Keyboard remote is not implemented yet.");
+        console.log(
+            "Keyboard remote disconnected"
+        );
+
     });
+
+
+    /* --------------------------------------------------------
+       Mousepad button
+       -------------------------------------------------------- */
+
+    mouseButton.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "/remote_lap/lapmouse";
+
+        }
+    );
+
+
+    /* --------------------------------------------------------
+       Keyboard button
+       -------------------------------------------------------- */
+
+    keyboardButton.addEventListener(
+        "click",
+        () => {
+
+            remoteMenu.style.display =
+                "none";
+
+            keyboardScreen.style.display =
+                "flex";
+
+        }
+    );
+
+
+    /* --------------------------------------------------------
+       Keyboard Back button
+       -------------------------------------------------------- */
+
+    keyboardBackButton.addEventListener(
+        "click",
+        (event) => {
+
+            event.stopPropagation();
+
+            keyboardScreen.style.display =
+                "none";
+
+            remoteMenu.style.display =
+                "flex";
+
+        }
+    );
+
+
+    /* --------------------------------------------------------
+       Keyboard keys
+       -------------------------------------------------------- */
+
+    const keyboardKeys =
+        document.querySelectorAll(
+            "#keyboardScreen .key"
+        );
+
+
+    keyboardKeys.forEach(
+        keyButton => {
+
+            keyButton.addEventListener(
+                "click",
+                (event) => {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+
+                    const key =
+                        keyButton.dataset.key;
+
+
+                    /*
+                     * For now we send the requested
+                     * keys through the Python backend.
+                     *
+                     * q
+                     * w
+                     * Enter
+                     */
+
+                    if (
+                        key === "q" ||
+                        key === "w" ||
+                        key === "Enter"
+                    ) {
+
+                        socket.emit(
+                            "keyboard_key",
+                            {
+                                key: key
+                            }
+                        );
+
+                        console.log(
+                            "KEY:",
+                            key
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    /* --------------------------------------------------------
+       Zoom
+       -------------------------------------------------------- */
+
+    zoomKey.addEventListener(
+        "click",
+        (event) => {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+
+            socket.emit(
+                "keyboard_zoom"
+            );
+
+
+            console.log(
+                "ZOOM KEY"
+            );
+
+        }
+    );
+
 }
 
 
@@ -56,13 +245,21 @@ if (window.REMOTE_PAGE === "remote") {
 if (window.REMOTE_PAGE === "mouse") {
 
     const pad =
-        document.getElementById("mousePad");
+        document.getElementById(
+            "mousePad"
+        );
+
 
     const backButton =
-        document.getElementById("backButton");
+        document.getElementById(
+            "backButton"
+        );
+
 
     const fullscreenButton =
-        document.getElementById("fullscreenButton");
+        document.getElementById(
+            "fullscreenButton"
+        );
 
 
     /* --------------------------------------------------------
@@ -95,24 +292,29 @@ if (window.REMOTE_PAGE === "mouse") {
        Navigation
        -------------------------------------------------------- */
 
-    backButton.addEventListener("click", (event) => {
+    backButton.addEventListener(
+        "click",
+        (event) => {
 
-        event.stopPropagation();
+            event.stopPropagation();
 
-        window.location.href =
-            "/remote_lap/";
-    });
+            window.location.href =
+                "/remote_lap/";
+
+        }
+    );
 
 
     /* --------------------------------------------------------
        Fullscreen
        -------------------------------------------------------- */
 
-/*    fullscreenButton.addEventListener(
+    fullscreenButton.addEventListener(
         "click",
         async (event) => {
 
             event.stopPropagation();
+
 
             try {
 
@@ -121,28 +323,30 @@ if (window.REMOTE_PAGE === "mouse") {
                     await document.documentElement
                         .requestFullscreen();
 
-                } else {
-
-                    await document.exitFullscreen();
                 }
 
-            } catch (error) {
+                else {
+
+                    await document.exitFullscreen();
+
+                }
+
+            }
+
+            catch (error) {
 
                 console.log(
                     "Fullscreen unavailable:",
                     error
                 );
+
             }
 
         }
     );
 
-*/
-
 
     /* --------------------------------------------------------
-       Settings
-     --------------------------------------------------------
        Touch state
        -------------------------------------------------------- */
 
@@ -157,73 +361,100 @@ if (window.REMOTE_PAGE === "mouse") {
        TOUCH START
        ======================================================== */
 
+    pad.addEventListener(
+        "touchstart",
+        event => {
 
-pad.addEventListener(
-    "touchstart",
-    event => {
+            if (!touchInputEnabled) {
+                return;
+            }
 
-        if (!touchInputEnabled) {
-            return;
+
+            event.preventDefault();
+
+
+            const now =
+                performance.now();
+
+
+            if (fingers.size === 0) {
+
+                startTime = now;
+
+            }
+
+
+            for (
+                const touch
+                of event.changedTouches
+            ) {
+
+                fingers.set(
+                    touch.identifier,
+                    {
+
+                        x: touch.clientX,
+                        y: touch.clientY,
+
+                        lastX: touch.clientX,
+                        lastY: touch.clientY,
+
+                        startX: touch.clientX,
+                        startY: touch.clientY
+
+                    }
+                );
+
+            }
+
+        },
+        {
+            passive: false
         }
-        event.preventDefault();
+    );
 
-        const now = performance.now();
-
-        if (fingers.size === 0) {
-            startTime = now;
-        }
-
-        for (const touch of event.changedTouches) {
-
-            fingers.set(touch.identifier, {
-                x: touch.clientX,
-                y: touch.clientY,
-
-                lastX: touch.clientX,
-                lastY: touch.clientY,
-
-                startX: touch.clientX,
-                startY: touch.clientY
-            });
-        }
-
-    },
-    { passive: false }
-);
 
     /* ========================================================
        TOUCH MOVE
        ======================================================== */
 
+    pad.addEventListener(
+        "touchmove",
+        event => {
 
-pad.addEventListener(
-    "touchmove",
-    event => {
-
-        if (!touchInputEnabled) {
-            return;
-        }
-        event.preventDefault();
-
-        for (const touch of event.changedTouches) {
-
-            const finger =
-                fingers.get(touch.identifier);
-
-            if (!finger) {
-                continue;
+            if (!touchInputEnabled) {
+                return;
             }
 
-            const dx =
-                touch.clientX - finger.lastX;
 
-            const dy =
-                touch.clientY - finger.lastY;
-            
-            /*if (movementTimer === null){
-               movementTimer= startTouchInputCycle();         
-            }*/
-            /*if (dx !== 0 || dy !== 0) {*/
+            event.preventDefault();
+
+
+            for (
+                const touch
+                of event.changedTouches
+            ) {
+
+                const finger =
+                    fingers.get(
+                        touch.identifier
+                    );
+
+
+                if (!finger) {
+                    continue;
+                }
+
+
+                const dx =
+                    touch.clientX -
+                    finger.lastX;
+
+
+                const dy =
+                    touch.clientY -
+                    finger.lastY;
+
 
                 socket.emit(
                     "mouse_move",
@@ -232,231 +463,305 @@ pad.addEventListener(
                         dy: dy
                     }
                 );
-            /*}*/
 
 
-            finger.x = touch.clientX;
-            finger.y = touch.clientY;
+                finger.x =
+                    touch.clientX;
 
-            finger.lastX = touch.clientX;
-            finger.lastY = touch.clientY;
+                finger.y =
+                    touch.clientY;
+
+
+                finger.lastX =
+                    touch.clientX;
+
+                finger.lastY =
+                    touch.clientY;
+
+            }
+
+        },
+        {
+            passive: false
         }
+    );
 
-    },
-    { passive: false }
-);
 
     /* ========================================================
        TOUCH END
        ======================================================== */
 
+    pad.addEventListener(
+        "touchend",
+        event => {
 
-pad.addEventListener(
-    "touchend",
-    event => {
-
-        if (!touchInputEnabled) {
-            return;
-        }
-        event.preventDefault();
-
-        const now = performance.now();
-
-        const fingerCount = fingers.size;
-
-        let moved = false;
-
-        /*if (movementTimer !== null) {
-            clearInterval(movementTimer);
-            movementTimer = null;
-        }*/
-
-        /*
-         * Determine whether the finger moved significantly.
-         */
-
-        for (const touch of event.changedTouches) {
-
-            const finger =
-                fingers.get(touch.identifier);
-
-            if (!finger) {
-                continue;
+            if (!touchInputEnabled) {
+                return;
             }
 
-            const dx =
-                touch.clientX - finger.startX;
 
-            const dy =
-                touch.clientY - finger.startY;
+            event.preventDefault();
 
 
-            if (
-                Math.abs(dx) > 10 ||
-                Math.abs(dy) > 10
-            ) {
-                moved = true;
-            }
-        }
+            const now =
+                performance.now();
 
 
-        /*
-         * Remove the fingers.
-         */
-
-        for (const touch of event.changedTouches) {
-            fingers.delete(touch.identifier);
-        }
+            const fingerCount =
+                fingers.size;
 
 
-        /*
-         * One-finger tap.
-         */
+            let moved = false;
 
-        if (
-            fingerCount === 1 &&
-            !moved &&
-            now - startTime < 400
-        ) {
 
             /*
-             * Double click.
+             * Determine whether the finger
+             * moved significantly.
              */
 
-            if (
-                now - lastTapTime < 400
+            for (
+                const touch
+                of event.changedTouches
             ) {
-                /*alert("Double Click")*/
-                socket.emit(
-                    "mouse_double_click"
+
+                const finger =
+                    fingers.get(
+                        touch.identifier
+                    );
+
+
+                if (!finger) {
+                    continue;
+                }
+
+
+                const dx =
+                    touch.clientX -
+                    finger.startX;
+
+
+                const dy =
+                    touch.clientY -
+                    finger.startY;
+
+
+                if (
+                    Math.abs(dx) > 10 ||
+                    Math.abs(dy) > 10
+                ) {
+
+                    moved = true;
+
+                }
+
+            }
+
+
+            /*
+             * Remove fingers.
+             */
+
+            for (
+                const touch
+                of event.changedTouches
+            ) {
+
+                fingers.delete(
+                    touch.identifier
                 );
 
-                console.log("DOUBLE TAP");
+            }
 
-                lastTapTime = 0;
+
+            /*
+             * One-finger tap.
+             */
+
+            if (
+                fingerCount === 1 &&
+                !moved &&
+                now - startTime < 400
+            ) {
+
+
+                /*
+                 * Double click.
+                 */
+
+                if (
+                    now - lastTapTime < 400
+                ) {
+
+                    socket.emit(
+                        "mouse_double_click"
+                    );
+
+
+                    console.log(
+                        "DOUBLE TAP"
+                    );
+
+
+                    lastTapTime = 0;
+
+                }
+
+
+                /*
+                 * Single click.
+                 */
+
+                else {
+
+                    socket.emit(
+                        "mouse_click",
+                        {
+                            button: "left"
+                        }
+                    );
+
+
+                    console.log(
+                        "SINGLE TAP"
+                    );
+
+
+                    lastTapTime = now;
+
+                }
 
             }
 
+
             /*
-             * Single click.
+             * Two-finger tap =
+             * right click.
              */
 
-            else {
-                /*alert("Single Click")*/
+            else if (
+                fingerCount === 2 &&
+                !moved
+            ) {
 
                 socket.emit(
-                    "mouse_click",
+                    "mouse_click_right",
                     {
-                        button: "left"
+                        button: "right"
                     }
                 );
 
-                console.log("SINGLE TAP");
 
-                lastTapTime = now;
+                console.log(
+                    "TWO-FINGER TAP"
+                );
+
             }
+
+        },
+        {
+            passive: false
         }
-
-
-        /*
-         * Two-finger tap = right click.
-         */
-
-        else if (
-            fingerCount === 2 &&
-            !moved
-        ) {
-            socket.emit(
-                "mouse_click_right",
-                {
-                    button: "right"
-                }
-            );
-
-            console.log("TWO-FINGER TAP");
-        }
-    },
-    { passive: false }
-);
-
-    /* ========================================================
-       TOUCH CANCEL
-       ======================================================== */
-
+    );
 
 
     /* ========================================================
-       Context menu
+       TWO-FINGER SCROLLING
        ======================================================== */
 
-/* ------------------------------------------------------------
-   Two-finger scrolling
-   ------------------------------------------------------------ */
+    pad.addEventListener(
+        "touchmove",
+        event => {
 
-pad.addEventListener(
-    "touchmove",
-    event => {
+            if (!touchInputEnabled) {
+                return;
+            }
 
-        if (!touchInputEnabled) {
-            return;
+
+            if (fingers.size !== 2) {
+                return;
+            }
+
+
+            event.preventDefault();
+
+
+            const points =
+                [...fingers.values()];
+
+
+            if (points.length !== 2) {
+                return;
+            }
+
+
+            const currentY =
+                (
+                    points[0].y +
+                    points[1].y
+                ) / 2;
+
+
+            const previousY =
+                (
+                    points[0].lastY +
+                    points[1].lastY
+                ) / 2;
+
+
+            const dy =
+                currentY -
+                previousY;
+
+
+            if (Math.abs(dy) > 1) {
+
+                socket.emit(
+                    "mouse_scroll",
+                    {
+                        amount: -dy
+                    }
+                );
+
+            }
+
+        },
+        {
+            passive: false
         }
-        if (fingers.size !== 2) {
-            return;
+    );
+
+
+    /* ========================================================
+       PREVENT BROWSER GESTURES
+       ======================================================== */
+
+    pad.addEventListener(
+        "gesturestart",
+        event =>
+            event.preventDefault(),
+        {
+            passive: false
         }
+    );
 
-        event.preventDefault();
 
-        const points = [...fingers.values()];
-
-        if (points.length !== 2) {
-            return;
+    pad.addEventListener(
+        "gesturechange",
+        event =>
+            event.preventDefault(),
+        {
+            passive: false
         }
-
-        const currentY =
-            (points[0].y + points[1].y) / 2;
-
-        const previousY =
-            (points[0].lastY + points[1].lastY) / 2;
-
-        const dy =
-            currentY - previousY;
+    );
 
 
-        if (Math.abs(dy) > 1) {
-
-            socket.emit(
-                "mouse_scroll",
-                {
-                    amount: -dy
-                }
-            );
+    pad.addEventListener(
+        "gestureend",
+        event =>
+            event.preventDefault(),
+        {
+            passive: false
         }
-
-    },
-    { passive: false }
-);
-
-
-/* ------------------------------------------------------------
-   Prevent browser gestures
-   ------------------------------------------------------------ */
-
-pad.addEventListener(
-    "gesturestart",
-    event => event.preventDefault(),
-    { passive: false }
-);
-
-pad.addEventListener(
-    "gesturechange",
-    event => event.preventDefault(),
-    { passive: false }
-);
-
-pad.addEventListener(
-    "gestureend",
-    event => event.preventDefault(),
-    { passive: false }
-);
+    );
 
 }
