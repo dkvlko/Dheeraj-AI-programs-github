@@ -149,13 +149,17 @@ def move_laptop_cursor(dx, dy):
 
 @remotelap_bp.route("/")
 def lapremote():
-    return render_template("lapremote.html", page="remote")
+    return render_template("index.html")
 
 
-@remotelap_bp.route("/lapmouse")
+@remotelap_bp.route("/mousepad")
 def lapmouse():
-    return render_template("lapremote.html", page="mouse")
+    return render_template("mousepad.html")
 
+
+@remotelap_bp.route("/keyboard")
+def keyboard():
+    return render_template("keyboard.html")
 #def register_socket_handlers(socketio):
 
 def send_key(key):
@@ -169,43 +173,62 @@ def send_key(key):
     )
 
 
+KEY_MAP = {
+    "PrintScreen": "Print",
+    "Enter": "Return",
+
+    "grave": "grave",
+    "minus": "minus",
+    "equal": "equal",
+
+    "leftBracket": "bracketleft",
+    "rightBracket": "bracketright",
+
+    "ShiftLeft": "Shift_L",
+    "ShiftRight": "Shift_R",
+
+    "ControlLeft": "Control_L",
+    "ControlRight": "Control_R",
+    "AltLeft": "Alt_L",
+    "AltRight": "Alt_R",
+    "SuperLeft": "Super_L",
+
+    "ArrowLeft": "Left",
+    "ArrowUp": "Up",
+    "ArrowDown": "Down",
+    "ArrowRight": "Right",
+
+    "Space": "space",
+}
+
 @socketio.on("keyboard_key")
 def handle_keyboard_key(data):
-
+    global zoom_state
     key = data.get("key")
 
-    if key == "q":
-        send_key("q")
+    if key in KEY_MAP:
+        send_key(KEY_MAP[key])
 
-    elif key == "w":
-        send_key("w")
+    elif key in {
+        "F1", "F2", "F3", "F4", "F5", "F6",
+        "F7","F8", "F9", "F10", "F11", "F12"
+    }:
+        if key == "F8" :
+            if not zoom_state :
+                send_key("ctrl+z")
+                zoom_state =True
+            else :
+                send_key("ctrl+w")
+                zoom_state = False
+        else :
+            send_key(key)
 
-    elif key == "Enter":
-        send_key("Return")
-
-
-@socketio.on("keyboard_zoom")
-def handle_keyboard_zoom():
-
-    global zoom_state
-
-    if not zoom_state:
-
-        # Super + W
-        send_key("super+w")
-
-        zoom_state = True
-
-        print("Keyboard: Super+W")
-
+    #elif key and len(key) == 1:
+    elif key : 
+        send_key(key)
     else:
+        print("Keyboard: unknown key:", key)
 
-        # Super + Z
-        send_key("super+z")
-
-        zoom_state = False
-
-        print("Keyboard: Super+Z")
 
 @socketio.on("mouse_move")
 def mouse_move(data):

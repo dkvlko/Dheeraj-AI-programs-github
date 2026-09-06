@@ -171,7 +171,7 @@ if (window.REMOTE_PAGE === "remote") {
                     break;
 
                 case "F8":
-                    socket.emit("keyboard_zoom");
+                    socket.emit("keyboard_key",{key: "F8"});
                     break;
 
                 case "F9":

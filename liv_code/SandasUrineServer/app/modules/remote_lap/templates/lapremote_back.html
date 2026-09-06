@@ -42,84 +42,104 @@
         }
 
 
-        /* =========================================================
-           LANDING PAGE
-           ========================================================= */
+/* =========================================================
+   LANDING PAGE
+   ========================================================= */
 
-        /* ============================================================
-   KEYBOARD SCREEN
-   ============================================================ */
+#remoteMenu {
+    width: 100vw;
+    height: 100vh;
 
-#keyboardScreen {
-    display: none;
+    display: flex;
+    flex-direction: column;
 
-    width: 100%;
-    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
 
-    box-sizing: border-box;
+    gap: 25px;
 
-    padding: 8px;
-
-    background: #111;
-
-    user-select: none;
-    -webkit-user-select: none;
+    background: #181818;
 }
 
+.menuButton {
+    width: min(80vw, 360px);
+    height: 90px;
 
-/* Back button */
-
-.keyboardTopButton {
-    position: absolute;
-
-    top: 8px;
-    left: 8px;
-
-    z-index: 20;
-
-    padding: 8px 14px;
-
-    border: 0;
-    border-radius: 8px;
+    border: 2px solid #555;
+    border-radius: 18px;
 
     background: #333;
     color: white;
 
-    font-size: 12px !important;
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ============================================================
+.menuButton:active {
+    background: #555;
+    transform: scale(0.97);
+}
+
+
+/* =========================================================
    KEYBOARD SCREEN
-   ============================================================ */
+   ========================================================= */
 
 #keyboardScreen {
     display: none;
 
-    position: relative;
+    position: fixed;
 
-    width: 100%;
+    left: 0;
+    top: 0;
+
+    width: 100vw;
     height: 100dvh;
 
     box-sizing: border-box;
 
-    /*
-       39px at the top for the Back button.
-       3px at the bottom as requested.
-    */
-    padding: 39px 3px 3px 3px;
+    padding-top: max(
+        70px,
+        calc(env(safe-area-inset-top) + 58px)
+    );
 
-    background: #111;
+    padding-left: max(
+        11px,
+        env(safe-area-inset-left)
+    );
 
-    overflow: hidden;
+    padding-right: max(
+        6px,
+        env(safe-area-inset-right)
+    );
+
+    padding-bottom: max(
+        8px,
+        env(safe-area-inset-bottom)
+    );
+
+    background: #181818;
+
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    gap: 7px;
+
+    touch-action: manipulation;
 
     user-select: none;
     -webkit-user-select: none;
 }
 
 
-/* ============================================================
-   BACK BUTTON
-   ============================================================ */
+/* =========================================================
+   KEYBOARD BACK BUTTON
+   ========================================================= */
 
 .keyboardBackButton {
     position: absolute;
@@ -140,11 +160,11 @@
     color: #f5f5f5;
 
     font-family: Arial, sans-serif;
-
     font-size: 11px;
     font-weight: 500;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -156,9 +176,9 @@
 }
 
 
-/* ============================================================
+/* =========================================================
    KEYBOARD
-   ============================================================ */
+   ========================================================= */
 
 #keyboard {
     width: 100%;
@@ -173,9 +193,9 @@
 }
 
 
-/* ============================================================
-   ROW
-   ============================================================ */
+/* =========================================================
+   KEYBOARD ROW
+   ========================================================= */
 
 .keyboardRow {
     width: 100%;
@@ -186,10 +206,6 @@
 
     display: grid;
 
-    /*
-       16 equal columns.
-       Almost every key occupies exactly one column.
-    */
     grid-template-columns:
         repeat(16, minmax(0, 1fr));
 
@@ -197,9 +213,9 @@
 }
 
 
-/* ============================================================
+/* =========================================================
    NORMAL KEY
-   ============================================================ */
+   ========================================================= */
 
 .key {
     width: 100%;
@@ -224,6 +240,7 @@
     font-weight: 500;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -237,64 +254,26 @@
 }
 
 
-/* ============================================================
+/* =========================================================
    WIDE KEYS
-   ============================================================ */
+   ========================================================= */
 
 .wideKey {
     grid-column: span 2;
 }
 
-
 .extraWideKey {
     grid-column: span 2;
 }
-
 
 .spaceKey {
     grid-column: span 4;
 }
 
 
-
-/* ============================================================
-   LANDSCAPE REQUEST
-   ============================================================ */
-
-/*@media (orientation: portrait) {
-
-    #keyboardScreen::before {
-        content: "Please rotate your iPhone to landscape mode.";
-
-        position: absolute;
-
-        top: 50%;
-        left: 50%;
-
-        transform: translate(-50%, -50%);
-
-        width: 90%;
-
-        text-align: center;
-
-        color: white;
-
-        font-family: Arial, sans-serif;
-
-        font-size: 16px;
-
-        z-index: 200;
-    }
-
-    #keyboard {
-        visibility: hidden;
-    }
-}*/
-
-
-/* ============================================================
+/* =========================================================
    LANDSCAPE
-   ============================================================ */
+   ========================================================= */
 
 @media (orientation: landscape) {
 
@@ -302,129 +281,6 @@
         height: 100dvh;
     }
 }
-/*keyboard CSS ends*/
-
-        /* =========================================================
-           KEYBOARD
-           ========================================================= */
-
-        #keyboardScreen {
-
-            position: fixed;
-
-            left: 0;
-            top: 0;
-
-            width: 100vw;
-            height: 100vh;
-
-            padding-top: max(
-                70px,
-                calc(env(safe-area-inset-top) + 58px)
-            );
-
-            padding-left: max(
-                11px,
-                env(safe-area-inset-left)
-            );
-
-            padding-right: max(
-                6px,
-                env(safe-area-inset-right)
-            );
-
-            padding-bottom: max(
-                8px,
-                env(safe-area-inset-bottom)
-            );
-
-            background: #181818;
-
-            display: flex;
-            flex-direction: column;
-
-            justify-content: flex-start;
-
-            gap: 7px;
-
-            touch-action: manipulation;
-        }
-
-
-        .keyboardRow {
-
-            width: 100%;
-
-            display: flex;
-
-            justify-content: center;
-
-            gap: 5px;
-
-            flex: 1;
-        }
-
-
-        .key {
-
-            flex: 1;
-
-            min-width: 0;
-
-            border: none;
-            border-radius: 8px;
-
-            background: #3a3a3a;
-
-            color: white;
-
-            font-size: clamp(
-                17px,
-                5vw,
-                28px
-            );
-
-            font-weight: 500;
-
-            padding: 0;
-
-            touch-action: manipulation;
-
-            -webkit-tap-highlight-color: transparent;
-        }
-
-
-        .key:active {
-
-            background: #666;
-
-            transform: scale(0.96);
-        }
-
-
-        .keyWide {
-
-            flex: 1.8;
-        }
-
-
-        .keyExtraWide {
-
-            flex: 3;
-        }
-
-
-        .specialKey {
-
-            background: #505050;
-
-            font-size: clamp(
-                14px,
-                4vw,
-                21px
-            );
-        }
-
 
     </style>
 

@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Remote — Mousepad</title><style>
+*{box-sizing:border-box}html,body{width:100%;
+    height:100%;margin:0;overflow:hidden;
+font-family:Arial,sans-serif;background:#181818;color:#f5f5f5;
+touch-action:none}
+#mousePad
+    {position:fixed;inset:0;background:#181818;cursor:crosshair}
+.topButton
+    {position:fixed;top:8px;z-index:10;height:34px;
+    padding:0 12px;border:2px solid #555;
+border-radius:6px;background:#292929;
+color:#f5f5f5;font:500 12px Arial,sans-serif;
+touch-action:manipulation}
+.topButton:active{background:#555;transform:scale(.97)}
+#backButton{left:6px}#fullscreenButton{right:6px}
+#status
+    {position:fixed;left:50%;bottom:12px;transform:translateX(-50%);
+    z-index:5;
+padding:7px 12px;border:1px solid #444;border-radius:7px;
+background:rgba(41,41,41,.9);
+color:#ccc;font-size:12px;pointer-events:none}
+</style>
+    </head>
+    <body>
+<div id="mousePad"></div>
+<button id="backButton" class="topButton">← Back</button>
+<button id="fullscreenButton" class="topButton">⛶ Fullscreen</button>
+<div id="status">Mousepad: ready — drag on this area</div>
+
+
+<script src="{{ url_for(
+    'static',
+    filename='socket.io.min.js'
+) }}"></script>
+
+
+<script src="{{ url_for(
+    'remote_lap.static',
+    filename='mouse.js'
+) }}"></script>
+
+    </body>
+</html>
