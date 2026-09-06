@@ -104,103 +104,116 @@
     );
 
 
-    /* --------------------------------------------------------
-       Touch state
-       -------------------------------------------------------- */
+/* ========================================================
+   TOUCH / GESTURE HANDLING
+   ======================================================== */
 
-    let fingers = new Map();
+let fingers = new Map();
 
-    let startTime = 0;
+let gestureMode = "none";
+// "none"
+// "move"
+// "scroll"
 
-    let lastTapTime = 0;
+let startTime = 0;
+let lastTapTime = 0;
 
-
-    /* ========================================================
-       TOUCH START
-       ======================================================== */
-
-    pad.addEventListener(
-        "touchstart",
-        event => {
+const MOVE_THRESHOLD = 10;
+const TAP_TIME = 400;
 
 
-            event.preventDefault();
+/* ========================================================
+   TOUCH START
+   ======================================================== */
 
+pad.addEventListener(
+    "touchstart",
+    event => {
 
-            const now =
-                performance.now();
+        event.preventDefault();
 
+        const now = performance.now();
 
-            if (fingers.size === 0) {
+        /*
+         * If this is the first finger, start a new gesture.
+         */
+        if (fingers.size === 0) {
 
-                startTime = now;
-
-            }
-
-
-            for (
-                const touch
-                of event.changedTouches
-            ) {
-
-                fingers.set(
-                    touch.identifier,
-                    {
-
-                        x: touch.clientX,
-                        y: touch.clientY,
-
-                        lastX: touch.clientX,
-                        lastY: touch.clientY,
-
-                        startX: touch.clientX,
-                        startY: touch.clientY
-
-                    }
-                );
-
-            }
-
-        },
-        {
-            passive: false
+            startTime = now;
+            gestureMode = "move";
         }
-    );
+
+        /*
+         * Add all newly changed fingers.
+         */
+        for (const touch of event.changedTouches) {
+
+            fingers.set(
+                touch.identifier,
+                {
+                    x: touch.clientX,
+                    y: touch.clientY,
+
+                    lastX: touch.clientX,
+                    lastY: touch.clientY,
+
+                    startX: touch.clientX,
+                    startY: touch.clientY
+                }
+            );
+        }
+
+        /*
+         * As soon as two fingers are present,
+         * switch permanently to SCROLL mode
+         * for this gesture.
+         */
+        if (fingers.size >= 2) {
+
+            gestureMode = "scroll";
+        }
+    },
+    {
+        passive: false
+    }
+);
 
 
-    /* ========================================================
-       TOUCH MOVE
-       ======================================================== */
+/* ========================================================
+   TOUCH MOVE
+   ======================================================== */
 
-    pad.addEventListener(
-        "touchmove",
-        event => {
-
-
-
-            event.preventDefault();
+pad.addEventListener(
+    "touchmove",
+    event => {
 
 
-            for (
-                const touch
-                of event.changedTouches
-            ) {
+        event.preventDefault();
+
+
+        /*
+         * --------------------------------------------------
+         * ONE-FINGER MODE
+         * --------------------------------------------------
+         */
+
+        if (
+            gestureMode === "move" &&
+            fingers.size === 1
+        ) {
+
+            for (const touch of event.changedTouches) {
 
                 const finger =
-                    fingers.get(
-                        touch.identifier
-                    );
-
+                    fingers.get(touch.identifier);
 
                 if (!finger) {
                     continue;
                 }
 
-
                 const dx =
                     touch.clientX -
                     finger.lastX;
-
 
                 const dy =
                     touch.clientY -
@@ -222,221 +235,60 @@
                 finger.y =
                     touch.clientY;
 
-
                 finger.lastX =
                     touch.clientX;
 
                 finger.lastY =
                     touch.clientY;
-
             }
 
-        },
-        {
-            passive: false
+            return;
         }
-    );
 
 
-    /* ========================================================
-       TOUCH END
-       ======================================================== */
+        /*
+         * --------------------------------------------------
+         * TWO-FINGER SCROLL MODE
+         * --------------------------------------------------
+         */
 
-    pad.addEventListener(
-        "touchend",
-        event => {
-
-
-            event.preventDefault();
-
-
-            const now =
-                performance.now();
-
-
-            const fingerCount =
-                fingers.size;
-
-
-            let moved = false;
-
+        if (
+            gestureMode === "scroll" &&
+            fingers.size === 2
+        ) {
 
             /*
-             * Determine whether the finger
-             * moved significantly.
+             * Update the positions of the
+             * fingers first.
              */
-
-            for (
-                const touch
-                of event.changedTouches
-            ) {
+            for (const touch of event.changedTouches) {
 
                 const finger =
-                    fingers.get(
-                        touch.identifier
-                    );
-
+                    fingers.get(touch.identifier);
 
                 if (!finger) {
                     continue;
                 }
 
+                finger.x =
+                    touch.clientX;
 
-                const dx =
-                    touch.clientX -
-                    finger.startX;
-
-
-                const dy =
-                    touch.clientY -
-                    finger.startY;
-
-
-                if (
-                    Math.abs(dx) > 10 ||
-                    Math.abs(dy) > 10
-                ) {
-
-                    moved = true;
-
-                }
-
+                finger.y =
+                    touch.clientY;
             }
-
-
-            /*
-             * Remove fingers.
-             */
-
-            for (
-                const touch
-                of event.changedTouches
-            ) {
-
-                fingers.delete(
-                    touch.identifier
-                );
-
-            }
-
-
-            /*
-             * One-finger tap.
-             */
-
-            if (
-                fingerCount === 1 &&
-                !moved &&
-                now - startTime < 400
-            ) {
-
-
-                /*
-                 * Double click.
-                 */
-
-                if (
-                    now - lastTapTime < 400
-                ) {
-
-                    socket.emit(
-                        "mouse_double_click"
-                    );
-
-
-                    console.log(
-                        "DOUBLE TAP"
-                    );
-
-
-                    lastTapTime = 0;
-
-                }
-
-
-                /*
-                 * Single click.
-                 */
-
-                else {
-
-                    socket.emit(
-                        "mouse_click",
-                        {
-                            button: "left"
-                        }
-                    );
-
-
-                    console.log(
-                        "SINGLE TAP"
-                    );
-
-
-                    lastTapTime = now;
-
-                }
-
-            }
-
-
-            /*
-             * Two-finger tap =
-             * right click.
-             */
-
-            else if (
-                fingerCount === 2 &&
-                !moved
-            ) {
-
-                socket.emit(
-                    "mouse_click_right",
-                    {
-                        button: "right"
-                    }
-                );
-
-
-                console.log(
-                    "TWO-FINGER TAP"
-                );
-
-            }
-
-        },
-        {
-            passive: false
-        }
-    );
-
-
-    /* ========================================================
-       TWO-FINGER SCROLLING
-       ======================================================== */
-
-    pad.addEventListener(
-        "touchmove",
-        event => {
-
-
-            if (fingers.size !== 2) {
-                return;
-            }
-
-
-            event.preventDefault();
 
 
             const points =
                 [...fingers.values()];
-
 
             if (points.length !== 2) {
                 return;
             }
 
 
+            /*
+             * Average Y position of both fingers.
+             */
             const currentY =
                 (
                     points[0].y +
@@ -456,6 +308,10 @@
                 previousY;
 
 
+            /*
+             * Only generate scroll when
+             * movement is significant.
+             */
             if (Math.abs(dy) > 1) {
 
                 socket.emit(
@@ -464,46 +320,218 @@
                         amount: -dy
                     }
                 );
-
             }
 
-        },
-        {
-            passive: false
+
+            /*
+             * Save current position for
+             * the next scroll event.
+             */
+            for (const finger of points) {
+
+                finger.lastX =
+                    finger.x;
+
+                finger.lastY =
+                    finger.y;
+            }
+
+            return;
         }
-    );
+    },
+    {
+        passive: false
+    }
+);
 
 
-    /* ========================================================
-       PREVENT BROWSER GESTURES
-       ======================================================== */
+/* ========================================================
+   TOUCH END
+   ======================================================== */
 
-    pad.addEventListener(
-        "gesturestart",
-        event =>
-            event.preventDefault(),
-        {
-            passive: false
+pad.addEventListener(
+    "touchend",
+    event => {
+
+
+        event.preventDefault();
+
+        const now =
+            performance.now();
+
+
+        /*
+         * Number of fingers involved in
+         * this gesture before removing them.
+         */
+        const fingerCount =
+            fingers.size;
+
+
+        let moved = false;
+
+
+        /*
+         * Check whether any finger moved
+         * more than the tap threshold.
+         */
+        for (const touch of event.changedTouches) {
+
+            const finger =
+                fingers.get(touch.identifier);
+
+            if (!finger) {
+                continue;
+            }
+
+
+            const dx =
+                touch.clientX -
+                finger.startX;
+
+
+            const dy =
+                touch.clientY -
+                finger.startY;
+
+
+            if (
+                Math.abs(dx) > MOVE_THRESHOLD ||
+                Math.abs(dy) > MOVE_THRESHOLD
+            ) {
+
+                moved = true;
+            }
         }
-    );
 
 
-    pad.addEventListener(
-        "gesturechange",
-        event =>
-            event.preventDefault(),
-        {
-            passive: false
+        /*
+         * Remove ended fingers.
+         */
+        for (const touch of event.changedTouches) {
+
+            fingers.delete(
+                touch.identifier
+            );
         }
-    );
 
 
-    pad.addEventListener(
-        "gestureend",
-        event =>
-            event.preventDefault(),
-        {
-            passive: false
+        /*
+         * --------------------------------------------------
+         * ONE-FINGER TAP
+         * --------------------------------------------------
+         */
+
+        if (
+            fingerCount === 1 &&
+            gestureMode === "move" &&
+            !moved &&
+            now - startTime < TAP_TIME
+        ) {
+
+            /*
+             * Double tap
+             */
+            if (
+                now - lastTapTime < TAP_TIME
+            ) {
+
+                socket.emit(
+                    "mouse_double_click"
+                );
+
+                console.log(
+                    "DOUBLE TAP"
+                );
+
+                lastTapTime = 0;
+            }
+
+            /*
+             * Single tap
+             */
+            else {
+
+                socket.emit(
+                    "mouse_click",
+                    {
+                        button: "left"
+                    }
+                );
+
+                console.log(
+                    "SINGLE TAP"
+                );
+
+                lastTapTime = now;
+            }
         }
-    );
 
+
+        /*
+         * --------------------------------------------------
+         * TWO-FINGER TAP
+         * --------------------------------------------------
+         */
+
+        else if (
+            fingerCount === 2 &&
+            gestureMode === "scroll" &&
+            !moved
+        ) {
+
+            socket.emit(
+                "mouse_click_right",
+                {
+                    button: "right"
+                }
+            );
+
+            console.log(
+                "TWO-FINGER TAP"
+            );
+        }
+
+
+        /*
+         * Reset gesture state after
+         * all fingers have left.
+         */
+        if (fingers.size === 0) {
+
+            gestureMode = "none";
+        }
+    },
+    {
+        passive: false
+    }
+);
+
+
+/* ========================================================
+   PREVENT BROWSER GESTURES
+   ======================================================== */
+
+pad.addEventListener(
+    "gesturestart",
+    event => event.preventDefault(),
+    {
+        passive: false
+    }
+);
+
+pad.addEventListener(
+    "gesturechange",
+    event => event.preventDefault(),
+    {
+        passive: false
+    }
+);
+
+pad.addEventListener(
+    "gestureend",
+    event => event.preventDefault(),
+    {
+        passive: false
+    }
+);

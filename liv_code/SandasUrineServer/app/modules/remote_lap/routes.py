@@ -253,7 +253,7 @@ def mouse_click_right(data):
 def mouse_double_click():
     double_click_laptop_mouse()
 
-@socketio.on("scroll")
+@socketio.on("mouse_scroll")
 def scroll(data):
     amount = float(data.get("amount", 0))
     scroll_laptop_mouse(amount)
