@@ -37,18 +37,12 @@ function startTouchInputCycle() {
 // startTouchInputCycle();
 
 
+
 /* ============================================================
    LANDING PAGE + KEYBOARD
    ============================================================ */
 
 if (window.REMOTE_PAGE === "remote") {
-
-    const socket = io();
-
-
-    /* --------------------------------------------------------
-       Landing page controls
-       -------------------------------------------------------- */
 
     const mouseButton =
         document.getElementById("mouseButton");
@@ -56,27 +50,34 @@ if (window.REMOTE_PAGE === "remote") {
     const keyboardButton =
         document.getElementById("keyboardButton");
 
-
     const remoteMenu =
         document.getElementById("remoteMenu");
 
     const keyboardScreen =
         document.getElementById("keyboardScreen");
 
-
     const keyboardBackButton =
-        document.getElementById(
-            "keyboardBackButton"
-        );
-
-
-    const zoomKey =
-        document.getElementById("zoomKey");
+        document.getElementById("keyboardBackButton");
 
 
     /* --------------------------------------------------------
-       Socket connection
+       Mousepad
        -------------------------------------------------------- */
+
+    mouseButton.addEventListener("click", () => {
+
+        window.location.href =
+            "/remote_lap/lapmouse";
+
+    });
+
+
+    /* --------------------------------------------------------
+       Socket.IO
+       -------------------------------------------------------- */
+
+    const socket = io();
+
 
     socket.on("connect", () => {
 
@@ -88,155 +89,110 @@ if (window.REMOTE_PAGE === "remote") {
     });
 
 
-    socket.on("disconnect", () => {
+    /* --------------------------------------------------------
+       Open keyboard
+       -------------------------------------------------------- */
 
-        console.log(
-            "Keyboard remote disconnected"
-        );
+    keyboardButton.addEventListener("click", () => {
+
+        remoteMenu.style.display = "none";
+
+        keyboardScreen.style.display = "block";
 
     });
 
 
     /* --------------------------------------------------------
-       Mousepad button
+       Close keyboard
        -------------------------------------------------------- */
 
-    mouseButton.addEventListener(
-        "click",
-        () => {
+    keyboardBackButton.addEventListener("click", () => {
 
-            window.location.href =
-                "/remote_lap/lapmouse";
+        keyboardScreen.style.display = "none";
 
-        }
-    );
+        remoteMenu.style.display = "flex";
+
+    });
 
 
-    /* --------------------------------------------------------
-       Keyboard button
-       -------------------------------------------------------- */
+    /* ========================================================
+       Q / W / ENTER
+       ======================================================== */
 
-    keyboardButton.addEventListener(
-        "click",
-        () => {
-
-            remoteMenu.style.display =
-                "none";
-
-            keyboardScreen.style.display =
-                "flex";
-
-        }
-    );
-
-
-    /* --------------------------------------------------------
-       Keyboard Back button
-       -------------------------------------------------------- */
-
-    keyboardBackButton.addEventListener(
-        "click",
-        (event) => {
-
-            event.stopPropagation();
-
-            keyboardScreen.style.display =
-                "none";
-
-            remoteMenu.style.display =
-                "flex";
-
-        }
-    );
-
-
-    /* --------------------------------------------------------
-       Keyboard keys
-       -------------------------------------------------------- */
-
-    const keyboardKeys =
+    const functionalKeys =
         document.querySelectorAll(
-            "#keyboardScreen .key"
+            "#keyboard .functionalKey"
         );
 
 
-    keyboardKeys.forEach(
-        keyButton => {
+    functionalKeys.forEach((keyElement) => {
 
-            keyButton.addEventListener(
-                "click",
-                (event) => {
+        keyElement.addEventListener("click", () => {
 
-                    event.preventDefault();
-                    event.stopPropagation();
+            const key =
+                keyElement.dataset.key;
 
+            if (key === "q") {
 
-                    const key =
-                        keyButton.dataset.key;
-
-
-                    /*
-                     * For now we send the requested
-                     * keys through the Python backend.
-                     *
-                     * q
-                     * w
-                     * Enter
-                     */
-
-                    if (
-                        key === "q" ||
-                        key === "w" ||
-                        key === "Enter"
-                    ) {
-
-                        socket.emit(
-                            "keyboard_key",
-                            {
-                                key: key
-                            }
-                        );
-
-                        console.log(
-                            "KEY:",
-                            key
-                        );
-
+                socket.emit(
+                    "keyboard_key",
+                    {
+                        key: "q"
                     }
+                );
 
-                }
-            );
+                console.log("Keyboard: q");
 
-        }
-    );
+            }
+
+            else if (key === "w") {
+
+                socket.emit(
+                    "keyboard_key",
+                    {
+                        key: "w"
+                    }
+                );
+
+                console.log("Keyboard: w");
+
+            }
+
+            else if (key === "Enter") {
+
+                socket.emit(
+                    "keyboard_key",
+                    {
+                        key: "Enter"
+                    }
+                );
+
+                console.log("Keyboard: Enter");
+
+            }
+
+        });
+
+    });
 
 
-    /* --------------------------------------------------------
-       Zoom
-       -------------------------------------------------------- */
+    /* ========================================================
+       ZO BUTTON
+       ======================================================== */
 
-    zoomKey.addEventListener(
-        "click",
-        (event) => {
-
-            event.preventDefault();
-            event.stopPropagation();
+    const zoomKey =
+        document.getElementById("zoomKey");
 
 
-            socket.emit(
-                "keyboard_zoom"
-            );
+    zoomKey.addEventListener("click", () => {
 
+        socket.emit("keyboard_zoom");
 
-            console.log(
-                "ZOOM KEY"
-            );
+        console.log("Keyboard: ZO");
 
-        }
-    );
+    });
 
 }
-
 
 /* ============================================================
    MOUSEPAD
