@@ -256,24 +256,12 @@
 }
 
 
-/* ============================================================
-   ZO
-   ============================================================ */
-
-#zoomKey {
-    font-weight: bold;
-
-    background: #393939;
-
-    border-color: #777;
-}
-
 
 /* ============================================================
    LANDSCAPE REQUEST
    ============================================================ */
 
-@media (orientation: portrait) {
+/*@media (orientation: portrait) {
 
     #keyboardScreen::before {
         content: "Please rotate your iPhone to landscape mode.";
@@ -301,7 +289,7 @@
     #keyboard {
         visibility: hidden;
     }
-}
+}*/
 
 
 /* ============================================================
@@ -315,122 +303,6 @@
     }
 }
 /*keyboard CSS ends*/
-
-        #remoteMenu {
-
-            width: 100%;
-            height: 100%;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: center;
-            align-items: center;
-
-            gap: 25px;
-        }
-
-
-        .menuButton {
-
-            width: min(80vw, 360px);
-            height: 90px;
-
-            border: none;
-            border-radius: 18px;
-
-            background: #333;
-            color: white;
-
-            font-size: 28px;
-            font-weight: bold;
-
-            touch-action: manipulation;
-        }
-
-
-        .menuButton:active {
-
-            transform: scale(0.97);
-
-            background: #555;
-        }
-
-
-        /* =========================================================
-           MOUSEPAD
-           ========================================================= */
-
-        #mousePad {
-
-            position: fixed;
-
-            left: 0;
-            top: 0;
-
-            width: 100vw;
-            height: 100vh;
-
-            background: #202020;
-
-            touch-action: none;
-
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-
-        /* =========================================================
-           COMMON TOP BUTTON
-           ========================================================= */
-
-        .topButton {
-
-            position: fixed;
-
-            z-index: 100;
-
-            top: max(
-                12px,
-                env(safe-area-inset-top)
-            );
-
-            height: 48px;
-
-            padding: 0 18px;
-
-            border: none;
-            border-radius: 12px;
-
-            background: rgba(60, 60, 60, 0.90);
-
-            color: white;
-
-            font-size: 17px;
-            font-weight: bold;
-
-            touch-action: manipulation;
-        }
-
-
-        #backButton {
-
-            left: max(
-                12px,
-                env(safe-area-inset-left)
-            );
-        }
-
-
-        #fullscreenButton {
-
-            right: max(
-                12px,
-                env(safe-area-inset-right)
-            );
-        }
-
 
         /* =========================================================
            KEYBOARD
@@ -452,7 +324,7 @@
             );
 
             padding-left: max(
-                6px,
+                11px,
                 env(safe-area-inset-left)
             );
 
@@ -554,45 +426,6 @@
         }
 
 
-        /* =========================================================
-           ZOOM BUTTON
-           ========================================================= */
-
-        #zoomKey {
-
-            position: absolute;
-
-            right: 10px;
-            bottom: max(
-                10px,
-                env(safe-area-inset-bottom)
-            );
-
-            width: 82px;
-            height: 48px;
-
-            border: none;
-            border-radius: 12px;
-
-            background: #505050;
-
-            color: white;
-
-            font-size: 17px;
-            font-weight: bold;
-
-            touch-action: manipulation;
-        }
-
-
-        #zoomKey:active {
-
-            background: #707070;
-
-            transform: scale(0.96);
-        }
-
-
     </style>
 
 </head>
@@ -632,9 +465,9 @@
      KEYBOARD REMOTE
      ========================================================= -->
 
+<!-- KEYBOARD -->
 <div id="keyboardScreen">
 
-    <!-- Back to remote menu -->
     <button
         id="keyboardBackButton"
         class="keyboardBackButton"
@@ -643,188 +476,213 @@
         ← Back
     </button>
 
+<div id="keyboard">
 
-    <div id="keyboard">
+    <!-- FUNCTION ROW -->
+    <div class="keyboardRow">
 
-        <!-- FUNCTION ROW -->
-        <div class="keyboardRow">
-
-            <button class="key">Esc</button>
-            <button class="key">F1</button>
-            <button class="key">F2</button>
-            <button class="key">F3</button>
-            <button class="key">F4</button>
-            <button class="key">F5</button>
-            <button class="key">F6</button>
-            <button class="key">F7</button>
-            <button class="key">F8</button>
-            <button class="key">F9</button>
-            <button class="key">F10</button>
-            <button class="key">F11</button>
-            <button class="key">F12</button>
-            <button class="key">Prt</button>
-            <button class="key">Del</button>
-
-            <button
-                id="zoomKey"
-                class="key"
-                type="button"
-            >
-                ZO
-            </button>
-
-        </div>
-
-
-        <!-- NUMBER ROW -->
-        <div class="keyboardRow">
-
-            <button class="key">`</button>
-            <button class="key">1</button>
-            <button class="key">2</button>
-            <button class="key">3</button>
-            <button class="key">4</button>
-            <button class="key">5</button>
-            <button class="key">6</button>
-            <button class="key">7</button>
-            <button class="key">8</button>
-            <button class="key">9</button>
-            <button class="key">0</button>
-            <button class="key">-</button>
-            <button class="key">=</button>
-
-            <button class="key wideKey">
-                Back
-            </button>
-
-        </div>
-
-
-        <!-- QWERTY ROW -->
-        <div class="keyboardRow">
-
-            <button class="key wideKey">Tab</button>
-
-            <button
-                class="key functionalKey"
-                data-key="q"
-            >
-                Q
-            </button>
-
-            <button
-                class="key functionalKey"
-                data-key="w"
-            >
-                W
-            </button>
-
-            <button class="key">E</button>
-            <button class="key">R</button>
-            <button class="key">T</button>
-            <button class="key">Y</button>
-            <button class="key">U</button>
-            <button class="key">I</button>
-            <button class="key">O</button>
-            <button class="key">P</button>
-            <button class="key">[</button>
-            <button class="key">]</button>
-            <button class="key">\</button>
-
-        </div>
-
-
-        <!-- HOME ROW -->
-        <div class="keyboardRow">
-
-            <button class="key wideKey">
-                Caps
-            </button>
-
-            <button class="key">A</button>
-            <button class="key">S</button>
-            <button class="key">D</button>
-            <button class="key">F</button>
-            <button class="key">G</button>
-            <button class="key">H</button>
-            <button class="key">J</button>
-            <button class="key">K</button>
-            <button class="key">L</button>
-            <button class="key">;</button>
-            <button class="key">'</button>
-
-            <button
-                id="enterKey"
-                class="key wideKey functionalKey"
-                data-key="Enter"
-            >
-                Enter
-            </button>
-
-        </div>
-
-
-        <!-- SHIFT ROW -->
-        <div class="keyboardRow">
-
-            <button class="key extraWideKey">
-                Shift
-            </button>
-
-            <button class="key">Z</button>
-            <button class="key">X</button>
-            <button class="key">C</button>
-            <button class="key">V</button>
-            <button class="key">B</button>
-            <button class="key">N</button>
-            <button class="key">M</button>
-            <button class="key">,</button>
-            <button class="key">.</button>
-            <button class="key">/</button>
-
-            <button class="key extraWideKey">
-                Shift
-            </button>
-
-        </div>
-
-
-        <!-- BOTTOM ROW -->
-        <div class="keyboardRow">
-
-            <button class="key wideKey">
-                Ctrl
-            </button>
-
-            <button class="key wideKey">
-                Alt
-            </button>
-
-            <button class="key wideKey">
-                Super
-            </button>
-
-            <button class="key">←</button>
-            <button class="key">↑</button>
-            <button class="key">↓</button>
-            <button class="key">→</button>
-
-            <button class="key spaceKey">
-                Space
-            </button>
-
-            <button class="key wideKey">
-                Alt
-            </button>
-
-            <button class="key wideKey">
-                Ctrl
-            </button>
-
-        </div>
+        <button class="key" data-key="Esc">Esc</button>
+        <button class="key" data-key="F1">F1</button>
+        <button class="key" data-key="F2">F2</button>
+        <button class="key" data-key="F3">F3</button>
+        <button class="key" data-key="F4">F4</button>
+        <button class="key" data-key="F5">F5</button>
+        <button class="key" data-key="F6">F6</button>
+        <button class="key" data-key="F7">F7</button>
+        <button class="key" data-key="F8">F8</button>
+        <button class="key" data-key="F9">F9</button>
+        <button class="key" data-key="F10">F10</button>
+        <button class="key" data-key="F11">F11</button>
+        <button class="key" data-key="F12">F12</button>
+        <button class="key" data-key="PrintScreen">Prt</button>
+        <button class="key" data-key="Delete">Del</button>
 
     </div>
 
+
+    <!-- NUMBER ROW -->
+    <div class="keyboardRow">
+
+        <button class="key" data-key="grave">`</button>
+        <button class="key" data-key="1">1</button>
+        <button class="key" data-key="2">2</button>
+        <button class="key" data-key="3">3</button>
+        <button class="key" data-key="4">4</button>
+        <button class="key" data-key="5">5</button>
+        <button class="key" data-key="6">6</button>
+        <button class="key" data-key="7">7</button>
+        <button class="key" data-key="8">8</button>
+        <button class="key" data-key="9">9</button>
+        <button class="key" data-key="0">0</button>
+        <button class="key" data-key="minus">-</button>
+        <button class="key" data-key="equal">=</button>
+
+        <button
+            class="key wideKey"
+            data-key="Backspace"
+        >
+            Back
+        </button>
+
+    </div>
+
+
+    <!-- QWERTY ROW -->
+    <div class="keyboardRow">
+
+        <button
+            class="key wideKey"
+            data-key="Tab"
+        >
+            Tab
+        </button>
+
+        <button
+            class="key"
+            data-key="q"
+        >
+            Q
+        </button>
+
+        <button
+            class="key"
+            data-key="w"
+        >
+            W
+        </button>
+
+        <button class="key" data-key="e">E</button>
+        <button class="key" data-key="r">R</button>
+        <button class="key" data-key="t">T</button>
+        <button class="key" data-key="y">Y</button>
+        <button class="key" data-key="u">U</button>
+        <button class="key" data-key="i">I</button>
+        <button class="key" data-key="o">O</button>
+        <button class="key" data-key="p">P</button>
+        <button class="key" data-key="leftBracket">[</button>
+        <button class="key" data-key="rightBracket">]</button>
+        <button class="key" data-key="backslash">\</button>
+
+    </div>
+
+
+    <!-- HOME ROW -->
+    <div class="keyboardRow">
+
+        <button
+            class="key wideKey"
+            data-key="CapsLock"
+        >
+            Caps
+        </button>
+
+        <button class="key" data-key="a">A</button>
+        <button class="key" data-key="s">S</button>
+        <button class="key" data-key="d">D</button>
+        <button class="key" data-key="f">F</button>
+        <button class="key" data-key="g">G</button>
+        <button class="key" data-key="h">H</button>
+        <button class="key" data-key="j">J</button>
+        <button class="key" data-key="k">K</button>
+        <button class="key" data-key="l">L</button>
+        <button class="key" data-key="semicolon">;</button>
+        <button class="key" data-key="apostrophe">'</button>
+
+        <button
+            id="enterKey"
+            class="key wideKey"
+            data-key="Enter"
+        >
+            Enter
+        </button>
+
+    </div>
+
+
+    <!-- SHIFT ROW -->
+    <div class="keyboardRow">
+
+        <button
+            class="key extraWideKey"
+            data-key="ShiftLeft"
+        >
+            Shift
+        </button>
+
+        <button class="key" data-key="z">Z</button>
+        <button class="key" data-key="x">X</button>
+        <button class="key" data-key="c">C</button>
+        <button class="key" data-key="v">V</button>
+        <button class="key" data-key="b">B</button>
+        <button class="key" data-key="n">N</button>
+        <button class="key" data-key="m">M</button>
+        <button class="key" data-key="comma">,</button>
+        <button class="key" data-key="period">.</button>
+        <button class="key" data-key="slash">/</button>
+
+        <button
+            class="key extraWideKey"
+            data-key="ShiftRight"
+        >
+            Shift
+        </button>
+
+    </div>
+
+
+    <!-- BOTTOM ROW -->
+    <div class="keyboardRow">
+
+        <button
+            class="key wideKey"
+            data-key="ControlLeft"
+        >
+            Ctrl
+        </button>
+
+        <button
+            class="key wideKey"
+            data-key="AltLeft"
+        >
+            Alt
+        </button>
+
+        <button
+            class="key wideKey"
+            data-key="SuperLeft"
+        >
+            Super
+        </button>
+
+        <button class="key" data-key="ArrowLeft">←</button>
+        <button class="key" data-key="ArrowUp">↑</button>
+        <button class="key" data-key="ArrowDown">↓</button>
+        <button class="key" data-key="ArrowRight">→</button>
+
+        <button
+            class="key spaceKey"
+            data-key="Space"
+        >
+            Space
+        </button>
+
+        <button
+            class="key wideKey"
+            data-key="AltRight"
+        >
+            Alt
+        </button>
+
+        <button
+            class="key wideKey"
+            data-key="ControlRight"
+        >
+            Ctrl
+        </button>
+
+    </div>
+
+</div>
 </div>
     <!-- END keyboardScreen -->
 
