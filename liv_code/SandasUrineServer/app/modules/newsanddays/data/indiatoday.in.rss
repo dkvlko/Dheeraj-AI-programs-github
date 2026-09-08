@@ -1,0 +1,17 @@
+<rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[India Today | Top Stories]]></title>
+        <description><![CDATA[India Today]]></description>
+        <atom:link href="https://www.indiatoday.in/rss/1206584" rel="self" type="application/rss+xml" />
+        <link><![CDATA[ https://www.indiatoday.in/?utm_source=rss ]]></link>
+        <lastBuildDate>Wed, 09 Sep 2026 04:02:05 +0530</lastBuildDate>
+        <generator>FeedCreator 1.7.2</generator>
+        <image>
+        <url>https://akm-img-a-in.tosshub.com/indiatoday/images/mediamanager/itlogo.png</url>
+        <title><![CDATA[India Today | Top Stories]]></title>
+        <link><![CDATA[ https://www.indiatoday.in/?utm_source=rss ]]></link>
+        <description>India Today</description>
+        </image>
+        
+    </channel>
+    </rss>

@@ -9,6 +9,7 @@ import time
 from pathlib import Path
 from urllib.parse import urlparse
 import requests
+import json
 
 # =========================================================
 # Configuration
@@ -20,7 +21,9 @@ OUTPUT_HTML = "data/sortednews.html"
 
 OUTPUT_JSON = "data/sortednews.json"
 
-SIMILARITY_THRESHOLD = 0.60
+INPUT_JSON = OUTPUT_JSON
+
+SIMILARITY_THRESHOLD = 0.80
 
 
 
@@ -143,6 +146,17 @@ def processURLs(rssa,rssb) :
         if entry.get("title")
     ]
 
+    if not rssa_headlines or not rssb_headlines:
+
+        print("\nHeadlines are missing from the file.")
+
+        if not rssa_headlines:
+            print(f"RSSA: {rssa}")
+
+        if not rssb_headlines:
+            print(f"RSSB: {rssb}")
+
+        return
 
     # =========================================================
     # Generate embeddings
@@ -225,6 +239,155 @@ def processURLs(rssa,rssb) :
 
 
     # =========================================================
+    # Generate sortednews.json
+    # =========================================================
+
+    # Read existing data
+    if Path(OUTPUT_JSON).exists():
+        try:
+            with open(OUTPUT_JSON, "r", encoding="utf-8") as f:
+                sorted_news = json.load(f)
+
+            if not isinstance(sorted_news, list):
+                sorted_news = []
+
+        except (json.JSONDecodeError, OSError):
+            sorted_news = []
+
+    else:
+        sorted_news = []
+
+
+    # Append newly matched entries
+    sorted_news.extend(matched_entries)
+
+
+    # Save updated JSON
+    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
+        json.dump(
+            sorted_news,
+            f,
+            ensure_ascii=False,
+            indent=2
+        )
+
+
+    print(f"\nUpdated: {OUTPUT_JSON}")
+    print(f"Total stories: {len(sorted_news)}")
+
+    # =========================================================
+    # Remove matched headlines from both feeds
+    # =========================================================
+
+    print("\nFiltering RSS feeds...")
+
+    filter_rss_xml(
+        rssa_xml,
+        matched_rssa_titles,
+        rssa
+    )
+
+    filter_rss_xml(
+        rssb_xml,
+        matched_rssb_titles,
+        rssb
+    )
+
+
+    print("\n======================================")
+    print("Finished")
+    print("======================================")
+    print(f"RSSA  : {rssa}")
+    print(f"RSSB  : {rssb}")
+    print(f"Matched RSSA stories : {len(matched_rssa_titles)}")
+    print(f"Matched RSSB stories : {len(matched_rssb_titles)}")
+
+def download_rss(urls, output_dir):
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (X11; Linux x86_64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/140.0.0.0 Safari/537.36"
+        ),
+        "Accept": (
+            "application/rss+xml, application/xml, "
+            "text/xml, */*;q=0.8"
+        ),
+    }
+
+    files = []
+
+    for url in urls:
+        parsed = urlparse(url)
+
+        # Use the domain as the filename
+        site = parsed.netloc.removeprefix("www.")
+        filename = output_dir / f"{site}.rss"
+
+        response = requests.get(url,
+                                headers = headers,
+                                timeout=30)
+
+        response.raise_for_status()
+
+        filename.write_bytes(response.content)
+        files.append(filename)
+
+    return files
+
+# The main function where the core logic of the script lives
+def main():
+    urls = [
+    "https://news.abplive.com/home/feed",
+    "http://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+    "https://www.thehindu.com/feeder/default.rss",
+    "https://www.hindustantimes.com/feeds/rss/latest/rssfeed.xml",
+    "https://feeds.feedburner.com/ndtvnews-top-stories",
+    "https://www.indiatoday.in/rss/1206584",
+    "https://www.news18.com/commonfeeds/v1/eng/rss/india.xml",
+    ]
+
+    data_dir = Path("./data")
+
+    for path in data_dir.iterdir():
+        if path.is_file():
+            path.unlink()
+
+    print("All files deleted from ./data")
+    #ABP_URL = "https://news.abplive.com/home/feed"
+    #TOI_URL = "http://timesofindia.indiatimes.com/rssfeedstopstories.cms"
+    rss_files = download_rss(urls, "data")
+    for i in range(len(rss_files) - 1):
+        for j in range(i + 1, len(rss_files)):
+            processURLs(rss_files[i], rss_files[j])
+    #processURLs(rss_files[0],rss_files[1])
+
+# =========================================================
+# Read sortednews.json
+# =========================================================
+
+    if not Path(INPUT_JSON).exists():
+        print(f"ERROR: {INPUT_JSON} does not exist.")
+        raise SystemExit(1)
+
+    try:
+        with open(INPUT_JSON, "r", encoding="utf-8") as f:
+            matched_entries = json.load(f)
+
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"ERROR reading {INPUT_JSON}: {e}")
+        raise SystemExit(1)
+
+
+    # Make sure the JSON contains a list
+    if not isinstance(matched_entries, list):
+        print(f"ERROR: {INPUT_JSON} does not contain a JSON list.")
+        raise SystemExit(1)
+
+
+    # =========================================================
     # Generate sortednews.html
     # =========================================================
 
@@ -245,7 +408,7 @@ def processURLs(rssa,rssb) :
 
     <body>
 
-    <h1>RSSA News — Matched with RSSB</h1>
+    <h1>News This Hour</h1>
 
     <p>
         {{ matched_entries|length }}
@@ -292,7 +455,7 @@ def processURLs(rssa,rssb) :
         <br>
 
         <small>
-            TOI:
+            RSSB:
             {{ item.matched_rssb_title }}
         </small>
 
@@ -307,82 +470,25 @@ def processURLs(rssa,rssb) :
     """)
 
 
+    # =========================================================
+    # Render template
+    # =========================================================
+
     html = template.render(
         matched_entries=matched_entries
     )
 
+
+    # =========================================================
+    # Write HTML
+    # =========================================================
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html)
 
 
     print(f"\nCreated: {OUTPUT_HTML}")
-
-
-    # =========================================================
-    # Remove matched headlines from both feeds
-    # =========================================================
-
-    print("\nFiltering RSS feeds...")
-
-    filter_rss_xml(
-        rssa_xml,
-        matched_rssa_titles,
-        rssa
-    )
-
-    filter_rss_xml(
-        rssb_xml,
-        matched_rssb_titles,
-        rssb
-    )
-
-
-    print("\n======================================")
-    print("Finished")
-    print("======================================")
-    print(f"HTML : {OUTPUT_HTML}")
-    print(f"RSSA  : {rssa}")
-    print(f"RSSB  : {rssb}")
-    print(f"Matched RSSA stories : {len(matched_rssa_titles)}")
-    print(f"Matched RSSB stories : {len(matched_rssb_titles)}")
-
-def download_rss(urls, output_dir):
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    files = []
-
-    for url in urls:
-        parsed = urlparse(url)
-
-        # Use the domain as the filename
-        site = parsed.netloc.removeprefix("www.")
-        filename = output_dir / f"{site}.rss"
-
-        response = requests.get(url, timeout=30)
-        response.raise_for_status()
-
-        filename.write_bytes(response.content)
-        files.append(filename)
-
-    return files
-
-# The main function where the core logic of the script lives
-def main():
-    urls = [
-    "https://news.abplive.com/home/feed",
-    "http://timesofindia.indiatimes.com/rssfeedstopstories.cms",
-    "https://www.thehindu.com/feeder/default.rss",
-    ]
-    #ABP_URL = "https://news.abplive.com/home/feed"
-    #TOI_URL = "http://timesofindia.indiatimes.com/rssfeedstopstories.cms"
-    rss_files = download_rss(urls, "data")
-    for i in range(len(rss_files) - 1):
-        for j in range(i + 1, len(rss_files
-            processURLs(rss_files[i], rss_files[j])
-    #processURLs(rss_files[0],rss_files[1])
-
+    print(f"Stories rendered: {len(matched_entries)}")
 
 if __name__ == "__main__":
     main()
