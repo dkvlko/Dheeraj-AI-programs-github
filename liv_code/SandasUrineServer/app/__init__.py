@@ -73,7 +73,12 @@ def create_app():
         url_prefix=remotelap_bp.app_url
     )
 
-    #register_socket_handlers(socketio)
+
+    from app.modules.clock_lap import clock_bp
+    app.register_blueprint(
+        clock_bp,
+        url_prefix=clock_bp.app_url
+    )
 
     #print("Static folder:", app.static_folder)
     #Static folder: /home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/static

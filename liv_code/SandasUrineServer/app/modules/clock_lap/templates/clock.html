@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clock</title>
+<style>
+    * { box-sizing: border-box; }
+
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #000000;
+    }
+
+    body {
+        font-family: Calibri, Carlito, Arial, sans-serif;
+    }
+
+    .page {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        gap: 8px;
+    }
+
+    /* The bottom frame is exactly 1/15 of the available page height. */
+    .clock-frame {
+        position: relative;
+        flex: 1 1 auto;
+        min-height: 0;
+        border: 5px solid #ffffff;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2vh 2vw;
+        color: #ffffff
+    }
+
+    .day {
+        font-size: clamp(42px, 8vw, 110px);
+        font-weight: 700;
+        line-height: 1.0;
+        margin-bottom: 2vh;
+    }
+
+    .date {
+        font-size: clamp(38px, 7vw, 96px);
+        font-weight: 700;
+        line-height: 1.0;
+        margin-bottom: 3vh;
+    }
+
+    .time {
+        font-size: clamp(62px, 11vw, 155px);
+        font-weight: 700;
+        line-height: 0.95;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+    }
+
+    .bottom-frame {
+        position: relative;
+        flex: 0 0 calc((100% - 8px) / 5);
+        min-height: 0;
+        border: 3px solid #ffffff;
+        border-radius: 8px;
+    }
+
+    .details-button {
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
+        width: 192px;
+        height: 192px;
+        max-width: calc(100% - 16px);
+        max-height: calc(100% - 16px);
+        border: 3px solid #a84f00;
+        border-radius: 12px;
+        background: #f28c18;
+        color: #111;
+        font: 700 28px Calibri, Carlito, Arial, sans-serif;
+        cursor: pointer;
+        box-shadow: 0 3px 8px rgba(0,0,0,.22);
+    }
+
+    .details-button:hover { background: #ff9d2e; }
+    .details-button:active { transform: translateY(1px); }
+    .details-button:focus-visible {
+        outline: 4px solid #222;
+        outline-offset: 3px;
+    }
+
+    @media (max-width: 700px) {
+        .page { padding: 6px; gap: 5px; }
+        .clock-frame { border-width: 3px; border-radius: 8px; }
+        .bottom-frame { border-width: 2px; }
+        .details-button {
+            width: 96px;
+            height: 96px;
+            font-size: 18px;
+        }
+    }
+</style>
+</head>
+<body>
+<main class="page">
+    <section class="clock-frame" aria-label="Current date and time">
+        <div id="day" class="day"></div>
+        <div id="date" class="date"></div>
+        <div id="time" class="time" aria-live="polite"></div>
+    </section>
+
+    <section class="bottom-frame" aria-label="Reserved information area">
+        <!-- Content can be populated here later. -->
+        <button class="details-button" type="button" id="detailsButton">
+            Details
+        </button>
+    </section>
+</main>
+
+<script>
+(function () {
+    const dayEl = document.getElementById("day");
+    const dateEl = document.getElementById("date");
+    const timeEl = document.getElementById("time");
+    const detailsButton = document.getElementById("detailsButton");
+
+    function updateClock() {
+        const now = new Date();
+
+        const day = new Intl.DateTimeFormat("en-US", {
+            weekday: "long"
+        }).format(now);
+
+        const date = new Intl.DateTimeFormat("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        }).format(now);
+
+        const time = new Intl.DateTimeFormat("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+        }).format(now);
+
+        dayEl.textContent = day;
+        dateEl.textContent = date;
+        timeEl.textContent = time;
+    }
+
+    detailsButton.addEventListener("click", function () {
+        window.location.href = "/clock_lap/details_date.html";
+    });
+
+    updateClock();
+    setInterval(updateClock, 1000);
+})();
+</script>
+</body>
+</html>
