@@ -26,6 +26,10 @@ def create_app():
         async_mode="threading"
     )
 
+
+    app.jinja_env.auto_reload = True
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
+
     # Register application modules here.
     #from .modules.music import music_bp
 

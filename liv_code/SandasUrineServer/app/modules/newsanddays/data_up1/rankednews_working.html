@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Ranked News</title>
+
+<style>
+
+    body {
+        font-family: Calibri, Arial, sans-serif;
+        margin: 20px;
+        background: #ffffff;
+    }
+
+    .news-item {
+        margin-bottom: 8px;
+    }
+
+    .title {
+        font-family: Calibri, Arial, sans-serif;
+        font-size: 11pt;
+        cursor: pointer;
+        display: inline;
+    }
+
+    .rank {
+        font-family: Calibri, Arial, sans-serif;
+        font-size: 8pt;
+        color: #666666;
+        margin-left: 6px;
+    }
+
+    .summary {
+        display: none;
+        font-family: Calibri, Arial, sans-serif;
+        font-size: 10pt;
+        margin-top: 4px;
+        margin-left: 20px;
+        line-height: 1.4;
+    }
+
+</style>
+
+<script>
+
+    function toggleSummary(id) {
+
+        const element = document.getElementById(id);
+
+        if (element.style.display === "none" ||
+            element.style.display === "") {
+
+            element.style.display = "block";
+
+        } else {
+
+            element.style.display = "none";
+        }
+    }
+
+</script>
+
+</head>
+
+<body>
+
+<h3>Ranked News</h3>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_0')">
+
+        Putin Arrives In Delhi For BRICS Summit; Key Talks With PM Modi Over Trade, Defence On Agenda
+
+    </span>
+
+    <span class="rank">
+        [Rank 13]
+    </span>
+
+    <div id="summary_0"
+         class="summary">
+
+        Putin Arrives In Delhi For BRICS Summit; Key Talks With PM Modi Over Trade, Defence On Agenda
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_1')">
+
+        &#x27;Confident Of Positive, Meaningful Discussions For Global Welfare&#x27;: PM Modi Ahead Of BRICS Summit
+
+    </span>
+
+    <span class="rank">
+        [Rank 14]
+    </span>
+
+    <div id="summary_1"
+         class="summary">
+
+        &#x27;Confident Summit Will Feature Meaningful Discussions&#x27;: PM Modi Ahead Of BRICS
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_2')">
+
+        BRICS Summit 2026 LIVE updates: Iran President Pezeshkian leaves Tehran for India, set to meet PM Modi
+
+    </span>
+
+    <span class="rank">
+        [Rank 15]
+    </span>
+
+    <div id="summary_2"
+         class="summary">
+
+        The BRICS Summit kicks off in New Delhi on September 12, with Russian President Vladimir Putin already in the capital and Iranian President Masoud Pezeshkian on his way. Both leaders are set to meet Prime Minister Narendra Modi, while India pushes for deeper economic cooperation and highlights its growing market, manufacturing and digital strengths
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_3')">
+
+        BRICS Summit 2026 LIVE Updates: India&#x27;s UPI Model Can Strengthen BRICS Trade Ties, Says Piyush Goyal
+
+    </span>
+
+    <span class="rank">
+        [Rank 16]
+    </span>
+
+    <div id="summary_3"
+         class="summary">
+
+        BRICS Summit 2026 LIVE Updates: As BRICS Chair for 2026, India will host the summit in New Delhi on September 12 and 13.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_4')">
+
+        PM Modi To Meet Putin, Pezeshkian Today As India Sets The BRICS Mood
+
+    </span>
+
+    <span class="rank">
+        [Rank 17]
+    </span>
+
+    <div id="summary_4"
+         class="summary">
+
+        An artist gives final touches to paintings of BRICS member countries&#x27; leaders in Amritsar
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_5')">
+
+        &#x27;Confident Of Positive, Meaningful Talks For Global Welfare’: PM Modi Ahead Of BRICS Summit
+
+    </span>
+
+    <span class="rank">
+        [Rank 18]
+    </span>
+
+    <div id="summary_5"
+         class="summary">
+
+        Prime Minister Narendra Modi on Friday expressed confidence that the BRICS Summit in New Delhi would pave the way for meaningful discussions on various issues
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_6')">
+
+        1980s AI Photo trend: 5 ChatGPT prompts to create Kerala-style retro images
+
+    </span>
+
+    <span class="rank">
+        [Rank 19]
+    </span>
+
+    <div id="summary_6"
+         class="summary">
+
+        A social media trend uses ChatGPT to recreate photos in 1980s styles. Users are now focusing on regional aesthetics, specifically 1980s Kerala and Malayali culture. Prompts request authentic family, wedding, college, and studio portraits from the period. These images incorporate traditional clothing, jewellery, and home settings from Kerala. The AI maintains recognizable facial features while adding retro photographic elements.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_7')">
+
+        ‘Key growth engine’: IMF hails India’s 7.8% growth, backs GDP estimate changes
+
+    </span>
+
+    <span class="rank">
+        [Rank 20]
+    </span>
+
+    <div id="summary_7"
+         class="summary">
+
+        India&#x27;s economy showcased remarkable resilience by achieving a robust 7.8 percent GDP growth for the April-June quarter, surpassing forecasts. The strength of the services and export sectors contributed significantly to this success. The International Monetary Fund lauded India&#x27;s economic achievements and its pivotal role as a global growth driver, also acknowledging improvements in macroeconomic statistics and data quality. This comes amid ongoing evaluations of India&#x27;s latest GDP figures.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_8')">
+
+        Slab collapses at Gandhinagar construction site, several workers injured
+
+    </span>
+
+    <span class="rank">
+        [Rank 21]
+    </span>
+
+    <div id="summary_8"
+         class="summary">
+
+        &lt;a href=&quot;https://www.indiatoday.in/newsmo/short-videos/slab-collapses-at-gandhinagar-construction-site-several-workers-injured-2992030-2026-09-11&quot;&gt; &lt;img align=&quot;left&quot; alt=&quot;&quot; border=&quot;0&quot; height=&quot;180&quot; hspace=&quot;2&quot; src=&quot;https://akm-img-a-in.tosshub.com/indiatoday/images/short_video/202609/gajarat-104950154-16x9_0.png?VersionId=TJALjMVIuQERL8ytP3qkIXz5edyw.s0I&quot; width=&quot;305&quot; /&gt; &lt;/a&gt; Slab collapses at Gandhinagar construction site several workers injured
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_9')">
+
+        From galouti kebabs to edible lotuses: How Delhi hotels are welcoming BRICS delegates
+
+    </span>
+
+    <span class="rank">
+        [Rank 22]
+    </span>
+
+    <div id="summary_9"
+         class="summary">
+
+        &lt;a href=&quot;https://www.indiatoday.in/lifestyle/food/story/from-galouti-kebabs-to-edible-lotuses-millet-cookies-how-delhi-hotels-are-welcoming-brics-delegates-2992130-2026-09-11&quot;&gt; &lt;img align=&quot;left&quot; alt=&quot;&quot; border=&quot;0&quot; height=&quot;180&quot; hspace=&quot;2&quot; src=&quot;https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/a-selection-of-fruits--chocolates-and-snacks-that-delegates-at-the-lalit-will-find-in-their-rooms-1152261-16x9_0.jpeg?VersionId=.dzlXUZdawYe1QtQzy6yUbju0XvO3beQ&quot; width=&quot;305&quot; /&gt; &lt;/a&gt; From galouti kebabs to edible lotuses How Delhi hotels are welcoming BRICS delegates
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_10')">
+
+        From galouti kebabs to edible lotuses: How Delhi hotels are welcoming BRICS delegates
+
+    </span>
+
+    <span class="rank">
+        [Rank 23]
+    </span>
+
+    <div id="summary_10"
+         class="summary">
+
+        &lt;a href=&quot;https://www.indiatoday.in/lifestyle/food/story/from-galouti-kebabs-to-edible-lotuses-millet-cookies-how-delhi-hotels-are-welcoming-brics-delegates-2992130-2026-09-11&quot;&gt; &lt;img align=&quot;left&quot; alt=&quot;&quot; border=&quot;0&quot; height=&quot;180&quot; hspace=&quot;2&quot; src=&quot;https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/a-selection-of-fruits--chocolates-and-snacks-that-delegates-at-the-lalit-will-find-in-their-rooms-1152261-16x9_0.jpeg?VersionId=.dzlXUZdawYe1QtQzy6yUbju0XvO3beQ&quot; width=&quot;305&quot; /&gt; &lt;/a&gt; From galouti kebabs to edible lotuses How Delhi hotels are welcoming BRICS delegates
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_11')">
+
+        Saudi Crown Prince MBS Urged Trump To Strike Houthis Amid Red Sea Escalation: Report
+
+    </span>
+
+    <span class="rank">
+        [Rank 24]
+    </span>
+
+    <div id="summary_11"
+         class="summary">
+
+        Saudi Crown Prince MBS Urged Trump To Strike Houthis Amid Red Sea Escalation: Report
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_12')">
+
+        Delhi man, 22, stabbed 17 times near school over suspected affair
+
+    </span>
+
+    <span class="rank">
+        [Rank 25]
+    </span>
+
+    <div id="summary_12"
+         class="summary">
+
+        A 22-year-old man died after being stabbed seventeen times in east Delhi&#x27;s Mandawali area.  The fatal altercation occurred near a school on Thursday evening following a dispute.  Police rushed the injured Vansh Dedha to a hospital where doctors pronounced him dead.  One accused, Keshav Kumar, was arrested while his associate is being sought.  Authorities are reviewing CCTV footage and technical surveillance for further investigation.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_13')">
+
+        Vande Mataram row: Do they want Kashmiris in jail? Omar Abdullah hits back at Cong
+
+    </span>
+
+    <span class="rank">
+        [Rank 26]
+    </span>
+
+    <div id="summary_13"
+         class="summary">
+
+        
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_14')">
+
+        Pakistan stops Sikh pilgrims bound for Hemkund Sahib at Faisalabad airport
+
+    </span>
+
+    <span class="rank">
+        [Rank 27]
+    </span>
+
+    <div id="summary_14"
+         class="summary">
+
+        Pakistani authorities stopped Sikh pilgrims from flying to India for their pilgrimage.  Devotees were stranded at Faisalabad International Airport after being asked for an NOC.  Pilgrims missed their scheduled flights to Delhi due to the unexpected requirement.  They had already spent significant money on travel arrangements for the journey.  The group now awaits government permission to travel via the Attari-Wagah land border.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_15')">
+
+        Brics summit: Beijing officially requested for Xi delegation’s visas on Aug 27
+
+    </span>
+
+    <span class="rank">
+        [Rank 28]
+    </span>
+
+    <div id="summary_15"
+         class="summary">
+
+        
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_16')">
+
+        Banking services impacted as unions go on nationwide strike to press for 5-day workweek
+
+    </span>
+
+    <span class="rank">
+        [Rank 29]
+    </span>
+
+    <div id="summary_16"
+         class="summary">
+
+        Most branches of public sector banks across the country were either completely or partially closed as both employees and officers observed the strike
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_17')">
+
+        Nepal’s flash floods death toll rises to 1,385
+
+    </span>
+
+    <span class="rank">
+        [Rank 30]
+    </span>
+
+    <div id="summary_17"
+         class="summary">
+
+        Nepal’s flash floods death toll rises to 1,385
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_18')">
+
+        Haiwaan review: Akshay Kumar, Saif Ali Khan lead an uneven thriller by Priyadarshan, saved by its final act
+
+    </span>
+
+    <span class="rank">
+        [Rank 31]
+    </span>
+
+    <div id="summary_18"
+         class="summary">
+
+        Haiwaan review: Saif Ali Khan looks unconvincing as a visually impaired man in Priyadarshan&#x27;s uneven thriller.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_19')">
+
+        ‘Dashing, may debut in Bollywood soon’: Piyush Goyal&#x27;s light-hearted praise for Russian minister
+
+    </span>
+
+    <span class="rank">
+        [Rank 32]
+    </span>
+
+    <div id="summary_19"
+         class="summary">
+
+        Piyush Goyal spoke about Alikhanov at the event held at Bharat Mandapam, as the 18th BRICS Summit gets underway in the national capital.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_20')">
+
+        Trump Rejects Warnings That AI May Lead To Human Extinction
+
+    </span>
+
+    <span class="rank">
+        [Rank 33]
+    </span>
+
+    <div id="summary_20"
+         class="summary">
+
+        Donald Trump brushed aside warnings from artificial intelligence researchers.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_21')">
+
+        What India Really Wants From BRICS As Trade Deficit Widens
+
+    </span>
+
+    <span class="rank">
+        [Rank 34]
+    </span>
+
+    <div id="summary_21"
+         class="summary">
+
+        India&#x27;s deficit with BRICS nations has ballooned to $226.1 billion in FY2025-26.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_22')">
+
+        5 Orangutans Found In Odisha May Be Victims Of Wildlife Smuggling: Indonesia
+
+    </span>
+
+    <span class="rank">
+        [Rank 35]
+    </span>
+
+    <div id="summary_22"
+         class="summary">
+
+        The animals were rescued by the Odisha forest department from Bichitrapur forest on September 8.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_23')">
+
+        Bank strike today: Why are employees protesting, and will there be more strikes?
+
+    </span>
+
+    <span class="rank">
+        [Rank 36]
+    </span>
+
+    <div id="summary_23"
+         class="summary">
+
+        &lt;a href=&quot;https://www.indiatoday.in/business/story/bank-strike-today-five-day-banking-week-ufbu-more-strikes-upcoming-demands-union-2992228-2026-09-11&quot;&gt; &lt;img align=&quot;left&quot; alt=&quot;&quot; border=&quot;0&quot; height=&quot;180&quot; hspace=&quot;2&quot; src=&quot;https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/bank-strike-110806918-16x9_0.png?VersionId=J4ztwg1eEjN2jSvDZ7ybWB7zy1wghtQ_&quot; width=&quot;305&quot; /&gt; &lt;/a&gt; Bank strike today Why are employees protesting and will there be more strikes
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_24')">
+
+        Live: Inside BRICS venue where PM Modi, Putin to hold bilateral meet
+
+    </span>
+
+    <span class="rank">
+        [Rank 37]
+    </span>
+
+    <div id="summary_24"
+         class="summary">
+
+        &lt;a href=&quot;https://www.indiatoday.in/india/story/brics-summit-2026-delhi-live-updates-putin-russia-xi-jinping-pezeshkian-iran-modi-cyril-ramaphosa-deal-bilateral-meetings-2992072-2026-09-11&quot;&gt; &lt;img align=&quot;left&quot; alt=&quot;&quot; border=&quot;0&quot; height=&quot;180&quot; hspace=&quot;2&quot; src=&quot;https://akm-img-a-in.tosshub.com/indiatoday/images/breaking_news/202609/subrahmanyam-jaishankar-111327338-16x9_0.png?VersionId=4K2bVaCQfRH6VCzz_jkyj4wVPCmgRY5y&quot; width=&quot;305&quot; /&gt; &lt;/a&gt; Live Inside BRICS venue where PM Modi Putin to hold bilateral meet
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_25')">
+
+        Bangladesh Hindu Monk Gets 5-Hour Parole For Mother’s Funeral After Final Wish Goes Unfulfilled
+
+    </span>
+
+    <span class="rank">
+        [Rank 38]
+    </span>
+
+    <div id="summary_25"
+         class="summary">
+
+        Bangladesh Hindu Monk Gets 5-Hour Parole For Mother’s Funeral After Final Wish Goes Unfulfilled
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_26')">
+
+        BRICS Summit 2026: Jaishankar Calls For Greater Self-Reliance With Global Market Ties At Business Forum
+
+    </span>
+
+    <span class="rank">
+        [Rank 39]
+    </span>
+
+    <div id="summary_26"
+         class="summary">
+
+        BRICS Summit 2026: Jaishankar Calls For Greater Self-Reliance With Global Market Ties At Business Forum
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_27')">
+
+        &#x27;Naraz Fufa Exposed&#x27;: BJP Takes Dig At Congress After Tharoor Breaks Ranks With Chidambaram On BRICS Summit
+
+    </span>
+
+    <span class="rank">
+        [Rank 40]
+    </span>
+
+    <div id="summary_27"
+         class="summary">
+
+        &#x27;Naraz Fufa Exposed&#x27;: BJP Takes Dig At Congress After Tharoor Differs With Chidambaram On BRICS Summit
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_28')">
+
+        Travelling By Train During BRICS Summit? Rajdhani, Vande Bharat Among Trains Hit Till Sep 13. Check List
+
+    </span>
+
+    <span class="rank">
+        [Rank 41]
+    </span>
+
+    <div id="summary_28"
+         class="summary">
+
+        Travelling By Train During BRICS Summit? Rajdhani, Vande Bharat Among Trains Hit Till Sep 13. Check List
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_29')">
+
+        &#x27;Promised to boost followers&#x27;: Delhi influencer &#x27;raped&#x27; by ASI’s associate
+
+    </span>
+
+    <span class="rank">
+        [Rank 42]
+    </span>
+
+    <div id="summary_29"
+         class="summary">
+
+        A troubling situation has emerged involving an SSB assistant sub-inspector, who stands accused of fraud and exploitation by three women. One of them alleges she was raped and then blackmailed with a video recording. She claims she was pressured to modify her statement following her complaint. Additionally, two other women report harassment and inappropriate messages from the officer, leading to a police and SSB investigation into these allegations.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_30')">
+
+        Jharkhand High Court sets two month deadline for government to appoint JPSC Chairman, members
+
+    </span>
+
+    <span class="rank">
+        [Rank 43]
+    </span>
+
+    <div id="summary_30"
+         class="summary">
+
+        Former JPSC chairman L. Khiangte was arrested on August 10, a day after all three members of the panel resigned amid massive protests by aspirants over alleged irregularities in recruitment tests conducted by the commission.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_31')">
+
+        KSEB ‘working hard’ to tide over power shortage, says Keralam Electricity Minister
+
+    </span>
+
+    <span class="rank">
+        [Rank 44]
+    </span>
+
+    <div id="summary_31"
+         class="summary">
+
+        Sunny Joseph says Opposition should not blame the present UDF government, as lapses during LDF’s tenure also contributed to the power crisis
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_32')">
+
+        ‘Rarest of rare’: Chhattisgarh man sentenced to death for raping, killing girl
+
+    </span>
+
+    <span class="rank">
+        [Rank 45]
+    </span>
+
+    <div id="summary_32"
+         class="summary">
+
+        The girl was found in a vehicle in Chhattisgarh’s Durg and declared dead at a hospital after she was reported missing in 2025
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_33')">
+
+        India at forefront of fight against terror: PM Modi remembers 9/11 victims
+
+    </span>
+
+    <span class="rank">
+        [Rank 46]
+    </span>
+
+    <div id="summary_33"
+         class="summary">
+
+        The prime minister also shared images of his visit to the 9/11 Memorial and Museum in 2014.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_34')">
+
+        India&#x27;s Journey From &quot;Least Attractive&quot; To One Of Most Reliable BRICS Members
+
+    </span>
+
+    <span class="rank">
+        [Rank 47]
+    </span>
+
+    <div id="summary_34"
+         class="summary">
+
+        India&#x27;s sovereign-risk narrative has also reversed.
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_35')">
+
+        Suvendu Adhikari Eats Fish In Temple. BJP Says This Must End Non-Veg Row
+
+    </span>
+
+    <span class="rank">
+        [Rank 48]
+    </span>
+
+    <div id="summary_35"
+         class="summary">
+
+        Kalighat has a tradition of offering fish and sacrificial goat meat to Kali
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_36')">
+
+        iPhone 16 price drops by Rs 13,000 in India, details here
+
+    </span>
+
+    <span class="rank">
+        [Rank 49]
+    </span>
+
+    <div id="summary_36"
+         class="summary">
+
+        &lt;a href=&quot;https://www.indiatoday.in/visualstories/technology/iphone-16-price-drops-by-rs-13000-in-india-details-here-285490-08-09-2026&quot;&gt; &lt;img align=&quot;left&quot; alt=&quot;&quot; border=&quot;0&quot; height=&quot;180&quot; hspace=&quot;2&quot; src=&quot;https://cf-img-a-in.tosshub.com/sites/visualstory/wp/2026/09/cropped-imageITG-1788267929137-1.png&quot; width=&quot;305&quot; /&gt; &lt;/a&gt; iPhone  price drops by Rs  in India details here
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_37')">
+
+        Thar, Fortuner owners take road safety pledge in Daman
+
+    </span>
+
+    <span class="rank">
+        [Rank 50]
+    </span>
+
+    <div id="summary_37"
+         class="summary">
+
+        &lt;a href=&quot;https://www.indiatoday.in/newsmo/short-videos/thar-fortuner-owners-take-road-safety-pledge-in-daman-2992033-2026-09-11&quot;&gt; &lt;img align=&quot;left&quot; alt=&quot;&quot; border=&quot;0&quot; height=&quot;180&quot; hspace=&quot;2&quot; src=&quot;https://akm-img-a-in.tosshub.com/indiatoday/images/short_video/202609/daman-105407857-16x9_0.jpg?VersionId=qSP.N4dmyaNLaMNpgqwccvFCNkl11mKV&quot; width=&quot;305&quot; /&gt; &lt;/a&gt; Thar Fortuner owners take road safety pledge in Daman
+
+    </div>
+
+</div>
+
+<div class="news-item">
+
+    <span class="title"
+          onclick="toggleSummary('summary_38')">
+
+        BRICS Summit Delhi: 26 Trains Cancelled, Over 25 Diverted | Check List
+
+    </span>
+
+    <span class="rank">
+        [Rank 51]
+    </span>
+
+    <div id="summary_38"
+         class="summary">
+
+        The operational changes include cancellations, diversions, short-originations, short-terminations and regulated running of trains.
+
+    </div>
+
+</div>
+
+</body>
+</html>

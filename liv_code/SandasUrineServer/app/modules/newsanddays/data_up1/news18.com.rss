@@ -4,7 +4,7 @@
     <title>India News in news18.com, India Latest News, India News</title>
     <description>Visit News18 English for latest news, breaking news, news headlines and updates from all the states, cities, places of India on politics, sports, entertainment, cricket, crime and more</description>
     <link>https://www.news18.com/india/</link>
-    <lastBuildDate>Fri, 11 Sep 2026 13:47:02 +0530</lastBuildDate>
+    <lastBuildDate>Fri, 11 Sep 2026 13:34:27 +0530</lastBuildDate>
     <ns0:link href="https://www.news18.com/commonfeeds/v1/eng/rss/india.xml" rel="self" type="application/rss+xml" />
     <category>India</category>
     <ttl>60</ttl>
@@ -989,16 +989,6 @@
       <ns2:content height="675" width="1200" medium="image" url="https://images.news18.com/ibnlive/uploads/2025/08/Image-New-22-2025-08-fac138825aa28693e8e6be2f53af6963-3x2.jpg" />
     </item>
     <item>
-      <title>15 Workers Rescued, 12 Hospitalised After Metal Slab Collapses At Gandhinagar Construction Site</title>
-      <link>https://www.news18.com/india/gujarat-15-workers-rescued-12-hospitalised-slab-collapses-at-gandhinagar-construction-site-ws-l-10319569.html</link>
-      <description>Gujarat Deputy Chief Minister Harsh Sanghavi said all 12 hospitalised workers were safe and none was in a critical condition.</description>
-      <pubDate>Thu, 10 Sep 2026 03:31:14 +0530</pubDate>
-      <dc:creator>News18</dc:creator>
-      <guid>https://www.news18.com/india/gujarat-15-workers-rescued-12-hospitalised-slab-collapses-at-gandhinagar-construction-site-ws-l-10319569.html</guid>
-      <category>India</category>
-      <ns2:content height="675" width="1200" medium="image" url="https://images.news18.com/ibnlive/uploads/2026/09/gujarat-2026-09-9e6cfea694e7945b14e5c5aba56b5357-1200x800.jpg" />
-    </item>
-    <item>
       <title>AAP Re-Elects Arvind Kejriwal As National Convenor, Announces New 23-Member Executive</title>
       <link>https://www.news18.com/india/aap-re-elects-arvind-kejriwal-as-national-convenor-announces-new-23-member-executive-ws-l-10319545.html</link>
       <description>Kejriwal has held the post of national convener since the party's formation in 2012.</description>
@@ -1737,6 +1727,16 @@
       <guid>https://www.news18.com/india/from-blood-donation-to-a-month-long-seva-campaign-how-bjp-plans-to-celebrate-pm-modis-birthday-ws-l-10318004.html</guid>
       <category>India</category>
       <ns2:content height="675" width="1200" medium="image" url="https://images.news18.com/ibnlive/uploads/2025/08/pm-narendra-modi-1-2025-08-8f96418b57a757872780c14440405db3-3x2.png" />
+    </item>
+    <item>
+      <title>‘Beat Him With Slippers’: Karnataka Minister Faces Flak Over Derogatory Remarks Against BJP MLA</title>
+      <link>https://www.news18.com/india/beat-him-with-slippers-karnataka-minister-faces-flak-over-derogatory-remarks-against-bjp-mla-ws-l-10317977.html</link>
+      <description>The controversy erupted when a group of farmers from the Harihar region approached Horticulture Minister to request irrigation water from the Bhadra reservoir.</description>
+      <pubDate>Wed, 9 Sep 2026 12:15:24 +0530</pubDate>
+      <dc:creator>News18</dc:creator>
+      <guid>https://www.news18.com/india/beat-him-with-slippers-karnataka-minister-faces-flak-over-derogatory-remarks-against-bjp-mla-ws-l-10317977.html</guid>
+      <category>India</category>
+      <ns2:content height="675" width="1200" medium="image" url="https://images.news18.com/ibnlive/uploads/2026/09/NW18-28-2026-09-bbabc92e8ecbd9041539a57be92ae54e-1200x800.png" />
     </item>
   </channel>
 </rss>

@@ -2,8 +2,8 @@
 from pathlib import Path
 import subprocess, shutil, time
 
-SOURCE_DIR=Path("/media/Elements/MegaDump")
-OUTPUT_DIR=Path("/media/Elements/MegaDump_720p")
+SOURCE_DIR=Path("/data/MegaDump")
+OUTPUT_DIR=Path("/data/MegaDump_720p")
 CRF="27"; PRESET="medium"; MIN_SAVING=10.0
 LOG_FILE=OUTPUT_DIR/"conversion.log"
 
@@ -23,7 +23,7 @@ def convert(src,dst):
     cmd=["ffmpeg","-hide_banner","-y","-i",str(src),"-map","0","-vf","scale=-2:720,format=yuv420p","-c:v","libx265","-preset",PRESET,"-crf",CRF,"-c:a","copy","-sn","-map_metadata","0","-map_chapters","0","-movflags","+faststart",str(dst)]
     return subprocess.run(cmd).returncode==0
 
-def main():
+def convmkv2mp4():
     if shutil.which("ffmpeg") is None: raise SystemExit("ffmpeg not found")
     OUTPUT_DIR.mkdir(parents=True,exist_ok=True)
     files=sorted(SOURCE_DIR.rglob("*.mkv"))
@@ -46,4 +46,4 @@ def main():
         log(f"ACCEPTED {rel} | {human(old)} -> {human(new)} | Saved {saving:.1f}%")
     log("="*70); log(f"Converted:{conv}"); log(f"Skipped:{skip}"); log(f"Rejected/Failed:{rej}")
     log(f"Original:{human(tb)}"); log(f"Output:{human(ta)}"); log(f"Elapsed:{(time.time()-st)/3600:.2f} h")
-if __name__=="__main__": main()
+if __name__=="__main__": convmkv2mp4()

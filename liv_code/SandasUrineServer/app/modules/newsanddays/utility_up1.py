@@ -12,22 +12,40 @@ import requests
 import json
 from datetime import datetime
 import shutil
+
+import numpy as np
 # =========================================================
 # Configuration
 # =========================================================
 
 
 
-OUTPUT_HTML = "data/sortednews.html"
+OUTPUT_HTML = "data_up1/sortednews.html"
 
-OUTPUT_JSON = "data/sortednews.json"
+OUTPUT_JSON = "data_up1/sortednews.json"
 
 INPUT_JSON = OUTPUT_JSON
+
+FINPUT_JSON = Path("/home/dkvlko/Dheeraj-AI-programs-github/"
+        "liv_code/SandasUrineServer/app/modules/newsanddays/data_up1/sortednews.json")
+
+Common_Json = Path(
+        "/home/dkvlko/Dheeraj-AI-programs-github/"
+        "liv_code/SandasUrineServer/app/modules/newsanddays/data_up1/common.json"
+     )   
+
+Ranked_Json = Path(
+        "/home/dkvlko/Dheeraj-AI-programs-github/"
+        "liv_code/SandasUrineServer/app/modules/newsanddays/data_up1/rankednews.json"
+     )   
 
 SIMILARITY_THRESHOLD = 0.70
 
 
 
+model = SentenceTransformer(
+        "sentence-transformers/all-MiniLM-L6-v2",
+        device="cpu" )
 
 def greet_user(name):
     return f"Hello, {name}! Welcome to Python."
@@ -122,10 +140,6 @@ def processURLs(rssa,rssb) :
     #model = SentenceTransformer("all-MiniLM-L6-v2")
 
 
-    model = SentenceTransformer(
-        "sentence-transformers/all-MiniLM-L6-v2",
-        device="cpu"
-    )
     
 
 
@@ -337,8 +351,10 @@ def download_rss(urls, output_dir):
     return files
 
 
-def combine_rss_files(rss_files, output_file):
+def combine_rss_files(rss_files):
     channel_items = []
+    
+    output_file = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/newsanddays/common.rss")
 
     for rss_file in rss_files:
         try:
@@ -370,7 +386,260 @@ def combine_rss_files(rss_files, output_file):
 
     tree = ET.ElementTree(rss)
     tree.write(output_file, encoding="utf-8", xml_declaration=True)
+    
+    return output_file
 
+def processRanking(
+        Sorted_Json: Path,
+        Common_Json: Path
+    ) -> None:
+        """
+        Semantically match titles in Sorted_Json against every title
+        in Common_Json.
+
+        A cosine similarity >= 0.70 is considered a match.
+
+        For every Sorted_Json article having at least one match:
+
+            - copy the complete Sorted_Json article
+            - add "count"
+            - add "best_similarity"
+            - add "best_matched_title"
+
+        The result is saved as rankednews.json in the same directory
+        as Sorted_Json.
+        """
+
+        # ---------------------------------------------------------
+        # Read Sorted_Json
+        # ---------------------------------------------------------
+
+        with Sorted_Json.open("r", encoding="utf-8") as f:
+            sorted_data = json.load(f)
+
+        # ---------------------------------------------------------
+        # Read Common_Json
+        # ---------------------------------------------------------
+
+        with Common_Json.open("r", encoding="utf-8") as f:
+            common_data = json.load(f)
+
+
+        # ---------------------------------------------------------
+        # Extract titles
+        # ---------------------------------------------------------
+
+        sorted_titles = [
+            str(article["title"])
+            for article in sorted_data
+            if article.get("title")
+        ]
+
+        common_titles = [
+            str(article["title"])
+            for article in common_data
+            if article.get("title")
+        ]
+
+        if not sorted_titles:
+            raise ValueError(
+                "No titles found in Sorted_Json."
+            )
+
+        if not common_titles:
+            raise ValueError(
+                "No titles found in Common_Json."
+            )
+
+
+        # ---------------------------------------------------------
+        # Encode all titles in batches
+        #
+        # normalize_embeddings=True means:
+        #
+        # cosine_similarity(A, B)
+        #
+        # is simply:
+        #
+        # A @ B.T
+        # ---------------------------------------------------------
+
+        sorted_embeddings = model.encode(
+            sorted_titles,
+            batch_size=32,
+            convert_to_numpy=True,
+            normalize_embeddings=True,
+            show_progress_bar=True
+        )
+
+        common_embeddings = model.encode(
+            common_titles,
+            batch_size=32,
+            convert_to_numpy=True,
+            normalize_embeddings=True,
+            show_progress_bar=True
+        )
+
+        # ---------------------------------------------------------
+        # Calculate ALL similarities at once
+        #
+        # Shape:
+        #
+        # sorted_embeddings = N x 384
+        # common_embeddings = M x 384
+        #
+        # result             = N x M
+        # ---------------------------------------------------------
+
+        similarity_matrix = (
+            sorted_embeddings @ common_embeddings.T
+        )
+
+        # ---------------------------------------------------------
+        # Create ranked results
+        # ---------------------------------------------------------
+
+        ranked_entries = []
+
+        sorted_title_index = 0
+
+        for article in sorted_data:
+
+            title = article.get("title")
+
+            if not title:
+                continue
+
+            title = str(title)
+
+            similarities = similarity_matrix[
+                sorted_title_index
+            ]
+
+            sorted_title_index += 1
+
+            # -----------------------------------------------------
+            # Find every Common_Json title matching >= 70%
+            # -----------------------------------------------------
+
+            matching_indices = np.flatnonzero(
+                similarities >= SIMILARITY_THRESHOLD 
+            )
+
+            # -----------------------------------------------------
+            # No match
+            # -----------------------------------------------------
+
+            if len(matching_indices) == 0:
+                continue
+
+            # -----------------------------------------------------
+            # Copy complete Sorted_Json article
+            # -----------------------------------------------------
+
+            ranked_article = dict(article)
+
+            # -----------------------------------------------------
+            # Count number of Common_Json matches
+            # -----------------------------------------------------
+
+            ranked_article["count"] = int(
+                len(matching_indices)
+            )
+
+            # -----------------------------------------------------
+            # Best match information
+            # -----------------------------------------------------
+
+            best_index = int(
+                np.argmax(similarities)
+            )
+
+            ranked_article["best_similarity"] = float(
+                similarities[best_index]
+            )
+
+            ranked_article["best_matched_title"] = (
+                common_titles[best_index]
+            )
+
+            ranked_entries.append(ranked_article)
+
+    # ---------------------------------------------------------
+    # Sort by count — highest count first
+    # ---------------------------------------------------------
+
+        ranked_entries.sort(
+            key=lambda article: article["count"],
+            reverse=True
+        )
+        # ---------------------------------------------------------
+        # Add Rank Position
+        # ---------------------------------------------------------
+
+        for rank_position, article in enumerate(
+            ranked_entries,
+            start=1
+        ):
+            article["Rank Position"] = rank_position
+
+        # ---------------------------------------------------------
+        # Output file
+        # ---------------------------------------------------------
+
+        #ranked_json = (
+        #    Sorted_Json.parent / "rankednews.json"
+        #)
+
+        # ---------------------------------------------------------
+        # Write JSON
+        # ---------------------------------------------------------
+
+        with Ranked_Json.open(
+            "w",
+            encoding="utf-8"
+        ) as f:
+
+            json.dump(
+                ranked_entries,
+                f,
+                ensure_ascii=False,
+                indent=4
+            )
+
+        print()
+        print("Ranking completed.")
+        print(f"Sorted articles : {len(sorted_data)}")
+        print(f"Common articles : {len(common_data)}")
+        print(f"Ranked articles : {len(ranked_entries)}")
+        print(f"Output          : {Ranked_Json}")
+        
+
+def rss_to_json(rssa) :
+        
+    with rssa.open("rb") as f:
+        # f is a file handle
+        content = f.read()
+
+    rssa_xml = content
+
+# =========================================================
+# Parse RSS
+# =========================================================
+
+    rssa_feed = feedparser.parse(rssa_xml)
+
+    with open(Common_Json,"w",encoding="utf-8") as f:
+        json.dump(
+                rssa_feed.entries,
+                f,
+                ensure_ascii=False,
+                indent=2,
+                default=str
+        )
+
+
+        
 # The main function where the core logic of the script lives
 def main():
     urls = [
@@ -384,24 +653,33 @@ def main():
     "https://www.livemint.com/rss/news",
     ]
 
-    data_dir = Path("./data")
+    data_dir = Path("./data_up1")
 
     for path in data_dir.iterdir():
         if path.is_file():
             path.unlink()
 
-    #print("All files deleted from ./data")
-    rss_files = download_rss(urls, "data")
+    #print("All files deleted from ./data_up1")
+    rss_files = download_rss(urls, "data_up1")
 
-    combine_rss_files(
-        rss_files,
-        "data/common.rss"
-    )
+    Common_RSS = combine_rss_files(
+        rss_files
+            )
+
+    
+    rss_to_json(Common_RSS)
+
     for i in range(len(rss_files) - 1):
         for j in range(i + 1, len(rss_files)):
+            #Generates OUTPUT_JSON
             processURLs(rss_files[i], rss_files[j])
-    #processURLs(rss_files[0],rss_files[1])
-
+    
+    print("Starting  Ranking")
+    
+    processRanking(FINPUT_JSON,Common_Json)
+    
+    print("Ranking Finished")
+    
 # =========================================================
 # Read sortednews.json
 # =========================================================
@@ -556,9 +834,9 @@ def main():
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html)
 
-    source = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/newsanddays/data/sortednews.html")
-    destination = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/clock_lap/templates/details_date.html")
-    shutil.copy2(source,destination)
+    #source = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/newsanddays/data_up1/sortednews.html")
+    #destination = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/clock_lap/templates/details_date.html")
+    #shutil.copy2(source,destination)
 
     #print(f"\nCreated: {OUTPUT_HTML}")
     #print(f"Stories rendered: {len(matched_entries)}")
