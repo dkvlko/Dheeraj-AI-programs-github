@@ -20,7 +20,7 @@ import numpy as np
 
 
 
-OUTPUT_HTML = "data_up1/sortednews.html"
+#OUTPUT_HTML = "data_up1/sortednews.html"
 
 OUTPUT_JSON = "data_up1/sortednews.json"
 
@@ -354,7 +354,7 @@ def download_rss(urls, output_dir):
 def combine_rss_files(rss_files):
     channel_items = []
     
-    output_file = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/newsanddays/common.rss")
+    output_file = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/newsanddays//data_up1/common.rss")
 
     for rss_file in rss_files:
         try:
@@ -680,166 +680,8 @@ def main():
     
     print("Ranking Finished")
     
-# =========================================================
-# Read sortednews.json
-# =========================================================
-
-    if not Path(INPUT_JSON).exists():
-        print(f"ERROR: {INPUT_JSON} does not exist.")
-        raise SystemExit(1)
-
-    try:
-        with open(INPUT_JSON, "r", encoding="utf-8") as f:
-            matched_entries = json.load(f)
-
-    except (json.JSONDecodeError, OSError) as e:
-        print(f"ERROR reading {INPUT_JSON}: {e}")
-        raise SystemExit(1)
 
 
-    # Make sure the JSON contains a list
-    if not isinstance(matched_entries, list):
-        print(f"ERROR: {INPUT_JSON} does not contain a JSON list.")
-        raise SystemExit(1)
-
-
-    # =========================================================
-    # Generate sortednews.html
-    # =========================================================
-
-    template = Template("""
-    <!DOCTYPE html>
-    <html>
-
-    <head>
-
-        <meta charset="UTF-8">
-
-        <meta name="viewport"
-              content="width=device-width, initial-scale=1.0">
-
-        <title>Sorted News</title>
-
-        <style>
-
-            /* Reduce default browser spacing */
-
-            h1 {
-                margin-bottom: 8px;
-            }
-
-            article {
-                margin-bottom: 8px;
-            }
-
-            article h2 {
-                margin-top: 4px;
-                margin-bottom: 2px;
-            }
-
-            article p {
-                margin-top: 3px;
-                margin-bottom: 3px;
-            }
-
-            article small {
-                line-height: 1.2;
-            }
-
-            hr {
-                margin-top: 8px;
-                margin-bottom: 8px;
-            }
-
-        </style>
-
-    </head>
-
-    <body>
-
-   <!-- <h1>News This Hour</h1>-->
-<h1>News This Hour — {{ timestamp.strftime('%d %b %Y, %I:%M:%S %p') }}</h1>
-
-    <p>
-        {{ matched_entries|length }}
-        matching RSSA stories
-    </p>
-
-    {% for item in matched_entries %}
-
-    <article>
-
-        <h2>
-            <a href="{{ item.link }}" target="_blank">
-                {{ item.title }}
-            </a>
-        </h2>
-
-        {% if item.get("published") %}
-
-            <small>
-                {{ item.published }}
-            </small>
-
-        {% elif item.get("updated") %}
-
-            <small>
-                {{ item.updated }}
-            </small>
-
-        {% endif %}
-
-        {% if item.get("summary") %}
-
-            <p>
-                {{ item.summary|safe }}
-            </p>
-
-        {% endif %}
-
-        <small>
-            Similarity:
-            {{ "%.1f"|format(item.similarity * 100) }}%
-        </small>
-
-        <br>
-
-        <hr>
-
-    </article>
-
-    {% endfor %}
-
-    </body>
-    </html>
-    """)
-
-    # =========================================================
-    # Render template
-    # =========================================================
-
-#    html = template.render(
-#        matched_entries=matched_entries
-#    )
-    html = template.render(
-        matched_entries=matched_entries,
-        timestamp=datetime.now()
-    )
-
-
-    # =========================================================
-    # Write HTML
-    # =========================================================
-
-    with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
-        f.write(html)
-
-    #source = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/newsanddays/data_up1/sortednews.html")
-    #destination = Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/clock_lap/templates/details_date.html")
-    #shutil.copy2(source,destination)
-
-    #print(f"\nCreated: {OUTPUT_HTML}")
-    #print(f"Stories rendered: {len(matched_entries)}")
 
 if __name__ == "__main__":
     main()

@@ -60,9 +60,11 @@ html_parts = [
 
     .title {
         font-family: Calibri, Arial, sans-serif;
-        font-size: 11pt;
+        font-size: 20pt;
         cursor: pointer;
         display: inline;
+        color: blue;
+        text-decoration: underline;
     }
 
     .rank {
@@ -75,7 +77,7 @@ html_parts = [
     .summary {
         display: none;
         font-family: Calibri, Arial, sans-serif;
-        font-size: 10pt;
+        font-size: 13pt;
         margin-top: 4px;
         margin-left: 20px;
         line-height: 1.4;
@@ -106,7 +108,7 @@ html_parts = [
 
 <body>
 
-<h3>Ranked News</h3>
+<h1>News This Hour — {{ timestamp.strftime('%d %b %Y, %I:%M:%S %p') }}</h1>
 """
 ]
 

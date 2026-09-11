@@ -1,6 +1,11 @@
+
 import json
 from pathlib import Path
 
+
+# =========================================================
+# JSON file
+# =========================================================
 
 JSON_FILE = Path(
     "/home/dkvlko/Dheeraj-AI-programs-github/"
@@ -9,9 +14,9 @@ JSON_FILE = Path(
 )
 
 
-# ---------------------------------------------------------
+# =========================================================
 # Read JSON
-# ---------------------------------------------------------
+# =========================================================
 
 with JSON_FILE.open(
     "r",
@@ -21,9 +26,9 @@ with JSON_FILE.open(
     data = json.load(f)
 
 
-# ---------------------------------------------------------
-# Sort by Rank Position
-# ---------------------------------------------------------
+# =========================================================
+# Sort by existing Rank Position
+# =========================================================
 
 data.sort(
     key=lambda article: int(
@@ -32,9 +37,20 @@ data.sort(
 )
 
 
-# ---------------------------------------------------------
-# Write sorted JSON back to same file
-# ---------------------------------------------------------
+# =========================================================
+# Renumber Rank Position starting from 1
+# =========================================================
+
+for rank_position, article in enumerate(
+    data,
+    start=1
+):
+    article["Rank Position"] = rank_position
+
+
+# =========================================================
+# Write sorted and renumbered JSON
+# =========================================================
 
 with JSON_FILE.open(
     "w",
@@ -49,6 +65,15 @@ with JSON_FILE.open(
     )
 
 
+# =========================================================
+# Report
+# =========================================================
+
+print()
 print(
-    f"JSON sorted by Rank Position: {JSON_FILE}"
+    f"JSON sorted and Rank Position renumbered: "
+    f"{JSON_FILE}"
+)
+print(
+    f"Total news items: {len(data)}"
 )
