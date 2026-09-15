@@ -13,8 +13,10 @@ import random
 from app.common import paths
 from . import  state 
 from . import lancloud_bp
-
-
+import shutil
+import tempfile
+import zipfile
+from flask import after_this_request
 
 @lancloud_bp.route("/")
 def LANcloud():
@@ -26,7 +28,7 @@ def LANcloud():
         f"{len(state.LANcloud_JSON['entries'])} entries loaded."
     )
 
-    return render_template("lancloud/showdirfiles.html")  
+    return render_template("/lancloud/showdirfiles.html")  
 
 
 @lancloud_bp.route("/list")
@@ -195,7 +197,6 @@ def file_operation_download():
     methods=["POST"]
 )
 def file_operation_upload():
-
     try:
 
         uploaded_chunk = request.files["file"]
@@ -287,6 +288,11 @@ def file_operation_upload():
         ####################################################
 
         if chunk_number == total_chunks - 1:
+
+            #if not filename.lower().endswith(".zip"):
+             #   final_filename = filename + ".zip"
+            #else:
+            #    final_filename = filename
 
             final_file = (
 

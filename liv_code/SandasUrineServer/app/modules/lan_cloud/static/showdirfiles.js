@@ -264,10 +264,10 @@ document
 async function()
 {
 
-    alert(
+    /*alert(
         "Firefox cannot upload folders directly.\n\n" +
         "Please zip the folder before uploading."
-    );
+    );*/
 
     const picker =
         document.createElement("input");
