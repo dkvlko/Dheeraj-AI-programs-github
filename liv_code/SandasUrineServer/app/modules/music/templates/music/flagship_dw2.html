@@ -52,33 +52,21 @@
 
 body{
     margin:0;
-    padding:0 20px;
-    min-height:100vh;
-    box-sizing:border-box;
+    padding:16px;
     background:#202124;
     color:white;
     font-family:Arial, sans-serif;
-    border:20px solid #ffff00;
 }
 
 .player-container{
     width:min(95vw, 900px);
-    margin:0 auto;
+    margin:20px auto;
 }
 
-/* Audio player positioned around one-third of the browser viewport
-   below the browser's address bar/page viewport. */
-#player{
+audio{
     display:block;
-    width: min(95%,900px);
-    position:absolute;
-    top:33.33vh;
-    left:50%;
-    transform:translate(-50%, -50%);
-}
-
-.controls{
-    margin-top:calc(33.33vh + 55px);
+    width:100%;
+    max-width:100%;
 }
 </style>
 

@@ -52,7 +52,7 @@ def json2html() :
 
         body {
             font-family: Calibri, Arial, sans-serif;
-            margin: 20px;
+            margin: 10px;
             background: #ffffff;
         }
 
@@ -62,7 +62,7 @@ def json2html() :
 
         .title {
             font-family: Calibri, Arial, sans-serif;
-            font-size: 25pt;
+            font-size: 35pt;
             cursor: pointer;
             display: inline;
             color: blue;
@@ -85,6 +85,19 @@ def json2html() :
             margin-left: 20px;
             line-height: 1.4;
         }
+    .news-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .news-button {
+        width: 96px;
+        height: 48px;
+        font-size: 14px;
+        cursor: pointer;
+    }
 
     </style>
 
@@ -110,8 +123,14 @@ def json2html() :
     </head>
 
     <body>
-    """,
-    f"""<h1>News This Hour — {timestamp}</h1>
+    """,f"""
+    <div class="news-header">
+        <h1>News This Hour — {timestamp}</h1>
+
+        <button class="news-button" onclick="history.back()">
+           Back 
+        </button>
+    </div>
     """
     ]
 

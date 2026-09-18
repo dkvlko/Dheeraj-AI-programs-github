@@ -15,6 +15,7 @@ import shutil
 import utility_dedupl 
 import  utility_ranksort 
 import  utility_json2html 
+import generate_sortedevents
 import numpy as np
 # =========================================================
 # Configuration
@@ -40,6 +41,13 @@ Ranked_Json = Path(
         "/home/dkvlko/Dheeraj-AI-programs-github/"
         "liv_code/SandasUrineServer/app/modules/newsanddays/data/rankednews.json"
      )   
+
+
+OUTPUT_EVENTS = Path(
+    "/home/dkvlko/Dheeraj-AI-programs-github/"
+    "liv_code/SandasUrineServer/app/modules/newsanddays/data/"
+    "sortedeventstoday.json"
+)
 
 SIMILARITY_THRESHOLD = 0.70
 
@@ -687,6 +695,21 @@ def main():
     #print("Sorted Ranking Finished")
     utility_json2html.json2html()
     #print("HTML Generated")
+    now = datetime.now().time()
+
+    midnight = time(0, 0, 0)
+    one_am = time(1, 0, 0)
+
+    if midnight <= now < one_am:
+        generate_sortedevents.generateEvents()
+
+        destination = Path(
+            "/home/dkvlko/Dheeraj-AI-programs-github/"
+            "liv_code/SandasUrineServer/app/modules/"
+            "clock_lap/static/sortedeventstoday.json"
+        )
+
+        shutil.copy2(OUTPUT_EVENTS, destination)
 
 
 

@@ -91,6 +91,43 @@
         box-shadow: 0 3px 8px rgba(0,0,0,.22);
     }
 
+    .events {
+        position: absolute;
+        left: 10px;
+        top: 8px;
+        right: 220px;
+        bottom: 8px;
+        overflow: hidden;
+        color: #ffffff;
+        font-size: 20px;
+        line-height: 1.35;
+        font-weight: 400;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .event-row {
+        margin: 0 0 2px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .event-date {
+        font-weight: 700;
+        margin-right: 8px;
+    }
+
+    .event-name {
+        font-weight: 400;
+    }
+
+    .event-effect {
+        font-style: italic;
+        margin-left: 8px;
+    }
+
     .details-button:hover { background: #ff9d2e; }
     .details-button:active { transform: translateY(1px); }
     .details-button:focus-visible {
@@ -102,6 +139,14 @@
         .page { padding: 6px; gap: 5px; }
         .clock-frame { border-width: 3px; border-radius: 8px; }
         .bottom-frame { border-width: 2px; }
+        .events {
+            left: 6px;
+            right: 108px;
+            top: 5px;
+            bottom: 5px;
+            font-size: 20px;
+        }
+
         .details-button {
             width: 96px;
             height: 96px;
@@ -118,8 +163,8 @@
         <div id="time" class="time" aria-live="polite"></div>
     </section>
 
-    <section class="bottom-frame" aria-label="Reserved information area">
-        <!-- Content can be populated here later. -->
+    <section class="bottom-frame" aria-label="Today's and upcoming events">
+        <div id="events" class="events" aria-live="polite"></div>
         <button class="details-button" type="button" id="detailsButton">
             Details
         </button>
@@ -127,11 +172,178 @@
 </main>
 
 <script>
+
+function getDayName(dateText) {
+    const d = new Date(dateText + "T00:00:00");
+
+    return new Intl.DateTimeFormat("en-US", {
+        weekday: "long"
+    }).format(d);
+}
+
 (function () {
     const dayEl = document.getElementById("day");
     const dateEl = document.getElementById("date");
     const timeEl = document.getElementById("time");
     const detailsButton = document.getElementById("detailsButton");
+    const eventsEl = document.getElementById("events");
+
+    const EVENTS_JSON_URL =
+        "/clock_lap/static/sortedeventstoday.json";
+
+    function formatDisplayDate(dateText) {
+        const d = new Date(dateText + "T00:00:00");
+
+        return new Intl.DateTimeFormat("en-US", {
+            weekday: "long",
+            month: "short",
+            day: "numeric"
+        }).format(d);
+    }
+
+    function getEffectText(events) {
+        const effects = [];
+
+        events.forEach(function (event) {
+            if (!Array.isArray(event.effects)) {
+                return;
+            }
+
+            event.effects.forEach(function (effect) {
+                if (!effect || typeof effect !== "object") {
+                    return;
+                }
+
+                const value =
+                    effect.effect ??
+                    effect.description ??
+                    effect.Effect ??
+                    effect.Description;
+
+                if (value && !effects.includes(String(value))) {
+                    effects.push(String(value));
+                }
+            });
+        });
+
+        return effects.join(", ");
+    }
+
+    function renderEvents(documentData) {
+        const days = Array.isArray(documentData.days)
+            ? documentData.days
+            : [];
+
+        if (!days.length) {
+            eventsEl.textContent = "No Events Today";
+            return;
+        }
+
+        /*
+         * Always display today's date first.
+         * Then display the next two dates which contain events.
+         *
+         * This means the bottom frame contains at most three
+         * date/event rows, while today's "No Events Today"
+         * message is still preserved.
+         */
+        const selectedDays = [days[0]];
+
+        for (let i = 1; i < days.length; i++) {
+            const day = days[i];
+
+            if (
+                Array.isArray(day.events) &&
+                day.events.length > 0
+            ) {
+                selectedDays.push(day);
+            }
+
+            if (selectedDays.length === 3) {
+                break;
+            }
+        }
+
+        eventsEl.replaceChildren();
+
+        selectedDays.forEach(function (day) {
+            const row = document.createElement("div");
+            row.className = "event-row";
+
+            const dateSpan = document.createElement("span");
+            dateSpan.className = "event-date";
+            dateSpan.textContent =
+                formatDisplayDate(day.date) + ":";
+
+            const nameSpan = document.createElement("span");
+            nameSpan.className = "event-name";
+
+            const events = Array.isArray(day.events)
+                ? day.events
+                : [];
+
+            const eventNames = events
+                .map(function (event) {
+                    return event.event_name;
+                })
+                .filter(function (name) {
+                    return name;
+                });
+
+            nameSpan.textContent =
+                eventNames.length
+                    ? eventNames.join(", ")
+                    : "No Events";
+
+            row.appendChild(dateSpan);
+            row.appendChild(nameSpan);
+
+            const effectText = getEffectText(events);
+
+            if (effectText) {
+                const effectSpan =
+                    document.createElement("span");
+
+                effectSpan.className = "event-effect";
+                effectSpan.textContent =
+                    "(" + effectText + ")";
+
+                row.appendChild(effectSpan);
+            }
+
+            eventsEl.appendChild(row);
+        });
+    }
+
+    async function loadEvents() {
+        try {
+            const response = await fetch(
+                EVENTS_JSON_URL + "?t=" + Date.now(),
+                {
+                    cache: "no-store"
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    "HTTP " + response.status
+                );
+            }
+
+            const documentData = await response.json();
+
+            renderEvents(documentData);
+
+        } catch (error) {
+            console.error(
+                "Unable to load events JSON:",
+                error
+            );
+
+            eventsEl.textContent =
+                "Unable to load events";
+        }
+    }
 
     function updateClock() {
         const now = new Date();
@@ -164,6 +376,11 @@
 
     updateClock();
     setInterval(updateClock, 1000);
+
+    loadEvents();
+
+    // Refresh the event data every 5 minutes.
+    setInterval(loadEvents, 30 * 60 * 1000);
 })();
 </script>
 </body>

@@ -1,421 +1,1283 @@
 [
     {
-        "id": "https://www.ndtv.com/india-news/indias-semiconductor-success-important-amid-supply-chain-risks-pm-narendra-modi-12058292#publisher=newsstand",
-        "guidislink": true,
-        "link": "https://www.ndtv.com/india-news/indias-semiconductor-success-important-amid-supply-chain-risks-pm-narendra-modi-12058292#publisher=newsstand",
-        "title": "India's Semiconductor Success Important Amid Supply Chain Risks: PM Modi",
+        "title": "Deepika Padukone, Ranveer Singh visit Siddhivinayak Temple ahead of welcoming second baby. Watch",
         "title_detail": {
             "type": "text/plain",
             "language": null,
             "base": "",
-            "value": "India's Semiconductor Success Important Amid Supply Chain Risks: PM Modi"
+            "value": "Deepika Padukone, Ranveer Singh visit Siddhivinayak Temple ahead of welcoming second baby. Watch"
+        },
+        "summary": "Dressed in traditional attire, Ranveer Singh and Deepika Padukone were accompanied by Ranveer's parents.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "Dressed in traditional attire, Ranveer Singh and Deepika Padukone were accompanied by Ranveer's parents."
         },
         "links": [
             {
                 "rel": "alternate",
                 "type": "text/html",
-                "href": "https://www.ndtv.com/india-news/indias-semiconductor-success-important-amid-supply-chain-risks-pm-narendra-modi-12058292#publisher=newsstand"
+                "href": "https://www.hindustantimes.com/entertainment/bollywood/deepika-padukone-ranveer-singh-visit-siddhivinayak-temple-ahead-of-welcoming-second-baby-101789725470546.html"
             }
         ],
-        "published": "Thu, 17 Sep 2026 14:49:09 +0530",
+        "link": "https://www.hindustantimes.com/entertainment/bollywood/deepika-padukone-ranveer-singh-visit-siddhivinayak-temple-ahead-of-welcoming-second-baby-101789725470546.html",
+        "id": "https://www.hindustantimes.com/entertainment/bollywood/deepika-padukone-ranveer-singh-visit-siddhivinayak-temple-ahead-of-welcoming-second-baby-101789725470546.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Fri, 18 Sep 2026 15:53:29 +0530",
         "published_parsed": [
             2026,
             9,
-            17,
-            9,
-            19,
-            9,
-            3,
-            260,
+            18,
+            10,
+            23,
+            29,
+            4,
+            261,
             0
         ],
         "media_content": [
             {
-                "url": "https://c.ndtvimg.com/2026-09/ao5o2gc_pm-modi_625x300_17_September_26.jpeg",
-                "type": "image/jpeg",
-                "expression": "full",
-                "width": "1280",
-                "height": "720"
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/18/1600x900/logo/Ranveer_1789726057483_Y9nK_1789726057685_Ns9V_2e6a9c59-ed13-456c-9294-6f0ef11b24f2_uT01.jpg",
+                "width": "1600"
             }
         ],
-        "summary": "Addressing the SEMICON India 2026 conference in the national capital, Prime Minister Modi highlighted that India has already laid the critical groundwork required to support cutting-edge semiconductor technologies.",
+        "similarity": 0.7334591150283813,
+        "matched_rssb_title": "Pregnant Deepika Padukone joins Ranveer as family seeks blessings at Siddhivinayak",
+        "count": 3,
+        "best_similarity": 1.0000001192092896,
+        "best_matched_title": "Deepika Padukone, Ranveer Singh visit Siddhivinayak Temple ahead of welcoming second baby. Watch",
+        "Rank Position": 26
+    },
+    {
+        "title": "Nestle Baby Food Under FSSAI Scanner: 3 Cases Filed Over Ads, Biotin Content",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Nestle Baby Food Under FSSAI Scanner: 3 Cases Filed Over Ads, Biotin Content"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://news.abplive.com/news/india/nestle-baby-food-fssai-row-three-cases-filed-over-false-ad-promotion-biotin-levels-1867249"
+            }
+        ],
+        "link": "https://news.abplive.com/news/india/nestle-baby-food-fssai-row-three-cases-filed-over-false-ad-promotion-biotin-levels-1867249",
+        "comments": "https://feeds.abplive.com/testfeeds/english/posts/1867249/index#respond",
+        "published": "Fri, 18 Sep 2026 13:26:48 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            7,
+            56,
+            48,
+            4,
+            261,
+            0
+        ],
+        "authors": [
+            {}
+        ],
+        "author": "",
+        "tags": [
+            {
+                "term": "India",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "id": "https://feeds.abplive.com/testfeeds/english/posts/1867249/index",
+        "guidislink": false,
+        "summary": "Nestle Baby Food Under FSSAI Scanner: 3 Cases Filed Over Ads, Biotin Content",
         "summary_detail": {
             "type": "text/html",
             "language": null,
             "base": "",
-            "value": "Addressing the SEMICON India 2026 conference in the national capital, Prime Minister Modi highlighted that India has already laid the critical groundwork required to support cutting-edge semiconductor technologies."
+            "value": "Nestle Baby Food Under FSSAI Scanner: 3 Cases Filed Over Ads, Biotin Content"
         },
-        "content": [
+        "slash_comments": "0",
+        "media_thumbnail": [
             {
-                "type": "text/html",
-                "language": null,
-                "base": "",
-                "value": "Addressing the SEMICON India 2026 conference in the national capital, Prime Minister Modi highlighted that India has already laid the critical groundwork required to support cutting-edge semiconductor technologies."
+                "url": "https://feeds.abplive.com/onecms/images/uploaded-images/2025/03/26/241dc401d2c73741ff231856f99f5be91743004780648800_original.jpg",
+                "width": "220"
             }
         ],
-        "similarity": 0.7036393284797668,
-        "matched_rssb_title": "SEMICON India 2026: PM Modi hails India’s semiconductor journey, says ‘ecosystem expanding, opening new opportunities'",
+        "href": "",
+        "similarity": 0.746464729309082,
+        "matched_rssb_title": "FSSAI flags Nestle infant products over false promotional claims, biotin levels",
+        "count": 2,
+        "best_similarity": 1.000000238418579,
+        "best_matched_title": "Nestle Baby Food Under FSSAI Scanner: 3 Cases Filed Over Ads, Biotin Content",
+        "Rank Position": 27
+    },
+    {
+        "title": "Bengal SIR: Over 37 Lakh Appeals Against Electoral Roll Changes Pending, EC Tells SC",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Bengal SIR: Over 37 Lakh Appeals Against Electoral Roll Changes Pending, EC Tells SC"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://news.abplive.com/news/india/bengal-sir-over-37-lakh-appeals-against-electoral-roll-changes-pending-ec-tells-sc-1867250"
+            }
+        ],
+        "link": "https://news.abplive.com/news/india/bengal-sir-over-37-lakh-appeals-against-electoral-roll-changes-pending-ec-tells-sc-1867250",
+        "comments": "https://feeds.abplive.com/testfeeds/english/posts/1867250/index#respond",
+        "published": "Fri, 18 Sep 2026 13:22:17 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            7,
+            52,
+            17,
+            4,
+            261,
+            0
+        ],
+        "authors": [
+            {}
+        ],
+        "author": "",
+        "tags": [
+            {
+                "term": "India",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "id": "https://feeds.abplive.com/testfeeds/english/posts/1867250/index",
+        "guidislink": false,
+        "summary": "Bengal SIR: Over 37 Lakh Appeals Against Electoral Roll Changes Pending, EC Tells SC",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "Bengal SIR: Over 37 Lakh Appeals Against Electoral Roll Changes Pending, EC Tells SC"
+        },
+        "slash_comments": "0",
+        "media_thumbnail": [
+            {
+                "url": "https://feeds.abplive.com/onecms/images/uploaded-images/2026/08/31/8e025366d8645e70eb23039c1f22b2cc1788166179876584_original.jpg",
+                "width": "220"
+            }
+        ],
+        "href": "",
+        "similarity": 0.8034888505935669,
+        "matched_rssb_title": "Over 37 lakh appeals pending after Bengal SIR: EC tells Supreme Court",
+        "count": 2,
+        "best_similarity": 1.000000238418579,
+        "best_matched_title": "Bengal SIR: Over 37 Lakh Appeals Against Electoral Roll Changes Pending, EC Tells SC",
+        "Rank Position": 28
+    },
+    {
+        "title": "‘Vibe’ Review: Kunal Kemmu Passes The ‘Vibe Check’",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "‘Vibe’ Review: Kunal Kemmu Passes The ‘Vibe Check’"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://news.abplive.com/movie-review/entertainment/movie-review-vibe-review-kunal-kemmu-passes-the-vibe-check-1867283"
+            }
+        ],
+        "link": "https://news.abplive.com/movie-review/entertainment/movie-review-vibe-review-kunal-kemmu-passes-the-vibe-check-1867283",
+        "comments": "https://feeds.abplive.com/testfeeds/english/posts/1867283/index#respond",
+        "published": "Fri, 18 Sep 2026 16:01:22 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            10,
+            31,
+            22,
+            4,
+            261,
+            0
+        ],
+        "authors": [
+            {}
+        ],
+        "author": "",
+        "tags": [
+            {
+                "term": "Movie Review",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "id": "https://feeds.abplive.com/testfeeds/english/posts/1867283/index",
+        "guidislink": false,
+        "summary": "‘Vibe’ Review: Kunal Kemmu Passes The ‘Vibe Check’",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "‘Vibe’ Review: Kunal Kemmu Passes The ‘Vibe Check’"
+        },
+        "slash_comments": "0",
+        "media_thumbnail": [
+            {
+                "url": "https://feeds.abplive.com/onecms/images/uploaded-images/2026/09/18/4d30aeeda435398f4d2bd50d7d2cecb817897254689071347_original.png",
+                "width": "220"
+            }
+        ],
+        "href": "",
+        "similarity": 0.7669435143470764,
+        "matched_rssb_title": "‘Vibe’ movie review: Kunal Kemmu aims for stars in rudderless, overlong comedy",
         "count": 2,
         "best_similarity": 1.0,
-        "best_matched_title": "India's Semiconductor Success Important Amid Supply Chain Risks: PM Modi",
+        "best_matched_title": "‘Vibe’ Review: Kunal Kemmu Passes The ‘Vibe Check’",
+        "Rank Position": 29
+    },
+    {
+        "title": "TMC Name-Symbol Row: Mamata Faction Gets Football Player, Arup Roy Camp Gets Envelope",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "TMC Name-Symbol Row: Mamata Faction Gets Football Player, Arup Roy Camp Gets Envelope"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://news.abplive.com/elections/tmc-row-mamata-banerjee-all-india-trinamool-congress-symbol-football-player-ritabrata-democratic-trinamool-congress-symbol-envelope-1867269"
+            }
+        ],
+        "link": "https://news.abplive.com/elections/tmc-row-mamata-banerjee-all-india-trinamool-congress-symbol-football-player-ritabrata-democratic-trinamool-congress-symbol-envelope-1867269",
+        "comments": "https://feeds.abplive.com/testfeeds/english/posts/1867269/index#respond",
+        "published": "Fri, 18 Sep 2026 14:21:01 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            8,
+            51,
+            1,
+            4,
+            261,
+            0
+        ],
+        "authors": [
+            {}
+        ],
+        "author": "",
+        "tags": [
+            {
+                "term": "Election",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "id": "https://feeds.abplive.com/testfeeds/english/posts/1867269/index",
+        "guidislink": false,
+        "summary": "TMC Name-Symbol Row: Mamata Faction Gets Football Player, Arup Roy Camp Gets Envelope",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "TMC Name-Symbol Row: Mamata Faction Gets Football Player, Arup Roy Camp Gets Envelope"
+        },
+        "slash_comments": "0",
+        "media_thumbnail": [
+            {
+                "url": "https://feeds.abplive.com/onecms/images/uploaded-images/2026/09/18/93f525ae453b7462bf0422f5d49257111789722984959272_original.jpg",
+                "width": "220"
+            }
+        ],
+        "href": "",
+        "similarity": 0.7967745065689087,
+        "matched_rssb_title": "Mamata's TMC faction gets football player symbol and new party name; Ritabrata camp gets envelope",
+        "count": 2,
+        "best_similarity": 0.9999999403953552,
+        "best_matched_title": "TMC Name-Symbol Row: Mamata Faction Gets Football Player, Arup Roy Camp Gets Envelope",
+        "Rank Position": 30
+    },
+    {
+        "title": "UN Panel Flags Possible US War Crimes In Iran Strikes, Accuses Tehran Of Crimes Against Humanity",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "UN Panel Flags Possible US War Crimes In Iran Strikes, Accuses Tehran Of Crimes Against Humanity"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://news.abplive.com/news/world/us-iran-war-un-panel-flags-possible-crimes-in-strikes-accuses-tehran-of-crimes-against-humanity-1867182"
+            }
+        ],
+        "link": "https://news.abplive.com/news/world/us-iran-war-un-panel-flags-possible-crimes-in-strikes-accuses-tehran-of-crimes-against-humanity-1867182",
+        "comments": "https://feeds.abplive.com/testfeeds/english/posts/1867182/index#respond",
+        "published": "Fri, 18 Sep 2026 09:18:25 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            3,
+            48,
+            25,
+            4,
+            261,
+            0
+        ],
+        "authors": [
+            {}
+        ],
+        "author": "",
+        "tags": [
+            {
+                "term": "World",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "id": "https://feeds.abplive.com/testfeeds/english/posts/1867182/index",
+        "guidislink": false,
+        "summary": "UN Panel Flags Possible US War Crimes In Iran Strikes, Accuses Tehran Of Crimes Against Humanity",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "UN Panel Flags Possible US War Crimes In Iran Strikes, Accuses Tehran Of Crimes Against Humanity"
+        },
+        "slash_comments": "0",
+        "media_thumbnail": [
+            {
+                "url": "https://feeds.abplive.com/onecms/images/uploaded-images/2026/08/31/75847daa8ebbc01419d11179cf2117201788152292918736_original.png",
+                "width": "220"
+            }
+        ],
+        "href": "",
+        "similarity": 0.703606128692627,
+        "matched_rssb_title": "US committed war crimes in Iran? Here's what a UN fact-finding mission found",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "UN Panel Flags Possible US War Crimes In Iran Strikes, Accuses Tehran Of Crimes Against Humanity",
+        "Rank Position": 31
+    },
+    {
+        "title": "'Football player' vs 'envelope': EC allots new names and symbols to TMC factions",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "'Football player' vs 'envelope': EC allots new names and symbols to TMC factions"
+        },
+        "summary": "",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": ""
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://timesofindia.indiatimes.com/india/tmc-becomes-mamata-all-india-trinamool-congress-didi-gets-football-player-as-symbol/articleshow/134330524.cms"
+            },
+            {
+                "type": "image/jpeg",
+                "length": "85914",
+                "href": "https://static.toiimg.com/photo/msid-134330532,imgsize-85914.cms",
+                "rel": "enclosure"
+            }
+        ],
+        "link": "https://timesofindia.indiatimes.com/india/tmc-becomes-mamata-all-india-trinamool-congress-didi-gets-football-player-as-symbol/articleshow/134330524.cms",
+        "id": "https://timesofindia.indiatimes.com/india/tmc-becomes-mamata-all-india-trinamool-congress-didi-gets-football-player-as-symbol/articleshow/134330524.cms",
+        "guidislink": false,
+        "published": "Fri, 18 Sep 2026 14:21:27 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            8,
+            51,
+            27,
+            4,
+            261,
+            0
+        ],
+        "authors": [
+            {
+                "name": "ROHITASHWA RANJAN"
+            }
+        ],
+        "author": "ROHITASHWA RANJAN",
+        "author_detail": {
+            "name": "ROHITASHWA RANJAN"
+        },
+        "similarity": 0.7894390821456909,
+        "matched_rssb_title": "Football player and envelope: Why both TMC factions will fight bypolls under temporary names & new symbols",
+        "count": 2,
+        "best_similarity": 1.0000001192092896,
+        "best_matched_title": "'Football player' vs 'envelope': EC allots new names and symbols to TMC factions",
+        "Rank Position": 32
+    },
+    {
+        "title": "India’s flag bearers revealed: Bhaker, Toor to lead contingent at Asian Games opening",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "India’s flag bearers revealed: Bhaker, Toor to lead contingent at Asian Games opening"
+        },
+        "summary": "As the Asian Games opening ceremony approaches, Manu Bhaker and Tajinderpal Singh Toor have been chosen to carry India's flag, symbolising the country's sports spirit. Bhaker, celebrated for her double Olympic medal triumph, recently earned two bronzes at the Paris Olympics. Toor, a leader in shot put with two previous Asian Games titles, brings valuable experience.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "As the Asian Games opening ceremony approaches, Manu Bhaker and Tajinderpal Singh Toor have been chosen to carry India's flag, symbolising the country's sports spirit. Bhaker, celebrated for her double Olympic medal triumph, recently earned two bronzes at the Paris Olympics. Toor, a leader in shot put with two previous Asian Games titles, brings valuable experience."
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://timesofindia.indiatimes.com/sports/asian-games-2026/indias-flag-bearers-revealed-manu-bhaker-tajinderpal-singh-toor-to-lead-contingent-at-asian-games-opening-ceremony/articleshow/134327751.cms"
+            },
+            {
+                "type": "image/jpeg",
+                "length": "135120",
+                "href": "https://static.toiimg.com/photo/msid-134327953,imgsize-135120.cms",
+                "rel": "enclosure"
+            }
+        ],
+        "link": "https://timesofindia.indiatimes.com/sports/asian-games-2026/indias-flag-bearers-revealed-manu-bhaker-tajinderpal-singh-toor-to-lead-contingent-at-asian-games-opening-ceremony/articleshow/134327751.cms",
+        "id": "https://timesofindia.indiatimes.com/sports/asian-games-2026/indias-flag-bearers-revealed-manu-bhaker-tajinderpal-singh-toor-to-lead-contingent-at-asian-games-opening-ceremony/articleshow/134327751.cms",
+        "guidislink": false,
+        "published": "Fri, 18 Sep 2026 12:00:58 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            6,
+            30,
+            58,
+            4,
+            261,
+            0
+        ],
+        "authors": [
+            {
+                "name": "HIJAM RAJU SINGH"
+            }
+        ],
+        "author": "HIJAM RAJU SINGH",
+        "author_detail": {
+            "name": "HIJAM RAJU SINGH"
+        },
+        "similarity": 0.7693459987640381,
+        "matched_rssb_title": "Manu Bhaker, Tajinderpal Singh Toor named India flag-bearers",
+        "count": 2,
+        "best_similarity": 1.0000001192092896,
+        "best_matched_title": "India’s flag bearers revealed: Bhaker, Toor to lead contingent at Asian Games opening",
+        "Rank Position": 33
+    },
+    {
+        "title": "'Prisoner No. 626710 present': CBFC flags Umar Khalid film screening at IIIT-Hyderabad",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "'Prisoner No. 626710 present': CBFC flags Umar Khalid film screening at IIIT-Hyderabad"
+        },
+        "summary": "The Central Board of Film Certification raised concerns about a planned documentary screening at IIIT-Hyderabad, pointing out violations of the Cinematograph Act. Consequently, students chose to halt the showing of this uncertified film. IIIT-Hyderabad dissociated itself from the event, clarifying that it was not an organizer. Similarly, an intended screening at NLSIU Bengaluru faced postponement due to opposition from ABVP.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "The Central Board of Film Certification raised concerns about a planned documentary screening at IIIT-Hyderabad, pointing out violations of the Cinematograph Act. Consequently, students chose to halt the showing of this uncertified film. IIIT-Hyderabad dissociated itself from the event, clarifying that it was not an organizer. Similarly, an intended screening at NLSIU Bengaluru faced postponement due to opposition from ABVP."
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://timesofindia.indiatimes.com/city/hyderabad/prisoner-no-626710-is-present-cbfc-flags-umar-khalid-film-screening-at-iiit-hyderabad/articleshow/134325390.cms"
+            },
+            {
+                "type": "image/jpeg",
+                "length": "1060809",
+                "href": "https://static.toiimg.com/photo/msid-134325606,imgsize-1060809.cms",
+                "rel": "enclosure"
+            }
+        ],
+        "link": "https://timesofindia.indiatimes.com/city/hyderabad/prisoner-no-626710-is-present-cbfc-flags-umar-khalid-film-screening-at-iiit-hyderabad/articleshow/134325390.cms",
+        "id": "https://timesofindia.indiatimes.com/city/hyderabad/prisoner-no-626710-is-present-cbfc-flags-umar-khalid-film-screening-at-iiit-hyderabad/articleshow/134325390.cms",
+        "guidislink": false,
+        "published": "Fri, 18 Sep 2026 09:41:26 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            4,
+            11,
+            26,
+            4,
+            261,
+            0
+        ],
+        "authors": [
+            {
+                "name": "RK LAXMI"
+            }
+        ],
+        "author": "RK LAXMI",
+        "author_detail": {
+            "name": "RK LAXMI"
+        },
+        "similarity": 0.7437765002250671,
+        "matched_rssb_title": "CBFC Intervenes Against Screening of Umar Khalid Documentary at IIIT Hyderabad | BREAKING | News18",
+        "count": 2,
+        "best_similarity": 1.0000001192092896,
+        "best_matched_title": "'Prisoner No. 626710 present': CBFC flags Umar Khalid film screening at IIIT-Hyderabad",
+        "Rank Position": 34
+    },
+    {
+        "title": "Watch: Chinese coast guard vessel rams civilian Philippine boat in South China Sea",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Watch: Chinese coast guard vessel rams civilian Philippine boat in South China Sea"
+        },
+        "summary": "In a troubling turn of events, a Chinese Coast Guard ship collided with a boat from the Philippine Bureau of Fisheries and Aquatic Resources while it was refueling local fishermen. Although the Philippine vessel sustained structural damage, no injuries were reported. China claims that the Philippine boat ignored warnings and changed its course, further escalating tensions in the already contentious South China Sea.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "In a troubling turn of events, a Chinese Coast Guard ship collided with a boat from the Philippine Bureau of Fisheries and Aquatic Resources while it was refueling local fishermen. Although the Philippine vessel sustained structural damage, no injuries were reported. China claims that the Philippine boat ignored warnings and changed its course, further escalating tensions in the already contentious South China Sea."
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://timesofindia.indiatimes.com/world/china/chinese-coast-guard-vessel-rams-civilian-philippine-boat-on-refuelling-mission-in-south-china-sea/articleshow/134331498.cms"
+            },
+            {
+                "type": "image/jpeg",
+                "length": "50660",
+                "href": "https://static.toiimg.com/photo/msid-134331702,imgsize-50660.cms",
+                "rel": "enclosure"
+            }
+        ],
+        "link": "https://timesofindia.indiatimes.com/world/china/chinese-coast-guard-vessel-rams-civilian-philippine-boat-on-refuelling-mission-in-south-china-sea/articleshow/134331498.cms",
+        "id": "https://timesofindia.indiatimes.com/world/china/chinese-coast-guard-vessel-rams-civilian-philippine-boat-on-refuelling-mission-in-south-china-sea/articleshow/134331498.cms",
+        "guidislink": false,
+        "published": "Fri, 18 Sep 2026 15:27:18 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            9,
+            57,
+            18,
+            4,
+            261,
+            0
+        ],
+        "authors": [
+            {
+                "name": "PRANJAL PANDEY"
+            }
+        ],
+        "author": "PRANJAL PANDEY",
+        "author_detail": {
+            "name": "PRANJAL PANDEY"
+        },
+        "similarity": 0.7436046600341797,
+        "matched_rssb_title": "Philippines says Chinese ship ‘rammed’ govt boat in South China Sea, Beijing alleges violation of international law",
+        "count": 2,
+        "best_similarity": 1.0000001192092896,
+        "best_matched_title": "Watch: Chinese coast guard vessel rams civilian Philippine boat in South China Sea",
+        "Rank Position": 35
+    },
+    {
+        "title": "Keralam forms Anti-Narcotic Investigation Team as Operation Toofan set to enter second phase",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Keralam forms Anti-Narcotic Investigation Team as Operation Toofan set to enter second phase"
+        },
+        "summary": "Four arrested in interstate drug case",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "Four arrested in interstate drug case"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.thehindu.com/news/national/kerala/keralam-forms-anti-narcotic-investigation-team-as-operation-toofan-set-to-enter-second-phase/article71479911.ece"
+            }
+        ],
+        "link": "https://www.thehindu.com/news/national/kerala/keralam-forms-anti-narcotic-investigation-team-as-operation-toofan-set-to-enter-second-phase/article71479911.ece",
+        "id": "article-71479911",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "Keralam",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Fri, 18 Sep 2026 14:31:11 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            9,
+            1,
+            11,
+            4,
+            261,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "675",
+                "medium": "image",
+                "url": "https://th-i.thgim.com/public/incoming/bd6cyf/article71480043.ece/alternates/LANDSCAPE_1200/chennithala_01.JPG",
+                "width": "1200"
+            }
+        ],
+        "similarity": 0.8855314254760742,
+        "matched_rssb_title": "Keralam forms anti-narcotics team to intensify Operation Toofan",
+        "count": 2,
+        "best_similarity": 0.9999998807907104,
+        "best_matched_title": "Keralam forms Anti-Narcotic Investigation Team as Operation Toofan set to enter second phase",
+        "Rank Position": 36
+    },
+    {
+        "title": "12 students injured as school van hits road divider in Jharkhand",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "12 students injured as school van hits road divider in Jharkhand"
+        },
+        "summary": "The accident occurred on the Bhuvaneshwari Temple Road this morning when the driver lost control of the vehicle, and the school van crashed into the road divider near N. Type quarters in Telco Stadium area",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "The accident occurred on the Bhuvaneshwari Temple Road this morning when the driver lost control of the vehicle, and the school van crashed into the road divider near N. Type quarters in Telco Stadium area"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.thehindu.com/news/national/jharkhand/12-students-injured-as-school-van-hits-road-divider-in-jharkhand/article71480178.ece"
+            }
+        ],
+        "link": "https://www.thehindu.com/news/national/jharkhand/12-students-injured-as-school-van-hits-road-divider-in-jharkhand/article71480178.ece",
+        "id": "article-71480178",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "Jharkhand",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Fri, 18 Sep 2026 15:36:34 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            10,
+            6,
+            34,
+            4,
+            261,
+            0
+        ],
+        "similarity": 0.8510339856147766,
+        "matched_rssb_title": "Video: School Van Hits Divider In Jharkhand, 12 Students Injured",
+        "count": 2,
+        "best_similarity": 0.9999999403953552,
+        "best_matched_title": "12 students injured as school van hits road divider in Jharkhand",
+        "Rank Position": 37
+    },
+    {
+        "title": "Rival Trinamool factions get new names, symbols for October 6 bypolls",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Rival Trinamool factions get new names, symbols for October 6 bypolls"
+        },
+        "summary": "The Mamata Banerjee-led faction has been assigned the name ‘Mamata All India Trinamool Congress’ with the symbol ‘football player’",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "The Mamata Banerjee-led faction has been assigned the name ‘Mamata All India Trinamool Congress’ with the symbol ‘football player’"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.thehindu.com/news/national/west-bengal/mamata-ritabrata-trinamool-factions-allotted-new-party-names-symbols-by-eci/article71480013.ece"
+            }
+        ],
+        "link": "https://www.thehindu.com/news/national/west-bengal/mamata-ritabrata-trinamool-factions-allotted-new-party-names-symbols-by-eci/article71480013.ece",
+        "id": "article-71480013",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "West Bengal",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Fri, 18 Sep 2026 14:56:32 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            9,
+            26,
+            32,
+            4,
+            261,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "675",
+                "medium": "image",
+                "url": "https://th-i.thgim.com/public/incoming/efmi97/article71480114.ece/alternates/LANDSCAPE_1200/WhatsApp%20Image%202026-09-18%20at%2014.48.36.jpeg",
+                "width": "1200"
+            }
+        ],
+        "similarity": 0.7866733074188232,
+        "matched_rssb_title": "Rival Trinamool Factions Submit New Names, Symbols For Bengal Bypolls",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Rival Trinamool factions get new names, symbols for October 6 bypolls",
         "Rank Position": 38
     },
     {
-        "id": "https://www.ndtv.com/india-news/pm-narendra-modis-birthday-to-be-celebrated-as-annapurna-divas-in-west-bengal-every-year-12058690#publisher=newsstand",
-        "guidislink": true,
-        "link": "https://www.ndtv.com/india-news/pm-narendra-modis-birthday-to-be-celebrated-as-annapurna-divas-in-west-bengal-every-year-12058690#publisher=newsstand",
-        "title": "PM Modi's Birthday To Be Celebrated As 'Annapurna Divas' In Bengal Every Year",
+        "title": "Marathi film Gondhal is India's official Oscars 2027 entry, takes regional cinema to the global stage",
         "title_detail": {
             "type": "text/plain",
             "language": null,
             "base": "",
-            "value": "PM Modi's Birthday To Be Celebrated As 'Annapurna Divas' In Bengal Every Year"
+            "value": "Marathi film Gondhal is India's official Oscars 2027 entry, takes regional cinema to the global stage"
+        },
+        "summary": "The Film Federation of India (FFI) announced the selection on Friday, putting the spotlight on a regional story.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "The Film Federation of India (FFI) announced the selection on Friday, putting the spotlight on a regional story."
         },
         "links": [
             {
                 "rel": "alternate",
                 "type": "text/html",
-                "href": "https://www.ndtv.com/india-news/pm-narendra-modis-birthday-to-be-celebrated-as-annapurna-divas-in-west-bengal-every-year-12058690#publisher=newsstand"
+                "href": "https://www.hindustantimes.com/entertainment/others/marathi-film-gondhal-is-indias-official-oscars-2027-entry-takes-regional-cinema-to-the-global-stage-101789726283881.html"
             }
         ],
-        "published": "Thu, 17 Sep 2026 14:12:06 +0530",
+        "link": "https://www.hindustantimes.com/entertainment/others/marathi-film-gondhal-is-indias-official-oscars-2027-entry-takes-regional-cinema-to-the-global-stage-101789726283881.html",
+        "id": "https://www.hindustantimes.com/entertainment/others/marathi-film-gondhal-is-indias-official-oscars-2027-entry-takes-regional-cinema-to-the-global-stage-101789726283881.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Fri, 18 Sep 2026 15:45:16 +0530",
         "published_parsed": [
             2026,
             9,
-            17,
-            8,
-            42,
-            6,
-            3,
-            260,
+            18,
+            10,
+            15,
+            16,
+            4,
+            261,
             0
         ],
         "media_content": [
             {
-                "url": "https://c.ndtvimg.com/2026-09/hcnhh96o_pm-modi-_625x300_17_September_26.jpg?im=FitAndFill,algorithm=dnn,width=1280,height=720",
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/18/1600x900/logo/Gondhal_1789726420748_S83v_1789726434325_FMOo_4ca19136-da3b-43f5-a9ac-08e1ed13500c_fuUh.jpg",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.7404069900512695,
+        "matched_rssb_title": "Marathi film Gondhal beats Dhurandhar, Hanuman Ansh to become India's Oscars entry",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Marathi film Gondhal is India's official Oscars 2027 entry, takes regional cinema to the global stage",
+        "Rank Position": 39
+    },
+    {
+        "title": "Delhi HC issues show cause notices to 140 candidates over DUSU poll violations",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Delhi HC issues show cause notices to 140 candidates over DUSU poll violations"
+        },
+        "summary": "The bench said that the measures undertaken by Delhi University and the Delhi Police from time to time did not appear to be acting as an effective deterrent",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "The bench said that the measures undertaken by Delhi University and the Delhi Police from time to time did not appear to be acting as an effective deterrent"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.hindustantimes.com/india-news/delhi-hc-issues-show-cause-notices-to-140-candidates-over-dusu-poll-violations-101789722349430.html"
+            }
+        ],
+        "link": "https://www.hindustantimes.com/india-news/delhi-hc-issues-show-cause-notices-to-140-candidates-over-dusu-poll-violations-101789722349430.html",
+        "id": "https://www.hindustantimes.com/india-news/delhi-hc-issues-show-cause-notices-to-140-candidates-over-dusu-poll-violations-101789722349430.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Fri, 18 Sep 2026 14:35:48 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            9,
+            5,
+            48,
+            4,
+            261,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/18/1600x900/logo/The-matter-will-be-heard-next-on-November-6---ANI-_1789722341421_WrEp.jpg",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.7056931257247925,
+        "matched_rssb_title": "DUSU Polls: Delhi High Court Bars Victory Processions, Issues Show-Cause Notices To Student Unions",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Delhi HC issues show cause notices to 140 candidates over DUSU poll violations",
+        "Rank Position": 40
+    },
+    {
+        "title": "Orry lights diya for PM Modi’s 76th birthday, shares Hindi wish: ‘Ishwar aapko shatayu…’",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Orry lights diya for PM Modi’s 76th birthday, shares Hindi wish: ‘Ishwar aapko shatayu…’"
+        },
+        "summary": "Orry lit a diya and shared a heartfelt message for PM Narendra Modi on his 76th birthday.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "Orry lit a diya and shared a heartfelt message for PM Narendra Modi on his 76th birthday."
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.hindustantimes.com/trending/orry-lights-diya-for-pm-modi-s-76th-birthday-shares-hindi-wish-ishwar-aapko-shatayu-101789720562876.html"
+            }
+        ],
+        "link": "https://www.hindustantimes.com/trending/orry-lights-diya-for-pm-modi-s-76th-birthday-shares-hindi-wish-ishwar-aapko-shatayu-101789720562876.html",
+        "id": "https://www.hindustantimes.com/trending/orry-lights-diya-for-pm-modi-s-76th-birthday-shares-hindi-wish-ishwar-aapko-shatayu-101789720562876.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Fri, 18 Sep 2026 14:18:10 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            8,
+            48,
+            10,
+            4,
+            261,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/18/1600x900/logo/bdfngfg_cdvvc_1789720998564_Asz5_1789721005781_FZNV_043f548b-3c0a-4bd5-ad01-3ebc837a0917_JQWQ.jpg",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.7024831771850586,
+        "matched_rssb_title": "PM Modi’s 76th Birthday: 76 Diyas To Illuminate Red Fort, Special ‘Aashirwad Ka Diya’ To Be Lit",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Orry lights diya for PM Modi’s 76th birthday, shares Hindi wish: ‘Ishwar aapko shatayu…’",
+        "Rank Position": 41
+    },
+    {
+        "id": "https://www.ndtv.com/india-news/doctor-in-court-his-driver-examined-patients-at-kanpur-hospital-in-uttar-pradesh-wrote-prescriptions-12063514#publisher=newsstand",
+        "guidislink": true,
+        "link": "https://www.ndtv.com/india-news/doctor-in-court-his-driver-examined-patients-at-kanpur-hospital-in-uttar-pradesh-wrote-prescriptions-12063514#publisher=newsstand",
+        "title": "Doctor In Court, His Driver 'Examined' Patients At UP Hospital, Wrote Prescriptions",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Doctor In Court, His Driver 'Examined' Patients At UP Hospital, Wrote Prescriptions"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.ndtv.com/india-news/doctor-in-court-his-driver-examined-patients-at-kanpur-hospital-in-uttar-pradesh-wrote-prescriptions-12063514#publisher=newsstand"
+            }
+        ],
+        "published": "Fri, 18 Sep 2026 13:41:44 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            8,
+            11,
+            44,
+            4,
+            261,
+            0
+        ],
+        "media_content": [
+            {
+                "url": "https://c.ndtvimg.com/2026-09/mb5qrpp_kanpur-hospital_625x300_18_September_26.jpeg?im=FitAndFill,algorithm=dnn,width=1280,height=720",
                 "type": "image/jpeg",
                 "expression": "full",
                 "width": "1280",
                 "height": "720"
             }
         ],
-        "summary": "Women sports personalities, including Poulami Ghatak, Indu Puri and Jyotirmoyee Sikdar, inaugurated the programme.",
+        "summary": "The driver has since been removed from the hospital, an official said.",
         "summary_detail": {
-            "type": "text/html",
+            "type": "text/plain",
             "language": null,
             "base": "",
-            "value": "Women sports personalities, including Poulami Ghatak, Indu Puri and Jyotirmoyee Sikdar, inaugurated the programme."
+            "value": "The driver has since been removed from the hospital, an official said."
         },
         "content": [
+            {
+                "type": "text/plain",
+                "language": null,
+                "base": "",
+                "value": "Hospital authorities identified the man as Dev, the driver of emergency medical officer (EMO) Ramkesh."
+            },
             {
                 "type": "text/html",
                 "language": null,
                 "base": "",
-                "value": "Women sports personalities, including Poulami Ghatak, Indu Puri and Jyotirmoyee Sikdar, inaugurated the programme."
+                "value": "Hospital authorities identified the man as Dev, the driver of emergency medical officer (EMO) Ramkesh."
             }
         ],
-        "similarity": 0.7022088766098022,
-        "matched_rssb_title": "PM Modi birthday: Wishes pour in from across politics, sports and Bollywood",
-        "count": 2,
-        "best_similarity": 1.0000001192092896,
-        "best_matched_title": "PM Modi's Birthday To Be Celebrated As 'Annapurna Divas' In Bengal Every Year",
-        "Rank Position": 39
-    },
-    {
-        "title": "Kolkata-class destroyer vs PNS Hunain: Pak picked wrong warship to mess with",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "Kolkata-class destroyer vs PNS Hunain: Pak picked wrong warship to mess with"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.indiatoday.in/india/story/india-pakistan-warship-collision-ins-kolkata-pns-hunain-capabilities-2996570-2026-09-17?utm_source=rss"
-            }
-        ],
-        "link": "https://www.indiatoday.in/india/story/india-pakistan-warship-collision-ins-kolkata-pns-hunain-capabilities-2996570-2026-09-17?utm_source=rss",
-        "summary": "<a href=\"https://www.indiatoday.in/india/story/india-pakistan-warship-collision-ins-kolkata-pns-hunain-capabilities-2996570-2026-09-17\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/the-indian-navy-destroyer-ins-kolkata-174400562-16x9_0.jpg?VersionId=_y4fgLwm1AxgXYlp1_4c9odsO7iAE1y7\" width=\"305\" /> </a> Kolkataclass destroyer vs PNS Hunain Pak picked wrong warship to mess with",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "<a href=\"https://www.indiatoday.in/india/story/india-pakistan-warship-collision-ins-kolkata-pns-hunain-capabilities-2996570-2026-09-17\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/the-indian-navy-destroyer-ins-kolkata-174400562-16x9_0.jpg?VersionId=_y4fgLwm1AxgXYlp1_4c9odsO7iAE1y7\" width=\"305\" /> </a> Kolkataclass destroyer vs PNS Hunain Pak picked wrong warship to mess with"
-        },
-        "published": "Thu, 17 Sep 2026 12:01:29 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            17,
-            6,
-            31,
-            29,
-            3,
-            260,
-            0
-        ],
-        "similarity": 0.7690138816833496,
-        "matched_rssb_title": "India-Pakistan Naval Tensions | Inside Details Of PNS Hunain Collision With Indian Warship | News18",
-        "count": 2,
-        "best_similarity": 1.0,
-        "best_matched_title": "Kolkata-class destroyer vs PNS Hunain: Pak picked wrong warship to mess with",
-        "Rank Position": 40
-    },
-    {
-        "title": "Frustrated by dog menace, Yuva Sena workers release strays on Nashik official's table",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "Frustrated by dog menace, Yuva Sena workers release strays on Nashik official's table"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.indiatoday.in/trending-news/story/nashik-activists-release-stray-dogs-on-officials-table-after-complaints-go-unheard-2996457-2026-09-17?utm_source=rss"
-            }
-        ],
-        "link": "https://www.indiatoday.in/trending-news/story/nashik-activists-release-stray-dogs-on-officials-table-after-complaints-go-unheard-2996457-2026-09-17?utm_source=rss",
-        "summary": "<a href=\"https://www.indiatoday.in/trending-news/story/nashik-activists-release-stray-dogs-on-officials-table-after-complaints-go-unheard-2996457-2026-09-17\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/nashik-activists-release-stray-dogs-on-officials-table-after-complaints-go-unheard-175000220-16x9_0.png?VersionId=Bxfqo127nJKgwkh7FPKisA4Rl8xPFLoz\" width=\"305\" /> </a> Frustrated by dog menace Yuva Sena workers release strays on Nashik officials table",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "<a href=\"https://www.indiatoday.in/trending-news/story/nashik-activists-release-stray-dogs-on-officials-table-after-complaints-go-unheard-2996457-2026-09-17\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/nashik-activists-release-stray-dogs-on-officials-table-after-complaints-go-unheard-175000220-16x9_0.png?VersionId=Bxfqo127nJKgwkh7FPKisA4Rl8xPFLoz\" width=\"305\" /> </a> Frustrated by dog menace Yuva Sena workers release strays on Nashik officials table"
-        },
-        "published": "Thu, 17 Sep 2026 09:24:45 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            17,
-            3,
-            54,
-            45,
-            3,
-            260,
-            0
-        ],
-        "similarity": 0.8054687976837158,
-        "matched_rssb_title": "Irked By Dog Menace, Nashik Yuva Sena Members Release Stray Dogs On Panchayat Official’s Table",
+        "similarity": 0.7357418537139893,
+        "matched_rssb_title": "Kanpur hospital driver caught examining patients, writing prescriptions",
         "count": 2,
         "best_similarity": 1.000000238418579,
-        "best_matched_title": "Frustrated by dog menace, Yuva Sena workers release strays on Nashik official's table",
-        "Rank Position": 41
-    },
-    {
-        "title": "Live: US embassy wishes PM Modi on 76th birthday, conveys Trump's greetings",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "Live: US embassy wishes PM Modi on 76th birthday, conveys Trump's greetings"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.indiatoday.in/india/story/pm-narendra-modi-birthday-2026-live-updates-september-17-birthday-celebrations-semicon-india-om-birla-bjp-rahul-gandhi-2996415-2026-09-17?utm_source=rss"
-            }
-        ],
-        "link": "https://www.indiatoday.in/india/story/pm-narendra-modi-birthday-2026-live-updates-september-17-birthday-celebrations-semicon-india-om-birla-bjp-rahul-gandhi-2996415-2026-09-17?utm_source=rss",
-        "summary": "<a href=\"https://www.indiatoday.in/india/story/pm-narendra-modi-birthday-2026-live-updates-september-17-birthday-celebrations-semicon-india-om-birla-bjp-rahul-gandhi-2996415-2026-09-17\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/breaking_news/202609/trump-modi-173014191-16x9_0.jpg?VersionId=MYWGW8_PCw.oKjpuowvFLHHGdd0BjbYb\" width=\"305\" /> </a> Live US embassy wishes PM Modi on th birthday conveys Trumps greetings",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "<a href=\"https://www.indiatoday.in/india/story/pm-narendra-modi-birthday-2026-live-updates-september-17-birthday-celebrations-semicon-india-om-birla-bjp-rahul-gandhi-2996415-2026-09-17\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/breaking_news/202609/trump-modi-173014191-16x9_0.jpg?VersionId=MYWGW8_PCw.oKjpuowvFLHHGdd0BjbYb\" width=\"305\" /> </a> Live US embassy wishes PM Modi on th birthday conveys Trumps greetings"
-        },
-        "published": "Thu, 17 Sep 2026 07:10:43 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            17,
-            1,
-            40,
-            43,
-            3,
-            260,
-            0
-        ],
-        "similarity": 0.7804418206214905,
-        "matched_rssb_title": "PM Modi Turns 76: Birthday Greetings Pour In From President, Ministers And Top Leaders",
-        "count": 2,
-        "best_similarity": 1.0,
-        "best_matched_title": "Live: US embassy wishes PM Modi on 76th birthday, conveys Trump's greetings",
+        "best_matched_title": "Doctor In Court, His Driver 'Examined' Patients At UP Hospital, Wrote Prescriptions",
         "Rank Position": 42
     },
     {
-        "title": "Macroeconomics Of PM Modi's Birthday: How Sept 17 Comes As Annual Infra & Welfare Booster Shot For India",
+        "id": "https://www.ndtv.com/business-news/tata-sons-ipo-row-explained-why-shapoorji-pallonji-group-wants-it-noel-tata-12063491#publisher=newsstand",
+        "guidislink": true,
+        "link": "https://www.ndtv.com/business-news/tata-sons-ipo-row-explained-why-shapoorji-pallonji-group-wants-it-noel-tata-12063491#publisher=newsstand",
+        "title": "Tata Sons IPO Row Explained: Why Shapoorji Pallonji Group Wants It, Noel Tata Doesn't",
         "title_detail": {
             "type": "text/plain",
             "language": null,
             "base": "",
-            "value": "Macroeconomics Of PM Modi's Birthday: How Sept 17 Comes As Annual Infra & Welfare Booster Shot For India"
+            "value": "Tata Sons IPO Row Explained: Why Shapoorji Pallonji Group Wants It, Noel Tata Doesn't"
         },
         "links": [
             {
                 "rel": "alternate",
                 "type": "text/html",
-                "href": "https://www.news18.com/india/macroeconomics-of-pm-modis-birthday-how-sept-17-comes-as-annual-infra-welfare-booster-shot-for-india-ws-l-10336378.html"
+                "href": "https://www.ndtv.com/business-news/tata-sons-ipo-row-explained-why-shapoorji-pallonji-group-wants-it-noel-tata-12063491#publisher=newsstand"
             }
         ],
-        "link": "https://www.news18.com/india/macroeconomics-of-pm-modis-birthday-how-sept-17-comes-as-annual-infra-welfare-booster-shot-for-india-ws-l-10336378.html",
-        "summary": "Government ministries routinely align project completions and foundation stone ceremonies with this date, unlocking thousands of crores in public spending",
+        "published": "Fri, 18 Sep 2026 13:16:43 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            7,
+            46,
+            43,
+            4,
+            261,
+            0
+        ],
+        "media_content": [
+            {
+                "url": "https://c.ndtvimg.com/2026-09/e6rnurm4_tata-sons-ipo_625x300_17_September_26.png?im=FitAndFill,algorithm=dnn,width=1280,height=720",
+                "type": "image/jpeg",
+                "expression": "full",
+                "width": "1280",
+                "height": "720"
+            }
+        ],
+        "summary": "The Shapoorji Pallonji Group has been pushing for a public listing of Tata Sons for years.",
+        "summary_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "The Shapoorji Pallonji Group has been pushing for a public listing of Tata Sons for years."
+        },
+        "content": [
+            {
+                "type": "text/plain",
+                "language": null,
+                "base": "",
+                "value": "Tata Sons is not listed on stock market. Its shares are held by Tata Trusts, Shapoorji Pallonji Group, Tata Group companies and other shareholders."
+            },
+            {
+                "type": "text/html",
+                "language": null,
+                "base": "",
+                "value": "Tata Sons is not listed on stock market. Its shares are held by Tata Trusts, Shapoorji Pallonji Group, Tata Group companies and other shareholders."
+            }
+        ],
+        "similarity": 0.7108199000358582,
+        "matched_rssb_title": "Why Noel Tata doesn't want Tata Sons to go public",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Tata Sons IPO Row Explained: Why Shapoorji Pallonji Group Wants It, Noel Tata Doesn't",
+        "Rank Position": 43
+    },
+    {
+        "id": "https://www.ndtv.com/world-news/philippines-school-shooting-student-shoots-2-schoolmates-in-philippines-then-kills-himself-12063912#publisher=newsstand",
+        "guidislink": true,
+        "link": "https://www.ndtv.com/world-news/philippines-school-shooting-student-shoots-2-schoolmates-in-philippines-then-kills-himself-12063912#publisher=newsstand",
+        "title": "Student Shoots 2 Schoolmates In Philippines, Then Kills Himself",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Student Shoots 2 Schoolmates In Philippines, Then Kills Himself"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.ndtv.com/world-news/philippines-school-shooting-student-shoots-2-schoolmates-in-philippines-then-kills-himself-12063912#publisher=newsstand"
+            }
+        ],
+        "published": "Fri, 18 Sep 2026 14:49:07 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            9,
+            19,
+            7,
+            4,
+            261,
+            0
+        ],
+        "media_content": [
+            {
+                "url": "https://c.ndtvimg.com/2026-09/cv31q72g_phillipines-school-shooting_625x300_18_September_26.jpeg",
+                "type": "image/jpeg",
+                "expression": "full",
+                "width": "1280",
+                "height": "720"
+            }
+        ],
+        "summary": "The incident follows two fatal gun incidents since June at schools in the Philippines",
+        "summary_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "The incident follows two fatal gun incidents since June at schools in the Philippines"
+        },
+        "content": [
+            {
+                "type": "text/plain",
+                "language": null,
+                "base": "",
+                "value": "The Friday shooting also follows a high-profile incident in Thailand in August, where a student went on a shooting rampage at a school on the outskirts of the capital Bangkok."
+            },
+            {
+                "type": "text/html",
+                "language": null,
+                "base": "",
+                "value": "The Friday shooting also follows a high-profile incident in Thailand in August, where a student went on a shooting rampage at a school on the outskirts of the capital Bangkok."
+            }
+        ],
+        "similarity": 0.7110576629638672,
+        "matched_rssb_title": "Philippines school shooting: 3 killed, 8 injured in South Cotabato",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Student Shoots 2 Schoolmates In Philippines, Then Kills Himself",
+        "Rank Position": 44
+    },
+    {
+        "title": "Amit Thackeray backs cousin Aaditya after he's named in FIR in Disha Salian case",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Amit Thackeray backs cousin Aaditya after he's named in FIR in Disha Salian case"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.indiatoday.in/india/story/disha-salian-case-amit-thackeray-defends-cousin-aaditya-bombay-high-court-ordered-cbi-fir-ptag-2997474-2026-09-18?utm_source=rss"
+            }
+        ],
+        "link": "https://www.indiatoday.in/india/story/disha-salian-case-amit-thackeray-defends-cousin-aaditya-bombay-high-court-ordered-cbi-fir-ptag-2997474-2026-09-18?utm_source=rss",
+        "summary": "<a href=\"https://www.indiatoday.in/india/story/disha-salian-case-amit-thackeray-defends-cousin-aaditya-bombay-high-court-ordered-cbi-fir-ptag-2997474-2026-09-18\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/amit-thackeray-aaditya-disha-salian-case-support-cousin-18465346-16x9_0.jpg?VersionId=KR4TCNhJOCCtP8AVoF9dd1aheX6gL_0D\" width=\"305\" /> </a> Amit Thackeray backs cousin Aaditya after hes named in FIR in Disha Salian case",
         "summary_detail": {
             "type": "text/html",
             "language": null,
             "base": "",
-            "value": "Government ministries routinely align project completions and foundation stone ceremonies with this date, unlocking thousands of crores in public spending"
+            "value": "<a href=\"https://www.indiatoday.in/india/story/disha-salian-case-amit-thackeray-defends-cousin-aaditya-bombay-high-court-ordered-cbi-fir-ptag-2997474-2026-09-18\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/amit-thackeray-aaditya-disha-salian-case-support-cousin-18465346-16x9_0.jpg?VersionId=KR4TCNhJOCCtP8AVoF9dd1aheX6gL_0D\" width=\"305\" /> </a> Amit Thackeray backs cousin Aaditya after hes named in FIR in Disha Salian case"
         },
-        "published": "Thu, 17 Sep 2026 16:33:40 +0530",
+        "published": "Fri, 18 Sep 2026 13:19:33 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            7,
+            49,
+            33,
+            4,
+            261,
+            0
+        ],
+        "similarity": 0.7031896710395813,
+        "matched_rssb_title": "'Character Assassination Attempt': Aaditya Thackeray Breaks Silence After Being Named In Disha Salian FIR",
+        "count": 2,
+        "best_similarity": 0.9999998211860657,
+        "best_matched_title": "Amit Thackeray backs cousin Aaditya after he's named in FIR in Disha Salian case",
+        "Rank Position": 45
+    },
+    {
+        "title": "Most merchants will pay a fee on UPI payments above Rs 2,000",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Most merchants will pay a fee on UPI payments above Rs 2,000"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.indiatoday.in/diu/story/upi-mdr-payments-above-rs-2000-starts-october-15-customers-exempt-2996757-2026-09-17?utm_source=rss"
+            }
+        ],
+        "link": "https://www.indiatoday.in/diu/story/upi-mdr-payments-above-rs-2000-starts-october-15-customers-exempt-2996757-2026-09-17?utm_source=rss",
+        "summary": "<a href=\"https://www.indiatoday.in/diu/story/upi-mdr-payments-above-rs-2000-starts-october-15-customers-exempt-2996757-2026-09-17\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/highlighting-the-scale-of-the-ecosystem--official-data-revealed-that-upi-processed-2-366-crore-trans-082028915-16x9.jpg?VersionId=XW9Vzglu68.dqhOJFIbMiT06oHSuYmXb\" width=\"305\" /> </a> Most merchants will pay a fee on UPI payments above Rs",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "<a href=\"https://www.indiatoday.in/diu/story/upi-mdr-payments-above-rs-2000-starts-october-15-customers-exempt-2996757-2026-09-17\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/highlighting-the-scale-of-the-ecosystem--official-data-revealed-that-upi-processed-2-366-crore-trans-082028915-16x9.jpg?VersionId=XW9Vzglu68.dqhOJFIbMiT06oHSuYmXb\" width=\"305\" /> </a> Most merchants will pay a fee on UPI payments above Rs"
+        },
+        "published": "Thu, 17 Sep 2026 17:15:04 +0530",
         "published_parsed": [
             2026,
             9,
             17,
             11,
-            3,
-            40,
-            3,
-            260,
-            0
-        ],
-        "authors": [
-            {
-                "name": "News18"
-            }
-        ],
-        "author": "News18",
-        "author_detail": {
-            "name": "News18"
-        },
-        "id": "https://www.news18.com/india/macroeconomics-of-pm-modis-birthday-how-sept-17-comes-as-annual-infra-welfare-booster-shot-for-india-ws-l-10336378.html",
-        "guidislink": false,
-        "tags": [
-            {
-                "term": "India",
-                "scheme": null,
-                "label": null
-            }
-        ],
-        "media_content": [
-            {
-                "height": "675",
-                "width": "1200",
-                "medium": "image",
-                "url": "https://images.news18.com/ibnlive/uploads/2026/09/294915_1789642817537-1200x800.jpg"
-            }
-        ],
-        "similarity": 0.7469625473022461,
-        "matched_rssb_title": "PM Modi Birthday: From RSS worker to third-term prime minister – tracing his political journey and rise in BJP",
-        "count": 2,
-        "best_similarity": 1.0,
-        "best_matched_title": "Macroeconomics Of PM Modi's Birthday: How Sept 17 Comes As Annual Infra & Welfare Booster Shot For India",
-        "Rank Position": 43
-    },
-    {
-        "title": "CCTV At Pharmacies? Centre Proposes Surveillance For Prescription Drug Sales",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "CCTV At Pharmacies? Centre Proposes Surveillance For Prescription Drug Sales"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.news18.com/india/cctv-at-pharmacies-centre-proposes-surveillance-for-prescription-drug-sales-ws-l-10335491.html"
-            }
-        ],
-        "link": "https://www.news18.com/india/cctv-at-pharmacies-centre-proposes-surveillance-for-prescription-drug-sales-ws-l-10335491.html",
-        "summary": "Wholesale drug dealers have been excluded from the proposed CCTV requirement.",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "Wholesale drug dealers have been excluded from the proposed CCTV requirement."
-        },
-        "published": "Thu, 17 Sep 2026 11:02:12 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            17,
-            5,
-            32,
-            12,
-            3,
-            260,
-            0
-        ],
-        "authors": [
-            {
-                "name": "News18"
-            }
-        ],
-        "author": "News18",
-        "author_detail": {
-            "name": "News18"
-        },
-        "id": "https://www.news18.com/india/cctv-at-pharmacies-centre-proposes-surveillance-for-prescription-drug-sales-ws-l-10335491.html",
-        "guidislink": false,
-        "tags": [
-            {
-                "term": "India",
-                "scheme": null,
-                "label": null
-            }
-        ],
-        "media_content": [
-            {
-                "height": "675",
-                "width": "1200",
-                "medium": "image",
-                "url": "https://images.news18.com/ibnlive/uploads/2025/08/Untitled-design-67-2025-08-16b13eafb6db17963d36be83d0be121e-3x2.jpg"
-            }
-        ],
-        "similarity": 0.8008731603622437,
-        "matched_rssb_title": "India proposes mandatory CCTVs at medical stores to regulate prescription drug sales",
-        "count": 2,
-        "best_similarity": 1.0,
-        "best_matched_title": "CCTV At Pharmacies? Centre Proposes Surveillance For Prescription Drug Sales",
-        "Rank Position": 44
-    },
-    {
-        "title": "PM Modi Turns 76: BJP Begins ‘Seva Sankalp Abhiyan’ To Mark 25 Years Of Public Service",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "PM Modi Turns 76: BJP Begins ‘Seva Sankalp Abhiyan’ To Mark 25 Years Of Public Service"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.news18.com/india/pm-modi-turns-76-bjp-begins-seva-sankalp-abhiyan-to-mark-25-years-of-public-service-ws-kl-10335379.html"
-            }
-        ],
-        "link": "https://www.news18.com/india/pm-modi-turns-76-bjp-begins-seva-sankalp-abhiyan-to-mark-25-years-of-public-service-ws-kl-10335379.html",
-        "summary": "The nationwide campaign is expected to feature various public outreach and service-oriented programmes throughout the month.",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "The nationwide campaign is expected to feature various public outreach and service-oriented programmes throughout the month."
-        },
-        "published": "Thu, 17 Sep 2026 10:09:56 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            17,
+            45,
             4,
-            39,
-            56,
             3,
             260,
+            0
+        ],
+        "similarity": 0.7340834736824036,
+        "matched_rssb_title": "UPI Charges Above ₹2,000: Will Consumers Pay More? New Rules Explained | Digital Payment | News18",
+        "count": 2,
+        "best_similarity": 0.9999998807907104,
+        "best_matched_title": "Most merchants will pay a fee on UPI payments above Rs 2,000",
+        "Rank Position": 46
+    },
+    {
+        "title": "DUSU Polls 2026: ABVP, NSUI, AISA-SFI In Contest As Voting Begins; Over 2,000 Police, Paramilitary Personnel Deployed",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "DUSU Polls 2026: ABVP, NSUI, AISA-SFI In Contest As Voting Begins; Over 2,000 Police, Paramilitary Personnel Deployed"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.news18.com/india/dusu-elections-2026-tight-security-voting-security-abvp-nsui-candidates-ws-l-10338017.html"
+            }
+        ],
+        "link": "https://www.news18.com/india/dusu-elections-2026-tight-security-voting-security-abvp-nsui-candidates-ws-l-10338017.html",
+        "summary": "DUSU Elections 2026: Voting begins across Delhi University amid tight security. Over 2,000 police and paramilitary personnel have been deployed across North and South campuses.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "DUSU Elections 2026: Voting begins across Delhi University amid tight security. Over 2,000 police and paramilitary personnel have been deployed across North and South campuses."
+        },
+        "published": "Fri, 18 Sep 2026 09:46:32 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            18,
+            4,
+            16,
+            32,
+            4,
+            261,
             0
         ],
         "authors": [
@@ -427,7 +1289,7 @@
         "author_detail": {
             "name": "News18"
         },
-        "id": "https://www.news18.com/india/pm-modi-turns-76-bjp-begins-seva-sankalp-abhiyan-to-mark-25-years-of-public-service-ws-kl-10335379.html",
+        "id": "https://www.news18.com/india/dusu-elections-2026-tight-security-voting-security-abvp-nsui-candidates-ws-l-10338017.html",
         "guidislink": false,
         "tags": [
             {
@@ -441,14 +1303,14 @@
                 "height": "675",
                 "width": "1200",
                 "medium": "image",
-                "url": "https://images.news18.com/ibnlive/uploads/2026/02/modif-2026-02-69ec34c98bc203911c67c4ddc07388d0-3x2.jpg"
+                "url": "https://images.news18.com/ibnlive/uploads/2026/09/MixCollage-18-Sep-2026-09-13-AM-9552-2026-09-23f45ac2554fa54cf6bc91fd0dad3699-1200x800.jpg"
             }
         ],
-        "similarity": 0.7314950227737427,
-        "matched_rssb_title": "Modi turns 76: How BJP marks PM’s birthday with nationwide ‘Seva Diwas’, bike rallies, blood donation camps",
+        "similarity": 0.8130636215209961,
+        "matched_rssb_title": "DUSU Election 2026: ABVP vs NSUI vs AISA-SFI - Key candidates, issues, voting time and a high court warning",
         "count": 2,
         "best_similarity": 1.0,
-        "best_matched_title": "PM Modi Turns 76: BJP Begins ‘Seva Sankalp Abhiyan’ To Mark 25 Years Of Public Service",
-        "Rank Position": 45
+        "best_matched_title": "DUSU Polls 2026: ABVP, NSUI, AISA-SFI In Contest As Voting Begins; Over 2,000 Police, Paramilitary Personnel Deployed",
+        "Rank Position": 47
     }
 ]

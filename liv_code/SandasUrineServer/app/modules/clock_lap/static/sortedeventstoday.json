@@ -1,13 +1,13 @@
 {
-    "generated_at": "2026-09-17T16:59:57.349436+05:30",
+    "generated_at": "2026-09-18T04:04:03.531614+05:30",
     "timezone": "Asia/Kolkata",
-    "start_date": "2026-09-17",
-    "end_date": "2026-09-23",
+    "start_date": "2026-09-18",
+    "end_date": "2026-09-24",
     "number_of_days": 7,
     "days": [
         {
-            "date": "2026-09-17",
-            "day": "Thursday",
+            "date": "2026-09-18",
+            "day": "Friday",
             "is_today": true,
             "events": [
                 {
@@ -24,16 +24,27 @@
             ]
         },
         {
-            "date": "2026-09-18",
-            "day": "Friday",
-            "is_today": false,
-            "events": []
-        },
-        {
             "date": "2026-09-19",
             "day": "Saturday",
             "is_today": false,
-            "events": []
+            "events": [
+                {
+                    "event_id": null,
+                    "event_name": "Sensex Closed",
+                    "event_type": "WEEKLY_RULE",
+                    "description": "Sensex is closed on Saturdays.",
+                    "date_status": "RULE",
+                    "date_calculation_method": "WEEKLY_DAY_OF_WEEK",
+                    "is_confirmed": true,
+                    "notes": null,
+                    "effects": [
+                        {
+                            "effect_type": "PUBLIC_LIFE",
+                            "effect": "Sensex Closed."
+                        }
+                    ]
+                }
+            ]
         },
         {
             "date": "2026-09-20",
@@ -92,6 +103,12 @@
                     ]
                 }
             ]
+        },
+        {
+            "date": "2026-09-24",
+            "day": "Thursday",
+            "is_today": false,
+            "events": []
         }
     ]
 }

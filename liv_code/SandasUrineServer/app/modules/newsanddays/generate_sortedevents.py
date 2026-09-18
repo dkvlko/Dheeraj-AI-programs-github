@@ -401,6 +401,35 @@ def get_special_daily_events(
             }
         )
 
+    if weekday == 5:
+
+        events.append(
+            {
+                "event_id": None,
+                "event_name": (
+                    "Sensex Closed"
+                ),
+                "event_type": "WEEKLY_RULE",
+                "description": (
+                    "Sensex is closed on Saturdays."
+                ),
+                "date_status": "RULE",
+                "date_calculation_method": (
+                    "WEEKLY_DAY_OF_WEEK"
+                ),
+                "is_confirmed": True,
+                "notes": None,
+                "effects": [
+                    {
+                        "effect_type": "PUBLIC_LIFE",
+                        "effect": (
+                            "Sensex Closed."
+                        ),
+                    }
+                ],
+            }
+        )
+
     return events
 
 
@@ -511,12 +540,9 @@ def build_json(
         "days": days,
     }
 
+# Generate today's Events #
 
-# ============================================================
-# Main
-# ============================================================
-
-def main() -> None:
+def generateEvents() :
 
     if not DB_PATH.exists():
 
@@ -543,11 +569,11 @@ def main() -> None:
 
     today = now.date()
 
-    print(
-        f"Generating events from "
-        f"{today.isoformat()} "
-        f"for {NUMBER_OF_DAYS} days."
-    )
+    #print(
+    #    f"Generating events from "
+    #    f"{today.isoformat()} "
+    #    f"for {NUMBER_OF_DAYS} days."
+    #)
 
     # --------------------------------------------------------
     # SQLite connection.
@@ -588,17 +614,24 @@ def main() -> None:
 
         json_file.write("\n")
 
-    print()
-    print(
-        f"JSON written to:\n{OUTPUT_PATH}"
-    )
+    #print()
+    #print(
+    #    f"JSON written to:\n{OUTPUT_PATH}"
+    #)
 
-    print(
-        f"Date range: "
-        f"{document['start_date']} "
-        f"to "
-        f"{document['end_date']}"
-    )
+    #print(
+    #    f"Date range: "
+    #    f"{document['start_date']} "
+    #    f"to "
+    #    f"{document['end_date']}"
+    #)
+
+# ============================================================
+# Main
+# ============================================================
+
+def main() -> None:
+    generateEvents()
 
 
 if __name__ == "__main__":
