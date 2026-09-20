@@ -4,162 +4,670 @@
 <meta charset="utf-8">
 <title>Flagship Music</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    padding: 0;
+    background:
+        radial-gradient(circle at 50% 30%, rgba(255, 220, 0, 0.12), transparent 34%),
+        radial-gradient(circle at 15% 80%, rgba(80, 120, 255, 0.12), transparent 30%),
+        #0d0f13;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 20px solid #ffff00;
+    overflow-x: hidden;
+}
+
+/* ---------- Main player ---------- */
+
+.player-stage {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.player-card {
+    position: absolute;
+    top: 33.33vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: min(900px, calc(100vw - 100px));
+    min-height: 270px;
+    padding: 28px;
+
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 28px;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.075);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 28px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+.album-art {
+    width: 190px;
+    height: 190px;
+    border-radius: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(circle at 35% 30%, #fff9a0 0, transparent 12%),
+        radial-gradient(circle at 65% 65%, #ffcc00 0, transparent 35%),
+        linear-gradient(135deg, #5b4b00, #17191f 55%, #050506);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.45),
+        inset 0 0 35px rgba(255, 230, 0, 0.16);
+
+    position: relative;
+    overflow: hidden;
+}
+
+.album-art::before {
+    content: "";
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            #101116 0,
+            #101116 3px,
+            #292b31 4px,
+            #101116 7px
+        );
+
+    box-shadow:
+        0 0 0 5px #17181d,
+        0 0 30px rgba(255, 220, 0, 0.22);
+
+    position: absolute;
+}
+
+.album-art::after {
+    content: "♫";
+    position: absolute;
+    z-index: 2;
+
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffff00;
+    color: #171717;
+    font-size: 22px;
+    font-weight: bold;
+
+    box-shadow: 0 0 18px rgba(255, 255, 0, 0.65);
+}
+
+/* ---------- Information ---------- */
+
+.player-info {
+    min-width: 0;
+}
+
+.brand {
+    display: inline-block;
+    margin-bottom: 8px;
+
+    color: #ffff00;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+#currentSong {
+    margin: 0;
+    min-height: 38px;
+
+    color: #ffffff;
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 700;
+    line-height: 1.15;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-label {
+    margin-top: 7px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+}
+
+/* ---------- Progress ---------- */
+
+.progress-row {
+    margin-top: 25px;
+}
+
+.progress-track {
+    width: 100%;
+    height: 7px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.14);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+#progress {
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #ffff00, #ffd000);
+    box-shadow: 0 0 12px rgba(255, 255, 0, 0.55);
+    transition: width 0.1s linear;
+}
+
+.time-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 7px;
+
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 11px;
+}
+
+/* ---------- Controls ---------- */
+
 .controls {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 30px;
-    margin-top: 20px;
+    gap: 15px;
+    margin-top: 22px;
 }
 
-.icon-btn {
-    border: none;
-    background: transparent;
-    padding: 0;
+.control-btn {
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    background: rgba(255, 255, 255, 0.08);
     cursor: pointer;
-}
-.icon-btn img {
-    width: clamp(48px, 10vw, 72px);
-    height: clamp(48px, 10vw, 72px);
-    display: block;
+
+    font-size: 18px;
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
-.icon-btn:active {
-    transform: scale(0.95);
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-2px);
 }
+
+.control-btn:active {
+    transform: scale(0.94);
+}
+
+.play-btn {
+    width: 62px;
+    height: 62px;
+
+    color: #111;
+    background: #ffff00;
+    border: none;
+
+    font-size: 25px;
+    box-shadow:
+        0 0 22px rgba(255, 255, 0, 0.35),
+        0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+.play-btn:hover {
+    background: #fff83b;
+    box-shadow:
+        0 0 30px rgba(255, 255, 0, 0.55),
+        0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.volume {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-left: auto;
+}
+
+.volume-icon {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+}
+
+#volume {
+    width: 90px;
+    accent-color: #ffff00;
+}
+
+/* ---------- Equalizer ---------- */
+
+.equalizer {
+    height: 32px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 14px;
+    opacity: 0.75;
+}
+
+.equalizer span {
+    width: 4px;
+    height: 7px;
+    border-radius: 4px;
+    background: #ffff00;
+    box-shadow: 0 0 8px rgba(255, 255, 0, 0.45);
+}
+
+.player-card.playing .equalizer span {
+    animation: equalize 0.8s ease-in-out infinite alternate;
+}
+
+.player-card.playing .equalizer span:nth-child(2) { animation-delay: -0.25s; }
+.player-card.playing .equalizer span:nth-child(3) { animation-delay: -0.5s; }
+.player-card.playing .equalizer span:nth-child(4) { animation-delay: -0.15s; }
+.player-card.playing .equalizer span:nth-child(5) { animation-delay: -0.4s; }
+.player-card.playing .equalizer span:nth-child(6) { animation-delay: -0.65s; }
+.player-card.playing .equalizer span:nth-child(7) { animation-delay: -0.3s; }
+
+@keyframes equalize {
+    from { height: 5px; }
+    to   { height: 30px; }
+}
+
+/* ---------- Playlist information ---------- */
+
 #playlistStatus {
+    position: absolute;
+    top: calc(33.33vh + 185px);
+    left: 50%;
+    transform: translateX(-50%);
 
-    margin-top:20px;
+    width: min(900px, calc(100vw - 100px));
 
-    width:95%;
-    max-width:900px;
-
-    margin-left:auto;
-    margin-right:auto;
-
-    text-align:left;
-
-    font-family:Arial;
-    font-size:16px;
-
-    word-break:break-word;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
 }
 
-#playlistStatus div{
-    margin:8px 0;
+.status-item {
+    min-width: 0;
+    min-height: 105px;
+    padding: 20px 18px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+
+    overflow: hidden;
 }
 
-body{
-    margin:0;
-    padding:0 20px;
-    min-height:100vh;
-    box-sizing:border-box;
-    background:#202124;
-    color:white;
-    font-family:Arial, sans-serif;
-    border:20px solid #ffff00;
+.status-title {
+    display: block;
+    margin-bottom: 10px;
+
+    color: #ffff00;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
-.player-container{
-    width:min(95vw, 900px);
-    margin:0 auto;
+.status-song {
+    display: block;
+
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 15px;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
-/* Audio player positioned around one-third of the browser viewport
-   below the browser's address bar/page viewport. */
-#player{
-    display:block;
-    width: min(95%,900px);
-    position:absolute;
-    top:33.33vh;
-    left:50%;
-    transform:translate(-50%, -50%);
+/* Hide the browser's basic audio controls.
+   The <audio> element remains the actual playback engine. */
+#player {
+    display: none;
 }
 
-.controls{
-    margin-top:calc(33.33vh + 55px);
+/* ---------- Responsive ---------- */
+
+@media (max-width: 700px) {
+    body {
+        border-width: 12px;
+    }
+
+    .player-card {
+        width: calc(100vw - 55px);
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding: 22px;
+        gap: 18px;
+    }
+
+    .album-art {
+        width: 145px;
+        height: 145px;
+    }
+
+    .album-art::before {
+        width: 86px;
+        height: 86px;
+    }
+
+    .player-info {
+        width: 100%;
+        text-align: center;
+    }
+
+    #currentSong {
+        font-size: 22px;
+    }
+
+    .controls {
+        justify-content: center;
+    }
+
+    .volume {
+        display: none;
+    }
+
+    #playlistStatus {
+        top: calc(33.33vh + 250px);
+        width: calc(100vw - 55px);
+        grid-template-columns: 1fr;
+    }
 }
 </style>
-
-
 </head>
+
 <body>
 
-<h2>Flagship Player</h2>
-<audio id="player" controls autoplay></audio>
+<div class="player-stage">
 
-<div class="controls">
-    <button id="prev" class="icon-btn">
-        <img src="/flagship/static/icons/rewind-button.png" alt="Previous">
-    </button>
+    <!-- Actual HTML audio engine -->
+    <audio id="player" autoplay></audio>
 
-    <button id="next" class="icon-btn">
-        <img src="/flagship/static/icons/forward.png" alt="Next">
-    </button>
+    <!-- Custom glass player -->
+    <section class="player-card" id="playerCard">
+
+        <div class="album-art" aria-hidden="true"></div>
+
+        <div class="player-info">
+
+            <div class="brand">Flagship Music</div>
+
+            <h1 id="currentSong">Loading...</h1>
+
+            <div class="song-label">Now playing</div>
+
+            <div class="progress-row">
+                <div class="progress-track" id="progressTrack">
+                    <div id="progress"></div>
+                </div>
+
+                <div class="time-row">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+
+            <div class="controls">
+
+                <button id="prev"
+                        class="control-btn"
+                        aria-label="Previous song"
+                        title="Previous">
+                    &#9664;&#9664;
+                </button>
+
+                <button id="playPause"
+                        class="control-btn play-btn"
+                        aria-label="Play or pause"
+                        title="Play / Pause">
+                    &#9654;
+                </button>
+
+                <button id="next"
+                        class="control-btn"
+                        aria-label="Next song"
+                        title="Next">
+                    &#9654;&#9654;
+                </button>
+
+                <div class="volume">
+                    <span class="volume-icon">&#128266;</span>
+                    <input id="volume"
+                           type="range"
+                           min="0"
+                           max="1"
+                           step="0.01"
+                           value="1"
+                           aria-label="Volume">
+                </div>
+
+            </div>
+
+            <div class="equalizer" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="playlistStatus">
+
+        <div class="status-item">
+            <span class="status-title">Previous</span>
+            <span class="status-song" id="previousSong"></span>
+        </div>
+
+        <div class="status-item">
+            <span class="status-title">Current</span>
+            <span class="status-song" id="statusCurrentSong"></span>
+        </div>
+
+        <div class="status-item">
+            <span class="status-title">Next</span>
+            <span class="status-song" id="nextSong"></span>
+        </div>
+
+    </div>
+
 </div>
-
-<div id="playlistStatus">
-
-    <div>
-        <b>Previous:</b>
-        <span id="previousSong"></span>
-    </div>
-
-    <div>
-        <b>Current:</b>
-        <span id="currentSong"></span>
-    </div>
-
-    <div>
-        <b>Next:</b>
-        <span id="nextSong"></span>
-    </div>
-
-</div>
-
 
 <script>
+const player = document.getElementById("player");
+const playerCard = document.getElementById("playerCard");
 
-const player=document.getElementById("player");
-async function updateStatus()
-{
-    const r = await fetch("/flagship/status");
+const playPause = document.getElementById("playPause");
+const progress = document.getElementById("progress");
+const progressTrack = document.getElementById("progressTrack");
+const currentTime = document.getElementById("currentTime");
+const duration = document.getElementById("duration");
+const volume = document.getElementById("volume");
 
-    const s = await r.json();
+const currentSong = document.getElementById("currentSong");
+const statusCurrentSong = document.getElementById("statusCurrentSong");
+const previousSong = document.getElementById("previousSong");
+const nextSong = document.getElementById("nextSong");
 
-    previousSong.textContent = s.previous ?? "";
-    currentSong.textContent  = s.current  ?? "";
-    nextSong.textContent     = s.next     ?? "";
+function formatTime(seconds) {
+    if (!Number.isFinite(seconds)) {
+        return "0:00";
+    }
+
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+
+    return minutes + ":" + String(secs).padStart(2, "0");
 }
 
-function playCurrent()
-{
+async function updateStatus() {
+    try {
+        const r = await fetch("/flagship/status");
+        const s = await r.json();
+
+        previousSong.textContent = s.previous ?? "";
+        currentSong.textContent = s.current ?? "";
+        statusCurrentSong.textContent = s.current ?? "";
+        nextSong.textContent = s.next ?? "";
+    } catch (e) {
+        console.log("Status error:", e);
+    }
+}
+
+function updatePlayButton() {
+    if (player.paused) {
+        playPause.innerHTML = "&#9654;";
+        playerCard.classList.remove("playing");
+    } else {
+        playPause.innerHTML = "&#10074;&#10074;";
+        playerCard.classList.add("playing");
+    }
+}
+
+function updateProgress() {
+    if (!Number.isFinite(player.duration) || player.duration <= 0) {
+        progress.style.width = "0%";
+        currentTime.textContent = "0:00";
+        duration.textContent = "0:00";
+        return;
+    }
+
+    const percent = (player.currentTime / player.duration) * 100;
+
+    progress.style.width = percent + "%";
+    currentTime.textContent = formatTime(player.currentTime);
+    duration.textContent = formatTime(player.duration);
+}
+
+function playCurrent() {
     console.log("Ended:", player.src);
-    player.src="/flagship/current?ts="+Date.now();
+
+    player.src = "/flagship/current?ts=" + Date.now();
     player.load();
 
     updateStatus();
-    player.play().catch(()=>{});
+
+    player.play()
+        .then(() => updatePlayButton())
+        .catch(() => updatePlayButton());
 }
+
+/* Play / Pause */
+
+playPause.onclick = () => {
+    if (player.paused) {
+        player.play().catch(() => {});
+    } else {
+        player.pause();
+    }
+};
+
+/* Previous */
 
 document.getElementById("prev").onclick = async () => {
     await fetch("/flagship/previous");
     playCurrent();
 };
 
+/* Next */
+
 document.getElementById("next").onclick = async () => {
     await fetch("/flagship/next");
     playCurrent();
 };
 
-player.addEventListener("ended",async ()=>{
+/* Automatically advance */
 
+player.addEventListener("ended", async () => {
     await fetch("/flagship/advance");
-
     playCurrent();
-
 });
+
+/* Progress */
+
+player.addEventListener("timeupdate", updateProgress);
+player.addEventListener("loadedmetadata", updateProgress);
+player.addEventListener("durationchange", updateProgress);
+
+/* Play state */
+
+player.addEventListener("play", updatePlayButton);
+player.addEventListener("pause", updatePlayButton);
+
+/* Click progress bar to seek */
+
+progressTrack.addEventListener("click", (event) => {
+    if (!Number.isFinite(player.duration) || player.duration <= 0) {
+        return;
+    }
+
+    const rect = progressTrack.getBoundingClientRect();
+    const position = (event.clientX - rect.left) / rect.width;
+
+    player.currentTime =
+        Math.max(0, Math.min(1, position)) * player.duration;
+});
+
+/* Volume */
+
+volume.addEventListener("input", () => {
+    player.volume = Number(volume.value);
+});
+
+/* Existing diagnostic logging */
 
 player.addEventListener("error", () => {
     console.log("Audio error:", player.error);
@@ -185,8 +693,9 @@ player.addEventListener("suspend", () => {
     console.log("Suspended");
 });
 
-playCurrent();
+/* Start */
 
+playCurrent();
 </script>
 
 </body>

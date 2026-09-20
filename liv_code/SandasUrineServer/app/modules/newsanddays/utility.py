@@ -3,14 +3,13 @@ import feedparser
 from sentence_transformers import SentenceTransformer, util
 from jinja2 import Template
 from dateutil import parser
-import requests
 import xml.etree.ElementTree as ET
 import time
 from pathlib import Path
 from urllib.parse import urlparse
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, time as dt_time
 import shutil
 import utility_dedupl 
 import  utility_ranksort 
@@ -697,8 +696,8 @@ def main():
     #print("HTML Generated")
     now = datetime.now().time()
 
-    midnight = time(0, 0, 0)
-    one_am = time(1, 0, 0)
+    midnight = dt_time(0, 0, 0)
+    one_am = dt_time(1, 0, 0)
 
     if midnight <= now < one_am:
         generate_sortedevents.generateEvents()

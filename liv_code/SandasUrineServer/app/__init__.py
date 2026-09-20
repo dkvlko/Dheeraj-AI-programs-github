@@ -83,7 +83,18 @@ def create_app():
         clock_bp,
         url_prefix=clock_bp.app_url
     )
+    
+    from app.modules.notesplus import notes_bp
+    app.register_blueprint(
+        notes_bp,
+        url_prefix= notes_bp.app_url
+    )
 
+    from app.modules.dailylog import dailylog_bp
+    app.register_blueprint(
+        dailylog_bp,
+        url_prefix= dailylog_bp.app_url
+    )
     #print("Static folder:", app.static_folder)
     #Static folder: /home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/static
     #Static URL path: /static

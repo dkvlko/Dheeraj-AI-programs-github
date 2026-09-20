@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Notes Plus</title>
+
+    <link
+        rel="stylesheet"
+        href="/notesplus/static/easymde.min.css"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 15px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .notes-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            margin-right: auto;
+        }
+
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 9px 15px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #1976d2;
+            color: white;
+        }
+
+        .secondary {
+            background: #666;
+            color: white;
+        }
+
+        .danger {
+            background: #c62828;
+            color: white;
+        }
+
+        .pin-button {
+            background: #f0a000;
+            color: white;
+        }
+
+        button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        /* ================================================
+           LIST
+           ================================================ */
+
+        .notes-list {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .note-row {
+            display: grid;
+
+            grid-template-columns:
+                45px
+                35px
+                minmax(120px, 0.8fr)
+                minmax(200px, 2fr);
+
+            align-items: center;
+
+            min-height: 52px;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+        .note-row.header-row {
+            font-weight: 700;
+            background: #e9edf1;
+        }
+
+        .note-row > div {
+            padding: 8px;
+        }
+
+        .note-title {
+            cursor: pointer;
+        }
+
+        .note-title:hover {
+            text-decoration: underline;
+        }
+
+        .pin-icon {
+            text-align: center;
+            font-size: 19px;
+        }
+
+        .empty {
+            padding: 40px;
+            text-align: center;
+            color: #777;
+        }
+
+        /* ================================================
+           EDITOR
+           ================================================ */
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        .field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 10px;
+            font-size: 17px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+        }
+
+        .readonly {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            min-height: 300px;
+            line-height: 1.6;
+        }
+
+        .editor-area {
+            display: none;
+        }
+
+        .editor-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .metadata {
+            margin-top: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            color: #666;
+            font-size: 13px;
+        }
+
+        #save-status {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 8px;
+            font-size: 14px;
+        }
+
+        .saving {
+            color: #e08a00;
+        }
+
+        .saved {
+            color: #16833b;
+        }
+
+        .save-error {
+            color: #c62828;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 8px;
+            }
+
+            .note-row {
+                grid-template-columns:
+                    35px
+                    30px
+                    minmax(100px, 0.8fr)
+                    minmax(120px, 1.5fr);
+            }
+
+            .note-row > div {
+                padding: 6px 4px;
+            }
+
+            .note-row.header-row {
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="notes-container">
+
+
+{% if notes is defined %}
+
+    <!-- =================================================
+         NOTES LIST
+         ================================================= -->
+
+    <div class="header">
+
+        <h1>Notes Plus</h1>
+
+        <button
+            class="primary"
+            onclick="newNote()"
+        >
+            + New
+        </button>
+
+        <button
+            class="pin-button"
+            id="pin-button"
+            onclick="pinSelected()"
+            disabled
+        >
+            📌 Pin
+        </button>
+
+        <button
+            class="primary"
+            id="edit-button"
+            onclick="editSelected()"
+            disabled
+        >
+            ✏ Edit
+        </button>
+
+        <button
+            class="danger"
+            onclick="deleteSelected()"
+        >
+            🗑 Delete
+        </button>
+
+        <button
+            class="secondary"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+    <div class="notes-list">
+
+        <div class="note-row header-row">
+
+            <div>
+                Select
+            </div>
+
+            <div>
+                Pin
+            </div>
+
+            <div>
+                Topic
+            </div>
+
+            <div>
+                Title
+            </div>
+
+        </div>
+
+
+        {% if notes %}
+
+            {% for item in notes %}
+
+            <div class="note-row">
+
+                <div>
+
+                    <input
+                        type="checkbox"
+                        class="note-select"
+                        value="{{ item.id }}"
+                        data-pinned="{{ item.is_pinned }}"
+                        onchange="selectionChanged()"
+                    >
+
+                </div>
+
+
+                <div class="pin-icon">
+
+                    {% if item.is_pinned %}
+                        📌
+                    {% endif %}
+
+                </div>
+
+
+                <div>
+                    {{ item.topic }}
+                </div>
+
+
+                <div
+                    class="note-title"
+                    onclick="openNote({{ item.id }})"
+                >
+                    {{ item.title }}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                No notes available.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <script>
+
+        function getSelected() {
+
+            return Array.from(
+                document.querySelectorAll(
+                    ".note-select:checked"
+                )
+            ).map(
+                checkbox => Number(checkbox.value)
+            );
+
+        }
+
+
+        function selectionChanged() {
+
+            const selected =
+                document.querySelectorAll(
+                    ".note-select:checked"
+                );
+
+            const count =
+                selected.length;
+
+            document.getElementById(
+                "edit-button"
+            ).disabled = count !== 1;
+
+            document.getElementById(
+                "pin-button"
+            ).disabled = count !== 1;
+
+        }
+
+        function newNote() {
+
+            window.location.href =
+                "/notesplus/new";
+
+        }
+
+        function openNote(id) {
+
+            window.location.href =
+                "/notesplus/note/" + id;
+
+        }
+
+
+        function editSelected() {
+
+            const selected =
+                getSelected();
+
+            if (selected.length !== 1) {
+                return;
+            }
+
+            window.location.href =
+                "/notesplus/note/" +
+                selected[0] +
+                "?edit=1";
+
+        }
+
+
+        async function pinSelected() {
+
+            const selected =
+                getSelected();
+
+            if (selected.length !== 1) {
+                return;
+            }
+
+            const id = selected[0];
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/notesplus/toggle-pin/" + id,
+                        {
+                            method: "POST"
+                        }
+                    );
+
+                const result =
+                    await response.json();
+
+                if (!result.success) {
+
+                    alert(result.error);
+
+                    return;
+
+                }
+
+                window.location.reload();
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Unable to change pin status."
+                );
+
+            }
+
+        }
+
+
+        async function deleteSelected() {
+
+            const selected =
+                getSelected();
+
+            if (!selected.length) {
+
+                alert(
+                    "Please select at least one note."
+                );
+
+                return;
+
+            }
+
+
+            const confirmed =
+                confirm(
+                    "Delete " +
+                    selected.length +
+                    " selected note(s)?"
+                );
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/notesplus/delete",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                ids: selected
+                            })
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!result.success) {
+
+                    alert(result.error);
+
+                    return;
+
+                }
+
+
+                window.location.reload();
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Unable to delete notes."
+                );
+
+            }
+
+        }
+
+
+        function goBack() {
+
+          window.location.replace("/notesplus/?refresh=" + Date.now());
+        }
+
+    </script>
+
+
+{% elif note is defined %}
+
+    <!-- =================================================
+         NOTE VIEW / EDIT
+         ================================================= -->
+
+    <div class="header">
+
+        <h1>Notes Plus</h1>
+
+        <button
+            class="secondary"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+        <button
+            class="pin-button"
+            onclick="togglePin()"
+        >
+            {% if note.is_pinned %}
+                📌 Unpin
+            {% else %}
+                📌 Pin
+            {% endif %}
+        </button>
+
+        <button
+            class="danger"
+            onclick="deleteCurrentNote()"
+        >
+            🗑 Delete
+        </button>
+
+    </div>
+
+
+    <div class="field">
+
+        <label>
+            Title
+        </label>
+
+        <input
+            id="title"
+            type="text"
+            value="{{ note.title }}"
+            readonly
+        >
+
+    </div>
+
+
+    <div class="field">
+
+        <label>
+            Topic
+        </label>
+
+        <input
+            id="topic"
+            type="text"
+            value="{{ note.topic }}"
+            readonly
+        >
+
+    </div>
+
+
+    <!-- Read-only rendered Markdown -->
+
+    <div
+        id="readonly-view"
+        class="readonly"
+    >
+
+        <div id="rendered-note"></div>
+
+    </div>
+
+
+    <!-- EasyMDE -->
+
+    <div
+        id="editor-area"
+        class="editor-area"
+    >
+
+        <textarea id="editor"></textarea>
+
+    </div>
+
+
+    <div class="editor-buttons">
+
+        <button
+            class="primary"
+            id="edit-button"
+            onclick="startEditing()"
+        >
+            ✏ Edit
+        </button>
+
+
+        <button
+            class="primary"
+            id="save-button"
+            onclick="saveNow()"
+            style="display:none;"
+        >
+            Save
+        </button>
+
+
+        <button
+            class="secondary"
+            id="cancel-button"
+            onclick="cancelEditing()"
+            style="display:none;"
+        >
+            Cancel
+        </button>
+
+
+        <span id="save-status"></span>
+
+    </div>
+
+
+    <div class="metadata">
+
+        <div>
+            Created:
+            {{ note.created_at }}
+        </div>
+
+        <div>
+            Modified:
+            <span id="modified-date">
+                {{ note.modified_at }}
+            </span>
+        </div>
+
+    </div>
+
+
+    <script src="/notesplus/static/easymde.min.js"></script>
+
+    <!-- Flask-SocketIO browser client -->
+
+<script src="{{ url_for(
+    'static',
+    filename='socket.io.min.js'
+) }}"></script>
+
+<!--    <script src="/socket.io/socket.io.js"></script> -->
+
+
+    <script> 
+
+        const currentNote =
+            {{ note|tojson }};
+
+
+        let easyMDE = null;
+
+        let editing = false;
+
+        let autosaveTimer = null;
+
+        let socket = null;
+
+        let saveInProgress = false;
+
+
+        // =================================================
+        // WebSocket
+        // =================================================
+
+        socket = io();
+
+
+        socket.on(
+            "connect",
+            function () {
+
+                console.log(
+                    "Notes WebSocket connected"
+                );
+
+            }
+        );
+
+
+        socket.on(
+            "disconnect",
+            function () {
+
+                console.log(
+                    "Notes WebSocket disconnected"
+                );
+
+                if (editing) {
+
+                    setSaveStatus(
+                        "WebSocket disconnected",
+                        "save-error"
+                    );
+
+                }
+
+            }
+        );
+
+
+        socket.on(
+            "notesplus_autosave_result",
+            function (result) {
+
+                saveInProgress = false;
+
+
+                if (!result.success) {
+
+                    setSaveStatus(
+                        "Save failed: " +
+                        result.error,
+                        "save-error"
+                    );
+
+                    return;
+
+                }
+
+
+                setSaveStatus(
+                    "● Saved",
+                    "saved"
+                );
+
+
+                document.getElementById(
+                    "modified-date"
+                ).textContent =
+                    result.modified_at;
+
+
+                /*
+                 * If this was a new note,
+                 * remember its database ID.
+                 */
+
+                if (!currentNote.id) {
+
+                    currentNote.id =
+                        result.note_id;
+
+                }
+
+            }
+        );
+
+
+        // =================================================
+        // EasyMDE
+        // =================================================
+
+        function initializeEditor() {
+
+            if (easyMDE) {
+                return;
+            }
+
+
+            easyMDE = new EasyMDE({
+
+                element:
+                    document.getElementById(
+                        "editor"
+                    ),
+
+                spellChecker: false,
+
+                status: false,
+
+                autofocus: true,
+
+                previewImagesInEditor: true,
+
+                sideBySide: true,
+
+                renderingConfig: {
+
+                    singleLineBreaks: false,
+
+                    codeSyntaxHighlighting: true
+
+                }
+
+            });
+
+
+            easyMDE.codemirror.on(
+                "change",
+                function () {
+
+                    if (!editing) {
+                        return;
+                    }
+
+
+                    scheduleAutosave();
+
+                }
+            );
+
+        }
+
+
+        // =================================================
+        // Render read-only Markdown
+        // =================================================
+
+        function renderMarkdown(markdown) {
+
+            initializeEditor();
+
+
+            const html =
+                easyMDE.options.previewRender(
+                    markdown
+                );
+
+
+            document.getElementById(
+                "rendered-note"
+            ).innerHTML = html;
+
+        }
+
+
+        // =================================================
+        // Editing
+        // =================================================
+
+        function startEditing() {
+
+            editing = true;
+
+
+            initializeEditor();
+
+
+            document.getElementById(
+                "readonly-view"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "editor-area"
+            ).style.display = "block";
+
+
+            document.getElementById(
+                "edit-button"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "save-button"
+            ).style.display =
+                "inline-block";
+
+
+            document.getElementById(
+                "cancel-button"
+            ).style.display =
+                "inline-block";
+
+
+            document.getElementById(
+                "title"
+            ).readOnly = false;
+
+
+            document.getElementById(
+                "topic"
+            ).readOnly = false;
+
+
+            easyMDE.value(
+                currentNote.content
+            );
+
+
+            easyMDE.codemirror.refresh();
+
+
+            setSaveStatus(
+                "● Editing",
+                "saving"
+            );
+
+        }
+
+
+        function cancelEditing() {
+
+            editing = false;
+
+
+            clearTimeout(
+                autosaveTimer
+            );
+
+
+            document.getElementById(
+                "readonly-view"
+            ).style.display = "block";
+
+
+            document.getElementById(
+                "editor-area"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "edit-button"
+            ).style.display =
+                "inline-block";
+
+
+            document.getElementById(
+                "save-button"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "cancel-button"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "title"
+            ).readOnly = true;
+
+
+            document.getElementById(
+                "topic"
+            ).readOnly = true;
+
+
+            document.getElementById(
+                "title"
+            ).value =
+                currentNote.title;
+
+
+            document.getElementById(
+                "topic"
+            ).value =
+                currentNote.topic;
+
+
+            easyMDE.value(
+                currentNote.content
+            );
+
+
+            setSaveStatus(
+                "",
+                ""
+            );
+
+        }
+
+
+        // =================================================
+        // Autosave
+        // =================================================
+
+        function scheduleAutosave() {
+
+            clearTimeout(
+                autosaveTimer
+            );
+
+
+            setSaveStatus(
+                "● Unsaved changes",
+                "saving"
+            );
+
+
+            autosaveTimer =
+                setTimeout(
+                    autosave,
+                    1000
+                );
+
+        }
+
+
+        function autosave() {
+
+            if (!editing) {
+                return;
+            }
+
+
+            if (!socket.connected) {
+
+                setSaveStatus(
+                    "WebSocket unavailable",
+                    "save-error"
+                );
+
+                return;
+
+            }
+
+
+            if (saveInProgress) {
+
+                /*
+                 * The current save will finish.
+                 * Another change will schedule another
+                 * autosave.
+                 */
+
+                return;
+
+            }
+
+
+            const title =
+                document.getElementById(
+                    "title"
+                ).value.trim();
+
+
+            let topic =
+                document.getElementById(
+                    "topic"
+                ).value.trim();
+
+
+            const content =
+                easyMDE.value();
+
+
+            if (!title) {
+
+                setSaveStatus(
+                    "Title required",
+                    "save-error"
+                );
+
+                return;
+
+            }
+
+
+            if (!topic) {
+
+                topic = title;
+
+                document.getElementById(
+                    "topic"
+                ).value = topic;
+
+            }
+
+
+            saveInProgress = true;
+
+
+            setSaveStatus(
+                "● Saving...",
+                "saving"
+            );
+
+
+            socket.emit(
+                "notesplus_autosave",
+                {
+
+                    id:
+                        currentNote.id,
+
+                    title:
+                        title,
+
+                    topic:
+                        topic,
+
+                    content:
+                        content
+
+                }
+            );
+
+        }
+
+
+        // =================================================
+        // Explicit Save
+        // =================================================
+
+        function saveNow() {
+
+            clearTimeout(
+                autosaveTimer
+            );
+
+            autosave();
+
+        }
+
+
+        // =================================================
+        // Status
+        // =================================================
+
+        function setSaveStatus(
+            text,
+            cssClass
+        ) {
+
+            const element =
+                document.getElementById(
+                    "save-status"
+                );
+
+
+            element.textContent =
+                text;
+
+
+            element.className =
+                cssClass;
+
+        }
+
+
+        // =================================================
+        // Pin
+        // =================================================
+
+        async function togglePin() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/notesplus/toggle-pin/" +
+                        currentNote.id,
+                        {
+                            method: "POST"
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!result.success) {
+
+                    alert(
+                        result.error
+                    );
+
+                    return;
+
+                }
+
+
+                window.location.reload();
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Unable to change pin status."
+                );
+
+            }
+
+        }
+
+
+        // =================================================
+        // Delete
+        // =================================================
+
+        async function deleteCurrentNote() {
+
+            if (
+                !confirm(
+                    "Delete this note?"
+                )
+            ) {
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/notesplus/delete",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    ids: [
+                                        currentNote.id
+                                    ]
+                                })
+
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!result.success) {
+
+                    alert(
+                        result.error
+                    );
+
+                    return;
+
+                }
+
+
+                window.location.href =
+                    "/notesplus/";
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Unable to delete note."
+                );
+
+            }
+
+        }
+
+
+        // =================================================
+        // Back
+        // =================================================
+
+        function goBack() {
+
+            window.location.replace(
+                "/notesplus/?refresh=" + Date.now()
+            );
+
+        }
+
+
+        // =================================================
+        // Initial display
+        // =================================================
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            /*
+             * New note:
+             * go directly into editing mode.
+             */
+
+            if (!currentNote.id) {
+
+                startEditing();
+
+                return;
+
+            }
+
+
+            /*
+             * Existing note:
+             * display rendered Markdown.
+             */
+
+            renderMarkdown(
+                currentNote.content
+            );
+
+
+            /*
+             * Existing note explicitly opened
+             * with ?edit=1.
+             */
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            if (
+                params.get("edit") === "1"
+            ) {
+
+                startEditing();
+
+            }
+
+        }
+    );
+
+    </script>
+
+
+{% endif %}
+
+
+</div>
+
+</body>
+
+</html>
