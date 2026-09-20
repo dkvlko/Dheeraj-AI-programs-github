@@ -235,7 +235,6 @@ def recent_activities():
 
     page = max(page, 1)
 
-    # Activity selected from the filter.
     selected_activity = request.args.get(
         "activity",
         ""
@@ -246,15 +245,13 @@ def recent_activities():
     try:
 
         # ---------------------------------------------------------
-        # Get all valid activity tables.
+        # Discover valid activity tables.
         # ---------------------------------------------------------
 
         activity_tables = get_activity_tables(conn)
 
         # ---------------------------------------------------------
-        # Validate the requested activity table.
-        # Never use an arbitrary URL parameter directly as
-        # a table name.
+        # Validate activity filter.
         # ---------------------------------------------------------
 
         if (
@@ -263,25 +260,16 @@ def recent_activities():
         ):
             selected_activity = ""
 
-        # ---------------------------------------------------------
-        # Decide which activity tables to read.
-        # ---------------------------------------------------------
-
         if selected_activity:
-
-            tables = [
-                selected_activity
-            ]
-
+            tables = [selected_activity]
         else:
-
             tables = activity_tables
 
-        # ---------------------------------------------------------
-        # Collect activity history records.
-        # ---------------------------------------------------------
-
         all_activities = []
+
+        # ---------------------------------------------------------
+        # Read activity history + activity-specific information.
+        # ---------------------------------------------------------
 
         for table_name in tables:
 
@@ -293,23 +281,54 @@ def recent_activities():
             if not columns:
                 continue
 
-            all_activities.extend(
-                get_activity_rows(
-                    conn,
-                    table_name,
-                    columns
-                )
+            rows = get_activity_rows(
+                conn,
+                table_name,
+                columns
             )
+
+            for activity in rows:
+
+                # -------------------------------------------------
+                # The history ID is the unique ID displayed on
+                # the Recent Activities page.
+                # -------------------------------------------------
+
+                activity["history_id"] = (
+                    activity["values"].get("history_id")
+                )
+
+                # -------------------------------------------------
+                # Only activity-specific columns should appear
+                # when the user expands an activity.
+                #
+                # Do NOT include:
+                #   id
+                #   history_id
+                #   created_at
+                #
+                # Historical information such as start_time,
+                # finish_time, location, status etc. is deliberately
+                # excluded here.
+                # -------------------------------------------------
+
+                activity["detail_columns"] = [
+                    column
+                    for column in columns
+                    if column not in HIDDEN_COLUMNS
+                ]
+
+                all_activities.append(activity)
 
     finally:
 
         conn.close()
 
     # -------------------------------------------------------------
-    # Most recent activity first.
+    # Sort by activity_history.created_at.
     #
-    # sort_key() uses the "created_at" value supplied by
-    # get_activity_rows(), which now comes from activity_history.
+    # get_activity_rows() puts history_created_at into
+    # activity["created_at"].
     # -------------------------------------------------------------
 
     all_activities.sort(
@@ -337,16 +356,12 @@ def recent_activities():
         page - 1
     ) * PAGE_SIZE
 
-    end = (
-        start + PAGE_SIZE
-    )
+    end = start + PAGE_SIZE
 
-    activities = all_activities[
-        start:end
-    ]
+    activities = all_activities[start:end]
 
     # -------------------------------------------------------------
-    # Render page
+    # Render page.
     # -------------------------------------------------------------
 
     return render_template(
@@ -359,18 +374,15 @@ def recent_activities():
         total=total,
         page_size=PAGE_SIZE,
 
-        # Activity filter.
         activity_tables=activity_tables,
         selected_activity=selected_activity,
 
-        # Common history information.
+        # Kept available for compatibility with other code/template
+        # logic, although the new template does not display them.
         standard_columns=STANDARD_COLUMNS,
-
-        # System/internal fields that should not appear
-        # as activity-specific columns.
         hidden_columns=HIDDEN_COLUMNS,
     )   
-    
+
 @dailylog_bp.route("/new", methods=["GET", "POST"])
 def new_activity():
     message = request.args.get(

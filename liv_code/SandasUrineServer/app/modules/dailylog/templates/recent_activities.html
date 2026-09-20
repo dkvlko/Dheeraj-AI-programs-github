@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -77,6 +78,12 @@
     }
 
 
+    .info {
+        margin-top: 8px;
+        font-size: 16px;
+    }
+
+
     .activity-table-wrapper {
         width: 100%;
         overflow-x: auto;
@@ -97,13 +104,40 @@
         padding: 7px 10px;
         text-align: left;
         vertical-align: top;
-        white-space: nowrap;
     }
 
 
     th {
         background: #eeeeee;
         font-weight: bold;
+        white-space: nowrap;
+    }
+
+
+    .main-row td {
+        white-space: nowrap;
+    }
+
+
+    .id-cell {
+        text-align: center;
+        font-weight: bold;
+    }
+
+
+    .id-button {
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+
+        font-family: Calibri, Arial, sans-serif;
+        font-size: 18px;
+
+        color: #0000ee;
+        text-decoration: underline;
+
+        cursor: pointer;
     }
 
 
@@ -112,8 +146,45 @@
     }
 
 
-    .status {
+    .detail-row {
+        display: none;
+    }
+
+
+    .detail-row.visible {
+        display: table-row;
+    }
+
+
+    .detail-container {
+        padding: 12px 20px;
+        background: #fafafa;
+    }
+
+
+    .detail-table {
+        width: auto;
+        min-width: 350px;
+        border-collapse: collapse;
+    }
+
+
+    .detail-table th,
+    .detail-table td {
+        border: 1px solid #999;
+        padding: 6px 10px;
+    }
+
+
+    .detail-table th {
+        background: #eeeeee;
         font-weight: bold;
+    }
+
+
+    .no-details {
+        padding: 8px;
+        font-style: italic;
     }
 
 
@@ -134,8 +205,11 @@
         display: inline-block;
         margin: 3px;
         padding: 5px 10px;
+
         border: 1px solid #777;
+
         text-decoration: none;
+
         font-family: Calibri, Arial, sans-serif;
         font-size: 18px;
     }
@@ -149,12 +223,6 @@
     .pagination .current {
         font-weight: bold;
         background: #eeeeee;
-    }
-
-
-    .info {
-        margin-top: 8px;
-        font-size: 16px;
     }
 
 
@@ -191,12 +259,12 @@
     </button>
 
 
-    <button
+  <!--  <button
         type="button"
         onclick="viewActivity()"
     >
         View Activity
-    </button>
+  </button> -->
 
 </div>
 
@@ -260,189 +328,204 @@ of {{ total }} activities
 
 {% if activities %}
 
-{#
-    Build the list of activity-specific columns.
+<table>
 
-    IMPORTANT:
+<thead>
 
-    activity.columns contains only the columns belonging
-    to the activity table.
+    <tr>
 
-    The history columns are NOT included there because
-    they come from activity_history and are already
-    available through activity['values'].
-#}
+        <th>
+            ID
+        </th>
 
-{% set custom_columns = namespace(items=[]) %}
+        <th>
+            Activity
+        </th>
+
+        <th>
+            Created At
+        </th>
+
+    </tr>
+
+</thead>
+
+
+<tbody>
 
 
 {% for activity in activities %}
 
-    {% for column in activity.columns %}
 
-        {% if column not in hidden_columns
-              and column not in standard_columns
-              and column not in custom_columns.items %}
+    {#
+        -----------------------------------------------------
+        MAIN ACTIVITY ROW
+        -----------------------------------------------------
+    #}
 
-            {% set custom_columns.items =
-                custom_columns.items + [column] %}
+    <tr
+        class="main-row"
+        id="activity-row-{{ activity['history_id'] }}"
+    >
 
-        {% endif %}
+        <td class="id-cell">
 
-    {% endfor %}
+            <button
+                type="button"
+                class="id-button"
+                onclick="toggleDetails(
+                    {{ activity['history_id'] }}
+                )"
+            >
+
+                {{ activity['history_id'] }}
+
+            </button>
+
+        </td>
+
+
+        <td class="activity-name">
+
+            {{ activity['activity_name'] }}
+
+        </td>
+
+
+        <td>
+
+            {{ activity['values'].get(
+                'created_at',
+                ''
+            ) }}
+
+        </td>
+
+    </tr>
+
+
+    {#
+        -----------------------------------------------------
+        DETAIL ROW
+
+        This row is hidden initially.
+
+        It contains ONLY the activity-specific fields.
+
+        History fields such as:
+            start_time
+            start_location
+            finish_time
+            finish_location
+            status
+            etc.
+
+        are NOT displayed.
+    #}
+
+    <tr
+        id="details-{{ activity['history_id'] }}"
+        class="detail-row"
+    >
+
+        <td
+            colspan="3"
+            class="detail-container"
+        >
+
+
+            {% if activity['detail_columns'] %}
+
+
+                <table class="detail-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Column
+                            </th>
+
+                            <th>
+                                Value
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    {% for column in activity['detail_columns'] %}
+
+
+                        <tr>
+
+                            <td>
+                                {{ column.replace(
+                                    '_',
+                                    ' '
+                                ) | title }}
+                            </td>
+
+
+                            <td>
+
+                                {% set value =
+                                    activity['values'].get(
+                                        column,
+                                        ''
+                                    )
+                                %}
+
+                                {% if value is none %}
+
+                                    -
+
+                                {% else %}
+
+                                    {{ value }}
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+
+                    {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+
+            {% else %}
+
+
+                <div class="no-details">
+
+                    No activity-specific information recorded.
+
+                </div>
+
+
+            {% endif %}
+
+
+        </td>
+
+    </tr>
+
 
 {% endfor %}
 
 
-<table>
-
-
-    <thead>
-
-        <tr>
-
-            <th>
-                Activity
-            </th>
-
-
-            {#
-                These are HISTORY columns.
-
-                They are always displayed in exactly
-                this order because their values come
-                from activity['values'].
-            #}
-
-            {% for column in standard_columns %}
-
-                <th>
-                    {{ column.replace('_', ' ') | title }}
-                </th>
-
-            {% endfor %}
-
-
-            {#
-                These are activity-specific columns.
-
-                Example:
-
-                Reading:
-                    book
-                    pages
-                    duration_min
-                    experience
-                    comments
-
-                Eating:
-                    food
-                    quantity
-                    quantity_unit
-                    experience
-                    comments
-            #}
-
-            {% for column in custom_columns.items %}
-
-                <th>
-                    {{ column.replace('_', ' ') | title }}
-                </th>
-
-            {% endfor %}
-
-
-            <th>
-                Created At
-            </th>
-
-        </tr>
-
-    </thead>
-
-
-    <tbody>
-
-
-    {% for activity in activities %}
-
-
-        <tr>
-
-
-            <td class="activity-name">
-
-                {{ activity['activity_name'] }}
-
-            </td>
-
-
-            {#
-                HISTORY DATA
-
-                Do NOT check activity.columns here.
-
-                The Python get_activity_rows() function
-                puts these fields directly into values.
-            #}
-
-            {% for column in standard_columns %}
-
-                {% if column == 'status' %}
-
-                    <td class="status">
-                        {{ activity['values'].get(column, '') }}
-                    </td>
-
-                {% else %}
-
-                    <td>
-                        {{ activity['values'].get(column, '') }}
-                    </td>
-
-                {% endif %}
-
-            {% endfor %}
-
-
-            {#
-                ACTIVITY-SPECIFIC DATA
-            #}
-
-            {% for column in custom_columns.items %}
-
-                {% if column in activity.columns %}
-
-                    <td>
-                        {{ activity['values'].get(column, '') }}
-                    </td>
-
-                {% else %}
-
-                    <td></td>
-
-                {% endif %}
-
-            {% endfor %}
-
-
-            {#
-                created_at has deliberately been normalised
-                by Python to the activity_history timestamp.
-            #}
-
-            <td>
-                {{ activity['values'].get('created_at', '') }}
-            </td>
-
-
-        </tr>
-
-
-    {% endfor %}
-
-
-    </tbody>
+</tbody>
 
 </table>
 
@@ -450,7 +533,7 @@ of {{ total }} activities
 
 <div class="empty">
 
-    No activities have been recorded yet.
+No activities have been recorded yet.
 
 </div>
 
@@ -483,7 +566,9 @@ of {{ total }} activities
     {% if p == page %}
 
         <span class="current">
+
             {{ p }}
+
         </span>
 
     {% else %}
@@ -495,7 +580,9 @@ of {{ total }} activities
                 activity=selected_activity
             ) }}"
         >
+
             {{ p }}
+
         </a>
 
     {% endif %}
@@ -513,7 +600,9 @@ of {{ total }} activities
             activity=selected_activity
         ) }}"
     >
+
         Next &raquo;
+
     </a>
 
 {% endif %}
@@ -528,13 +617,63 @@ of {{ total }} activities
     type="button"
     onclick="history.back()"
 >
+
     Back
+
 </button>
 
 </div>
 
 <script>
 
+
+/*
+ * -------------------------------------------------------------
+ * Expand/collapse one activity's details.
+ * -------------------------------------------------------------
+ */
+
+function toggleDetails(historyId) {
+
+    const detailRow =
+        document.getElementById(
+            "details-" + historyId
+        );
+
+
+    if (!detailRow) {
+        return;
+    }
+
+
+    if (
+        detailRow.classList.contains(
+            "visible"
+        )
+    ) {
+
+        detailRow.classList.remove(
+            "visible"
+        );
+
+    }
+
+    else {
+
+        detailRow.classList.add(
+            "visible"
+        );
+
+    }
+
+}
+
+
+/*
+ * -------------------------------------------------------------
+ * New Activity
+ * -------------------------------------------------------------
+ */
 
 function newActivity() {
 
@@ -543,6 +682,12 @@ function newActivity() {
 
 }
 
+
+/*
+ * -------------------------------------------------------------
+ * View Activity
+ * -------------------------------------------------------------
+ */
 
 function viewActivity() {
 
