@@ -54,109 +54,50 @@
         "similarity": 0.8046693801879883,
         "matched_rssb_title": "Career seemed over: Ajit Doval recalls mission when China captured his agents",
         "count": 2,
-        "best_similarity": 0.9999998807907104,
+        "best_similarity": 0.9999999403953552,
         "best_matched_title": "'I knew this was the end of my career': Doval recalls when China captured his agents",
-        "Rank Position": 40
+        "Rank Position": 43
     },
     {
-        "title": "In a first, abetment FIR filed against IIT-Bombay professor in 2nd-year student’s death",
+        "title": "Delhi Police head constable, wife found dead in Narela; children find flat locked from inside",
         "title_detail": {
             "type": "text/plain",
             "language": null,
             "base": "",
-            "value": "In a first, abetment FIR filed against IIT-Bombay professor in 2nd-year student’s death"
+            "value": "Delhi Police head constable, wife found dead in Narela; children find flat locked from inside"
         },
-        "summary": "",
+        "summary": "Outer North DCP Shobhit D. Saxena said the couple’s children returned from school and found the flat locked from inside.",
         "summary_detail": {
             "type": "text/html",
             "language": null,
             "base": "",
-            "value": ""
+            "value": "Outer North DCP Shobhit D. Saxena said the couple’s children returned from school and found the flat locked from inside."
         },
         "links": [
             {
                 "rel": "alternate",
                 "type": "text/html",
-                "href": "https://timesofindia.indiatimes.com/city/mumbai/in-a-first-abetment-fir-filed-against-iit-bombay-professor-in-second-year-students-death/articleshow/134359955.cms"
-            },
-            {
-                "type": "image/jpeg",
-                "length": "121688",
-                "href": "https://static.toiimg.com/photo/msid-134359950,imgsize-121688.cms",
-                "rel": "enclosure"
+                "href": "https://www.thehindu.com/news/cities/Delhi/delhi-police-head-constable-wife-found-dead-in-narela-children-find-flat-locked-from-inside/article71485886.ece"
             }
         ],
-        "link": "https://timesofindia.indiatimes.com/city/mumbai/in-a-first-abetment-fir-filed-against-iit-bombay-professor-in-second-year-students-death/articleshow/134359955.cms",
-        "id": "https://timesofindia.indiatimes.com/city/mumbai/in-a-first-abetment-fir-filed-against-iit-bombay-professor-in-second-year-students-death/articleshow/134359955.cms",
-        "guidislink": false,
-        "published": "Sun, 20 Sep 2026 00:56:04 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            19,
-            19,
-            26,
-            4,
-            5,
-            262,
-            0
-        ],
-        "authors": [
-            {
-                "name": "YOGITA RAO AND NITASHA NATU"
-            }
-        ],
-        "author": "YOGITA RAO AND NITASHA NATU",
-        "author_detail": {
-            "name": "YOGITA RAO AND NITASHA NATU"
-        },
-        "similarity": 0.75312739610672,
-        "matched_rssb_title": "FIR Filed After IIT Bombay Student Suicide; ChatGPT Exam Row Sparks Campus Protests",
-        "count": 2,
-        "best_similarity": 1.0,
-        "best_matched_title": "In a first, abetment FIR filed against IIT-Bombay professor in 2nd-year student’s death",
-        "Rank Position": 41
-    },
-    {
-        "title": "Davis Cup: Czechs beat USA to qualify for finals",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "Davis Cup: Czechs beat USA to qualify for finals"
-        },
-        "summary": "The wins in Davis Cup are always a little bit different because this is a team competition, said Jiri Lehecka",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "The wins in Davis Cup are always a little bit different because this is a team competition, said Jiri Lehecka"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.thehindu.com/sport/tennis/davis-cup-czechs-beat-usa-to-qualify-for-finals/article71486927.ece"
-            }
-        ],
-        "link": "https://www.thehindu.com/sport/tennis/davis-cup-czechs-beat-usa-to-qualify-for-finals/article71486927.ece",
-        "id": "article-71486927",
+        "link": "https://www.thehindu.com/news/cities/Delhi/delhi-police-head-constable-wife-found-dead-in-narela-children-find-flat-locked-from-inside/article71485886.ece",
+        "id": "article-71485886",
         "guidislink": false,
         "tags": [
             {
-                "term": "Tennis",
+                "term": "Delhi",
                 "scheme": null,
                 "label": null
             }
         ],
-        "published": "Sun, 20 Sep 2026 06:00:39 +0530",
+        "published": "Sun, 20 Sep 2026 07:55:36 +0530",
         "published_parsed": [
             2026,
             9,
             20,
-            0,
-            30,
-            39,
+            2,
+            25,
+            36,
             6,
             263,
             0
@@ -165,369 +106,622 @@
             {
                 "height": "675",
                 "medium": "image",
-                "url": "https://th-i.thgim.com/public/incoming/74kpz1/article71486928.ece/alternates/LANDSCAPE_1200/Czech_Republic_USA_Davis_Cup_Tennis_51446.jpg",
+                "url": "https://th-i.thgim.com/public/incoming/nyjwoq/article71486961.ece/alternates/LANDSCAPE_1200/TRIPLE%20MURDER%20DELHI%2004%2012%202.JPG",
                 "width": "1200"
             }
         ],
-        "similarity": 0.97519850730896,
-        "matched_rssb_title": "Czechs beat USA to qualify for Davis Cup finals",
+        "similarity": 0.7535098791122437,
+        "matched_rssb_title": "Burning smell, locked door: Delhi cop, wife found dead at Narela home; murder-suicide suspected",
         "count": 2,
         "best_similarity": 1.0000001192092896,
-        "best_matched_title": "Davis Cup: Czechs beat USA to qualify for finals",
-        "Rank Position": 42
+        "best_matched_title": "Delhi Police head constable, wife found dead in Narela; children find flat locked from inside",
+        "Rank Position": 44
     },
     {
-        "title": "Actor Manju Warrier files injunction suit against filmmaker Sanalkumar Sasidharan",
+        "title": "Bengal police arrest Rejinagar bypoll candidate days after Nandigram candidate Milan Pradhan’s arrest",
         "title_detail": {
             "type": "text/plain",
             "language": null,
             "base": "",
-            "value": "Actor Manju Warrier files injunction suit against filmmaker Sanalkumar Sasidharan"
+            "value": "Bengal police arrest Rejinagar bypoll candidate days after Nandigram candidate Milan Pradhan’s arrest"
         },
-        "summary": "",
+        "summary": "The two bypolls slated for October 6 were necessitated after Chief Minister Suvendu Adhikari vacated Nandigram, while Rejinagar fell vacant after Humayun Kabir retained Nawda upon winning both seats in the 2026 assembly election",
         "summary_detail": {
             "type": "text/html",
             "language": null,
             "base": "",
-            "value": ""
+            "value": "The two bypolls slated for October 6 were necessitated after Chief Minister Suvendu Adhikari vacated Nandigram, while Rejinagar fell vacant after Humayun Kabir retained Nawda upon winning both seats in the 2026 assembly election"
         },
         "links": [
             {
                 "rel": "alternate",
                 "type": "text/html",
-                "href": "https://www.thehindu.com/news/national/kerala/actor-manju-warrier-files-defamation-suit-against-filmmaker-sanalkumar-sasidharan/article71484922.ece"
+                "href": "https://www.thehindu.com/news/national/west-bengal/bengal-police-arrest-rejinagar-bypoll-candidate-days-after-nandigram-candidate-milan-pradhans-arrest/article71487021.ece"
             }
         ],
-        "link": "https://www.thehindu.com/news/national/kerala/actor-manju-warrier-files-defamation-suit-against-filmmaker-sanalkumar-sasidharan/article71484922.ece",
-        "id": "article-71484922",
+        "link": "https://www.thehindu.com/news/national/west-bengal/bengal-police-arrest-rejinagar-bypoll-candidate-days-after-nandigram-candidate-milan-pradhans-arrest/article71487021.ece",
+        "id": "article-71487021",
         "guidislink": false,
         "tags": [
             {
-                "term": "Keralam",
+                "term": "West Bengal",
                 "scheme": null,
                 "label": null
             }
         ],
-        "published": "Sun, 20 Sep 2026 00:04:44 +0530",
+        "published": "Sun, 20 Sep 2026 09:15:48 +0530",
         "published_parsed": [
             2026,
             9,
-            19,
-            18,
-            34,
-            44,
-            5,
-            262,
+            20,
+            3,
+            45,
+            48,
+            6,
+            263,
             0
         ],
         "media_content": [
             {
                 "height": "675",
                 "medium": "image",
-                "url": "https://th-i.thgim.com/public/incoming/y55vjf/article71485115.ece/alternates/LANDSCAPE_1200/12tvm%20manju.jpg",
+                "url": "https://th-i.thgim.com/public/incoming/semnjp/article71487030.ece/alternates/LANDSCAPE_1200/Lokayukta-trapsGM2GHTS8B.3.jpg.jpg",
                 "width": "1200"
             }
         ],
-        "similarity": 0.8323967456817627,
-        "matched_rssb_title": "Manju Warrier files defamation suit against filmmaker Sanal Kumar Sasidharan",
+        "similarity": 0.7361866235733032,
+        "matched_rssb_title": "After Nandigram, Rejinagar Independent candidate arrested in old election clash case",
         "count": 2,
         "best_similarity": 1.0000001192092896,
-        "best_matched_title": "Actor Manju Warrier files injunction suit against filmmaker Sanalkumar Sasidharan",
-        "Rank Position": 43
-    },
-    {
-        "title": "Surendra Koli cremated, police begin probe into his activities in Haridwar",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "Surendra Koli cremated, police begin probe into his activities in Haridwar"
-        },
-        "summary": "Surendra Koli cremated, police begin probe into his activities in Haridwar",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "Surendra Koli cremated, police begin probe into his activities in Haridwar"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.hindustantimes.com/cities/dehradun-news/surendra-koli-cremated-police-begin-probe-into-his-activities-in-haridwar-101789843113599.html"
-            }
-        ],
-        "link": "https://www.hindustantimes.com/cities/dehradun-news/surendra-koli-cremated-police-begin-probe-into-his-activities-in-haridwar-101789843113599.html",
-        "id": "https://www.hindustantimes.com/cities/dehradun-news/surendra-koli-cremated-police-begin-probe-into-his-activities-in-haridwar-101789843113599.html",
-        "guidislink": false,
-        "tags": [
-            {
-                "term": "latest",
-                "scheme": null,
-                "label": null
-            }
-        ],
-        "published": "Sun, 20 Sep 2026 00:08:33 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            19,
-            18,
-            38,
-            33,
-            5,
-            262,
-            0
-        ],
-        "media_content": [
-            {
-                "height": "900",
-                "medium": "image",
-                "url": "https://www.hindustantimes.com/ht-img/img/2026/01/27/1600x900/logo/ht-generic_cities2_1769511880449_1769511907099.jpg",
-                "width": "1600"
-            }
-        ],
-        "similarity": 0.7239003777503967,
-        "matched_rssb_title": "Surendra Koli, At Centre Of 2006 Nithari Killings, Dies By Suicide In Haridwar",
-        "count": 2,
-        "best_similarity": 1.0000001192092896,
-        "best_matched_title": "Surendra Koli cremated, police begin probe into his activities in Haridwar",
-        "Rank Position": 44
-    },
-    {
-        "title": "‘Tight slap on his face’: BJP targets Rahul Gandhi after ABVP's big win in DUSU elections",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "‘Tight slap on his face’: BJP targets Rahul Gandhi after ABVP's big win in DUSU elections"
-        },
-        "summary": "Slamming Rahul Gandhi, BJP's Sidharth Yadav said the ABVP victory reflected students' rejection of “politics of lies, deceit and propaganda,\"",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "Slamming Rahul Gandhi, BJP's Sidharth Yadav said the ABVP victory reflected students' rejection of “politics of lies, deceit and propaganda,\""
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.hindustantimes.com/india-news/tight-slap-on-his-face-bjp-rahul-gandhi-abvps-big-win-dusu-2026-election-results-nsui-congress-101789828782110.html"
-            }
-        ],
-        "link": "https://www.hindustantimes.com/india-news/tight-slap-on-his-face-bjp-rahul-gandhi-abvps-big-win-dusu-2026-election-results-nsui-congress-101789828782110.html",
-        "id": "https://www.hindustantimes.com/india-news/tight-slap-on-his-face-bjp-rahul-gandhi-abvps-big-win-dusu-2026-election-results-nsui-congress-101789828782110.html",
-        "guidislink": false,
-        "tags": [
-            {
-                "term": "latest",
-                "scheme": null,
-                "label": null
-            }
-        ],
-        "published": "Sat, 19 Sep 2026 22:35:34 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            19,
-            17,
-            5,
-            34,
-            5,
-            262,
-            0
-        ],
-        "media_content": [
-            {
-                "height": "900",
-                "medium": "image",
-                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/19/1600x900/logo/DUSU_1789837885195_w3VM_1789837902094_ZghU_47fc62f3-9cae-455e-94da-9b52eaee18ff_CkpR.jpg",
-                "width": "1600"
-            }
-        ],
-        "similarity": 0.7954795956611633,
-        "matched_rssb_title": "'Big Fat Zero To Rahul Gandhi': BJP Takes Swipe At Congress After ABVP's Victory In DUSU Election",
-        "count": 2,
-        "best_similarity": 1.0,
-        "best_matched_title": "‘Tight slap on his face’: BJP targets Rahul Gandhi after ABVP's big win in DUSU elections",
+        "best_matched_title": "Bengal police arrest Rejinagar bypoll candidate days after Nandigram candidate Milan Pradhan’s arrest",
         "Rank Position": 45
     },
     {
-        "id": "https://www.ndtv.com/world-news/anthropic-openai-spacexai-google-sued-over-ai-development-slowdown-calls-12070198#publisher=newsstand",
-        "guidislink": true,
-        "link": "https://www.ndtv.com/world-news/anthropic-openai-spacexai-google-sued-over-ai-development-slowdown-calls-12070198#publisher=newsstand",
-        "title": "Anthropic, OpenAI, SpaceXAI, Google Sued Over AI Development Slowdown Calls",
+        "title": "Ed Sheeran set to return to stage after Palestinian controversy",
         "title_detail": {
             "type": "text/plain",
             "language": null,
             "base": "",
-            "value": "Anthropic, OpenAI, SpaceXAI, Google Sued Over AI Development Slowdown Calls"
+            "value": "Ed Sheeran set to return to stage after Palestinian controversy"
+        },
+        "summary": "‘We now extend our call for boycotting Ed Sheeran's entire world tour, including the upcoming Latin American dates and the as-yet-unannounced European leg,’ the Palestinian Campaign for the Academic and Cultural Boycott of Israel said",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "‘We now extend our call for boycotting Ed Sheeran's entire world tour, including the upcoming Latin American dates and the as-yet-unannounced European leg,’ the Palestinian Campaign for the Academic and Cultural Boycott of Israel said"
         },
         "links": [
             {
                 "rel": "alternate",
                 "type": "text/html",
-                "href": "https://www.ndtv.com/world-news/anthropic-openai-spacexai-google-sued-over-ai-development-slowdown-calls-12070198#publisher=newsstand"
+                "href": "https://www.thehindu.com/entertainment/music/ed-sheeran-set-to-return-to-stage-after-palestinian-controversy/article71486920.ece"
             }
         ],
-        "published": "Sun, 20 Sep 2026 00:12:08 +0530",
+        "link": "https://www.thehindu.com/entertainment/music/ed-sheeran-set-to-return-to-stage-after-palestinian-controversy/article71486920.ece",
+        "id": "article-71486920",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "Music",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Sun, 20 Sep 2026 08:12:38 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            20,
+            2,
+            42,
+            38,
+            6,
+            263,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "675",
+                "medium": "image",
+                "url": "https://th-i.thgim.com/public/incoming/c8nbjd/article71486921.ece/alternates/LANDSCAPE_1200/2026-09-19T234741Z_1655734377_RC2NMNARX2YG_RTRMADP_3_ISRAEL-PALESTINIANS-MACKLEMORE-ED-SHEERAN.JPG",
+                "width": "1200"
+            }
+        ],
+        "similarity": 0.8364672064781189,
+        "matched_rssb_title": "Ed Sheeran returns to stage after Macklemore was removed and other acts withdrew over Palestine row",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Ed Sheeran set to return to stage after Palestinian controversy",
+        "Rank Position": 46
+    },
+    {
+        "title": "Delhi's Southern Ridge gets 1,000 more acres as reserved forest",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Delhi's Southern Ridge gets 1,000 more acres as reserved forest"
+        },
+        "summary": "The government said the decision was taken under Section 20 of the Indian Forest Act, 1927, to bring the additional area under statutory protection.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "The government said the decision was taken under Section 20 of the Indian Forest Act, 1927, to bring the additional area under statutory protection."
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.hindustantimes.com/cities/others/southern-ridge-gets-1-000-more-acres-as-reserved-forest-101789842011843.html"
+            }
+        ],
+        "link": "https://www.hindustantimes.com/cities/others/southern-ridge-gets-1-000-more-acres-as-reserved-forest-101789842011843.html",
+        "id": "https://www.hindustantimes.com/cities/others/southern-ridge-gets-1-000-more-acres-as-reserved-forest-101789842011843.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Sun, 20 Sep 2026 07:41:00 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            20,
+            2,
+            11,
+            0,
+            6,
+            263,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/19/1600x900/logo/The-government-said-the-decision-was-taken-under-S_1789842005346_W0FK.jpg",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.9492713212966919,
+        "matched_rssb_title": "1,000 Acres Of Delhi's Southern Ridge Set To Get Reserved Forest Status",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Delhi's Southern Ridge gets 1,000 more acres as reserved forest",
+        "Rank Position": 47
+    },
+    {
+        "title": "Gladiators trailer: Shalini admits to feeling nervous when she sees husband Ajith Kumar on the race track. Watch",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Gladiators trailer: Shalini admits to feeling nervous when she sees husband Ajith Kumar on the race track. Watch"
+        },
+        "summary": "Gladiators trailer: The trailer of Ajith Kumar's documentary features his wife and children, as well as those who have raced alongside him.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "Gladiators trailer: The trailer of Ajith Kumar's documentary features his wife and children, as well as those who have raced alongside him."
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.hindustantimes.com/entertainment/tamil-cinema/gladiators-trailer-shalini-admits-to-feeling-nervous-when-she-sees-husband-ajith-kumar-on-the-race-track-watch-101789874312644.html"
+            }
+        ],
+        "link": "https://www.hindustantimes.com/entertainment/tamil-cinema/gladiators-trailer-shalini-admits-to-feeling-nervous-when-she-sees-husband-ajith-kumar-on-the-race-track-watch-101789874312644.html",
+        "id": "https://www.hindustantimes.com/entertainment/tamil-cinema/gladiators-trailer-shalini-admits-to-feeling-nervous-when-she-sees-husband-ajith-kumar-on-the-race-track-watch-101789874312644.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Sun, 20 Sep 2026 09:19:03 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            20,
+            3,
+            49,
+            3,
+            6,
+            263,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/20/1600x900/logo/Ajith_Kumar_Shalini_1789874296511_intt_1789874308709_DTKU_4a766587-7395-4e0e-8846-2a62bc4850fd_NWzA.jpg",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.7210862636566162,
+        "matched_rssb_title": "Gladiators trailer: Ajith Kumar's racing obsession gets a full-throttle showcase",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Gladiators trailer: Shalini admits to feeling nervous when she sees husband Ajith Kumar on the race track. Watch",
+        "Rank Position": 48
+    },
+    {
+        "title": "IIT-B students seek task force, director’s resignation",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "IIT-B students seek task force, director’s resignation"
+        },
+        "summary": "MUMBAI: Students at IIT-Bombay have handed over a 12-point list of demands to the institute’s administration, seeking the resignation of the institute’s director and other senior officials as well as a task force to address student suicides at the country’s most elite engineering institution",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "MUMBAI: Students at IIT-Bombay have handed over a 12-point list of demands to the institute’s administration, seeking the resignation of the institute’s director and other senior officials as well as a task force to address student suicides at the country’s most elite engineering institution"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.hindustantimes.com/cities/mumbai-news/iitb-students-seek-task-force-director-s-resignation-101789842727721.html"
+            }
+        ],
+        "link": "https://www.hindustantimes.com/cities/mumbai-news/iitb-students-seek-task-force-director-s-resignation-101789842727721.html",
+        "id": "https://www.hindustantimes.com/cities/mumbai-news/iitb-students-seek-task-force-director-s-resignation-101789842727721.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Sun, 20 Sep 2026 07:46:30 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            20,
+            2,
+            16,
+            30,
+            6,
+            263,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/19/1600x900/logo/IIT-B-students-seek-task-force--director-s-resigna_1789842725483_hOZp.jpg",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.7054523229598999,
+        "matched_rssb_title": "After 3 suicides in 7 months, IIT Bombay students demand director's resignation",
+        "count": 2,
+        "best_similarity": 1.0000001192092896,
+        "best_matched_title": "IIT-B students seek task force, director’s resignation",
+        "Rank Position": 49
+    },
+    {
+        "title": "Organisers allege Mumbai Police pressurised venues to cancel screening of Umar Khalid documentary",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Organisers allege Mumbai Police pressurised venues to cancel screening of Umar Khalid documentary"
+        },
+        "summary": "On Saturday, the organisers alleged, police personnel in civilian clothes went to the Bandra venue where the screening had originally been planned. They said the personnel questioned the person in charge and appeared to have information about the screening, including details that had been shared only in a private organising group with registered participants",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "On Saturday, the organisers alleged, police personnel in civilian clothes went to the Bandra venue where the screening had originally been planned. They said the personnel questioned the person in charge and appeared to have information about the screening, including details that had been shared only in a private organising group with registered participants"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.hindustantimes.com/cities/mumbai-news/organisers-allege-mumbai-police-pressurised-venues-to-cancel-screening-of-umar-khalid-documentary-101789844288237.html"
+            }
+        ],
+        "link": "https://www.hindustantimes.com/cities/mumbai-news/organisers-allege-mumbai-police-pressurised-venues-to-cancel-screening-of-umar-khalid-documentary-101789844288237.html",
+        "id": "https://www.hindustantimes.com/cities/mumbai-news/organisers-allege-mumbai-police-pressurised-venues-to-cancel-screening-of-umar-khalid-documentary-101789844288237.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Sun, 20 Sep 2026 07:54:00 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            20,
+            2,
+            24,
+            0,
+            6,
+            263,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/19/1600x900/logo/-p-Organisers-allege-Mumbai-Police-pressurised-ven_1789844285835_5s5n.jpeg",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.7031853199005127,
+        "matched_rssb_title": "CBFC Intervenes Against Screening of Umar Khalid Documentary at IIIT Hyderabad | BREAKING | News18",
+        "count": 2,
+        "best_similarity": 0.9999999403953552,
+        "best_matched_title": "Organisers allege Mumbai Police pressurised venues to cancel screening of Umar Khalid documentary",
+        "Rank Position": 50
+    },
+    {
+        "title": "Bittu detained after waving liquor bottle, eggs at CM’s convoy in Ludhiana",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Bittu detained after waving liquor bottle, eggs at CM’s convoy in Ludhiana"
+        },
+        "summary": "Protesting an alleged attack on his convoy near Batala, Bittu claimed he was “returning” eggs and tomatoes while targeting AAP over governance",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "Protesting an alleged attack on his convoy near Batala, Bittu claimed he was “returning” eggs and tomatoes while targeting AAP over governance"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.hindustantimes.com/cities/chandigarh-news/bittu-detained-after-waving-liquor-bottle-eggs-at-cm-s-convoy-in-ludhiana-101789843987819.html"
+            }
+        ],
+        "link": "https://www.hindustantimes.com/cities/chandigarh-news/bittu-detained-after-waving-liquor-bottle-eggs-at-cm-s-convoy-in-ludhiana-101789843987819.html",
+        "id": "https://www.hindustantimes.com/cities/chandigarh-news/bittu-detained-after-waving-liquor-bottle-eggs-at-cm-s-convoy-in-ludhiana-101789843987819.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Sun, 20 Sep 2026 07:51:30 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            20,
+            2,
+            21,
+            30,
+            6,
+            263,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/19/1600x900/logo/Mann-was-visiting-Ludhiana-to-release-promotional-_1789843985744_ZTOL.jpg",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.7490008473396301,
+        "matched_rssb_title": "BJP's Ravneet Bittu Detained In Ludhiana Over Alleged Attempt To Throw Eggs, Tomatoes At Punjab CM's Convoy",
+        "count": 2,
+        "best_similarity": 1.0,
+        "best_matched_title": "Bittu detained after waving liquor bottle, eggs at CM’s convoy in Ludhiana",
+        "Rank Position": 51
+    },
+    {
+        "title": "Nithari case's Surendra Koli cremated in Haridwar; police await autopsy report",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Nithari case's Surendra Koli cremated in Haridwar; police await autopsy report"
+        },
+        "summary": "Surendra Koli was acquitted of all 13 cases related to Nithari killings. He was found dead with a with a noose around his neck at his tea stall in Haridwar.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "Surendra Koli was acquitted of all 13 cases related to Nithari killings. He was found dead with a with a noose around his neck at his tea stall in Haridwar."
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.hindustantimes.com/cities/delhi-news/surendra-koli-s-last-rites-performed-police-await-autopsy-report-101789841887641.html"
+            }
+        ],
+        "link": "https://www.hindustantimes.com/cities/delhi-news/surendra-koli-s-last-rites-performed-police-await-autopsy-report-101789841887641.html",
+        "id": "https://www.hindustantimes.com/cities/delhi-news/surendra-koli-s-last-rites-performed-police-await-autopsy-report-101789841887641.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Sun, 20 Sep 2026 07:40:10 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            20,
+            2,
+            10,
+            10,
+            6,
+            263,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/19/1600x900/logo/The-rites-were-conducted-at-the-Khadkhadi-cremator_1789841885336_qWzW.jpg",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.7713289260864258,
+        "matched_rssb_title": "Surendra Koli, At Centre Of 2006 Nithari Killings, Dies By Suicide In Haridwar",
+        "count": 2,
+        "best_similarity": 1.000000238418579,
+        "best_matched_title": "Nithari case's Surendra Koli cremated in Haridwar; police await autopsy report",
+        "Rank Position": 52
+    },
+    {
+        "title": "‘Developing nations unjustly blamed’: PM Modi flags climate inequality",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "‘Developing nations unjustly blamed’: PM Modi flags climate inequality"
+        },
+        "summary": "He emphasized India's commitment to renewable energy and environmental initiatives, showcasing advancements in solar and electric vehicle sectors.",
+        "summary_detail": {
+            "type": "text/html",
+            "language": null,
+            "base": "",
+            "value": "He emphasized India's commitment to renewable energy and environmental initiatives, showcasing advancements in solar and electric vehicle sectors."
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.hindustantimes.com/india-news/developing-nations-unjustly-blamed-pm-modi-flags-climate-inequality-101789872087302.html"
+            }
+        ],
+        "link": "https://www.hindustantimes.com/india-news/developing-nations-unjustly-blamed-pm-modi-flags-climate-inequality-101789872087302.html",
+        "id": "https://www.hindustantimes.com/india-news/developing-nations-unjustly-blamed-pm-modi-flags-climate-inequality-101789872087302.html",
+        "guidislink": false,
+        "tags": [
+            {
+                "term": "latest",
+                "scheme": null,
+                "label": null
+            }
+        ],
+        "published": "Sun, 20 Sep 2026 08:41:35 +0530",
+        "published_parsed": [
+            2026,
+            9,
+            20,
+            3,
+            11,
+            35,
+            6,
+            263,
+            0
+        ],
+        "media_content": [
+            {
+                "height": "900",
+                "medium": "image",
+                "url": "https://www.hindustantimes.com/ht-img/img/2026/09/20/1600x900/logo/HT_DELH_NEWS_B1_P006_20260920_ART_010_PIC_001_crop_1789872726912_PBHL_1789872727141_qlpu_59c2a884-1afe-44c5-8eb9-49b1146e17d2_Irlz.webp",
+                "width": "1600"
+            }
+        ],
+        "similarity": 0.8097207546234131,
+        "matched_rssb_title": "PM Modi flags climate inequality, says developed nations' carbon emissions 6 times more | Top quotes",
+        "count": 2,
+        "best_similarity": 1.000000238418579,
+        "best_matched_title": "‘Developing nations unjustly blamed’: PM Modi flags climate inequality",
+        "Rank Position": 53
+    },
+    {
+        "id": "https://www.ndtv.com/india-news/kathmandu-bound-air-india-flight-returns-to-delhi-over-suspected-tech-issue-12070207#publisher=newsstand",
+        "guidislink": true,
+        "link": "https://www.ndtv.com/india-news/kathmandu-bound-air-india-flight-returns-to-delhi-over-suspected-tech-issue-12070207#publisher=newsstand",
+        "title": "Kathmandu-Bound Air India Flight Returns To Delhi Over Suspected Tech Issue",
+        "title_detail": {
+            "type": "text/plain",
+            "language": null,
+            "base": "",
+            "value": "Kathmandu-Bound Air India Flight Returns To Delhi Over Suspected Tech Issue"
+        },
+        "links": [
+            {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "https://www.ndtv.com/india-news/kathmandu-bound-air-india-flight-returns-to-delhi-over-suspected-tech-issue-12070207#publisher=newsstand"
+            }
+        ],
+        "published": "Sun, 20 Sep 2026 00:15:38 +0530",
         "published_parsed": [
             2026,
             9,
             19,
             18,
-            42,
-            8,
+            45,
+            38,
             5,
             262,
             0
         ],
         "media_content": [
             {
-                "url": "https://c.ndtvimg.com/2026-09/3apvlv0g_anthropic-ai_625x300_11_September_26.jpeg?im=FeatureCrop,algorithm=dnn,width=1280,height=720",
+                "url": "https://c.ndtvimg.com/2025-07/10aofjvk_boeing-787-dreamliner_625x300_31_July_25.jpg?im=FeatureCrop,algorithm=dnn,width=1280,height=720",
                 "type": "image/jpeg",
                 "expression": "full",
-                "width": "1280",
-                "height": "720"
+                "width": "1200",
+                "height": "738"
             }
         ],
-        "summary": "The coordination largely took place on September 12, the lawsuit argues",
+        "summary": "Air India also regretted the inconvenience caused to passengers due to the unforeseen situation.",
         "summary_detail": {
             "type": "text/plain",
             "language": null,
             "base": "",
-            "value": "The coordination largely took place on September 12, the lawsuit argues"
+            "value": "Air India also regretted the inconvenience caused to passengers due to the unforeseen situation."
         },
+        "media_credit": [
+            {
+                "role": "author",
+                "scheme": "urn:ebu",
+                "content": "Representational"
+            }
+        ],
+        "credit": "Representational",
         "content": [
             {
                 "type": "text/plain",
                 "language": null,
                 "base": "",
-                "value": "The lawsuit, which was filed Friday in the U.S. District Court for the Northern District of California, argues that the leading AI companies violated antitrust laws when they agreed to coordinate slowdown efforts"
+                "value": "The airline said passengers were flown to Kathmandu in an alternative aircraft."
             },
             {
                 "type": "text/html",
                 "language": null,
                 "base": "",
-                "value": "The lawsuit, which was filed Friday in the U.S. District Court for the Northern District of California, argues that the leading AI companies violated antitrust laws when they agreed to coordinate slowdown efforts"
+                "value": "The airline said passengers were flown to Kathmandu in an alternative aircraft."
             }
         ],
-        "similarity": 0.8298532962799072,
-        "matched_rssb_title": "US lawsuit accuses OpenAI, Google and rivals of slowing AI development",
+        "similarity": 0.9485870599746704,
+        "matched_rssb_title": "Air India Delhi-Kathmandu Flight Returns To Delhi After Technical Issue",
         "count": 2,
         "best_similarity": 1.0000001192092896,
-        "best_matched_title": "Anthropic, OpenAI, SpaceXAI, Google Sued Over AI Development Slowdown Calls",
-        "Rank Position": 46
-    },
-    {
-        "id": "https://www.ndtv.com/india-news/siya-goyal-lohagad-fort-5-053-page-chargesheet-filed-in-ketan-agarwal-murder-case-12070084#publisher=newsstand",
-        "guidislink": true,
-        "link": "https://www.ndtv.com/india-news/siya-goyal-lohagad-fort-5-053-page-chargesheet-filed-in-ketan-agarwal-murder-case-12070084#publisher=newsstand",
-        "title": "5,053-Page Chargesheet Filed In Ketan Agarwal Murder Case",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "5,053-Page Chargesheet Filed In Ketan Agarwal Murder Case"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.ndtv.com/india-news/siya-goyal-lohagad-fort-5-053-page-chargesheet-filed-in-ketan-agarwal-murder-case-12070084#publisher=newsstand"
-            }
-        ],
-        "published": "Sat, 19 Sep 2026 23:19:21 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            19,
-            17,
-            49,
-            21,
-            5,
-            262,
-            0
-        ],
-        "media_content": [
-            {
-                "url": "https://c.ndtvimg.com/2026-06/t504l6jg_ketan-chetan-siya_625x300_25_June_26.jpg?im=FeatureCrop,algorithm=dnn,width=1280,height=720",
-                "type": "image/jpeg",
-                "expression": "full",
-                "width": "650",
-                "height": "400"
-            }
-        ],
-        "summary": "As per the chargesheet, Siya Goyal had searched online about a similar incident at Lohagad.",
-        "summary_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "As per the chargesheet, Siya Goyal had searched online about a similar incident at Lohagad."
-        },
-        "content": [
-            {
-                "type": "text/plain",
-                "language": null,
-                "base": "",
-                "value": "The chargesheet, submitted in the Vadgaon Maval court, carries several pieces of evidence, including the messages, photos, mobile phone data, call detail records, statements of witnesses and technical analysis certificates, the Pune Rural police official said."
-            },
-            {
-                "type": "text/html",
-                "language": null,
-                "base": "",
-                "value": "The chargesheet, submitted in the Vadgaon Maval court, carries several pieces of evidence, including the messages, photos, mobile phone data, call detail records, statements of witnesses and technical analysis certificates, the Pune Rural police official said."
-            }
-        ],
-        "similarity": 0.8193191885948181,
-        "matched_rssb_title": "Ketan Agarwal Murder Case: 5,053-Page Chargesheet Names 85, 3 Witnessed Siya's Crime",
-        "count": 2,
-        "best_similarity": 0.9999998807907104,
-        "best_matched_title": "5,053-Page Chargesheet Filed In Ketan Agarwal Murder Case",
-        "Rank Position": 47
-    },
-    {
-        "title": "Nila Vikhe Patil, Maharashtra BJP minister's niece, elected to Sweden Parliament",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "Nila Vikhe Patil, Maharashtra BJP minister's niece, elected to Sweden Parliament"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.indiatoday.in/world/indians-abroad/story/nila-vikhe-patil-maharashtra-swedish-parliament-election-stockholm-seat-2998494-2026-09-19?utm_source=rss"
-            }
-        ],
-        "link": "https://www.indiatoday.in/world/indians-abroad/story/nila-vikhe-patil-maharashtra-swedish-parliament-election-stockholm-seat-2998494-2026-09-19?utm_source=rss",
-        "summary": "<a href=\"https://www.indiatoday.in/world/indians-abroad/story/nila-vikhe-patil-maharashtra-swedish-parliament-election-stockholm-seat-2998494-2026-09-19\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/source-linkedinnila-vikhe-patil-190900920-16x9_0.jpg?VersionId=VsxMP4UwJPQBJnfXteU6HF5kaER_onVS\" width=\"305\" /> </a> Nila Vikhe Patil Maharashtra BJP ministers niece elected to Sweden Parliament",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "<a href=\"https://www.indiatoday.in/world/indians-abroad/story/nila-vikhe-patil-maharashtra-swedish-parliament-election-stockholm-seat-2998494-2026-09-19\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/source-linkedinnila-vikhe-patil-190900920-16x9_0.jpg?VersionId=VsxMP4UwJPQBJnfXteU6HF5kaER_onVS\" width=\"305\" /> </a> Nila Vikhe Patil Maharashtra BJP ministers niece elected to Sweden Parliament"
-        },
-        "published": "Sat, 19 Sep 2026 23:00:26 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            19,
-            17,
-            30,
-            26,
-            5,
-            262,
-            0
-        ],
-        "similarity": 0.8942029476165771,
-        "matched_rssb_title": "Who Is Nila Vikhe Patil? Maharashtra Educationist’s Daughter Elected To Swedish Parliament",
-        "count": 2,
-        "best_similarity": 0.9999997615814209,
-        "best_matched_title": "Nila Vikhe Patil, Maharashtra BJP minister's niece, elected to Sweden Parliament",
-        "Rank Position": 48
+        "best_matched_title": "Kathmandu-Bound Air India Flight Returns To Delhi Over Suspected Tech Issue",
+        "Rank Position": 54
     },
     {
         "title": "Mamata Banerjee moves Supreme Court against EC order to freeze TMC name, symbol",
@@ -569,91 +763,7 @@
         "count": 2,
         "best_similarity": 0.9999998807907104,
         "best_matched_title": "Mamata Banerjee moves Supreme Court against EC order to freeze TMC name, symbol",
-        "Rank Position": 49
-    },
-    {
-        "title": "Nestle India faces FSSAI action over infant products, promotional claims",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "Nestle India faces FSSAI action over infant products, promotional claims"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.indiatoday.in/health/story/fssai-acts-against-nestle-india-infant-food-products-promotional-claims-sub-standard-2997550-2026-09-18?utm_source=rss"
-            }
-        ],
-        "link": "https://www.indiatoday.in/health/story/fssai-acts-against-nestle-india-infant-food-products-promotional-claims-sub-standard-2997550-2026-09-18?utm_source=rss",
-        "summary": "<a href=\"https://www.indiatoday.in/health/story/fssai-acts-against-nestle-india-infant-food-products-promotional-claims-sub-standard-2997550-2026-09-18\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/fssai-has-initiated-three-adjudication-cases-against-nestl-india-over-alleged-violations-involving-180859586-16x9_0.jpg?VersionId=mKalyujkiJBtgdv9g9KM304yRKpU5nE5\" width=\"305\" /> </a> Nestle India faces FSSAI action over infant products promotional claims",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "<a href=\"https://www.indiatoday.in/health/story/fssai-acts-against-nestle-india-infant-food-products-promotional-claims-sub-standard-2997550-2026-09-18\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/fssai-has-initiated-three-adjudication-cases-against-nestl-india-over-alleged-violations-involving-180859586-16x9_0.jpg?VersionId=mKalyujkiJBtgdv9g9KM304yRKpU5nE5\" width=\"305\" /> </a> Nestle India faces FSSAI action over infant products promotional claims"
-        },
-        "published": "Fri, 18 Sep 2026 13:27:09 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            18,
-            7,
-            57,
-            9,
-            4,
-            261,
-            0
-        ],
-        "similarity": 0.8513957262039185,
-        "matched_rssb_title": "FSSAI Initiates Legal Action Against Nestle India Over Infant Food Violations, Company Reacts",
-        "count": 2,
-        "best_similarity": 1.0,
-        "best_matched_title": "Nestle India faces FSSAI action over infant products, promotional claims",
-        "Rank Position": 50
-    },
-    {
-        "title": "Saudi Arabia issues Riyadh alert as Iran sends war terms via Qatar",
-        "title_detail": {
-            "type": "text/plain",
-            "language": null,
-            "base": "",
-            "value": "Saudi Arabia issues Riyadh alert as Iran sends war terms via Qatar"
-        },
-        "links": [
-            {
-                "rel": "alternate",
-                "type": "text/html",
-                "href": "https://www.indiatoday.in/world/story/saudi-arabia-riyadh-alert-iran-conditions-end-war-qatar-ptag-2998569-2026-09-19?utm_source=rss"
-            }
-        ],
-        "link": "https://www.indiatoday.in/world/story/saudi-arabia-riyadh-alert-iran-conditions-end-war-qatar-ptag-2998569-2026-09-19?utm_source=rss",
-        "summary": "<a href=\"https://www.indiatoday.in/world/story/saudi-arabia-riyadh-alert-iran-conditions-end-war-qatar-ptag-2998569-2026-09-19\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/riyadh-airport-strike-202812819-16x9_0.jpg?VersionId=ZuOKlZ.1THHiXZo4APB66LTuLazFqt3Q\" width=\"305\" /> </a> Saudi Arabia issues Riyadh alert as Iran sends war terms via Qatar",
-        "summary_detail": {
-            "type": "text/html",
-            "language": null,
-            "base": "",
-            "value": "<a href=\"https://www.indiatoday.in/world/story/saudi-arabia-riyadh-alert-iran-conditions-end-war-qatar-ptag-2998569-2026-09-19\"> <img align=\"left\" alt=\"\" border=\"0\" height=\"180\" hspace=\"2\" src=\"https://akm-img-a-in.tosshub.com/indiatoday/images/story/202609/riyadh-airport-strike-202812819-16x9_0.jpg?VersionId=ZuOKlZ.1THHiXZo4APB66LTuLazFqt3Q\" width=\"305\" /> </a> Saudi Arabia issues Riyadh alert as Iran sends war terms via Qatar"
-        },
-        "published": "Sat, 19 Sep 2026 22:28:32 +0530",
-        "published_parsed": [
-            2026,
-            9,
-            19,
-            16,
-            58,
-            32,
-            5,
-            262,
-            0
-        ],
-        "similarity": 0.7142637968063354,
-        "matched_rssb_title": "Saudi Arabia Issues Rare Air-Raid Alerts for Riyadh",
-        "count": 2,
-        "best_similarity": 1.0000003576278687,
-        "best_matched_title": "Saudi Arabia issues Riyadh alert as Iran sends war terms via Qatar",
-        "Rank Position": 51
+        "Rank Position": 55
     },
     {
         "title": "From International Tennis Player To Student Leader: Who Is Yash Dabas, The New DUSU President?",
@@ -721,6 +831,6 @@
         "count": 2,
         "best_similarity": 0.9999999403953552,
         "best_matched_title": "From International Tennis Player To Student Leader: Who Is Yash Dabas, The New DUSU President?",
-        "Rank Position": 52
+        "Rank Position": 56
     }
 ]

@@ -1,126 +1,61 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta charset="UTF-8">
 
-    <title>Recent Activities</title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: Calibri, Arial, sans-serif;
-            font-size: 18px;
-        }
+<title>Recent Activities</title>
 
-        .header {
-            position: relative;
-            min-height: 75px;
-        }
 
-        h1 {
-            margin: 0;
-            text-align: center;
-            font-family: Calibri, Arial, sans-serif;
-            font-size: 25px;
-            font-weight: normal;
-        }
+<style>
 
-        .action-buttons {
-            position: absolute;
-            right: 0;
-            top: 38px;
-            display: flex;
-            gap: 10px;
-        }
+    body {
+        margin: 0;
+        padding: 20px;
+        font-family: Calibri, Arial, sans-serif;
+        font-size: 18px;
+    }
 
-        .action-buttons button {
-            font-family: Calibri, Arial, sans-serif;
-            font-size: 18px;
-            padding: 6px 14px;
-            cursor: pointer;
-        }
 
-        .activity-table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            margin-top: 20px;
-        }
+    .header {
+        position: relative;
+        min-height: 75px;
+    }
 
-        table {
-            border-collapse: collapse;
-            width: max-content;
-            min-width: 100%;
-        }
 
-        th,
-        td {
-            border: 1px solid #777;
-            padding: 7px 10px;
-            text-align: left;
-            vertical-align: top;
-            white-space: nowrap;
-        }
+    h1 {
+        margin: 0;
+        text-align: center;
+        font-family: Calibri, Arial, sans-serif;
+        font-size: 25px;
+        font-weight: normal;
+    }
 
-        th {
-            background: #eeeeee;
-            font-weight: bold;
-        }
 
-        .activity-name {
-            font-weight: bold;
-        }
+    .action-buttons {
+        position: absolute;
+        right: 0;
+        top: 38px;
+        display: flex;
+        gap: 10px;
+    }
 
-        .empty {
-            text-align: center;
-            padding: 30px;
-        }
 
-        .pagination {
-            margin-top: 20px;
-            text-align: center;
-        }
+    .action-buttons button {
+        font-family: Calibri, Arial, sans-serif;
+        font-size: 18px;
+        padding: 6px 14px;
+        cursor: pointer;
+    }
 
-        .pagination a,
-        .pagination span {
-            display: inline-block;
-            margin: 3px;
-            padding: 5px 10px;
-            border: 1px solid #777;
-            text-decoration: none;
-            font-family: Calibri, Arial, sans-serif;
-            font-size: 18px;
-        }
 
-        .pagination a {
-            color: #000;
-        }
-
-        .pagination .current {
-            font-weight: bold;
-            background: #eeeeee;
-        }
-
-        .info {
-            margin-top: 8px;
-            font-size: 16px;
-        }
-
-        .back-button {
-            margin-top: 20px;
-        }
-
-        .back-button button {
-            font-family: Calibri, Arial, sans-serif;
-            font-size: 18px;
-            padding: 6px 18px;
-            cursor: pointer;
-        }
     .activity-filter {
         margin-top: 15px;
         margin-bottom: 10px;
@@ -128,214 +63,498 @@
         font-size: 18px;
     }
 
+
     .activity-filter label {
         font-weight: bold;
         margin-right: 8px;
     }
+
 
     .activity-filter select {
         font-family: Calibri, Arial, sans-serif;
         font-size: 18px;
         padding: 4px 8px;
     }
-    </style>
+
+
+    .activity-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 20px;
+    }
+
+
+    table {
+        border-collapse: collapse;
+        width: max-content;
+        min-width: 100%;
+    }
+
+
+    th,
+    td {
+        border: 1px solid #777;
+        padding: 7px 10px;
+        text-align: left;
+        vertical-align: top;
+        white-space: nowrap;
+    }
+
+
+    th {
+        background: #eeeeee;
+        font-weight: bold;
+    }
+
+
+    .activity-name {
+        font-weight: bold;
+    }
+
+
+    .status {
+        font-weight: bold;
+    }
+
+
+    .empty {
+        text-align: center;
+        padding: 30px;
+    }
+
+
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+
+    .pagination a,
+    .pagination span {
+        display: inline-block;
+        margin: 3px;
+        padding: 5px 10px;
+        border: 1px solid #777;
+        text-decoration: none;
+        font-family: Calibri, Arial, sans-serif;
+        font-size: 18px;
+    }
+
+
+    .pagination a {
+        color: #000;
+    }
+
+
+    .pagination .current {
+        font-weight: bold;
+        background: #eeeeee;
+    }
+
+
+    .info {
+        margin-top: 8px;
+        font-size: 16px;
+    }
+
+
+    .back-button {
+        margin-top: 20px;
+    }
+
+
+    .back-button button {
+        font-family: Calibri, Arial, sans-serif;
+        font-size: 18px;
+        padding: 6px 18px;
+        cursor: pointer;
+    }
+
+</style>
+
 </head>
 
 <body>
 
 <div class="header">
 
-    <h1>Recent Activities</h1>
+<h1>Recent Activities</h1>
 
-    <div class="action-buttons">
-        <button type="button" onclick="newActivity()">
-            New Activity
-        </button>
 
-        <button type="button" onclick="viewActivity()">
-            View Activity
-        </button>
-    </div>
+<div class="action-buttons">
+
+    <button
+        type="button"
+        onclick="newActivity()"
+    >
+        New Activity
+    </button>
+
+
+    <button
+        type="button"
+        onclick="viewActivity()"
+    >
+        View Activity
+    </button>
 
 </div>
-<form method="get" class="activity-filter">
 
-    <label for="activity">Activity:</label>
+</div>
 
-    <select
-        name="activity"
-        id="activity"
-        onchange="this.form.submit()"
-    >
+<form
+    method="get"
+    class="activity-filter"
+>
 
-        <option value="">
-            All Activities
+<label for="activity">
+    Activity:
+</label>
+
+
+<select
+    name="activity"
+    id="activity"
+    onchange="this.form.submit()"
+>
+
+    <option value="">
+        All Activities
+    </option>
+
+
+    {% for table in activity_tables %}
+
+        <option
+            value="{{ table }}"
+            {% if selected_activity == table %}
+                selected
+            {% endif %}
+        >
+
+            {{ table[:-9] }}
+
         </option>
 
-        {% for table in activity_tables %}
+    {% endfor %}
 
-            <option
-                value="{{ table }}"
-                {% if selected_activity == table %}
-                    selected
-                {% endif %}
-            >
-                {{ table[:-9] }}
-            </option>
-
-        {% endfor %}
-
-    </select>
+</select>
 
 </form>
 
 <div class="info">
-    Showing
-    {{ ((page - 1) * page_size) + 1 if total else 0 }}
-    -
-    {{ [page * page_size, total] | min }}
-    of {{ total }} activities
+
+Showing
+
+{{ ((page - 1) * page_size) + 1 if total else 0 }}
+
+-
+
+{{ [page * page_size, total] | min }}
+
+of {{ total }} activities
+
 </div>
 
 <div class="activity-table-wrapper">
 
 {% if activities %}
 
-<table>
-    <thead>
-        <tr>
-            <th>Activity</th>
+{#
+    Build the list of activity-specific columns.
 
-            {# Standard information always comes first. #}
-            {% for column in standard_columns %}
-                {% set present = namespace(value=false) %}
+    IMPORTANT:
 
-                {% for activity in activities %}
-                    {% if column in activity.columns %}
-                        {% set present.value = true %}
-                    {% endif %}
-                {% endfor %}
+    activity.columns contains only the columns belonging
+    to the activity table.
 
-                {% if present.value %}
-                    <th>{{ column.replace('_', ' ') | title }}</th>
-                {% endif %}
-            {% endfor %}
+    The history columns are NOT included there because
+    they come from activity_history and are already
+    available through activity['values'].
+#}
 
-            {# Then display all custom columns used on this page. #}
-            {% set custom_columns = namespace(items=[]) %}
+{% set custom_columns = namespace(items=[]) %}
 
-            {% for activity in activities %}
-                {% for column in activity.columns %}
-                    {% if column not in hidden_columns
-                          and column not in standard_columns
-                          and column not in custom_columns.items %}
-                        {% set custom_columns.items =
-                            custom_columns.items + [column] %}
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
 
-            {% for column in custom_columns.items %}
-                <th>{{ column.replace('_', ' ') | title }}</th>
-            {% endfor %}
+{% for activity in activities %}
 
-            <th>Created At</th>
-        </tr>
-    </thead>
+    {% for column in activity.columns %}
 
-    <tbody>
+        {% if column not in hidden_columns
+              and column not in standard_columns
+              and column not in custom_columns.items %}
 
-    {% for activity in activities %}
+            {% set custom_columns.items =
+                custom_columns.items + [column] %}
 
-        <tr>
-            <td class="activity-name">
-                {{ activity.activity_name }}
-            </td>
-
-            {% for column in standard_columns %}
-                {% if column in activity.columns %}
-                    <td>{{ activity['values'].get(column, '') }}</td>
-                {% else %}
-                    <td></td>
-                {% endif %}
-            {% endfor %}
-
-            {% for column in custom_columns.items %}
-                {% if column in activity.columns %}
-                    <td>{{ activity['values'].get(column, '') }}</td>
-                {% else %}
-                    <td></td>
-                {% endif %}
-            {% endfor %}
-
-            <td>{{ activity['values'].get('created_at', '') }}</td>
-        </tr>
+        {% endif %}
 
     {% endfor %}
 
+{% endfor %}
+
+
+<table>
+
+
+    <thead>
+
+        <tr>
+
+            <th>
+                Activity
+            </th>
+
+
+            {#
+                These are HISTORY columns.
+
+                They are always displayed in exactly
+                this order because their values come
+                from activity['values'].
+            #}
+
+            {% for column in standard_columns %}
+
+                <th>
+                    {{ column.replace('_', ' ') | title }}
+                </th>
+
+            {% endfor %}
+
+
+            {#
+                These are activity-specific columns.
+
+                Example:
+
+                Reading:
+                    book
+                    pages
+                    duration_min
+                    experience
+                    comments
+
+                Eating:
+                    food
+                    quantity
+                    quantity_unit
+                    experience
+                    comments
+            #}
+
+            {% for column in custom_columns.items %}
+
+                <th>
+                    {{ column.replace('_', ' ') | title }}
+                </th>
+
+            {% endfor %}
+
+
+            <th>
+                Created At
+            </th>
+
+        </tr>
+
+    </thead>
+
+
+    <tbody>
+
+
+    {% for activity in activities %}
+
+
+        <tr>
+
+
+            <td class="activity-name">
+
+                {{ activity['activity_name'] }}
+
+            </td>
+
+
+            {#
+                HISTORY DATA
+
+                Do NOT check activity.columns here.
+
+                The Python get_activity_rows() function
+                puts these fields directly into values.
+            #}
+
+            {% for column in standard_columns %}
+
+                {% if column == 'status' %}
+
+                    <td class="status">
+                        {{ activity['values'].get(column, '') }}
+                    </td>
+
+                {% else %}
+
+                    <td>
+                        {{ activity['values'].get(column, '') }}
+                    </td>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            {#
+                ACTIVITY-SPECIFIC DATA
+            #}
+
+            {% for column in custom_columns.items %}
+
+                {% if column in activity.columns %}
+
+                    <td>
+                        {{ activity['values'].get(column, '') }}
+                    </td>
+
+                {% else %}
+
+                    <td></td>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            {#
+                created_at has deliberately been normalised
+                by Python to the activity_history timestamp.
+            #}
+
+            <td>
+                {{ activity['values'].get('created_at', '') }}
+            </td>
+
+
+        </tr>
+
+
+    {% endfor %}
+
+
     </tbody>
+
 </table>
 
 {% else %}
 
 <div class="empty">
+
     No activities have been recorded yet.
+
 </div>
 
 {% endif %}
 
 </div>
-
 
 {% if total_pages > 1 %}
 
 <div class="pagination">
 
-    {% if page > 1 %}
-        <a href="{{ url_for('dailylog.recent_activities', page=page-1) }}">
-            &laquo; Previous
+{% if page > 1 %}
+
+    <a
+        href="{{ url_for(
+            'dailylog.recent_activities',
+            page=page-1,
+            activity=selected_activity
+        ) }}"
+    >
+        &laquo; Previous
+    </a>
+
+{% endif %}
+
+
+{% for p in range(1, total_pages + 1) %}
+
+
+    {% if p == page %}
+
+        <span class="current">
+            {{ p }}
+        </span>
+
+    {% else %}
+
+        <a
+            href="{{ url_for(
+                'dailylog.recent_activities',
+                page=p,
+                activity=selected_activity
+            ) }}"
+        >
+            {{ p }}
         </a>
+
     {% endif %}
 
-    {% for p in range(1, total_pages + 1) %}
 
-        {% if p == page %}
-            <span class="current">{{ p }}</span>
-        {% else %}
-            <a href="{{ url_for('dailylog.recent_activities', page=p) }}">
-                {{ p }}
-            </a>
-        {% endif %}
+{% endfor %}
 
-    {% endfor %}
 
-    {% if page < total_pages %}
-        <a href="{{ url_for('dailylog.recent_activities', page=page+1) }}">
-            Next &raquo;
-        </a>
-    {% endif %}
+{% if page < total_pages %}
+
+    <a
+        href="{{ url_for(
+            'dailylog.recent_activities',
+            page=page+1,
+            activity=selected_activity
+        ) }}"
+    >
+        Next &raquo;
+    </a>
+
+{% endif %}
 
 </div>
 
 {% endif %}
 
-
 <div class="back-button">
-    <button type="button" onclick="history.back()">
-        Back
-    </button>
+
+<button
+    type="button"
+    onclick="history.back()"
+>
+    Back
+</button>
+
 </div>
 
-
 <script>
-    function newActivity() {
-        // To be implemented later.
-    }
 
-    function viewActivity() {
-        // To be implemented later.
-    }
+
+function newActivity() {
+
+    window.location.href =
+        "{{ url_for('dailylog.new_activity') }}";
+
+}
+
+
+function viewActivity() {
+
+    /*
+     * Reserved for the future View Activity feature.
+     */
+
+}
+
+
 </script>
 
 </body>
+
 </html>

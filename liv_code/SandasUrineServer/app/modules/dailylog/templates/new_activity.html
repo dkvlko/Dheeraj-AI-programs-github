@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>New Activity</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 18px;
+        }
+
+        h1 {
+            margin: 0 0 25px 0;
+            text-align: center;
+            font-size: 25px;
+            font-weight: normal;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .row {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select,
+        input,
+        textarea {
+            box-sizing: border-box;
+            width: 100%;
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 18px;
+            padding: 7px;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons button {
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 18px;
+            padding: 7px 18px;
+            cursor: pointer;
+        }
+
+        .section {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px solid #999;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #777;
+            background: #eeeeee;
+        }
+
+        .active-message {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #555;
+        }
+
+        .back-button {
+            margin-top: 30px;
+        }
+
+        .back-button button {
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 18px;
+            padding: 6px 18px;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>New Activity</h1>
+
+{% if message %}
+
+    <div class="message">
+        {{ message }}
+    </div>
+
+{% endif %}
+
+
+<form
+    method="get"
+    action="{{ url_for('dailylog.new_activity') }}"
+>
+
+
+    <div class="row">
+
+        <label for="activity">
+            Activity
+        </label>
+
+        <select
+            name="activity"
+            id="activity"
+            onchange="activityChanged()"
+        >
+
+            <option value="">
+                -- Select Activity --
+            </option>
+
+            {% for table in activity_tables %}
+
+                <option
+                    value="{{ table }}"
+                    {% if selected_activity == table %}
+                        selected
+                    {% endif %}
+                >
+                    {{ table[:-9] }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+
+</form>
+
+
+{% if selected_activity %}
+
+
+    {% if active_history %}
+
+        <div class="active-message">
+
+            <strong>
+                {{ selected_activity[:-9] }}
+            </strong>
+
+            is currently STARTED.
+
+            <br><br>
+
+            Started at:
+            {{ active_history["start_time"] }}
+
+        </div>
+
+
+        <form
+            method="post"
+            id="actionForm"
+        >
+
+            <input
+                type="hidden"
+                name="activity"
+                value="{{ selected_activity }}"
+            >
+
+            <input
+                type="hidden"
+                name="history_id"
+                value="{{ active_history['id'] }}"
+            >
+
+
+            <div class="section">
+
+                <div class="section-title">
+                    Finish / Cancel
+                </div>
+
+
+                <div class="row">
+
+                    <label for="finish_time">
+                        Date and Time
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="finish_time"
+                        name="finish_time"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="row">
+
+                    <label>
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="finish_location"
+                        name="finish_location"
+                        placeholder="GPS location or enter manually"
+                    >
+
+                    <input
+                        type="hidden"
+                        id="finish_latitude"
+                        name="finish_latitude"
+                    >
+
+                    <input
+                        type="hidden"
+                        id="finish_longitude"
+                        name="finish_longitude"
+                    >
+
+                    <input
+                        type="hidden"
+                        id="finish_location_source"
+                        name="finish_location_source"
+                    >
+
+                </div>
+
+
+                <div
+                    id="activityFields"
+                    class="hidden"
+                >
+
+                    <div class="section-title">
+                        {{ selected_activity[:-9] }} Details
+                    </div>
+
+
+                    {% for column in activity_columns %}
+
+                        <div class="row">
+
+                            <label
+                                for="field_{{ column }}"
+                            >
+                                {{ column.replace('_', ' ') | title }}
+                            </label>
+
+
+                            {% if column == "comments" %}
+
+                                <textarea
+                                    id="field_{{ column }}"
+                                    name="field_{{ column }}"
+                                ></textarea>
+
+
+                            {% elif column == "experience" %}
+
+                                <select
+                                    id="field_{{ column }}"
+                                    name="field_{{ column }}"
+                                >
+
+                                    <option value="">
+                                        -- Select --
+                                    </option>
+
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+
+                                </select>
+
+
+                            {% else %}
+
+                                <input
+                                    type="{% if column in ['pages', 'duration_min', 'quantity'] %}number{% else %}text{% endif %}"
+                                    id="field_{{ column }}"
+                                    name="field_{{ column }}"
+                                >
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="action-buttons">
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="FINISH"
+                        onclick="prepareFinish()"
+                    >
+                        Finish
+                    </button>
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="CANCEL"
+                        onclick="prepareFinish()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+
+    {% else %}
+
+
+        <form
+            method="post"
+            id="newActivityForm"
+        >
+
+            <input
+                type="hidden"
+                name="activity"
+                value="{{ selected_activity }}"
+            >
+
+
+            <div class="section">
+
+                <div class="section-title">
+                    Start Activity
+                </div>
+
+
+                <div class="row">
+
+                    <label for="start_time">
+                        Date and Time
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="start_time"
+                        name="start_time"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="row">
+
+                    <label for="start_location">
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="start_location"
+                        name="start_location"
+                        placeholder="GPS location or enter manually"
+                    >
+
+                    <input
+                        type="hidden"
+                        id="start_latitude"
+                        name="start_latitude"
+                    >
+
+                    <input
+                        type="hidden"
+                        id="start_longitude"
+                        name="start_longitude"
+                    >
+
+                    <input
+                        type="hidden"
+                        id="start_location_source"
+                        name="start_location_source"
+                    >
+
+                </div>
+
+
+                <div class="action-buttons">
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="START"
+                    >
+                        Start
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="showBacklog()"
+                    >
+                        Backlog
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="backlogSection"
+                class="section hidden"
+            >
+
+                <div class="section-title">
+                    Backlog
+                </div>
+
+
+                <div class="row">
+
+                    <label for="backlog_start_time">
+                        Start Date and Time
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="backlog_start_time"
+                        name="backlog_start_time"
+                    >
+
+                </div>
+
+
+                <div class="row">
+
+                    <label for="backlog_finish_time">
+                        Finish Date and Time
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="backlog_finish_time"
+                        name="backlog_finish_time"
+                    >
+
+                </div>
+
+
+                <div class="row">
+
+                    <label for="backlog_start_location">
+                        Start Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="backlog_start_location"
+                        name="backlog_start_location"
+                    >
+
+                </div>
+
+
+                <div class="row">
+
+                    <label for="backlog_finish_location">
+                        Finish Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="backlog_finish_location"
+                        name="backlog_finish_location"
+                    >
+
+                </div>
+
+
+                {% for column in activity_columns %}
+
+                    <div class="row">
+
+                        <label>
+                            {{ column.replace('_', ' ') | title }}
+                        </label>
+
+                        {% if column == "comments" %}
+
+                            <textarea
+                                name="backlog_field_{{ column }}"
+                            ></textarea>
+
+                        {% elif column == "experience" %}
+
+                            <select
+                                name="backlog_field_{{ column }}"
+                            >
+                                <option value="">-- Select --</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+
+                        {% else %}
+
+                            <input
+                                type="{% if column in ['pages', 'duration_min', 'quantity'] %}number{% else %}text{% endif %}"
+                                name="backlog_field_{{ column }}"
+                            >
+
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+
+                <div class="action-buttons">
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="BACKLOG"
+                        onclick="prepareBacklog()"
+                    >
+                        Insert Backlog
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    {% endif %}
+
+
+{% endif %}
+
+
+<div class="back-button">
+
+    <button
+        type="button"
+        onclick="/dailylog/"
+    >
+        Back
+    </button>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/*
+ * Convert a Date object into the format required by
+ * <input type="datetime-local">.
+ */
+function setCurrentDateTime(elementId) {
+
+    const now = new Date();
+
+    const year =
+        now.getFullYear();
+
+    const month =
+        String(now.getMonth() + 1).padStart(2, "0");
+
+    const day =
+        String(now.getDate()).padStart(2, "0");
+
+    const hours =
+        String(now.getHours()).padStart(2, "0");
+
+    const minutes =
+        String(now.getMinutes()).padStart(2, "0");
+
+    document.getElementById(elementId).value =
+        `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+
+/*
+ * Called when the Activity dropdown changes.
+ */
+function activityChanged() {
+
+    const activity =
+        document.getElementById("activity").value;
+
+    if (!activity) {
+        return;
+    }
+
+    window.location.href =
+        "{{ url_for('dailylog.new_activity') }}"
+        + "?activity="
+        + encodeURIComponent(activity);
+}
+
+
+/*
+ * Try to obtain GPS coordinates.
+ */
+function getGPS(
+    latitudeId,
+    longitudeId,
+    sourceId,
+    locationId
+) {
+
+    if (!navigator.geolocation) {
+
+        document.getElementById(sourceId).value =
+            "MANUAL";
+
+        return;
+    }
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            document.getElementById(latitudeId).value =
+                position.coords.latitude;
+
+            document.getElementById(longitudeId).value =
+                position.coords.longitude;
+
+            document.getElementById(sourceId).value =
+                "GPS";
+
+            document.getElementById(locationId).value =
+                "GPS: "
+                + position.coords.latitude.toFixed(6)
+                + ", "
+                + position.coords.longitude.toFixed(6);
+
+        },
+
+        function(error) {
+
+            console.log(
+                "GPS unavailable:",
+                error.message
+            );
+
+            document.getElementById(sourceId).value =
+                "MANUAL";
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 60000
+        }
+    );
+}
+
+
+/*
+ * Show the Backlog section.
+ */
+function showBacklog() {
+
+    document
+        .getElementById("backlogSection")
+        .classList.remove("hidden");
+
+    /*
+     * The normal Start fields are not required
+     * when entering a backlog record.
+     */
+    document
+        .getElementById("start_time")
+        .required = false;
+
+    document
+        .getElementById("start_location")
+        .required = false;
+}
+
+
+/*
+ * Prepare the Start form.
+ */
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        const startTime =
+            document.getElementById("start_time");
+
+        if (startTime) {
+
+            setCurrentDateTime(
+                "start_time"
+            );
+
+            getGPS(
+                "start_latitude",
+                "start_longitude",
+                "start_location_source",
+                "start_location"
+            );
+        }
+
+
+        const finishTime =
+            document.getElementById("finish_time");
+
+        if (finishTime) {
+
+            setCurrentDateTime(
+                "finish_time"
+            );
+
+            getGPS(
+                "finish_latitude",
+                "finish_longitude",
+                "finish_location_source",
+                "finish_location"
+            );
+
+            const fields =
+                document.getElementById(
+                    "activityFields"
+                );
+
+            if (fields) {
+
+                fields.classList.remove(
+                    "hidden"
+                );
+            }
+        }
+
+    }
+);
+
+
+/*
+ * Prepare Finish/Cancel.
+ */
+function prepareFinish() {
+
+    const finishTime =
+        document.getElementById(
+            "finish_time"
+        );
+
+    if (finishTime && !finishTime.value) {
+
+        setCurrentDateTime(
+            "finish_time"
+        );
+    }
+}
+
+
+/*
+ * Copy Backlog fields into the names expected
+ * by the Python route.
+ */
+function prepareBacklog() {
+
+    const form =
+        document.getElementById(
+            "newActivityForm"
+        );
+
+    /*
+     * Rename the backlog datetime values by
+     * creating hidden fields.
+     */
+
+    const start =
+        document.getElementById(
+            "backlog_start_time"
+        ).value;
+
+    const finish =
+        document.getElementById(
+            "backlog_finish_time"
+        ).value;
+
+
+    addHidden(
+        form,
+        "start_time",
+        start
+    );
+
+    addHidden(
+        form,
+        "finish_time",
+        finish
+    );
+
+
+    addHidden(
+        form,
+        "start_location",
+        document.getElementById(
+            "backlog_start_location"
+        ).value
+    );
+
+
+    addHidden(
+        form,
+        "finish_location",
+        document.getElementById(
+            "backlog_finish_location"
+        ).value
+    );
+
+
+    /*
+     * Copy activity-specific fields.
+     */
+
+    {% for column in activity_columns %}
+
+        addHidden(
+            form,
+            "field_{{ column }}",
+            getBacklogFieldValue(
+                "{{ column }}"
+            )
+        );
+
+    {% endfor %}
+
+}
+
+
+function getBacklogFieldValue(column) {
+
+    const element =
+        document.querySelector(
+            '[name="backlog_field_' + column + '"]'
+        );
+
+    if (!element) {
+        return "";
+    }
+
+    return element.value;
+}
+
+
+function addHidden(
+    form,
+    name,
+    value
+) {
+
+    let existing =
+        form.querySelector(
+            'input[name="' + name + '"]'
+        );
+
+    if (existing) {
+
+        existing.value =
+            value;
+
+        return;
+    }
+
+
+    const input =
+        document.createElement("input");
+
+    input.type = "hidden";
+    input.name = name;
+    input.value = value;
+
+    form.appendChild(input);
+}
+
+</script>
+
+
+</body>
+</html>
