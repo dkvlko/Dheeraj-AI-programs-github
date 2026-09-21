@@ -205,6 +205,7 @@ KEY_MAP = {
 def handle_keyboard_key(data):
     global zoom_state
     key = data.get("key")
+    #print("Key pressed: ",key)
 
     if key in KEY_MAP:
         send_key(KEY_MAP[key])
@@ -213,17 +214,7 @@ def handle_keyboard_key(data):
         "F1", "F2", "F3", "F4", "F5", "F6",
         "F7","F8", "F9", "F10", "F11", "F12"
     }:
-        if key == "F8" :
-            if not zoom_state :
-                send_key("ctrl+z")
-                zoom_state =True
-            else :
-                send_key("ctrl+w")
-                zoom_state = False
-        else :
-            send_key(key)
-
-    #elif key and len(key) == 1:
+        send_key(key)
     elif key : 
         send_key(key)
     else:

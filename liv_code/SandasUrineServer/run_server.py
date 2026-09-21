@@ -20,5 +20,6 @@ if __name__ == "__main__":
         ssl_context=(
             str(SERVER_CERT),
             str(SERVER_KEY)
-        )
+        ),
+        allow_unsafe_werkzeug=True
     )

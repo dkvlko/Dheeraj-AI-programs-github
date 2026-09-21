@@ -2,6 +2,7 @@ import math
 import os
 import sqlite3
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 from flask import (
@@ -13,6 +14,7 @@ from flask import (
 
 from . import dailylog_bp
 
+IST = ZoneInfo("Asia/Kolkata")
 
 # Change this environment variable if activities.db is stored elsewhere.
 ACTIVITY_DB_PATH = Path(
@@ -63,6 +65,13 @@ def parse_datetime(value):
 
     except ValueError:
         return None
+
+def get_created_at():
+    """
+    Return the current application creation timestamp in IST.
+    Stored as YYYY-MM-DD HH:MM:SS for SQLite.
+    """
+    return datetime.now(IST).strftime("%Y-%m-%d %H:%M:%S")
 
 def get_db_connection():
     conn = sqlite3.connect(ACTIVITY_DB_PATH)
@@ -555,6 +564,8 @@ def new_activity():
             if start_longitude:
                 start_longitude = float(start_longitude)
 
+            created_at = get_created_at()
+
             conn.execute(
                 """
                 INSERT INTO activity_history (
@@ -564,9 +575,10 @@ def new_activity():
                     start_latitude,
                     start_longitude,
                     start_location_source,
-                    status
+                    status,
+                    created_at
                 )
-                VALUES (?, ?, ?, ?, ?, ?, 'STARTED')
+                VALUES (?, ?, ?, ?, ?, ?, 'STARTED',?)
                 """,
                 (
                     activity_table,
@@ -575,6 +587,7 @@ def new_activity():
                     start_latitude,
                     start_longitude,
                     start_location_source,
+                    created_at,
                 )
             )
 
@@ -978,6 +991,7 @@ def new_activity():
 
                 values.append(value)
 
+            created_at = get_created_at()
             try:
 
                 conn.execute("BEGIN")
@@ -996,12 +1010,14 @@ def new_activity():
                         finish_latitude,
                         finish_longitude,
                         finish_location_source,
-                        status
+                        status,
+                        created_at
                     )
                     VALUES (
                         ?, ?, ?, ?, ?, ?,
                         ?, ?, ?, ?, ?,
-                        'BACKLOG'
+                        'BACKLOG',
+                        ?
                     )
                     """,
                     (
@@ -1016,6 +1032,7 @@ def new_activity():
                         finish_latitude,
                         finish_longitude,
                         finish_location_source,
+                        created_at,
                     )
                 )
 
