@@ -17,3 +17,9 @@ venv/
 ENV/
 env/
 
+liv_code/SandasUrineServer/app/modules/clock_lap/templates/details_date.html
+
+# Generated news working files
+liv_code/SandasUrineServer/app/modules/newsanddays/data/rankednews.json
+liv_code/SandasUrineServer/app/modules/newsanddays/data/rankednews_working.html
+liv_code/SandasUrineServer/app/modules/newsanddays/data/rankednews_working.json
