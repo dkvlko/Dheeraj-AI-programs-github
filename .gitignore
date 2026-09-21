@@ -6,4 +6,14 @@ liv_code/BLOBS
 drik-panchanga
 content
 UnSocial
+# Python generated files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
 
