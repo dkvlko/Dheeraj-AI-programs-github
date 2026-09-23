@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,
+                 initial-scale=1,
+                 maximum-scale=1,
+                 user-scalable=no,
+                 viewport-fit=cover"
+    >
+
+    <title>Android TV Remote</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('tvremote.static', filename='tvremote/tvremote.css') }}"
+    >
+</head>
+
+<body>
+
+<div id="tvRemoteScreen">
+
+    <!-- =====================================================
+         TOP BAR
+         ===================================================== -->
+
+    <header class="topbar">
+
+        <button
+            type="button"
+            id="backToRemoteButton"
+            class="topbarButton"
+        >
+            ←
+        </button>
+
+        <div class="topbarTitle">
+            Android TV
+        </div>
+
+        <div
+            id="connectionStatus"
+            class="connectionStatus"
+        >
+            Connecting...
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         REMOTE COORDINATE SYSTEM
+         
+         The complete remote uses the device viewport as its
+         coordinate system.
+         ===================================================== -->
+
+    <main class="remote">
+
+        <!-- =================================================
+             DEVELOPMENT GRID OVERLAY
+
+             The checkbox controls visibility.
+
+             IMPORTANT:
+             The grid is an overlay and does not participate
+             in layout.
+             ================================================= -->
+
+        <div
+            id="gridOverlay"
+            class="gridOverlay showGrid"
+            aria-hidden="true"
+        >
+            <div class="gridCenterMarker"></div>
+        </div>
+
+
+        <!-- =================================================
+             DEVELOPMENT CONTROLS
+
+             This is intentionally positioned independently
+             from the remote grid.
+             ================================================= -->
+
+        <div class="gridControls">
+
+            <label>
+                <input
+                    type="checkbox"
+                    id="showGrid"
+                >
+                Show 8 × 8 Grid
+            </label>
+
+        </div>
+
+
+        <!-- =================================================
+             ACTUAL REMOTE GRID
+
+             All remote controls belong inside this grid.
+             ================================================= -->
+
+        <div
+            id="remoteGrid"
+            class="remoteGrid"
+        >
+
+
+            <!-- =============================================
+                 POWER
+                 ============================================= -->
+
+            <button
+                type="button"
+                class="remoteButton powerButton"
+                data-command="power"
+                aria-label="Power"
+            >
+                ⏻
+            </button>
+
+
+            <!-- =============================================
+                 D-PAD
+                 ============================================= -->
+
+            <section class="dpad">
+
+                <button
+                    type="button"
+                    class="remoteButton dpadButton dpadUp"
+                    data-command="up"
+                    aria-label="Up"
+                >
+                    ▲
+                </button>
+
+                <button
+                    type="button"
+                    class="remoteButton dpadButton dpadLeft"
+                    data-command="left"
+                    aria-label="Left"
+                >
+                    ◀
+                </button>
+
+                <button
+                    type="button"
+                    class="remoteButton dpadButton dpadSelect"
+                    data-command="select"
+                    aria-label="OK"
+                >
+                    OK
+                </button>
+
+                <button
+                    type="button"
+                    class="remoteButton dpadButton dpadRight"
+                    data-command="right"
+                    aria-label="Right"
+                >
+                    ▶
+                </button>
+
+                <button
+                    type="button"
+                    class="remoteButton dpadButton dpadDown"
+                    data-command="down"
+                    aria-label="Down"
+                >
+                    ▼
+                </button>
+
+            </section>
+
+
+            <!-- =============================================
+                 BACK / HOME / MUTE
+                 ============================================= -->
+
+            <section class="navigationButtons">
+
+                <button
+                    type="button"
+                    class="remoteButton navigationButton"
+                    data-command="back"
+                >
+                    <span class="largeIcon">↩</span>
+                    <span>BACK</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="remoteButton navigationButton"
+                    data-command="home"
+                >
+                    <span class="largeIcon">⌂</span>
+                    <span>HOME</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="remoteButton navigationButton"
+                    data-command="mute"
+                >
+                    <span class="largeIcon">🔇</span>
+                    <span>MUTE</span>
+                </button>
+
+            </section>
+
+
+            <!-- =============================================
+                 VOLUME
+                 ============================================= -->
+
+            <section class="volumeControl">
+
+                <button
+                    type="button"
+                    class="remoteButton volumeButton"
+                    data-command="vol_down"
+                    aria-label="Volume down"
+                >
+                    −
+                </button>
+
+                <div class="volumeLabel">
+                    VOLUME
+                </div>
+
+                <button
+                    type="button"
+                    class="remoteButton volumeButton"
+                    data-command="vol_up"
+                    aria-label="Volume up"
+                >
+                    +
+                </button>
+
+            </section>
+
+
+            <!-- =============================================
+                 APPS
+                 ============================================= -->
+
+            <section class="appButtons">
+
+                <button
+                    type="button"
+                    class="remoteButton appButton"
+                    data-command="youtube"
+                >
+                    YouTube
+                </button>
+
+                <button
+                    type="button"
+                    class="remoteButton appButton"
+                    data-command="netflix"
+                >
+                    Netflix
+                </button>
+
+                <button
+                    type="button"
+                    class="remoteButton appButton"
+                    data-package="com.amazon.amazonvideo.livingroom"
+                >
+                    Prime Video
+                </button>
+
+            </section>
+
+
+            <!-- =============================================
+                 TEXT ENTRY
+                 ============================================= -->
+
+            <section class="textEntry">
+
+                <textarea
+                    id="tvTextInput"
+                    rows="3"
+                    wrap="soft"
+                    placeholder="Type text on TV"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="sentences"
+                    spellcheck="false"
+                ></textarea>
+
+                <button
+                    type="button"
+                    id="sendTextButton"
+                    class="remoteButton sendTextButton"
+                >
+                    SEND
+                </button>
+
+            </section>
+
+
+            <!-- =============================================
+                 UTILITY BUTTONS
+                 ============================================= -->
+
+            <section class="utilityButtons">
+
+                <button
+                    type="button"
+                    class="remoteButton utilityButton"
+                    data-command="status"
+                >
+                    STATUS
+                </button>
+
+                <button
+                    type="button"
+                    class="remoteButton utilityButton"
+                    data-command="screenshot"
+                >
+                    SCREENSHOT
+                </button>
+
+                <button
+                    type="button"
+                    id="fullscreenButton"
+                    class="remoteButton utilityButton"
+                >
+                    FULLSCREEN
+                </button>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     SOCKET.IO
+     ========================================================= -->
+
+<script src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
+
+
+<!-- =========================================================
+     TV REMOTE JAVASCRIPT
+     ========================================================= -->
+
+<script src="{{ url_for('tvremote.static', filename='tvremote/tvremote.js') }}"></script>
+
+
+<!-- =========================================================
+     DEVELOPMENT GRID TOGGLE
+     ========================================================= -->
+
+<script>
+
+(function () {
+
+    const checkbox = document.getElementById("showGrid");
+    const overlay = document.getElementById("gridOverlay");
+
+    if (!checkbox || !overlay) {
+        return;
+    }
+
+    function updateGridVisibility() {
+
+        overlay.classList.toggle(
+            "showGrid",
+            checkbox.checked
+        );
+
+    }
+
+    checkbox.addEventListener(
+        "change",
+        updateGridVisibility
+    );
+
+    updateGridVisibility();
+
+})();
+
+</script>
+
+</body>
+</html>

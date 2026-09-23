@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1,
+                   user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#111111">
+    <title>Remote — TV</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('tvremote.static', filename='tvremote.css') }}">
+</head>
+
+<body>
+<div id="tvRemoteScreen">
+
+    <header class="topbar">
+        <button id="tvBackButton" class="topButton" type="button">← Back</button>
+        <div class="title">Android TV</div>
+        <div id="connectionStatus" class="connectionStatus">
+            <span id="statusDot" class="statusDot offline"></span>
+            <span id="statusText">Connecting…</span>
+        </div>
+    </header>
+
+    <!--
+        The remoteStage is an exact device-sized design surface.
+        It is divided into a 10 x 10 logical grid.
+
+        Portrait centres:
+          iPhone 8     375 x 667  -> (187.5, 333.5)
+          iPhone 13    390 x 844  -> (195, 422)
+          iPad mini 2  768 x 1024 -> (384, 512)
+
+        Landscape centres:
+          iPhone 8     667 x 375  -> (333.5, 187.5)
+          iPhone 13    844 x 390  -> (422, 195)
+          iPad mini 2  1024 x 768 -> (512, 384)
+
+        Every remote object is placed inside this 10 x 10 grid.
+    -->
+    <main class="remote">
+        <div class="remoteStage">
+            <div class="remoteGrid" aria-label="Android TV remote">
+
+                <!-- Row 1-3: power and D-pad -->
+                <button class="roundButton powerButton"
+                        data-command="power" aria-label="Power">⏻</button>
+
+                <section class="dpad" aria-label="TV navigation">
+                    <button class="remoteButton dpadUp" data-command="up">▲</button>
+                    <button class="remoteButton dpadLeft" data-command="left">◀</button>
+                    <button class="remoteButton dpadOK" data-command="select">OK</button>
+                    <button class="remoteButton dpadRight" data-command="right">▶</button>
+                    <button class="remoteButton dpadDown" data-command="down">▼</button>
+                </section>
+
+                <!-- Row 4: Back / Home / Mute -->
+                <section class="threeButtons" aria-label="Navigation controls">
+                    <button class="remoteButton" data-command="back">
+                        <span class="largeIcon">↩</span><span>BACK</span>
+                    </button>
+                    <button class="remoteButton" data-command="home">
+                        <span class="largeIcon">⌂</span><span>HOME</span>
+                    </button>
+                    <button class="remoteButton" data-command="mute">
+                        <span class="largeIcon">🔇</span><span>MUTE</span>
+                    </button>
+                </section>
+
+                <!-- Row 5: Volume -->
+                <section class="volumeControl" aria-label="Volume controls">
+                    <button class="volumeButton" data-command="vol_down">−</button>
+                    <span class="volumeLabel">VOLUME</span>
+                    <button class="volumeButton" data-command="vol_up">+</button>
+                </section>
+
+                <!-- Row 6: Applications -->
+                <section class="apps" aria-label="Applications">
+                    <button class="appButton" data-command="youtube">YouTube</button>
+                    <button class="appButton" data-command="netflix">Netflix</button>
+                    <button class="appButton" data-package="org.videolan.vlc">VLC</button>
+                </section>
+
+                <!-- Row 7-8: text entry -->
+                <section class="textEntry" aria-label="Text entry">
+                    <textarea id="tvTextInput" rows="3"
+                              autocomplete="off" autocorrect="off"
+                              autocapitalize="sentences" spellcheck="false"
+                              placeholder="Type text on TV"></textarea>
+                    <button id="sendTextButton" type="button">SEND</button>
+                </section>
+
+                <!-- Row 9: utilities -->
+                <section class="utilityButtons" aria-label="Remote utilities">
+                    <button class="remoteButton" data-command="status">↻ Status</button>
+                    <button class="remoteButton" data-command="screenshot">📷 Screenshot</button>
+                    <button id="fullscreenButton" class="remoteButton" type="button">⛶ Fullscreen</button>
+                </section>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
+<script src="{{ url_for('tvremote.static', filename='tvremote/tvremote.js') }}"></script>
+</body>
+</html>

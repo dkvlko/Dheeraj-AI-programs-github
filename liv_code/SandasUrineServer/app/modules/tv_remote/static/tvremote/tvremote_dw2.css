@@ -1,0 +1,903 @@
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    background: #181818;
+    color: #f5f5f5;
+
+    font-family:
+        Arial,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        sans-serif;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+body {
+    touch-action: manipulation;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: 1px solid #555;
+    border-radius: 12px;
+
+    background: #292929;
+    color: #f5f5f5;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:active,
+button.pressed {
+    background: #555;
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   SCREEN
+   ========================================================= */
+
+#tvRemoteScreen {
+
+    position: fixed;
+    inset: 0;
+
+    width: 100vw;
+    height: 100dvh;
+
+    padding-top: max(
+        38px,
+        env(safe-area-inset-top)
+    );
+
+    padding-right: max(
+        8px,
+        env(safe-area-inset-right)
+    );
+
+    padding-bottom: max(
+        8px,
+        env(safe-area-inset-bottom)
+    );
+
+    padding-left: max(
+        8px,
+        env(safe-area-inset-left)
+    );
+
+    background: #181818;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.topButton {
+
+    height: 29px;
+
+    padding: 0 10px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.title {
+
+    flex: 1;
+
+    text-align: center;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.connectionStatus {
+
+    width: 90px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    font-size: 10px;
+
+    color: #aaa;
+}
+
+.statusDot {
+
+    width: 8px;
+    height: 8px;
+
+    margin-right: 5px;
+
+    border-radius: 50%;
+
+    background: #777;
+}
+
+.statusDot.online {
+    background: #35c759;
+}
+
+.statusDot.offline {
+    background: #ff453a;
+}
+
+.statusDot.busy {
+    background: #ffcc00;
+}
+
+
+/* =========================================================
+   REMOTE BODY
+   ========================================================= */
+
+.remote {
+
+    width: 100%;
+    max-width: 520px;
+
+    margin: 0 auto;
+
+    flex: 1;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 10px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   POWER
+   ========================================================= */
+
+.powerRow {
+
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+
+    flex: 0 0 auto;
+}
+
+.roundButton {
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    font-size: 23px;
+}
+
+.powerButton {
+    background: #5b2525;
+}
+
+
+/* =========================================================
+   D-PAD
+   ========================================================= */
+
+.dpad {
+
+    width: min(
+        76vw,
+        300px
+    );
+
+    height: min(
+        76vw,
+        300px
+    );
+
+    flex: 0 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    grid-template-rows:
+        1fr 1fr 1fr;
+
+    gap: 6px;
+}
+
+.remoteButton {
+
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 2px;
+
+    font-size: 16px;
+}
+
+.dpad button {
+    font-size: 25px;
+    border-radius: 20px;
+}
+
+.dpadUp {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.dpadLeft {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.dpadOK {
+
+    grid-column: 2;
+    grid-row: 2;
+
+    border-radius: 50% !important;
+
+    background: #3a3a3a;
+
+    font-size: 18px !important;
+    font-weight: 700;
+}
+
+.dpadRight {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.dpadDown {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+
+/* =========================================================
+   BACK / HOME / MUTE
+   ========================================================= */
+
+.threeButtons {
+
+    width: 100%;
+
+    display: flex;
+
+    gap: 7px;
+
+    flex: 0 0 auto;
+}
+
+.threeButtons button {
+
+    flex: 1;
+
+    min-height: 47px;
+
+    flex-direction: column;
+
+    font-size: 8px;
+}
+
+.largeIcon {
+
+    font-size: 20px;
+    line-height: 20px;
+}
+
+
+/* =========================================================
+   VOLUME
+   ========================================================= */
+
+.volumeControl {
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex: 0 0 auto;
+}
+
+.volumeButton {
+
+    width: 76px;
+    height: 45px;
+
+    border-radius: 13px;
+
+    font-size: 28px;
+}
+
+.volumeLabel {
+
+    flex: 1;
+
+    text-align: center;
+
+    color: #999;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   APPS
+   ========================================================= */
+
+.apps {
+
+    width: 100%;
+
+    display: flex;
+
+    gap: 7px;
+
+    flex: 0 0 auto;
+}
+
+.appButton {
+
+    flex: 1;
+
+    min-height: 42px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    border-radius: 10px;
+}
+
+.youtube {
+    background: #a91d22;
+}
+
+.netflix {
+    background: #80131a;
+}
+
+
+/* =========================================================
+   TEXT
+   ========================================================= */
+
+.textEntry {
+
+    width: 100%;
+
+    display: flex;
+
+    gap: 7px;
+
+    flex: 0 0 auto;
+}
+
+.textEntry input {
+
+    min-width: 0;
+
+    flex: 1;
+
+    height: 43px;
+
+    padding:
+        0 11px;
+
+    border:
+        1px solid #555;
+
+    border-radius: 10px;
+
+    background: #242424;
+
+    color: #fff;
+
+    outline: none;
+
+    font-size: 14px;
+
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+.textEntry button {
+
+    width: 66px;
+
+    border-radius: 10px;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   UTILITY
+   ========================================================= */
+
+.utilityButtons {
+
+    width: 100%;
+
+    display: flex;
+
+    gap: 7px;
+
+    flex: 0 0 auto;
+}
+
+.utilityButtons button {
+
+    flex: 1;
+
+    min-height: 39px;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 18px;
+
+    transform:
+        translateX(-50%)
+        translateY(15px);
+
+    max-width: 90vw;
+
+    padding:
+        9px 13px;
+
+    border-radius: 9px;
+
+    background: #333;
+
+    color: #fff;
+
+    font-size: 12px;
+
+    text-align: center;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity .15s,
+        transform .15s;
+
+    z-index: 100;
+}
+
+.toast.show {
+
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* =========================================================
+   SHORT PHONE -- iPhone 8
+   ========================================================= */
+
+@media
+    (orientation: portrait)
+    and (max-height: 700px) {
+
+    #tvRemoteScreen {
+        padding-top:
+            max(
+                32px,
+                env(safe-area-inset-top)
+            );
+    }
+
+    .topbar {
+        height: 32px;
+        flex-basis: 32px;
+    }
+
+    .title {
+        font-size: 14px;
+    }
+
+    .remote {
+        gap: 6px;
+    }
+
+    .dpad {
+
+        width: min(
+            68vw,
+            245px
+        );
+
+        height: min(
+            68vw,
+            245px
+        );
+
+        gap: 4px;
+    }
+
+    .dpad button {
+        border-radius: 15px;
+        font-size: 21px;
+    }
+
+    .dpadOK {
+        font-size: 15px !important;
+    }
+
+    .threeButtons button {
+        min-height: 40px;
+    }
+
+    .volumeButton {
+        height: 39px;
+    }
+
+    .appButton {
+        min-height: 36px;
+        font-size: 11px;
+    }
+
+    .textEntry input {
+        height: 38px;
+    }
+
+    .utilityButtons button {
+        min-height: 34px;
+    }
+}
+
+
+/* =========================================================
+   iPhone 13 portrait
+   ========================================================= */
+
+@media
+    (orientation: portrait)
+    and (min-height: 701px)
+    and (max-width: 500px) {
+
+    .dpad {
+
+        width: min(
+            78vw,
+            305px
+        );
+
+        height: min(
+            78vw,
+            305px
+        );
+    }
+}
+
+
+/* =========================================================
+   iPad mini 2 portrait
+   ========================================================= */
+
+@media
+    (orientation: portrait)
+    and (min-width: 600px)
+    and (max-width: 800px) {
+
+    #tvRemoteScreen {
+        padding-left:
+            max(
+                24px,
+                env(safe-area-inset-left)
+            );
+
+        padding-right:
+            max(
+                24px,
+                env(safe-area-inset-right)
+            );
+    }
+
+    .remote {
+        max-width: 620px;
+        gap: 12px;
+    }
+
+    .dpad {
+
+        width: 360px;
+        height: 360px;
+
+        gap: 7px;
+    }
+
+    .dpad button {
+        font-size: 30px;
+    }
+
+    .dpadOK {
+        font-size: 20px !important;
+    }
+
+    .threeButtons button {
+        min-height: 56px;
+    }
+
+    .volumeButton {
+        height: 55px;
+    }
+
+    .appButton {
+        min-height: 50px;
+        font-size: 14px;
+    }
+
+    .textEntry input {
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .textEntry button {
+        width: 85px;
+    }
+
+    .utilityButtons button {
+        min-height: 47px;
+        font-size: 12px;
+    }
+}
+
+
+/* =========================================================
+   LANDSCAPE
+   ========================================================= */
+
+@media (orientation: landscape) {
+
+    #tvRemoteScreen {
+
+        padding-top:
+            max(
+                30px,
+                env(safe-area-inset-top)
+            );
+    }
+
+    .topbar {
+        height: 31px;
+        flex-basis: 31px;
+    }
+
+    .remote {
+
+        max-width: 820px;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1.2fr 1fr;
+
+        grid-template-rows:
+            auto auto auto auto;
+
+        grid-template-areas:
+            "power dpad nav"
+            "power dpad volume"
+            "apps apps apps"
+            "text text utility";
+
+        align-items: center;
+
+        column-gap: 18px;
+        row-gap: 7px;
+    }
+
+    .powerRow {
+        grid-area: power;
+        align-self: start;
+    }
+
+    .dpad {
+        grid-area: dpad;
+
+        width: min(
+            46vh,
+            290px
+        );
+
+        height: min(
+            46vh,
+            290px
+        );
+
+        justify-self: center;
+    }
+
+    .threeButtons {
+        grid-area: nav;
+    }
+
+    .volumeControl {
+        grid-area: volume;
+    }
+
+    .apps {
+        grid-area: apps;
+    }
+
+    .textEntry {
+        grid-area: text;
+    }
+
+    .utilityButtons {
+        grid-area: utility;
+    }
+}
+
+
+/* =========================================================
+   iPad mini 2 landscape
+   ========================================================= */
+
+@media
+    (orientation: landscape)
+    and (min-width: 900px) {
+
+    #tvRemoteScreen {
+
+        padding-left:
+            max(
+                10px,
+                env(safe-area-inset-left)
+            );
+
+        padding-right:
+            max(
+                10px,
+                env(safe-area-inset-right)
+            );
+    }
+
+    .remote {
+        max-width: 960px;
+    }
+
+    .dpad {
+
+        width: min(
+            43vh,
+            330px
+        );
+
+        height: min(
+            43vh,
+            330px
+        );
+    }
+}
+
+
+/* =========================================================
+   VERY SHORT LANDSCAPE -- iPhone 8
+   ========================================================= */
+
+@media
+    (orientation: landscape)
+    and (max-height: 400px) {
+
+    .remote {
+        row-gap: 4px;
+        column-gap: 10px;
+    }
+
+    .dpad {
+
+        width: min(
+            56vh,
+            220px
+        );
+
+        height: min(
+            56vh,
+            220px
+        );
+
+        gap: 4px;
+    }
+
+    .dpad button {
+        font-size: 19px;
+    }
+
+    .threeButtons button {
+        min-height: 36px;
+    }
+
+    .volumeButton {
+        height: 36px;
+    }
+
+    .appButton {
+        min-height: 32px;
+        font-size: 10px;
+    }
+
+    .textEntry input {
+        height: 34px;
+    }
+
+    .utilityButtons button {
+        min-height: 31px;
+    }
+}

@@ -1,0 +1,21 @@
+[Unit]
+Description=Android TV Remote Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dkvlko
+Group=dkvlko
+WorkingDirectory=/home/dkvlko/live_code/TVAndroidRemote
+Environment=HOME=/home/dkvlko
+Environment=PATH=/home/dkvlko/python314_projects/venv_3.14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/home/dkvlko/python314_projects/venv_3.14/bin/python /home/dkvlko/live_code/TVAndroidRemote/tvandroidremote_daemon.py
+Restart=on-failure
+RestartSec=30
+
+RuntimeDirectory=tvandroidremote
+RuntimeDirectoryMode=0750
+
+[Install]
+WantedBy=multi-user.target

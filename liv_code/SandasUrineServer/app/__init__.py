@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_socketio import test_client
 
+
 #from flask_socketio import SocketIO
 
 #from .common.paths import (
@@ -101,6 +102,14 @@ def create_app():
     app.register_blueprint(
         wordle_bp,
         url_prefix=wordle_bp.app_url
+    )
+
+
+    from app.modules.tv_remote import tvremote_bp
+
+    app.register_blueprint(
+        tvremote_bp,
+        url_prefix=tvremote_bp.app_url
     )
     #print("Static folder:", app.static_folder)
     #Static folder: /home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/static
