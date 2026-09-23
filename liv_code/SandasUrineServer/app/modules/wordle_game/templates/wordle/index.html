@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no"
+    >
+
+    <title>Wordle</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('wordle.static', filename='wordle.css') }}"
+    >
+</head>
+
+<body>
+
+<div id="wordle-app">
+
+    <!-- ==========================================================
+         HEADER
+         ========================================================== -->
+
+    <header id="game-header">
+
+        <button id="new-game-button" type="button">
+            New
+        </button>
+
+        <div id="game-title">
+            WORDLE
+        </div>
+
+        <div id="attempt-counter">
+            0 / 6
+        </div>
+
+    </header>
+
+
+    <!-- ==========================================================
+         MESSAGE AREA
+         ========================================================== -->
+
+    <div id="message-area" aria-live="polite"></div>
+
+
+    <!-- ==========================================================
+         GAME BOARD
+         ========================================================== -->
+
+    <main id="game-board" aria-label="Wordle board">
+
+        <div class="row" data-row="0">
+            <div class="tile" data-col="0"></div>
+            <div class="tile" data-col="1"></div>
+            <div class="tile" data-col="2"></div>
+            <div class="tile" data-col="3"></div>
+            <div class="tile" data-col="4"></div>
+        </div>
+
+        <div class="row" data-row="1">
+            <div class="tile" data-col="0"></div>
+            <div class="tile" data-col="1"></div>
+            <div class="tile" data-col="2"></div>
+            <div class="tile" data-col="3"></div>
+            <div class="tile" data-col="4"></div>
+        </div>
+
+        <div class="row" data-row="2">
+            <div class="tile" data-col="0"></div>
+            <div class="tile" data-col="1"></div>
+            <div class="tile" data-col="2"></div>
+            <div class="tile" data-col="3"></div>
+            <div class="tile" data-col="4"></div>
+        </div>
+
+        <div class="row" data-row="3">
+            <div class="tile" data-col="0"></div>
+            <div class="tile" data-col="1"></div>
+            <div class="tile" data-col="2"></div>
+            <div class="tile" data-col="3"></div>
+            <div class="tile" data-col="4"></div>
+        </div>
+
+        <div class="row" data-row="4">
+            <div class="tile" data-col="0"></div>
+            <div class="tile" data-col="1"></div>
+            <div class="tile" data-col="2"></div>
+            <div class="tile" data-col="3"></div>
+            <div class="tile" data-col="4"></div>
+        </div>
+
+        <div class="row" data-row="5">
+            <div class="tile" data-col="0"></div>
+            <div class="tile" data-col="1"></div>
+            <div class="tile" data-col="2"></div>
+            <div class="tile" data-col="3"></div>
+            <div class="tile" data-col="4"></div>
+        </div>
+
+    </main>
+
+
+    <!-- ==========================================================
+         KEYBOARD
+         ========================================================== -->
+
+    <section id="keyboard" aria-label="Keyboard">
+
+        <div class="keyboard-row">
+
+            <button class="key" data-key="q">Q</button>
+            <button class="key" data-key="w">W</button>
+            <button class="key" data-key="e">E</button>
+            <button class="key" data-key="r">R</button>
+            <button class="key" data-key="t">T</button>
+            <button class="key" data-key="y">Y</button>
+            <button class="key" data-key="u">U</button>
+            <button class="key" data-key="i">I</button>
+            <button class="key" data-key="o">O</button>
+            <button class="key" data-key="p">P</button>
+
+        </div>
+
+        <div class="keyboard-row keyboard-middle">
+
+            <button class="key" data-key="a">A</button>
+            <button class="key" data-key="s">S</button>
+            <button class="key" data-key="d">D</button>
+            <button class="key" data-key="f">F</button>
+            <button class="key" data-key="g">G</button>
+            <button class="key" data-key="h">H</button>
+            <button class="key" data-key="j">J</button>
+            <button class="key" data-key="k">K</button>
+            <button class="key" data-key="l">L</button>
+
+        </div>
+
+        <div class="keyboard-row">
+
+            <button
+                class="key key-wide"
+                data-key="enter"
+            >
+                ENTER
+            </button>
+
+            <button class="key" data-key="z">Z</button>
+            <button class="key" data-key="x">X</button>
+            <button class="key" data-key="c">C</button>
+            <button class="key" data-key="v">V</button>
+            <button class="key" data-key="b">B</button>
+            <button class="key" data-key="n">N</button>
+            <button class="key" data-key="m">M</button>
+
+            <button
+                class="key key-wide backspace-key"
+                data-key="backspace"
+                aria-label="Backspace"
+            >
+                ⌫
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         END GAME OVERLAY
+         ========================================================== -->
+
+    <div id="game-overlay" class="hidden">
+
+        <div id="result-card">
+
+            <div id="result-symbol"></div>
+
+            <h1 id="result-title"></h1>
+
+            <p id="result-text"></p>
+
+            <div id="answer-display"></div>
+
+            <button id="play-again-button" type="button">
+                PLAY AGAIN
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script
+    src="{{ url_for('wordle.static', filename='wordle.js') }}"
+    defer
+></script>
+
+</body>
+</html>

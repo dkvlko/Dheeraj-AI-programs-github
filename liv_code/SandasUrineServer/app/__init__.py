@@ -95,6 +95,13 @@ def create_app():
         dailylog_bp,
         url_prefix= dailylog_bp.app_url
     )
+
+    from app.modules.wordle_game import wordle_bp
+
+    app.register_blueprint(
+        wordle_bp,
+        url_prefix=wordle_bp.app_url
+    )
     #print("Static folder:", app.static_folder)
     #Static folder: /home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/static
     #Static URL path: /static

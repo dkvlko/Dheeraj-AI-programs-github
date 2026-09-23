@@ -14,16 +14,20 @@ keyboard controls TV
 import subprocess
 import keyboard
 import datetime
-from scapy.all import ARP, Ether, srp
+import shlex
+import re
+import shutil
 
 # -----------------------------
 # TV MAC ADDRESS
 # -----------------------------
 
-TV_MAC = "b0:41:1d:d4:c8:29".lower()
+TV_MAC = "ec:fa:5c:bf:70:7c".lower()
 
-NETWORK = "192.168.29.0/24"
 TV_IP = None
+ADB_DEVICE = None
+NETWORK_INTERFACE = None
+NETWORK_CIDR = None
 
 remote_enabled = False
 
@@ -32,40 +36,214 @@ remote_enabled = False
 # DISCOVER TV
 # -----------------------------
 
+def get_network_info():
+    """
+    Determine the active IPv4 interface and connected subnet using
+    the native Linux 'ip' command.
+    """
+    result = subprocess.run(
+        ["ip", "-4", "route", "show", "scope", "link"],
+        capture_output=True,
+        text=True,
+        check=False
+    )
+
+    routes = []
+
+    for line in result.stdout.splitlines():
+        parts = line.split()
+
+        if not parts:
+            continue
+
+        # Example:
+        # 192.168.0.0/24 dev eno1 proto kernel scope link src 192.168.0.10
+        network = parts[0]
+
+        if "/" not in network:
+            continue
+
+        try:
+            interface = parts[parts.index("dev") + 1]
+        except (ValueError, IndexError):
+            continue
+
+        routes.append((network, interface))
+
+    # Prefer a non-container Ethernet/Wi-Fi interface.
+    preferred = [
+        item for item in routes
+        if not item[1].startswith(("docker", "br-", "virbr", "veth"))
+    ]
+
+    if preferred:
+        return preferred[0]
+
+    if routes:
+        return routes[0]
+
+    return None, None
+
+
+def get_adb_devices():
+    """Return ADB devices as a list of (serial, state)."""
+    result = subprocess.run(
+        ["adb", "devices"],
+        capture_output=True,
+        text=True,
+        check=False
+    )
+
+    devices = []
+
+    for line in result.stdout.splitlines():
+        line = line.strip()
+
+        if not line or line.startswith("List of devices attached"):
+            continue
+
+        parts = line.split()
+
+        if len(parts) >= 2:
+            devices.append((parts[0], parts[1]))
+
+    return devices
+
+
 def discover_tv():
+    global TV_IP, NETWORK_INTERFACE, NETWORK_CIDR
 
-    global TV_IP
+    print("\nDiscovering TV...\n")
 
-    print("\nScanning network for TV...\n")
+    # -------------------------------------------------
+    # First determine the active LAN interface/subnet.
+    # -------------------------------------------------
+    NETWORK_CIDR, NETWORK_INTERFACE = get_network_info()
 
-    arp = ARP(pdst=NETWORK)
-    ether = Ether(dst="ff:ff:ff:ff:ff:ff")
+    if not NETWORK_INTERFACE:
+        print("Could not determine the active network interface.")
+        return False
 
-    packet = ether / arp
-    result = srp(packet, timeout=3, verbose=0)[0]
+    print(f"Network interface: {NETWORK_INTERFACE}")
+    print(f"Network: {NETWORK_CIDR}")
 
-    for sent, received in result:
+    # -------------------------------------------------
+    # Use the native Linux neighbour table first.
+    # Use the native Linux neighbour table.
+    # -------------------------------------------------
+    result = subprocess.run(
+        ["ip", "neigh", "show", "dev", NETWORK_INTERFACE],
+        capture_output=True,
+        text=True,
+        check=False
+    )
 
-        ip = received.psrc
-        mac = received.hwsrc.lower()
+    print("\nDevices currently known by Linux:\n")
 
-        print(f"{ip}  {mac}")
+    for line in result.stdout.splitlines():
+        line = line.strip()
+
+        # Example:
+        # 192.168.0.102 lladdr ec:fa:5c:bf:70:7c REACHABLE
+        match = re.match(
+            r"^(\d+\.\d+\.\d+\.\d+)\s+"
+            r".*?\blladdr\s+([0-9a-fA-F:]{17})\b",
+            line
+        )
+
+        if not match:
+            continue
+
+        ip = match.group(1)
+        mac = match.group(2).lower()
+
+        print(f"{ip:<16} {mac}")
 
         if mac == TV_MAC:
             TV_IP = ip
-            print("\nTV FOUND:", TV_IP)
-            return
+            print(f"\nTV FOUND: {TV_IP}")
+            return True
+
+    # -------------------------------------------------
+    # If the TV is not currently in the neighbour table,
+    # use native 'nmap' if available.
+    #
+    # Since the TV exposes ADB on TCP/5555, scan for
+    # hosts with that port open.
+    # -------------------------------------------------
+    print("\nTV not found in the Linux neighbour table.")
+
+    nmap_path = shutil.which("nmap")
+
+    if nmap_path:
+        print(f"Scanning {NETWORK_CIDR} for TCP port 5555...\n")
+
+        result = subprocess.run(
+            [nmap_path, "-n", "-p", "5555", "--open", NETWORK_CIDR],
+            capture_output=True,
+            text=True,
+            check=False
+        )
+
+        found_ips = []
+
+        for line in result.stdout.splitlines():
+            match = re.match(r"^Nmap scan report for (\d+\.\d+\.\d+\.\d+)$", line.strip())
+
+            if match:
+                current_ip = match.group(1)
+                continue
+
+            if "5555/tcp" in line and "open" in line:
+                if "current_ip" in locals():
+                    found_ips.append(current_ip)
+
+        # Try each ADB candidate and verify it with adb.
+        for ip in found_ips:
+            print(f"ADB port found at {ip}:5555")
+
+            result = subprocess.run(
+                ["adb", "connect", f"{ip}:5555"],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+
+            devices = get_adb_devices()
+
+            for serial, state in devices:
+                if serial == f"{ip}:5555" and state == "device":
+                    TV_IP = ip
+                    print(f"\nTV/ADB DEVICE FOUND: {serial}")
+                    return True
+
+        print("No usable Android TV ADB device found.")
+
+    else:
+        print("nmap is not installed; skipping TCP/5555 discovery.")
+        print("Install it with: sudo apt install nmap")
 
     print("TV not found.")
-    exit()
-
+    return False
 
 # -----------------------------
 # ADB COMMAND
 # -----------------------------
 
 def adb(cmd):
-    subprocess.run(f"adb -s {TV_IP} {cmd}", shell=True)
+    if not ADB_DEVICE:
+        print("ADB device is not connected.")
+        return False
+
+    result = subprocess.run(
+        ["adb", "-s", ADB_DEVICE, *shlex.split(cmd)],
+        text=True
+    )
+
+    if result.returncode != 0:
+        print(f"ADB command failed: {cmd}")
+
+    return result.returncode == 0
 
 
 def key(code):
@@ -173,9 +351,76 @@ def toggle_remote():
 
 def connect():
 
-    subprocess.run("adb start-server", shell=True)
-    subprocess.run(f"adb connect {TV_IP}", shell=True)
+    global ADB_DEVICE
 
+    # Start the ADB server if necessary.
+    subprocess.run(
+        ["adb", "start-server"],
+        check=False
+    )
+
+    # -------------------------------------------------
+    # First use an already-existing ADB connection.
+    # -------------------------------------------------
+    devices = get_adb_devices()
+
+    for serial, state in devices:
+        if state != "device":
+            continue
+
+        # If discovery found an IP, match the ADB device to it.
+        if TV_IP and (
+            serial == TV_IP
+            or serial == f"{TV_IP}:5555"
+            or serial.startswith(TV_IP + ":")
+        ):
+            ADB_DEVICE = serial
+            print(f"Using existing ADB connection: {ADB_DEVICE}")
+            return True
+
+    # -------------------------------------------------
+    # No existing connection. Connect to the dynamically
+    # discovered TV IP on the standard ADB TCP port.
+    # -------------------------------------------------
+    if not TV_IP:
+        print("No TV IP address is available for ADB.")
+        return False
+
+    print(f"Connecting to TV at {TV_IP}:5555...")
+
+    result = subprocess.run(
+        ["adb", "connect", f"{TV_IP}:5555"],
+        capture_output=True,
+        text=True,
+        check=False
+    )
+
+    output = (result.stdout.strip() or result.stderr.strip())
+
+    if output:
+        print(output)
+
+    # -------------------------------------------------
+    # Verify that ADB actually reports the TV as a
+    # usable 'device'.
+    # -------------------------------------------------
+    devices = get_adb_devices()
+
+    for serial, state in devices:
+        if (
+            state == "device"
+            and (
+                serial == TV_IP
+                or serial == f"{TV_IP}:5555"
+                or serial.startswith(TV_IP + ":")
+            )
+        ):
+            ADB_DEVICE = serial
+            print(f"ADB connected: {ADB_DEVICE}")
+            return True
+
+    print("ADB connection to TV failed.")
+    return False
 
 # -----------------------------
 # HELP
@@ -215,8 +460,13 @@ def help_menu():
 
 def main():
 
-    discover_tv()
-    connect()
+    if not discover_tv():
+        print("Remote cannot start because the TV could not be discovered.")
+        return
+
+    if not connect():
+        print("Remote cannot start because the TV is not available through ADB.")
+        return
 
     help_menu()
 

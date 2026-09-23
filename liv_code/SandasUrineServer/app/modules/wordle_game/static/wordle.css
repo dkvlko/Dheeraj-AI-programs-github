@@ -1,0 +1,821 @@
+/* ================================================================
+   WORDLE
+   ================================================================ */
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    font-family: inherit;
+    touch-action: manipulation;
+}
+
+/* ------------------------------------------------
+   PUZZLE VISIBILITY BASELINE
+   The board must remain visible independently
+   of the keyboard's presence/visibility.
+   ------------------------------------------------ */
+#game-board {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    z-index: 10 !important;
+}
+
+#game-board .row {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#game-board .tile {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+
+/* ================================================================
+   IPHONE 8
+   375 × 667 CSS PIXELS
+   ================================================================ */
+
+@media only screen and (width: 375px) and (orientation: portrait) {
+
+
+
+    html, body {
+        width: 375px;
+        height: 667px;
+        overflow: hidden;
+        background: #ffffff;
+        color: #111111;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body { display: block; }
+
+    #wordle-app {
+        position: relative;
+        width: 375px;
+        height: 667px;
+        overflow: hidden;
+        background: #ffffff;
+    }
+
+    #game-header {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 375px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #d3d6da;
+    }
+
+    #game-title {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 3px;
+    }
+
+    #new-game-button {
+        position: absolute;
+        left: 10px;
+        top: 8px;
+        height: 30px;
+        padding: 0 9px;
+        border: 2px solid #999;
+        border-radius: 7px;
+        background: white;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    #attempt-counter {
+        position: absolute;
+        right: 10px;
+        top: 15px;
+        font-size: 12px;
+        color: #555;
+    }
+
+    #message-area {
+        position: absolute;
+        z-index: 20;
+        top: 53px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 13px;
+        font-weight: 700;
+        opacity: 0;
+        pointer-events: none;
+        white-space: nowrap;
+        transition: opacity 0.2s;
+    }
+
+    #message-area.show { opacity: 1; }
+
+    #game-board {
+        position: absolute;
+        z-index: 10;
+        left: 50%;
+        top: 58px;
+        transform: translateX(-50%);
+        width: 280px;
+        height: 336px;
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+        gap: 3px;
+    }
+
+    #game-board .row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 3px;
+    }
+
+    #game-board .tile {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #d3d6da;
+        font-size: 27px;
+        font-weight: 800;
+        text-transform: uppercase;
+        background: #ffffff;
+        transition: transform 0.1s, background-color 0.25s, border-color 0.25s;
+    }
+
+    #game-board .tile.filled { border-color: #878a8c; }
+
+    #game-board .tile.correct {
+        background: #6aaa64;
+        border-color: #6aaa64;
+        color: white;
+    }
+
+    #game-board .tile.present {
+        background: #c9b458;
+        border-color: #c9b458;
+        color: white;
+    }
+
+    #game-board .tile.absent {
+        background: #787c7e;
+        border-color: #787c7e;
+        color: white;
+    }
+
+    #game-board .tile.pop { transform: scale(1.06); }
+
+    #keyboard {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0;
+        overflow: visible;
+        z-index: 5;
+    }
+
+    #keyboard .keyboard-row {
+        width: 375px;
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+}
+
+    #keyboard .keyboard-middle {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #keyboard .key {
+        flex: 0 0 auto;
+        width: 31px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 0;
+        border-radius: 5px;
+        background: #d3d6da;
+        color: #111;
+        font-size: 13px;
+        font-weight: 700;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    #keyboard .key:active { transform: scale(0.94); }
+
+    #keyboard .key-wide {
+        width: 44px;
+        font-size: 8px;
+    }
+
+    #keyboard .backspace-key { font-size: 18px; }
+
+    #keyboard .key.correct { background: #6aaa64; color: white; }
+    #keyboard .key.present { background: #c9b458; color: white; }
+    #keyboard .key.absent { background: #787c7e; color: white; }
+
+
+    #keyboard .keyboard-row:last-child {
+        margin-bottom: 0;
+    }
+    #game-overlay {
+        position: absolute;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 375px;
+        height: 667px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    #game-overlay.hidden { display: none; }
+
+    #result-card {
+        width: 320px;
+        padding: 25px 15px;
+        text-align: center;
+        border: 1px solid #d3d6da;
+        border-radius: 12px;
+        background: white;
+    }
+
+    #result-symbol { font-size: 38px; }
+    #result-title { margin: 8px 0; }
+    #result-text { margin: 8px 0; }
+
+    #answer-display {
+        margin: 20px 0;
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: 5px;
+    }
+
+    #play-again-button {
+        padding: 13px 28px;
+        border: 0;
+        border-radius: 5px;
+        background: #111;
+        color: white;
+        font-weight: 700;
+    }
+}
+
+
+/* ================================================================
+   IPHONE 13
+   390 × 844 CSS PIXELS
+   ================================================================ */
+
+@media only screen and (width: 390px) and (orientation: portrait) {
+
+    /* Keyboard geometry is set by layoutKeyboard() in wordle.js. */
+    --keyboard-top: auto;
+    --keyboard-height: auto;
+    --keyboard-row-height: 47px;
+    --keyboard-row-gap: 5px;
+
+
+    html, body {
+        width: 390px;
+        height: 844px;
+        overflow: hidden;
+        background: #ffffff;
+        color: #111111;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body { display: block; }
+
+    #wordle-app {
+        position: relative;
+        width: 390px;
+        height: 844px;
+        overflow: hidden;
+        background: #ffffff;
+    }
+
+    #game-header {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 390px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #d3d6da;
+    }
+
+    #game-title {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 4px;
+    }
+
+    #new-game-button {
+        position: absolute;
+        left: 16px;
+        top: 8px;
+        height: 34px;
+        padding: 0 12px;
+        border: 2px solid #999;
+        border-radius: 7px;
+        background: white;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    #attempt-counter {
+        position: absolute;
+        right: 16px;
+        top: 17px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    #message-area {
+        position: absolute;
+        z-index: 20;
+        top: 58px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 14px;
+        font-weight: 700;
+        opacity: 0;
+        pointer-events: none;
+        white-space: nowrap;
+        transition: opacity 0.2s;
+    }
+
+    #message-area.show { opacity: 1; }
+
+    #game-board {
+        position: absolute;
+        z-index: 10;
+        left: 50%;
+        top: 60px;
+        transform: translateX(-50%);
+        width: 370px;
+        height: 444px;
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+        gap: 4px;
+    }
+
+    #game-board .row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+    }
+
+    #game-board .tile {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #d3d6da;
+        font-size: 30px;
+        font-weight: 800;
+        text-transform: uppercase;
+        background: #ffffff;
+        transition: transform 0.1s, background-color 0.25s, border-color 0.25s;
+    }
+
+    #game-board .tile.filled { border-color: #878a8c; }
+
+    #game-board .tile.correct {
+        background: #6aaa64;
+        border-color: #6aaa64;
+        color: white;
+    }
+
+    #game-board .tile.present {
+        background: #c9b458;
+        border-color: #c9b458;
+        color: white;
+    }
+
+    #game-board .tile.absent {
+        background: #787c7e;
+        border-color: #787c7e;
+        color: white;
+    }
+
+    #game-board .tile.pop { transform: scale(1.06); }
+
+    #keyboard {
+        position: absolute;
+        z-index: 5;
+        left: 0;
+        top: 0;
+
+        width: 390px;
+        
+        height:auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0;
+        overflow: visible;
+    }
+
+    #keyboard .keyboard-row {
+        width: 390px;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+}
+
+    #keyboard .keyboard-middle {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #keyboard .key {
+        flex: 0 0 auto;
+        width: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 0;
+        border-radius: 5px;
+        background: #d3d6da;
+        color: #111;
+        font-size: 14px;
+        font-weight: 700;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    #keyboard .key:active { transform: scale(0.94); }
+
+    #keyboard .key-wide {
+        width: 47px;
+        font-size: 8px;
+    }
+
+    #keyboard .backspace-key { font-size: 20px; }
+
+    #keyboard .key.correct { background: #6aaa64; color: white; }
+    #keyboard .key.present { background: #c9b458; color: white; }
+    #keyboard .key.absent { background: #787c7e; color: white; }
+
+
+    #keyboard .keyboard-row:last-child {
+        margin-bottom: 0;
+    }
+    #game-overlay {
+        position: absolute;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 390px;
+        height: 844px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    #game-overlay.hidden { display: none; }
+
+    #result-card {
+        width: 330px;
+        padding: 25px 15px;
+        text-align: center;
+        border: 1px solid #d3d6da;
+        border-radius: 12px;
+        background: white;
+    }
+
+    #result-symbol { font-size: 38px; }
+    #result-title { margin: 8px 0; }
+    #result-text { margin: 8px 0; }
+
+    #answer-display {
+        margin: 20px 0;
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: 5px;
+    }
+
+    #play-again-button {
+        padding: 13px 28px;
+        border: 0;
+        border-radius: 5px;
+        background: #111;
+        color: white;
+        font-weight: 700;
+    }
+}
+
+
+/* ================================================================
+   IPAD MINI 2
+   768 × 1024 CSS PIXELS
+   ================================================================ */
+
+@media only screen and (width: 768px) and (orientation: portrait) {
+
+    /* Keyboard geometry is set by layoutKeyboard() in wordle.js. */
+    --keyboard-top: auto;
+    --keyboard-height: auto;
+    --keyboard-row-height: 64px;
+    --keyboard-row-gap: 8px;
+
+
+    html, body {
+        width: 768px;
+        height: 1024px;
+        overflow: hidden;
+        background: #ffffff;
+        color: #111111;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body { display: block; }
+
+    #wordle-app {
+        position: relative;
+        width: 768px;
+        height: 1024px;
+        overflow: hidden;
+        background: #ffffff;
+    }
+
+    #game-header {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 768px;
+        height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #d3d6da;
+    }
+
+    #game-title {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: 5px;
+    }
+
+    #new-game-button {
+        position: absolute;
+        left: 18px;
+        top: 11px;
+        height: 40px;
+        padding: 0 16px;
+        border: 2px solid #999;
+        border-radius: 7px;
+        background: white;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    #attempt-counter {
+        position: absolute;
+        right: 18px;
+        top: 21px;
+        font-size: 15px;
+        color: #555;
+    }
+
+    #message-area {
+        position: absolute;
+        z-index: 20;
+        top: 73px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 16px;
+        font-weight: 700;
+        opacity: 0;
+        pointer-events: none;
+        white-space: nowrap;
+        transition: opacity 0.2s;
+    }
+
+    #message-area.show { opacity: 1; }
+
+    #game-board {
+        position: absolute;
+        z-index: 10;
+        left: 50%;
+        top: 82px;
+        transform: translateX(-50%);
+        width: 540px;
+        height: 648px;
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+        gap: 6px;
+    }
+
+    #game-board .row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+    }
+
+    #game-board .tile {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid #d3d6da;
+        font-size: 52px;
+        font-weight: 800;
+        text-transform: uppercase;
+        background: #ffffff;
+        transition: transform 0.1s, background-color 0.25s, border-color 0.25s;
+    }
+
+    #game-board .tile.filled { border-color: #878a8c; }
+
+    #game-board .tile.correct {
+        background: #6aaa64;
+        border-color: #6aaa64;
+        color: white;
+    }
+
+    #game-board .tile.present {
+        background: #c9b458;
+        border-color: #c9b458;
+        color: white;
+    }
+
+    #game-board .tile.absent {
+        background: #787c7e;
+        border-color: #787c7e;
+        color: white;
+    }
+
+    #game-board .tile.pop { transform: scale(1.06); }
+
+    #keyboard {
+        position: absolute;
+        z-index: 5;
+        left: 0;
+        top: 0;
+        width: 768px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0;
+        overflow: visible;
+    }
+
+    #keyboard .keyboard-row {
+        width: 768px;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+}
+
+    #keyboard .keyboard-middle {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #keyboard .key {
+        flex: 0 0 auto;
+        width: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 0;
+        border-radius: 7px;
+        background: #d3d6da;
+        color: #111;
+        font-size: 20px;
+        font-weight: 700;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    #keyboard .key:active { transform: scale(0.94); }
+
+    #keyboard .key-wide {
+        width: 78px;
+        font-size: 11px;
+    }
+
+    #keyboard .backspace-key { font-size: 25px; }
+
+    #keyboard .key.correct { background: #6aaa64; color: white; }
+    #keyboard .key.present { background: #c9b458; color: white; }
+    #keyboard .key.absent { background: #787c7e; color: white; }
+
+
+    #keyboard .keyboard-row:last-child {
+        margin-bottom: 0;
+    }
+    #game-overlay {
+        position: absolute;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 768px;
+        height: 1024px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    #game-overlay.hidden { display: none; }
+
+    #result-card {
+        width: 450px;
+        padding: 30px;
+        text-align: center;
+        border: 1px solid #d3d6da;
+        border-radius: 12px;
+        background: white;
+    }
+
+    #result-symbol { font-size: 48px; }
+    #result-title { margin: 10px 0; font-size: 30px; }
+    #result-text { margin: 10px 0; font-size: 18px; }
+
+    #answer-display {
+        margin: 24px 0;
+        font-size: 38px;
+        font-weight: 800;
+        letter-spacing: 6px;
+    }
+
+    #play-again-button {
+        padding: 15px 35px;
+        border: 0;
+        border-radius: 6px;
+        background: #111;
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+    }
+}
+
+
+/* ================================================================
+   LANDSCAPE
+   ================================================================ */
+
+@media only screen and (orientation: landscape) {
+
+    #wordle-app::before {
+        content: "Please rotate your device to portrait mode.";
+
+        position: absolute;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 30px;
+
+        background: white;
+
+        font-size: 20px;
+        font-weight: 700;
+        text-align: center;
+    }
+}
