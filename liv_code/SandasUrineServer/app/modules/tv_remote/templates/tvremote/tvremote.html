@@ -24,23 +24,14 @@
 
 <div id="tvRemoteScreen">
 
-    <!-- =====================================================
-         TOP BAR
-         ===================================================== -->
-
     <header class="topbar">
-
         <button
             type="button"
             id="backToRemoteButton"
             class="topbarButton"
-        >
-            ←
-        </button>
+        >←</button>
 
-        <div class="topbarTitle">
-            Android TV
-        </div>
+        <div class="topbarTitle">Android TV</div>
 
         <div
             id="connectionStatus"
@@ -48,28 +39,9 @@
         >
             Connecting...
         </div>
-
     </header>
 
-
-    <!-- =====================================================
-         REMOTE COORDINATE SYSTEM
-         
-         The complete remote uses the device viewport as its
-         coordinate system.
-         ===================================================== -->
-
     <main class="remote">
-
-        <!-- =================================================
-             DEVELOPMENT GRID OVERLAY
-
-             The checkbox controls visibility.
-
-             IMPORTANT:
-             The grid is an overlay and does not participate
-             in layout.
-             ================================================= -->
 
         <div
             id="gridOverlay"
@@ -79,46 +51,25 @@
             <div class="gridCenterMarker"></div>
         </div>
 
-
-        <!-- =================================================
-             DEVELOPMENT CONTROLS
-
-             This is intentionally positioned independently
-             from the remote grid.
-             ================================================= -->
-
         <div class="gridControls">
-
             <label>
                 <input
                     type="checkbox"
                     id="showGrid"
+                    checked
                 >
                 Show 8 × 8 Grid
             </label>
-
         </div>
 
+        <div id="remoteGrid" class="remoteGrid">
 
-        <!-- =================================================
-             ACTUAL REMOTE GRID
-
-             All remote controls belong inside this grid.
-             ================================================= -->
-
-        <div
-            id="remoteGrid"
-            class="remoteGrid"
-        >
-
-
-            <!-- =============================================
-                 POWER
-                 ============================================= -->
+            <!-- ROW 1 -->
 
             <button
                 type="button"
                 class="remoteButton powerButton"
+                style="grid-column: 7 / 9; grid-row: 1;"
                 data-command="power"
                 aria-label="Power"
             >
@@ -126,102 +77,140 @@
             </button>
 
 
-            <!-- =============================================
-                 D-PAD
-                 ============================================= -->
+            <!-- ROW 2 -->
 
-            <section class="dpad">
-
-                <button
-                    type="button"
-                    class="remoteButton dpadButton dpadUp"
-                    data-command="up"
-                    aria-label="Up"
-                >
-                    ▲
-                </button>
-
-                <button
-                    type="button"
-                    class="remoteButton dpadButton dpadLeft"
-                    data-command="left"
-                    aria-label="Left"
-                >
-                    ◀
-                </button>
-
-                <button
-                    type="button"
-                    class="remoteButton dpadButton dpadSelect"
-                    data-command="select"
-                    aria-label="OK"
-                >
-                    OK
-                </button>
-
-                <button
-                    type="button"
-                    class="remoteButton dpadButton dpadRight"
-                    data-command="right"
-                    aria-label="Right"
-                >
-                    ▶
-                </button>
-
-                <button
-                    type="button"
-                    class="remoteButton dpadButton dpadDown"
-                    data-command="down"
-                    aria-label="Down"
-                >
-                    ▼
-                </button>
-
-            </section>
+            <button
+                type="button"
+                class="remoteButton dpadButton dpadUp"
+                style="grid-column: 4 / 6; grid-row: 2;"
+                data-command="up"
+                aria-label="Up"
+            >
+                ▲
+            </button>
 
 
-            <!-- =============================================
-                 BACK / HOME / MUTE
-                 ============================================= -->
+            <!-- ROW 3 -->
 
-            <section class="navigationButtons">
+            <button
+                type="button"
+                class="remoteButton dpadButton dpadLeft"
+                style="grid-column: 1 / 4; grid-row: 3;"
+                data-command="left"
+                aria-label="Left"
+            >
+                ◀
+            </button>
 
-                <button
-                    type="button"
-                    class="remoteButton navigationButton"
-                    data-command="back"
-                >
-                    <span class="largeIcon">↩</span>
-                    <span>BACK</span>
-                </button>
+            <button
+                type="button"
+                class="remoteButton dpadButton dpadSelect"
+                style="grid-column: 4 / 6; grid-row: 3;"
+                data-command="select"
+                aria-label="OK"
+            >
+                OK
+            </button>
 
-                <button
-                    type="button"
-                    class="remoteButton navigationButton"
-                    data-command="home"
-                >
-                    <span class="largeIcon">⌂</span>
-                    <span>HOME</span>
-                </button>
-
-                <button
-                    type="button"
-                    class="remoteButton navigationButton"
-                    data-command="mute"
-                >
-                    <span class="largeIcon">🔇</span>
-                    <span>MUTE</span>
-                </button>
-
-            </section>
+            <button
+                type="button"
+                class="remoteButton dpadButton dpadRight"
+                style="grid-column: 6 / 9; grid-row: 3;"
+                data-command="right"
+                aria-label="Right"
+            >
+                ▶
+            </button>
 
 
-            <!-- =============================================
-                 VOLUME
-                 ============================================= -->
+            <!-- ROW 4 -->
 
-            <section class="volumeControl">
+            <button
+                type="button"
+                class="remoteButton dpadButton dpadDown"
+                style="grid-column: 4 / 6; grid-row: 4;"
+                data-command="down"
+                aria-label="Down"
+            >
+                ▼
+            </button>
 
+
+            <!-- ROW 5 -->
+
+            <button
+                type="button"
+                class="remoteButton navigationButton backButton"
+                style="grid-column: 1 / 4; grid-row: 5;"
+                data-command="back"
+                aria-label="Back"
+            >
+                <span class="largeIcon">↩</span>
+                <span>BACK</span>
+            </button>
+
+            <button
+                type="button"
+                class="remoteButton navigationButton homeButton"
+                style="grid-column: 4 / 6; grid-row: 5;"
+                data-command="home"
+                aria-label="Home"
+            >
+                <span class="largeIcon">⌂</span>
+                <span>HOME</span>
+            </button>
+
+            <button
+                type="button"
+                class="remoteButton navigationButton muteButton"
+                style="grid-column: 6 / 9; grid-row: 5;"
+                data-command="mute"
+                aria-label="Mute"
+            >
+                <span class="largeIcon">🔇</span>
+                <span>MUTE</span>
+            </button>
+
+
+            <!-- ROW 6 -->
+
+            <button
+                type="button"
+                class="remoteButton appButton netflixButton"
+                style="grid-column: 1 / 4; grid-row: 6;"
+                data-command="netflix"
+                aria-label="Netflix"
+            >
+                Netflix
+            </button>
+
+            <button
+                type="button"
+                class="remoteButton appButton youtubeButton"
+                style="grid-column: 4 / 6; grid-row: 6;"
+                data-command="youtube"
+                aria-label="YouTube"
+            >
+                YouTube
+            </button>
+
+            <button
+                type="button"
+                class="remoteButton appButton primeVideoButton"
+                style="grid-column: 6 / 9; grid-row: 6;"
+                data-package="com.amazon.amazonvideo.livingroom"
+                aria-label="Prime Video"
+            >
+                Prime Video
+            </button>
+
+
+            <!-- ROW 7 -->
+
+            <section
+                class="volumeControl"
+                style="grid-column: 1 / 9; grid-row: 7;"
+            >
                 <button
                     type="button"
                     class="remoteButton volumeButton"
@@ -243,49 +232,15 @@
                 >
                     +
                 </button>
-
             </section>
 
 
-            <!-- =============================================
-                 APPS
-                 ============================================= -->
+            <!-- ROW 8 -->
 
-            <section class="appButtons">
-
-                <button
-                    type="button"
-                    class="remoteButton appButton"
-                    data-command="youtube"
-                >
-                    YouTube
-                </button>
-
-                <button
-                    type="button"
-                    class="remoteButton appButton"
-                    data-command="netflix"
-                >
-                    Netflix
-                </button>
-
-                <button
-                    type="button"
-                    class="remoteButton appButton"
-                    data-package="com.amazon.amazonvideo.livingroom"
-                >
-                    Prime Video
-                </button>
-
-            </section>
-
-
-            <!-- =============================================
-                 TEXT ENTRY
-                 ============================================= -->
-
-            <section class="textEntry">
-
+            <section
+                class="textEntry"
+                style="grid-column: 1 / 9; grid-row: 8;"
+            >
                 <textarea
                     id="tvTextInput"
                     rows="3"
@@ -304,42 +259,7 @@
                 >
                     SEND
                 </button>
-
             </section>
-
-
-            <!-- =============================================
-                 UTILITY BUTTONS
-                 ============================================= -->
-
-            <section class="utilityButtons">
-
-                <button
-                    type="button"
-                    class="remoteButton utilityButton"
-                    data-command="status"
-                >
-                    STATUS
-                </button>
-
-                <button
-                    type="button"
-                    class="remoteButton utilityButton"
-                    data-command="screenshot"
-                >
-                    SCREENSHOT
-                </button>
-
-                <button
-                    type="button"
-                    id="fullscreenButton"
-                    class="remoteButton utilityButton"
-                >
-                    FULLSCREEN
-                </button>
-
-            </section>
-
 
         </div>
 
@@ -347,27 +267,11 @@
 
 </div>
 
-
-<!-- =========================================================
-     SOCKET.IO
-     ========================================================= -->
-
 <script src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
-
-
-<!-- =========================================================
-     TV REMOTE JAVASCRIPT
-     ========================================================= -->
 
 <script src="{{ url_for('tvremote.static', filename='tvremote/tvremote.js') }}"></script>
 
-
-<!-- =========================================================
-     DEVELOPMENT GRID TOGGLE
-     ========================================================= -->
-
 <script>
-
 (function () {
 
     const checkbox = document.getElementById("showGrid");
@@ -378,12 +282,10 @@
     }
 
     function updateGridVisibility() {
-
         overlay.classList.toggle(
             "showGrid",
             checkbox.checked
         );
-
     }
 
     checkbox.addEventListener(
@@ -394,7 +296,6 @@
     updateGridVisibility();
 
 })();
-
 </script>
 
 </body>

@@ -1,38 +1,27 @@
 {
-    "generated_at": "2026-09-23T00:18:14.435228+05:30",
+    "generated_at": "2026-09-24T00:03:36.684767+05:30",
     "timezone": "Asia/Kolkata",
-    "start_date": "2026-09-23",
-    "end_date": "2026-09-29",
+    "start_date": "2026-09-24",
+    "end_date": "2026-09-30",
     "number_of_days": 7,
     "days": [
         {
-            "date": "2026-09-23",
-            "day": "Wednesday",
+            "date": "2026-09-24",
+            "day": "Thursday",
             "is_today": true,
             "events": [
                 {
                     "event_id": null,
-                    "event_name": "Munshipuliya Closed and Mahangar has open Market",
-                    "event_type": "WEEKLY_RULE",
-                    "description": "Wednesday weekly market arrangement.",
-                    "date_status": "RULE",
-                    "date_calculation_method": "WEEKLY_DAY_OF_WEEK",
+                    "event_name": "No Events Today",
+                    "event_type": "NO_EVENT",
+                    "description": "No holiday or registered event was found for today.",
+                    "date_status": "INFORMATIONAL",
+                    "date_calculation_method": null,
                     "is_confirmed": true,
                     "notes": null,
-                    "effects": [
-                        {
-                            "effect_type": "LOCAL_LIFE",
-                            "effect": "Munshipuliya Closed and Mahangar has open Market"
-                        }
-                    ]
+                    "effects": []
                 }
             ]
-        },
-        {
-            "date": "2026-09-24",
-            "day": "Thursday",
-            "is_today": false,
-            "events": []
         },
         {
             "date": "2026-09-25",
@@ -97,6 +86,29 @@
             "day": "Tuesday",
             "is_today": false,
             "events": []
+        },
+        {
+            "date": "2026-09-30",
+            "day": "Wednesday",
+            "is_today": false,
+            "events": [
+                {
+                    "event_id": null,
+                    "event_name": "Munshipuliya Closed and Mahangar has open Market",
+                    "event_type": "WEEKLY_RULE",
+                    "description": "Wednesday weekly market arrangement.",
+                    "date_status": "RULE",
+                    "date_calculation_method": "WEEKLY_DAY_OF_WEEK",
+                    "is_confirmed": true,
+                    "notes": null,
+                    "effects": [
+                        {
+                            "effect_type": "LOCAL_LIFE",
+                            "effect": "Munshipuliya Closed and Mahangar has open Market"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

@@ -14,6 +14,7 @@ import shutil
 import utility_dedupl 
 import  utility_ranksort 
 import  utility_json2html 
+import indianexpress
 import generate_sortedevents
 import numpy as np
 # =========================================================
@@ -670,6 +671,7 @@ def main():
 
     #print("All files deleted from ./data")
     rss_files = download_rss(urls, "data")
+    indianexpress.generate_rss()
 
     Common_RSS = combine_rss_files(
         rss_files

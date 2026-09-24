@@ -159,23 +159,74 @@ button.pressed {
    the rule below while tuning the UI if you want to see the grid.
    --------------------------------------------------------------- */
 
+
 .remoteGrid {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+
+    width: 100%;
+    height: 100%;
+}
+
+/* Visible 10 × 10 grid */
+
+.remoteGrid.showGrid {
+    background-image:
+        linear-gradient(
+            to right,
+            rgba(0, 255, 255, 0.35) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(0, 255, 255, 0.35) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        12.5% 12.5%,
+        12.5% 12.5%;
+}
+
+
+/* Outer boundary */
+
+.remoteGrid.showGrid::before {
+    content: "";
+
     position: absolute;
     inset: 0;
 
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    gap: var(--grid-gap);
+    border: 2px solid rgba(255, 255, 0, 0.8);
 
-    align-items: center;
-    justify-items: center;
+    pointer-events: none;
 
-    /* Uncomment temporarily when tuning coordinates. */
-    /* background-image:
-        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-    background-size: 10% 10%; */
+    z-index: 1000;
+}
+
+
+/* Centre lines */
+
+.remoteGrid.showGrid::after {
+    content: "";
+
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+
+    width: 2px;
+
+    background: rgba(255, 0, 0, 0.7);
+
+    transform: translateX(-1px);
+
+    pointer-events: none;
+
+    z-index: 1001;
 }
 
 .remoteButton,
@@ -429,6 +480,84 @@ button.pressed {
     transform: translate(-50%, 0);
 }
 
+.gridOverlay {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    display: none;
+
+    z-index: 1000;
+}
+
+.gridOverlay.showGrid {
+    display: block;
+
+    background-image:
+        linear-gradient(
+            to right,
+            rgba(0, 255, 255, 0.35) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(0, 255, 255, 0.35) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        12.5% 12.5%,
+        12.5% 12.5%;
+}
+
+
+.gridOverlay::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    border: 2px solid rgba(255, 255, 0, 0.8);
+}
+
+
+.gridOverlay::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 0;
+    bottom: 0;
+
+    width: 2px;
+
+    background: rgba(255, 0, 0, 0.75);
+
+    transform: translateX(-1px);
+}
+
+
+/* Exact centre marker */
+
+.gridCenterMarker {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 12px;
+    height: 12px;
+
+    transform: translate(-50%, -50%);
+
+    border: 2px solid red;
+    border-radius: 50%;
+
+    background: transparent;
+}
+
 /* ================================================================
    DEVICE PROFILES
    ================================================================ */
@@ -561,5 +690,112 @@ button.pressed {
     background-image:
         linear-gradient(to right, rgba(255,255,255,.12) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255,255,255,.12) 1px, transparent 1px);
-    background-size: 10% 10%;
+    background-size: 12.5% 12.5%;
+}
+
+
+/* ================================================================
+   iPHONE 13 PORTRAIT — 8 x 8 COORDINATE LAYOUT
+
+   Coordinate convention:
+       column 1, row 1 = top-left cell
+       column 8, row 1 = top-right cell
+
+   A range such as 1 / 4 means columns 1, 2 and 3.
+   ================================================================ */
+@media (min-width: 381px) and (max-width: 500px) and (orientation: portrait) {
+
+    /* Sections are transparent to the parent grid so their buttons
+       can be assigned directly to the 8 x 8 coordinate system. */
+    .dpad,
+    .navigationButtons,
+    .appButtons {
+        display: contents;
+    }
+
+    /* Power: columns 7-8, row 1 */
+    .powerButton {
+        grid-column: 7 / 9;
+        grid-row: 1;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        aspect-ratio: auto;
+        border-radius: var(--button-radius);
+    }
+
+    /* D-pad */
+    .dpadUp {
+        grid-column: 4 / 6;
+        grid-row: 2;
+    }
+
+    .dpadLeft {
+        grid-column: 1 / 4;
+        grid-row: 3;
+    }
+
+    .dpadOK,
+    .dpadSelect {
+        grid-column: 4 / 6;
+        grid-row: 3;
+    }
+
+    .dpadRight {
+        grid-column: 6 / 9;
+        grid-row: 3;
+    }
+
+    .dpadDown {
+        grid-column: 4 / 6;
+        grid-row: 4;
+    }
+
+    /* Back / Home / Mute */
+    .navigationButtons .navigationButton:nth-child(1) {
+        grid-column: 1 / 4;
+        grid-row: 5;
+    }
+
+    .navigationButtons .navigationButton:nth-child(2) {
+        grid-column: 4 / 6;
+        grid-row: 5;
+    }
+
+    .navigationButtons .navigationButton:nth-child(3) {
+        grid-column: 6 / 9;
+        grid-row: 5;
+    }
+
+    /* Apps */
+    .appButtons .appButton:nth-child(1) {
+        grid-column: 4 / 6;
+        grid-row: 6;
+    }
+
+    .appButtons .appButton:nth-child(2) {
+        grid-column: 1 / 4;
+        grid-row: 6;
+    }
+
+    .appButtons .appButton:nth-child(3) {
+        grid-column: 6 / 9;
+        grid-row: 6;
+    }
+
+    /* The remaining controls are temporarily kept in rows 7-8.
+       We can assign their exact coordinates next. */
+    .volumeControl {
+        grid-column: 1 / 9;
+        grid-row: 7;
+    }
+
+    .textEntry {
+        grid-column: 1 / 9;
+        grid-row: 8;
+    }
+
+    .utilityButtons {
+        display: none;
+    }
 }

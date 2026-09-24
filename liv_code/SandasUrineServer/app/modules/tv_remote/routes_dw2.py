@@ -5,73 +5,23 @@ from app import socketio
 
 import json
 import socket
-import subprocess
-import threading
-import time
 
-# The Android-TV connection daemon owns Remote v2, discovery and reconnect logic.
 # Flask only talks to its Unix-domain command socket.
 TV_REMOTE_SOCKET = "/run/tvandroidremote/remote.sock"
-TV_REMOTE_SERVICE = "tvandroidremote.service"
-
-# Prevent multiple browser requests from simultaneously trying to restart
-# the same daemon.  A short cooldown also prevents a dead service from
-# being restarted for every button press.
-_restart_lock = threading.Lock()
-_last_restart_time = 0.0
-RESTART_COOLDOWN = 10
-RESTART_WAIT = 2
 
 
 class TVRemoteError(RuntimeError):
     pass
 
 
-def _restart_tv_remote_service():
+def send_tv_command(command, **kwargs):
     """
-    Restart the Android TV Remote v2 systemd service.
+    Send one JSON command to tvandroidremote.service.
 
-    This is only attempted when the Unix command socket is unavailable.
-    A cooldown prevents repeated browser commands from causing a restart
-    storm.
+    The daemon is responsible for:
+      - discovering the TV
+      - reconnecting every 30 minutes/checking availability
     """
-    global _last_restart_time
-
-    with _restart_lock:
-        now = time.monotonic()
-
-        if now - _last_restart_time < RESTART_COOLDOWN:
-            return False, "restart cooldown active"
-
-        _last_restart_time = now
-
-        try:
-            result = subprocess.run(
-                ["systemctl", "restart", TV_REMOTE_SERVICE],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-                timeout=10,
-                check=False,
-            )
-
-            if result.returncode != 0:
-                error = result.stderr.strip() or (
-                    f"systemctl exited with code {result.returncode}"
-                )
-                return False, error
-
-            return True, "service restart requested"
-
-        except subprocess.TimeoutExpired:
-            return False, "systemctl restart timed out"
-
-        except OSError as exc:
-            return False, f"could not run systemctl: {exc}"
-
-
-def _send_tv_command_once(command, **kwargs):
-    """Send one command attempt to the daemon socket."""
     request = {
         "command": command,
         **kwargs,
@@ -99,7 +49,9 @@ def _send_tv_command_once(command, **kwargs):
                 "No response from Android TV remote service"
             )
 
-        response = json.loads(response_data.decode("utf-8"))
+        response = json.loads(
+            response_data.decode("utf-8")
+        )
 
         if not response.get("ok", False):
             raise TVRemoteError(
@@ -118,7 +70,8 @@ def _send_tv_command_once(command, **kwargs):
 
     except OSError as exc:
         raise TVRemoteError(
-            "Android TV remote service unavailable: " + str(exc)
+            "Android TV remote service unavailable: "
+            + str(exc)
         ) from exc
 
     except json.JSONDecodeError as exc:
@@ -128,48 +81,6 @@ def _send_tv_command_once(command, **kwargs):
 
     finally:
         sock.close()
-
-
-def send_tv_command(command, **kwargs):
-    """
-    Send a JSON command to the Android TV Remote v2 daemon.
-
-    If the Unix command socket is unavailable, request one systemd restart
-    and retry the command once after the service has had time to start.
-    """
-    try:
-        return _send_tv_command_once(command, **kwargs)
-
-    except TVRemoteError as first_error:
-        # Only restart when the daemon itself is unavailable.  Do not restart
-        # it merely because the TV rejected an otherwise valid command.
-        error_text = str(first_error).lower()
-        service_unavailable = (
-            "remote service unavailable" in error_text
-            or "no response from android tv remote service" in error_text
-            or "remote service timed out" in error_text
-        )
-
-        if not service_unavailable:
-            raise
-
-        restarted, restart_message = _restart_tv_remote_service()
-
-        if not restarted:
-            raise TVRemoteError(
-                f"{first_error}; could not restart "
-                f"{TV_REMOTE_SERVICE}: {restart_message}"
-            ) from first_error
-
-        time.sleep(RESTART_WAIT)
-
-        try:
-            return _send_tv_command_once(command, **kwargs)
-        except TVRemoteError as second_error:
-            raise TVRemoteError(
-                f"{first_error}; {TV_REMOTE_SERVICE} was restarted "
-                f"but the command is still unavailable: {second_error}"
-            ) from second_error
 
 
 # ------------------------------------------------------------
@@ -229,7 +140,6 @@ def handle_tv_remote_command(data):
         "type_text",
         "launch_app",
     }
-    #print("command sent: ",command)
 
     if command not in allowed_commands:
         emit("tv_remote_result", {
@@ -303,7 +213,6 @@ def handle_tv_remote_command(data):
 # ------------------------------------------------------------
 
 def _simple_command(command):
-    #print("Simple command: ",command)
     try:
         result = send_tv_command(command)
 

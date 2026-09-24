@@ -671,47 +671,6 @@ async def connection_monitor():
 
 
 # ---------------------------------------------------------------------------
-# Service restart on remote-command failure
-# ---------------------------------------------------------------------------
-
-# The systemd unit is configured with Restart=on-failure.  When a Remote v2
-# command fails, terminate this daemon with a non-zero status after the JSON
-# response has been sent.  systemd will then start a completely fresh daemon,
-# which is more reliable than trying to reuse a possibly stale Remote v2
-# session after the TV has been powered off/on.
-_restart_requested = False
-_restart_lock = threading.Lock()
-
-
-def request_service_restart(reason):
-    """Ask systemd to restart this daemon after a remote command failure."""
-    global _restart_requested
-
-    with _restart_lock:
-        if _restart_requested:
-            return
-        _restart_requested = True
-
-    log(
-        "Remote command failure detected. "
-        f"Requesting tvandroidremote.service restart: {reason}"
-    )
-
-    def terminate_for_systemd():
-        log(
-            "Exiting tvandroidremote daemon with status 1 so systemd "
-            "Restart=on-failure can start a fresh instance."
-        )
-        os._exit(1)
-
-    # Give the Unix-socket client a short window to receive the failed-command
-    # response before the process is terminated and restarted by systemd.
-    timer = threading.Timer(0.25, terminate_for_systemd)
-    timer.daemon = True
-    timer.start()
-
-
-# ---------------------------------------------------------------------------
 # Remote command execution
 # ---------------------------------------------------------------------------
 
@@ -753,9 +712,7 @@ async def send_key(command):
     tv = require_remote()
 
     if tv is None:
-        error = "TV is not connected."
-        request_service_restart(f"key command '{command}' failed: {error}")
-        return False, error
+        return False, "TV is not connected."
 
     try:
         tv.send_key_command(key_code)
@@ -786,50 +743,40 @@ async def send_key(command):
                 f"{type(recovery_exc).__name__}: {recovery_exc}"
             )
 
-        error = f"Remote connection closed: {exc}"
-        request_service_restart(f"key command '{command}' failed: {error}")
-        return False, error
+        return False, f"Remote connection closed: {exc}"
 
     except Exception as exc:
-        error = f"{type(exc).__name__}: {exc}"
-        request_service_restart(f"key command '{command}' failed: {error}")
-        return False, error
+        return False, f"{type(exc).__name__}: {exc}"
 
 
 async def send_text(text):
     tv = require_remote()
 
     if tv is None:
-        error = "TV is not connected."
-        request_service_restart(f"type_text failed: {error}")
-        return False, error
+        return False, "TV is not connected."
 
     try:
         tv.send_text(text)
         return True, ""
+    except ConnectionClosed as exc:
+        return False, f"Remote connection closed: {exc}"
     except Exception as exc:
-        error = f"{type(exc).__name__}: {exc}"
-        request_service_restart(f"type_text failed: {error}")
-        return False, error
+        return False, f"{type(exc).__name__}: {exc}"
 
 
 async def launch_app(package_or_link):
     tv = require_remote()
 
     if tv is None:
-        error = "TV is not connected."
-        request_service_restart(f"launch_app failed: {error}")
-        return False, error
+        return False, "TV is not connected."
 
     try:
         tv.send_launch_app_command(package_or_link)
         return True, ""
+    except ConnectionClosed as exc:
+        return False, f"Remote connection closed: {exc}"
     except Exception as exc:
-        error = f"{type(exc).__name__}: {exc}"
-        request_service_restart(
-            f"launch_app '{package_or_link}' failed: {error}"
-        )
-        return False, error
+        return False, f"{type(exc).__name__}: {exc}"
 
 
 # ---------------------------------------------------------------------------
