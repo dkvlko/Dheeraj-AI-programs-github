@@ -1,0 +1,49 @@
+[2026-09-25 12:19:23 +0530] EVENT: D-state process detected: count=2
+    PID    PPID USER     STAT WCHAN                                    %CPU %MEM     ELAPSED COMMAND         COMMAND
+1010553       2 root     D<   -                                         0.0  0.0       34:28 kworker/u9:2+i9 [kworker/u9:2+i915_flip]
+1030719       2 root     D<   -                                         0.1  0.0       10:59 kworker/u9:3+i9 [kworker/u9:3+i915_flip]
+[2026-09-25 12:19:37 +0530] EVENT: Kernel warning/error detected
+-- No entries --
+[2026-09-25 12:19:37 +0530] EVENT: Systemd failed units detected
+● sandas-server.service loaded failed failed sandas-server.service
+[2026-09-25 12:20:41 +0530] EVENT: SWAP ACTIVITY detected: pswpin=744022 pswpout=1741941
+[2026-09-25 12:20:41 +0530] EVENT: Kernel warning/error detected
+-- No entries --
+[2026-09-25 12:20:41 +0530] EVENT: Systemd failed units detected
+● sandas-server.service loaded failed failed sandas-server.service
+[2026-09-25 12:21:44 +0530] EVENT: D-state processes cleared
+[2026-09-25 12:21:44 +0530] EVENT: SWAP ACTIVITY detected: pswpin=745632 pswpout=1741941
+[2026-09-25 12:21:44 +0530] EVENT: Kernel warning/error detected
+-- No entries --
+[2026-09-25 12:21:44 +0530] EVENT: Systemd failed units detected
+● sandas-server.service loaded failed failed sandas-server.service
+[2026-09-25 12:22:48 +0530] EVENT: SWAP ACTIVITY detected: pswpin=745927 pswpout=1741941
+[2026-09-25 12:22:48 +0530] EVENT: Kernel warning/error detected
+-- No entries --
+[2026-09-25 12:22:48 +0530] EVENT: Systemd failed units detected
+● sandas-server.service loaded failed failed sandas-server.service
+[2026-09-25 12:23:52 +0530] EVENT: SWAP ACTIVITY detected: pswpin=745978 pswpout=1741941
+[2026-09-25 12:23:52 +0530] EVENT: Kernel warning/error detected
+-- No entries --
+[2026-09-25 12:23:52 +0530] EVENT: Systemd failed units detected
+● sandas-server.service loaded failed failed sandas-server.service
+[2026-09-25 12:24:55 +0530] EVENT: SWAP ACTIVITY detected: pswpin=746203 pswpout=1741941
+[2026-09-25 12:24:55 +0530] EVENT: Kernel warning/error detected
+-- No entries --
+[2026-09-25 12:24:55 +0530] EVENT: Systemd failed units detected
+● sandas-server.service loaded failed failed sandas-server.service
+[2026-09-25 12:25:58 +0530] EVENT: SWAP ACTIVITY detected: pswpin=746383 pswpout=1741941
+[2026-09-25 12:25:58 +0530] EVENT: Kernel warning/error detected
+-- No entries --
+[2026-09-25 12:25:59 +0530] EVENT: Systemd failed units detected
+● sandas-server.service loaded failed failed sandas-server.service
+[2026-09-25 12:27:02 +0530] EVENT: SWAP ACTIVITY detected: pswpin=746491 pswpout=1741941
+[2026-09-25 12:27:02 +0530] EVENT: Kernel warning/error detected
+-- No entries --
+[2026-09-25 12:27:02 +0530] EVENT: Systemd failed units detected
+● sandas-server.service loaded failed failed sandas-server.service
+[2026-09-25 12:28:06 +0530] EVENT: SWAP ACTIVITY detected: pswpin=746537 pswpout=1741941
+[2026-09-25 12:28:06 +0530] EVENT: Kernel warning/error detected
+-- No entries --
+[2026-09-25 12:28:06 +0530] EVENT: Systemd failed units detected
+● sandas-server.service loaded failed failed sandas-server.service

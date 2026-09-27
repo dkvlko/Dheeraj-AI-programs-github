@@ -42,7 +42,7 @@ IST = ZoneInfo("Asia/Kolkata")
 # ----------------------------------------------------------------------
 
 BASE_URL = "https://indianexpress.com/"
-OUTPUT_FILE = Path(__file__).resolve().parent / "data" / "indianexpress.rss"
+OUTPUT_FILE =Path("/home/dkvlko/Dheeraj-AI-programs-github/liv_code/SandasUrineServer/app/modules/newsanddays/data/indianexpress.rss")
 
 MAX_ITEMS = 100
 
@@ -53,7 +53,7 @@ USER_AGENT = (
     "IndianExpressRSS/1.0"
 )
 
-REQUEST_TIMEOUT = 30
+REQUEST_TIMEOUT = 5
 
 
 # ----------------------------------------------------------------------
@@ -284,7 +284,7 @@ def clean_text(value: str | None) -> str:
         return ""
 
     value = html.unescape(value)
-
+    value = value.replace("&#x27;", "")
     value = re.sub(r"\s+", " ", value)
 
     return value.strip()
@@ -1148,7 +1148,8 @@ def generate_rss() -> int:
 
         #print(
         #    f"[{number}/{len(articles)}] "
-        #    f"{article.title[:70]}"
+        #    f"{article.title[:70]}",
+        #    flush=True,
         #)
 
         published, updated = get_article_datetime(
@@ -1162,7 +1163,7 @@ def generate_rss() -> int:
             article.updated = updated
             
 # ------------------------------------------------------------------
-# Keep only articles published within the last 24 hours (IST)
+# Keep only articles published within the last 12 hours (IST)
 # ------------------------------------------------------------------
 
     cutoff_time = datetime.now(IST) - timedelta(hours=12)
@@ -1210,10 +1211,10 @@ def generate_rss() -> int:
 
     #print("\nFirst 10 articles:")
 
-    for number, article in enumerate(
-        articles[:10],
-        start=1,
-    ):
+    #for number, article in enumerate(
+    #    articles[:10],
+    #    start=1,
+    #):
         #print(
         #    f"{number:2}. {article.title}"
         #)
@@ -1222,7 +1223,7 @@ def generate_rss() -> int:
 
 
 def main() -> int:
-    generate_rss()
+    return generate_rss()
 
 if __name__ == "__main__":
     raise SystemExit(

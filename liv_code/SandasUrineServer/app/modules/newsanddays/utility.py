@@ -664,15 +664,16 @@ def main():
     ]
 
     data_dir = Path("./data")
-
     for path in data_dir.iterdir():
         if path.is_file():
             path.unlink()
 
     #print("All files deleted from ./data")
     rss_files = download_rss(urls, "data")
-    indianexpress.generate_rss()
 
+    print("Indian Express start")
+    indianexpress.generate_rss()
+    print("Indian Express finish")
     Common_RSS = combine_rss_files(
         rss_files
             )

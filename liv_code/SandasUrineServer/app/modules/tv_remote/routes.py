@@ -47,7 +47,7 @@ def _restart_tv_remote_service():
 
         try:
             result = subprocess.run(
-                ["systemctl", "restart", TV_REMOTE_SERVICE],
+                ["sudo", "-n", "systemctl", "restart", TV_REMOTE_SERVICE],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,
@@ -219,6 +219,7 @@ def handle_tv_remote_command(data):
         "back",
         "home",
         "power",
+        "wakeup"
         "vol_up",
         "vol_down",
         "mute",
@@ -228,8 +229,9 @@ def handle_tv_remote_command(data):
         "screenshot",
         "type_text",
         "launch_app",
+        "get_connection",
     }
-    #print("command sent: ",command)
+    print("command sent: ",command)
 
     if command not in allowed_commands:
         emit("tv_remote_result", {
@@ -237,6 +239,29 @@ def handle_tv_remote_command(data):
             "command": command,
             "error": "Unsupported TV command"
         })
+        return
+
+    # "get_connection" is a control-plane action.  It does not go
+    # through the daemon socket because the purpose of the button is to
+    # restart the daemon itself.
+    if command == "get_connection":
+        restarted, message = _restart_tv_remote_service()
+
+        if restarted:
+            emit("tv_remote_result", {
+                "ok": True,
+                "command": command,
+                "output": "TV remote service restarted",
+            })
+        else:
+            emit("tv_remote_result", {
+                "ok": False,
+                "command": command,
+                "error": (
+                    "Could not restart tvandroidremote.service: "
+                    + message
+                ),
+            })
         return
 
     kwargs = {}
@@ -303,7 +328,7 @@ def handle_tv_remote_command(data):
 # ------------------------------------------------------------
 
 def _simple_command(command):
-    #print("Simple command: ",command)
+    print("Simple command: ",command)
     try:
         result = send_tv_command(command)
 

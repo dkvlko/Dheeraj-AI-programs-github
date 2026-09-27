@@ -11,7 +11,8 @@ open-dictionary
 __pycache__/
 *.py[cod]
 *$py.class
-
+ScreenCast
+kotlin-compiler-2.4.20
 # Python virtual environments
 .venv/
 venv/

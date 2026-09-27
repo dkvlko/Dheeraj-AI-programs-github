@@ -49,7 +49,7 @@ TV_BT_MAC = "ec:fa:5c:c0:f7:1c".lower()
 
 TV_SERVICE_TYPE = "_androidtvremote2._tcp.local."
 
-CHECK_INTERVAL = 30 * 60
+CHECK_INTERVAL = 10 * 60
 
 # Refresh the Remote v2 session every CHECK_INTERVAL.  This is deliberate:
 # androidtvremote2 can remain apparently connected while its outgoing command
@@ -255,18 +255,26 @@ def on_available(is_available):
     global CONNECTED
 
     with state_lock:
+        previous = CONNECTED
         CONNECTED = bool(is_available)
 
-    log(f"Android TV Remote v2 availability: {CONNECTED}")
+    log(
+        f"Android TV Remote v2 availability changed: "
+        f"{previous} -> {CONNECTED}"
+    )
 
 
 def on_power_changed(is_on):
     global IS_ON
 
     with state_lock:
+        previous = IS_ON
         IS_ON = is_on
 
-    log(f"Android TV power state changed: {is_on}")
+    log(
+        f"Android TV power state changed: "
+        f"{previous} -> {is_on}"
+    )
 
 
 def on_current_app_changed(current_app):
@@ -729,6 +737,14 @@ def require_remote():
 async def send_key(command):
     """
     Send a normal short key press using Android TV Remote v2.
+
+    If the existing Remote v2 session is stale, the first key press is used
+    as the recovery trigger.  The daemon disconnects the stale session,
+    establishes a fresh Remote v2 connection, and retries the SAME key once.
+
+    This is important for standby: the daemon does not need to determine
+    whether the TV is asleep.  The first key pressed by the user is enough
+    to detect and recover a stale command channel.
     """
 
     key_map = {
@@ -740,6 +756,7 @@ async def send_key(command):
         "back": "KEYCODE_BACK",
         "home": "KEYCODE_HOME",
         "power": "KEYCODE_POWER",
+        "wakeup": 224,  # Android KEYCODE_WAKEUP
         "vol_up": "KEYCODE_VOLUME_UP",
         "vol_down": "KEYCODE_VOLUME_DOWN",
         "mute": "KEYCODE_VOLUME_MUTE",
@@ -750,19 +767,15 @@ async def send_key(command):
     if key_code is None:
         return False, f"Unknown key command: {command}"
 
+    # First attempt: use the currently established Remote v2 session.
     tv = require_remote()
 
+    # If the daemon already knows that the session is unavailable, do not
+    # restart systemd immediately.  The user's key press should trigger
+    # an in-process reconnect first.
     if tv is None:
-        error = "TV is not connected."
-        request_service_restart(f"key command '{command}' failed: {error}")
-        return False, error
-
-    try:
-        tv.send_key_command(key_code)
-        return True, ""
-    except ConnectionClosed as exc:
         log(
-            f"Remote v2 key command detected a closed connection: {exc}. "
+            f"Remote v2 key command '{command}' found no usable connection. "
             "Attempting immediate recovery."
         )
 
@@ -786,11 +799,44 @@ async def send_key(command):
                 f"{type(recovery_exc).__name__}: {recovery_exc}"
             )
 
-        error = f"Remote connection closed: {exc}"
+        error = "TV is not connected."
         request_service_restart(f"key command '{command}' failed: {error}")
         return False, error
 
+    try:
+        tv.send_key_command(key_code)
+        return True, ""
+
     except Exception as exc:
+        # A stale Remote v2 session may not raise ConnectionClosed.  In the
+        # observed MIBOX4 case it can instead raise an ordinary exception
+        # containing "TV is not connected".  Treat every failure of an
+        # otherwise valid key command as a possible stale-session failure.
+        log(
+            f"Remote v2 key command '{command}' failed with "
+            f"{type(exc).__name__}: {exc}. Attempting immediate recovery."
+        )
+
+        try:
+            await disconnect_remote()
+
+            if await ensure_connection():
+                tv = require_remote()
+
+                if tv is not None:
+                    tv.send_key_command(key_code)
+                    log(
+                        f"Remote v2 key command '{command}' succeeded "
+                        "after reconnection."
+                    )
+                    return True, ""
+
+        except Exception as recovery_exc:
+            log(
+                f"Remote v2 immediate command recovery failed: "
+                f"{type(recovery_exc).__name__}: {recovery_exc}"
+            )
+
         error = f"{type(exc).__name__}: {exc}"
         request_service_restart(f"key command '{command}' failed: {error}")
         return False, error
@@ -845,6 +891,7 @@ KEY_COMMANDS = {
     "back",
     "home",
     "power",
+    "wakeup",
     "vol_up",
     "vol_down",
     "mute",

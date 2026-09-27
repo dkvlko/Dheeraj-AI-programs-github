@@ -173,6 +173,33 @@ button.pressed {
 }
 
 
+/* Get connection */
+
+.getConnectionButton {
+    font-size: clamp(
+        10px,
+        min(2.5vw, 2.5vh),
+        18px
+    );
+
+    font-weight: 700;
+    background: #244b5b;
+}
+
+
+/* Wake up */
+
+.wakeupButton {
+    font-size: clamp(
+        10px,
+        min(2.8vw, 2.8vh),
+        18px
+    );
+
+    font-weight: 700;
+    background: #315b3a;
+}
+
 /* Power */
 
 .powerButton {
