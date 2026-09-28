@@ -1,0 +1,63 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:2:1-30:12
+INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:2:1-30:12
+INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:2:1-30:12
+INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:2:1-30:12
+	package
+		INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:4:5-67
+	android:name
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:4:22-64
+application
+ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:6:5-28:19
+INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:6:5-28:19
+	android:extractNativeLibs
+		INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml
+	android:label
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:8:9-41
+	android:theme
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:7:9-40
+	android:networkSecurityConfig
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:10:9-69
+	android:usesCleartextTraffic
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:9:9-45
+service#com.noclasslessons.screensaver.UrlDreamService
+ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:12:9-26:19
+	android:exported
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:14:13-36
+	android:permission
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:15:13-71
+	android:name
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:13:13-44
+intent-filter#action:name:android.service.dreams.DreamService+category:name:android.intent.category.DEFAULT
+ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:17:13-20:29
+action#android.service.dreams.DreamService
+ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:18:17-78
+	android:name
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:18:25-75
+category#android.intent.category.DEFAULT
+ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:19:17-76
+	android:name
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:19:27-73
+meta-data#android.service.dream
+ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:22:13-24:49
+	android:resource
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:24:17-46
+	android:name
+		ADDED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml:23:17-53
+uses-sdk
+INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml
+INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/AndroidManifest.xml

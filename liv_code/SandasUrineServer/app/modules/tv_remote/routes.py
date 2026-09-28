@@ -219,12 +219,13 @@ def handle_tv_remote_command(data):
         "back",
         "home",
         "power",
-        "wakeup"
+        "wakeup",
         "vol_up",
         "vol_down",
         "mute",
         "youtube",
-        "netflix",
+        "primevideo",
+        "jiohotstar",
         "status",
         "screenshot",
         "type_text",
@@ -276,20 +277,7 @@ def handle_tv_remote_command(data):
             emit("tv_remote_result", {
                 "ok": False,
                 "command": command,
-                "error": "Application package is missing"
-            })
-            return
-
-        # Basic validation. Package names are deliberately restricted
-        # to the Android package-name character set.
-        if not all(
-            part.replace("_", "").isalnum()
-            for part in package.split(".")
-        ):
-            emit("tv_remote_result", {
-                "ok": False,
-                "command": command,
-                "error": "Invalid Android package name"
+                "error": "Application package or deep link is missing"
             })
             return
 

@@ -1,0 +1,4 @@
+com.noclasslessons.screensaver:xml/network_security_config = 0x7f030001
+com.noclasslessons.screensaver:style/AppTheme = 0x7f020000
+com.noclasslessons.screensaver:xml/dream = 0x7f030000
+com.noclasslessons.screensaver:string/app_name = 0x7f010000

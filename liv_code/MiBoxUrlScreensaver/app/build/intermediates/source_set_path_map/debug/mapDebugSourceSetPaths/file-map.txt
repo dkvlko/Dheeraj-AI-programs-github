@@ -1,0 +1,8 @@
+com.noclasslessons.screensaver.app-pngs-0 /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/build/generated/res/pngs/debug
+com.noclasslessons.screensaver.app-resValues-1 /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/build/generated/res/resValues/debug
+com.noclasslessons.screensaver.app-updated_navigation_xml-2 /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/build/generated/updated_navigation_xml/debug
+com.noclasslessons.screensaver.app-packageDebugResources-3 /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.noclasslessons.screensaver.app-packageDebugResources-4 /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.noclasslessons.screensaver.app-debug-5 /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.noclasslessons.screensaver.app-debug-6 /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/debug/res
+com.noclasslessons.screensaver.app-main-7 /home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/res

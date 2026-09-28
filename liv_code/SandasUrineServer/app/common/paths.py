@@ -49,10 +49,10 @@ AI_KEY_FILE = AI_API_DIR / "AI-keys.key"
 
 CERT_DIR = PROJECT_ROOT_SSL / "sslcert"
 
-#SERVER_CERT = CERT_DIR / "ubuntu_server.crt"
-SERVER_CERT = CERT_DIR / "ubuntu_server_192_168_0_25.crt"
-#SERVER_KEY = CERT_DIR / "ubuntu_server.key"
-SERVER_KEY = CERT_DIR / "ubuntu_server_192_168_0_25.key"
+SERVER_CERT = CERT_DIR / "noclasslessons_server.crt"
+#SERVER_CERT = CERT_DIR / "ubuntu_server_192_168_0_25.crt"
+SERVER_KEY = CERT_DIR / "noclasslessons_server.key"
+#SERVER_KEY = CERT_DIR / "ubuntu_server_192_168_0_25.key"
 
 
 

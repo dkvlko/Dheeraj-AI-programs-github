@@ -944,15 +944,22 @@ async def execute_command_async(request):
         }
 
     if command == "youtube":
-        ok, output = await launch_app("com.google.android.youtube.tv")
+        ok, output = await launch_app("vnd.youtube://")
 
         return {
             "ok": ok,
             "output": output,
         }
 
-    if command == "netflix":
-        ok, output = await launch_app("com.netflix.ninja")
+    if command == "primevideo":
+        ok, output = await launch_app("https://app.primevideo.com/")
+
+        return {
+            "ok": ok,
+            "output": output,
+        }
+    if command == "jiohotstar":
+        ok, output = await launch_app("hotstar://")
 
         return {
             "ok": ok,

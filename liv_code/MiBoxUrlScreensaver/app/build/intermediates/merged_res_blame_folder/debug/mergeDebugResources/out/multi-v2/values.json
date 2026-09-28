@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.noclasslessons.screensaver.app-mergeDebugResources-2:/values/values.xml",
+            "map": [
+                {
+                    "source": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "67",
+                        "endOffsets": "118"
+                    }
+                },
+                {
+                    "source": "/home/dkvlko/Dheeraj-AI-programs-github/liv_code/MiBoxUrlScreensaver/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "56",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "381"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "123",
+                        "endLines": "8",
+                        "endColumns": "12",
+                        "endOffsets": "440"
+                    }
+                }
+            ]
+        }
+    ]
+}

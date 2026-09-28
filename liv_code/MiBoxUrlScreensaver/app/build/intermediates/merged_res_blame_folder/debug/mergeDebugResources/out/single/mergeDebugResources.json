@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.noclasslessons.screensaver.app-debug-4:/xml_dream.xml.flat",
+        "source": "com.noclasslessons.screensaver.app-main-6:/xml/dream.xml"
+    },
+    {
+        "merged": "com.noclasslessons.screensaver.app-debug-4:/xml_network_security_config.xml.flat",
+        "source": "com.noclasslessons.screensaver.app-main-6:/xml/network_security_config.xml"
+    }
+]

@@ -1,38 +1,27 @@
 {
-    "generated_at": "2026-09-27T00:43:53.446953+05:30",
+    "generated_at": "2026-09-28T00:36:59.580481+05:30",
     "timezone": "Asia/Kolkata",
-    "start_date": "2026-09-27",
-    "end_date": "2026-10-03",
+    "start_date": "2026-09-28",
+    "end_date": "2026-10-04",
     "number_of_days": 7,
     "days": [
         {
-            "date": "2026-09-27",
-            "day": "Sunday",
+            "date": "2026-09-28",
+            "day": "Monday",
             "is_today": true,
             "events": [
                 {
                     "event_id": null,
-                    "event_name": "Public Holiday",
-                    "event_type": "WEEKLY_RULE",
-                    "description": "Sunday is treated as a Public Holiday.",
-                    "date_status": "RULE",
-                    "date_calculation_method": "WEEKLY_DAY_OF_WEEK",
+                    "event_name": "No Events Today",
+                    "event_type": "NO_EVENT",
+                    "description": "No holiday or registered event was found for today.",
+                    "date_status": "INFORMATIONAL",
+                    "date_calculation_method": null,
                     "is_confirmed": true,
                     "notes": null,
-                    "effects": [
-                        {
-                            "effect_type": "PUBLIC_LIFE",
-                            "effect": "Public Holiday"
-                        }
-                    ]
+                    "effects": []
                 }
             ]
-        },
-        {
-            "date": "2026-09-28",
-            "day": "Monday",
-            "is_today": false,
-            "events": []
         },
         {
             "date": "2026-09-29",
@@ -112,6 +101,29 @@
                         {
                             "effect_type": "PUBLIC_LIFE",
                             "effect": "Sensex Closed."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "2026-10-04",
+            "day": "Sunday",
+            "is_today": false,
+            "events": [
+                {
+                    "event_id": null,
+                    "event_name": "Public Holiday",
+                    "event_type": "WEEKLY_RULE",
+                    "description": "Sunday is treated as a Public Holiday.",
+                    "date_status": "RULE",
+                    "date_calculation_method": "WEEKLY_DAY_OF_WEEK",
+                    "is_confirmed": true,
+                    "notes": null,
+                    "effects": [
+                        {
+                            "effect_type": "PUBLIC_LIFE",
+                            "effect": "Public Holiday"
                         }
                     ]
                 }
