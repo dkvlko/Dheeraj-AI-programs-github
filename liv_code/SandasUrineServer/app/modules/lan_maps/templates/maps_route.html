@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1,
+                   maximum-scale=1,
+                   user-scalable=no">
+
+    <title>LAN Maps - Route</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('lan_maps.static',
+                   filename='maplibre/maplibre-gl.css') }}">
+
+    <style>
+
+        html,
+        body {
+
+            margin: 0;
+            padding: 0;
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+        #map {
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 100%;
+
+        }
+
+
+        #routePanel {
+
+            position: absolute;
+
+            top: 10px;
+            left: 10px;
+            right: 10px;
+
+            z-index: 1000;
+
+            max-width: 760px;
+
+            margin: 0 auto;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border-radius: 8px;
+
+            padding: 10px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.20);
+
+        }
+
+
+        .location-row {
+
+            display: flex;
+
+            align-items: center;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .location-row label {
+
+            width: 100px;
+
+            flex-shrink: 0;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+        }
+
+
+        .location-input {
+
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 9px 10px;
+
+            font-size: 15px;
+
+            border: 1px solid #bdbdbd;
+
+            border-radius: 5px;
+
+            outline: none;
+
+            background: #ffffff;
+
+        }
+
+
+        #status {
+
+            position: absolute;
+
+            left: 10px;
+            bottom: 10px;
+
+            z-index: 1000;
+
+            max-width: calc(100% - 20px);
+
+            background: rgba(0, 0, 0, 0.80);
+
+            color: white;
+
+            padding: 9px 12px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            #routePanel {
+
+                left: 6px;
+                right: 6px;
+                top: 6px;
+
+            }
+
+
+            .location-row label {
+
+                width: 82px;
+
+                font-size: 14px;
+
+            }
+
+
+            .location-input {
+
+                font-size: 14px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div id="map"></div>
+
+
+<div id="routePanel">
+
+    <div class="location-row">
+
+        <label for="source">
+            Source:
+        </label>
+
+        <input
+            type="text"
+            id="source"
+            class="location-input"
+            value="{{ source }}"
+            readonly>
+
+    </div>
+
+
+    <div class="location-row">
+
+        <label for="destination">
+            Destination:
+        </label>
+
+        <input
+            type="text"
+            id="destination"
+            class="location-input"
+            value="{{ destination }}"
+            readonly>
+
+    </div>
+
+</div>
+
+
+<div id="status">
+    Starting route...
+</div>
+
+
+<script type="module">
+
+import * as maplibregl
+    from "{{ url_for(
+        'lan_maps.static',
+        filename='maplibre/maplibre-gl.mjs'
+    ) }}";
+
+
+const statusElement =
+    document.getElementById("status");
+
+
+function setStatus(message)
+{
+
+    statusElement.textContent = message;
+
+    console.log(message);
+
+}
+
+
+/*
+ * -----------------------------------------------------
+ * MapLibre map
+ * -----------------------------------------------------
+ */
+
+let map;
+
+
+try
+{
+
+    map = new maplibregl.Map({
+
+        container: "map",
+
+        center: [
+            80.9462,
+            26.8467
+        ],
+
+        zoom: 12,
+
+        minZoom: 5,
+
+        maxZoom: 22,
+
+        style: {
+
+            version: 8,
+            
+            glyphs: "/lan_maps/static/fonts/{fontstack}/{range}.pbf",
+            
+            sources: {
+
+                india: {
+
+                    type: "vector",
+                    tiles: [
+                        "/lan_maps/martin/india/{z}/{x}/{y}"
+                    ],
+
+                
+                    minzoom: 0,
+
+                    maxzoom: 14
+
+                }
+
+            },
+
+
+            layers: [
+
+
+                /* -------------------------------------
+                   Background
+                   ------------------------------------- */
+
+                {
+
+                    id: "background",
+
+                    type: "background",
+
+                    paint: {
+
+                        "background-color":
+                            "#eeeeee"
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Landcover
+                   ------------------------------------- */
+
+                {
+
+                    id: "landcover",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "landcover",
+
+                    paint: {
+
+                        "fill-color":
+                            "#dcebd5",
+
+                        "fill-opacity":
+                            0.6
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Landuse
+                   ------------------------------------- */
+
+                {
+
+                    id: "landuse",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "landuse",
+
+                    paint: {
+
+                        "fill-color":
+                            "#e8e8d8",
+
+                        "fill-opacity":
+                            0.5
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Water
+                   ------------------------------------- */
+
+                {
+
+                    id: "water",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "water",
+
+                    paint: {
+
+                        "fill-color":
+                            "#8fc9e8"
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Waterways
+                   ------------------------------------- */
+
+                {
+
+                    id: "waterway",
+
+                    type: "line",
+
+                    source: "india",
+
+                    "source-layer":
+                        "waterway",
+
+                    paint: {
+
+                        "line-color":
+                            "#6daed0",
+
+                        "line-width":
+                            1.5
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Roads
+                   ------------------------------------- */
+
+                {
+
+                    id: "roads",
+
+                    type: "line",
+
+                    source: "india",
+
+                    "source-layer":
+                        "transportation",
+
+                    paint: {
+
+                        "line-color":
+                            "#ffffff",
+
+                        "line-width": [
+
+                            "interpolate",
+
+                            ["linear"],
+                            ["zoom"],
+
+                            5, 0.5,
+                            10, 1.2,
+                            14, 4
+
+                        ]
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Major Roads
+                   ------------------------------------- */
+
+            {
+                id: "roads-major",
+
+                type: "line",
+
+                source: "india",
+
+                "source-layer": "transportation",
+
+                filter: [
+                    "match",
+                    ["get", "class"],
+                    [
+                        "motorway",
+                        "trunk",
+                        "primary",
+                        "secondary"
+                    ],
+                    true,
+                    false
+                ],
+
+                paint: {
+
+                    "line-color": "#d88b8b",
+
+                    "line-width": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+                        5, 1,
+                        10, 2,
+                        14, 5
+                    ]
+
+                }
+            },
+
+/* Location Names Layer*/
+                {
+                    id: "place-names",
+
+                    type: "symbol",
+
+                    source: "india",
+
+                    "source-layer": "place",
+
+                    minzoom: 5,
+
+                    layout: {
+
+                        "text-field": [
+                            "coalesce",
+                            ["get", "name:en"],
+                            ["get", "name"],
+                            ["get", "name:latin"]
+                        ],
+
+                        "text-font": [
+                            "Noto Sans Regular"
+                        ],
+
+                        "text-size": [
+
+                            "interpolate",
+
+                            ["linear"],
+
+                            ["zoom"],
+
+                            5, 10,
+                            8, 12,
+                            12, 15,
+                            16, 18
+
+                        ],
+
+                        "text-anchor": "center",
+
+                        "text-allow-overlap": false,
+
+                        "text-ignore-placement": false
+
+                    },
+
+                    paint: {
+
+                        "text-color": "#222222",
+
+                        "text-halo-color": "#ffffff",
+
+                        "text-halo-width": 1.5
+
+                    }
+
+                },
+                /* Road Names*/
+
+            {
+                id: "road-names",
+
+                type: "symbol",
+
+                source: "india",
+
+                "source-layer": "transportation_name",
+
+                minzoom: 12,
+
+                layout: {
+
+                    "symbol-placement": "line",
+
+                    "text-field": [
+                        "coalesce",
+                        ["get", "name:en"],
+                        ["get", "name"],
+                        ["get", "name:latin"]
+                    ],
+
+                    "text-font": [
+                        "Noto Sans Regular"
+                    ],
+
+                    "text-size": [
+
+                        "interpolate",
+
+                        ["linear"],
+
+                        ["zoom"],
+
+                        12, 9,
+                        14, 11,
+                        17, 14
+
+                    ],
+
+                    "text-rotation-alignment": "map",
+
+                    "text-pitch-alignment": "viewport",
+
+                    "text-max-angle": 30,
+
+                    "text-padding": 2
+
+                },
+
+                paint: {
+
+                    "text-color": "#444444",
+
+                    "text-halo-color": "#ffffff",
+
+                    "text-halo-width": 1.2
+
+                }
+
+            },
+
+            /* POI layer*/
+            {
+                id: "poi-names",
+
+                type: "symbol",
+
+                source: "india",
+
+                "source-layer": "poi",
+
+                minzoom: 12,
+
+                layout: {
+
+                    "text-field": [
+                        "coalesce",
+                        ["get", "name:en"],
+                        ["get", "name"],
+                        ["get", "name:latin"]
+                    ],
+
+                    "text-font": [
+                        "Noto Sans Regular"
+                    ],
+
+                    "text-size": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+
+                        12, 9,
+                        13, 10,
+                        14, 12,
+                        16, 14,
+                        18, 15
+
+                    ],
+
+                    "text-anchor": "top",
+
+                    "text-offset": [
+                        0,
+                        0.8
+                    ],
+
+                    "text-allow-overlap": false,
+
+                    "text-ignore-placement": false
+
+                },
+
+                paint: {
+
+                    "text-color": "#333333",
+
+                    "text-halo-color": "#ffffff",
+
+                    "text-halo-width": 1.5
+
+                }
+
+            },
+            /* House - Numbers/Address Layer */
+
+            {
+                id: "house-numbers",
+
+                type: "symbol",
+
+                source: "india",
+
+                "source-layer": "housenumber",
+
+                minzoom: 14,
+
+                layout: {
+
+                    "text-field": [
+                        "get",
+                        "housenumber"
+                    ],
+
+                    "text-font": [
+                        "Noto Sans Regular"
+                    ],
+
+                    "text-size": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+
+                        14, 9,
+                        15, 10,
+                        16, 11,
+                        17, 12,
+                        18, 13
+                    ],
+
+                    "text-anchor": "center",
+
+                    "text-allow-overlap": false,
+
+                    "text-ignore-placement": false
+
+                },
+
+                paint: {
+
+                    "text-color": "#333333",
+
+                    "text-halo-color": "#ffffff",
+
+                    "text-halo-width": 1.2
+
+                }
+
+            },
+                        /* -------------------------------------
+                           Buildings
+                           ------------------------------------- */
+
+                {
+
+                    id: "buildings",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "building",
+
+                    minzoom: 13,
+
+                    paint: {
+
+                        "fill-color":
+                            "#d6c5b5",
+
+                        "fill-opacity":
+                            0.70
+
+                    }
+
+                },
+                /*Water names*/
+            {
+                id: "water-names",
+
+                type: "symbol",
+
+                source: "india",
+
+                "source-layer": "water_name",
+
+                minzoom: 8,
+
+                layout: {
+
+                    "text-field": [
+                        "coalesce",
+                        ["get", "name"],
+                        ["get", "name:en"],
+                        ["get", "name:latin"]
+                    ],
+
+                    "text-font": [
+                        "Noto Sans Regular"
+                    ],
+
+                    "text-size": [
+
+                        "interpolate",
+
+                        ["linear"],
+
+                        ["zoom"],
+
+                        8, 10,
+                        12, 12,
+                        16, 15
+
+                    ]
+
+                },
+
+                paint: {
+
+                    "text-color": "#287fa3",
+
+                    "text-halo-color": "#ffffff",
+
+                    "text-halo-width": 1
+
+                }
+
+            }
+
+            ]
+
+        }
+
+
+    });
+
+
+    map.addControl(
+        new maplibregl.NavigationControl(),
+        "top-right"
+    );
+
+
+    map.on("error", function(event)
+    {
+
+        console.error(
+            "MAPLIBRE ERROR:",
+            event
+        );
+
+        if (event && event.error)
+        {
+
+            setStatus(
+                "Map error: " +
+                event.error.message
+            );
+
+        }
+
+    });
+
+
+}
+catch (error)
+{
+
+    console.error(
+        "Map initialization error:",
+        error
+    );
+
+    setStatus(
+        "MapLibre initialization failed."
+    );
+
+}
+
+
+/*
+ * -----------------------------------------------------
+ * Coordinate parser
+ * -----------------------------------------------------
+ */
+
+function parseCoordinates(value)
+{
+
+    const pattern =
+        /^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/;
+
+    const match =
+        value.trim().match(pattern);
+
+    if (!match)
+        return null;
+
+    const lat =
+        Number(match[1]);
+
+    const lon =
+        Number(match[2]);
+
+    if (
+        !Number.isFinite(lat) ||
+        !Number.isFinite(lon) ||
+        lat < -90 ||
+        lat > 90 ||
+        lon < -180 ||
+        lon > 180
+    )
+    {
+        return null;
+    }
+
+    return {
+        lat: lat,
+        lon: lon
+    };
+
+}
+
+
+/*
+ * -----------------------------------------------------
+ * Display route
+ * -----------------------------------------------------
+ */
+
+function displayRoute(
+    routeData,
+    source,
+    destination
+)
+{
+
+    if (!map)
+        return;
+
+
+    if (map.getSource("route"))
+    {
+
+        map.getSource("route").setData(
+            routeData
+        );
+
+    }
+    else
+    {
+
+        map.addSource(
+            "route",
+            {
+                type: "geojson",
+                data: routeData
+            }
+        );
+
+
+        map.addLayer(
+            {
+
+                id: "route-line",
+
+                type: "line",
+
+                source: "route",
+
+                layout: {
+
+                    "line-cap": "round",
+
+                    "line-join": "round"
+
+                },
+
+                paint: {
+
+                    "line-color": "#1976d2",
+
+                    "line-width": 6,
+
+                    "line-opacity": 0.90
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Source marker
+     */
+
+    const sourceMarker =
+        new maplibregl.Marker({
+
+            color: "#2e7d32"
+
+        })
+
+        .setLngLat([
+            source.lon,
+            source.lat
+        ])
+
+        .addTo(map);
+
+
+    /*
+     * Destination marker
+     */
+
+    const destinationMarker =
+        new maplibregl.Marker({
+
+            color: "#c62828"
+
+        })
+
+        .setLngLat([
+            destination.lon,
+            destination.lat
+        ])
+
+        .addTo(map);
+
+
+    /*
+     * Fit map to route.
+     */
+
+    const bounds =
+        new maplibregl.LngLatBounds();
+
+
+    routeData.geometry.coordinates
+        .forEach(function(coordinate)
+        {
+
+            bounds.extend(coordinate);
+
+        });
+
+
+    bounds.extend([
+        source.lon,
+        source.lat
+    ]);
+
+    bounds.extend([
+        destination.lon,
+        destination.lat
+    ]);
+
+
+    map.fitBounds(
+        bounds,
+        {
+
+            padding: {
+
+                top: 160,
+                bottom: 60,
+                left: 40,
+                right: 40
+
+            },
+
+            maxZoom: 17,
+
+            duration: 1000
+
+        }
+    );
+
+}
+
+
+/*
+ * -----------------------------------------------------
+ * Ask Flask to calculate the route
+ * -----------------------------------------------------
+ */
+
+async function calculateRoute()
+{
+
+    const sourceText =
+        document.getElementById("source").value;
+
+    const destinationText =
+        document.getElementById("destination").value;
+
+
+    const source =
+        parseCoordinates(sourceText);
+
+    const destination =
+        parseCoordinates(destinationText);
+
+
+    if (!source || !destination)
+    {
+
+        setStatus(
+            "Source and destination must be GPS coordinates."
+        );
+
+        return;
+
+    }
+
+
+    setStatus(
+        "Calculating route..."
+    );
+
+
+    try
+    {
+
+        const response =
+            await fetch(
+                "{{ url_for(
+                    'lan_maps.route_api'
+                ) }}",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        source: sourceText,
+
+                        destination:
+                            destinationText
+
+                    })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok)
+        {
+
+            throw new Error(
+                result.error ||
+                "Route request failed."
+            );
+
+        }
+
+
+        displayRoute(
+            result.route,
+            source,
+            destination
+        );
+
+
+        const distance =
+            result.summary.length_km;
+
+        const time =
+            result.summary.time_minutes;
+
+
+        if (
+            Number.isFinite(distance) &&
+            Number.isFinite(time)
+        )
+        {
+
+            setStatus(
+                "Route: " +
+                distance.toFixed(2) +
+                " km, " +
+                time.toFixed(1) +
+                " minutes"
+            );
+
+        }
+        else
+        {
+
+            setStatus(
+                "Route displayed."
+            );
+
+        }
+
+    }
+    catch (error)
+    {
+
+        console.error(
+            "Route calculation error:",
+            error
+        );
+
+        setStatus(
+            "Route error: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/*
+ * Wait until MapLibre is ready before routing.
+ */
+
+if (map)
+{
+
+    map.on(
+        "load",
+        function()
+        {
+
+            setStatus(
+                "Map loaded. Calculating route..."
+            );
+
+            calculateRoute();
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+</html>

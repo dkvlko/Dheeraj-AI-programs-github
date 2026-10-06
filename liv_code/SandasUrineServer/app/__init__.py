@@ -56,6 +56,12 @@ def create_app():
     )
 
 
+    from app.modules.movies import movies_bp
+    app.register_blueprint(
+        movies_bp,
+        url_prefix=movies_bp.app_url
+    )
+
     from app.modules.lan_cloud import lancloud_bp
     app.register_blueprint(
         lancloud_bp,

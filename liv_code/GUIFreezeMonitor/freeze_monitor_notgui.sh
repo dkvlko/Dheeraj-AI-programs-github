@@ -30,7 +30,7 @@ set -o pipefail
 # Configuration
 # ------------------------------------------------------------
 
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="~/nogui_freeze_monitor"
 LOG_DIR="$SCRIPT_DIR/system_monitor_logs"
 
 INTERVAL=60

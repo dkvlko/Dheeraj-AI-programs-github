@@ -49,7 +49,7 @@ TV_BT_MAC = "ec:fa:5c:c0:f7:1c".lower()
 
 TV_SERVICE_TYPE = "_androidtvremote2._tcp.local."
 
-CHECK_INTERVAL = 10 * 60
+CHECK_INTERVAL = 5 * 60
 
 # Refresh the Remote v2 session every CHECK_INTERVAL.  This is deliberate:
 # androidtvremote2 can remain apparently connected while its outgoing command

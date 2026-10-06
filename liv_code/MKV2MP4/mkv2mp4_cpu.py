@@ -44,6 +44,7 @@ def convmkv2mp4():
             dst.unlink(missing_ok=True); rej+=1; log(f"REJECTED {rel} ({saving:.1f}% saving)"); continue
         src.unlink(); conv+=1; ta+=new
         log(f"ACCEPTED {rel} | {human(old)} -> {human(new)} | Saved {saving:.1f}%")
+        input("Press Enter to continue to the next video...")
     log("="*70); log(f"Converted:{conv}"); log(f"Skipped:{skip}"); log(f"Rejected/Failed:{rej}")
     log(f"Original:{human(tb)}"); log(f"Output:{human(ta)}"); log(f"Elapsed:{(time.time()-st)/3600:.2f} h")
 if __name__=="__main__": convmkv2mp4()

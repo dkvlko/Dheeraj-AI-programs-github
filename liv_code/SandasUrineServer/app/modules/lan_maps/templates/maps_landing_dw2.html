@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>LAN Maps</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .landing-container {
+            width: min(650px, 92vw);
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0 0 35px 0;
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+        .main-button {
+            display: block;
+            width: 240px;
+            margin: 0 auto 18px auto;
+
+            padding: 14px 20px;
+
+            font-size: 17px;
+            font-weight: 500;
+
+            border: none;
+            border-radius: 6px;
+
+            background: #1976d2;
+            color: white;
+
+            cursor: pointer;
+        }
+
+        .main-button:hover {
+            background: #1565c0;
+        }
+
+        .route-section {
+            width: 100%;
+            margin-top: 10px;
+            text-align: left;
+
+            padding: 22px;
+
+            background: white;
+            border-radius: 8px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .location-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .location-row label {
+            width: 110px;
+            flex-shrink: 0;
+
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .location-input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 11px 12px;
+
+            font-size: 16px;
+
+            border: 1px solid #bdbdbd;
+            border-radius: 5px;
+
+            outline: none;
+        }
+
+        .location-input:focus {
+            border-color: #1976d2;
+            box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.15);
+        }
+
+        .search-status {
+            margin-top: 5px;
+            margin-left: 110px;
+
+            font-size: 13px;
+            color: #666;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+
+            .landing-container {
+                width: 94vw;
+            }
+
+            h1 {
+                font-size: 25px;
+                margin-bottom: 25px;
+            }
+
+            .route-section {
+                padding: 16px;
+            }
+
+            .location-row {
+                display: block;
+            }
+
+            .location-row label {
+                display: block;
+                width: auto;
+                margin-bottom: 6px;
+            }
+
+            .location-input {
+                width: 100%;
+            }
+
+            .search-status {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="landing-container">
+
+    <h1>LAN Maps</h1>
+
+    <!-- Current Location -->
+    <button
+        type="button"
+        class="main-button"
+        id="currentLocationButton">
+        Current location
+    </button>
+
+    <!-- Get Route -->
+    <button
+        type="button"
+        class="main-button"
+        id="getRouteButton">
+        Get route
+    </button>
+
+    <!-- Route input section -->
+    <div
+        id="routeSection"
+        class="route-section hidden">
+
+        <div class="location-row">
+            <label for="source">Source:</label>
+
+            <input
+                type="text"
+                id="source"
+                class="location-input"
+                placeholder="Location name or latitude, longitude"
+                autocomplete="off">
+
+        </div>
+
+        <div
+            id="sourceStatus"
+            class="search-status">
+        </div>
+
+        <div class="location-row">
+            <label for="destination">Destination:</label>
+
+            <input
+                type="text"
+                id="destination"
+                class="location-input"
+                placeholder="Location name or latitude, longitude"
+                autocomplete="off">
+
+        </div>
+
+        <div
+            id="destinationStatus"
+            class="search-status">
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const currentLocationButton =
+        document.getElementById("currentLocationButton");
+
+    const getRouteButton =
+        document.getElementById("getRouteButton");
+
+    const routeSection =
+        document.getElementById("routeSection");
+
+    const sourceInput =
+        document.getElementById("source");
+
+    const destinationInput =
+        document.getElementById("destination");
+
+    const sourceStatus =
+        document.getElementById("sourceStatus");
+
+    const destinationStatus =
+        document.getElementById("destinationStatus");
+
+
+    /*
+     * Current Location
+     *
+     * For the current stage this simply opens the
+     * existing maps.html page.
+     */
+    currentLocationButton.addEventListener("click", function () {
+
+        window.location.href = "/lan_maps/cmaps";
+
+    });
+
+
+    /*
+     * Get Route
+     *
+     * First click displays the Source and Destination
+     * fields.
+     *
+     * We are deliberately NOT submitting the route yet.
+     */
+    getRouteButton.addEventListener("click", function () {
+
+        routeSection.classList.toggle("hidden");
+
+        if (!routeSection.classList.contains("hidden")) {
+
+            sourceInput.focus();
+
+            getCurrentLocation();
+
+        }
+
+    });
+
+
+    /*
+     * Obtain browser GPS location.
+     *
+     * The resulting value is placed into Source as:
+     *
+     * latitude, longitude
+     */
+    function getCurrentLocation() {
+
+        if (!navigator.geolocation) {
+
+            sourceStatus.textContent =
+                "GPS location is not supported by this browser.";
+
+            return;
+        }
+
+        sourceStatus.textContent =
+            "Getting current location...";
+
+        navigator.geolocation.getCurrentPosition(
+
+            function (position) {
+
+                const latitude =
+                    position.coords.latitude;
+
+                const longitude =
+                    position.coords.longitude;
+
+                sourceInput.value =
+                    latitude.toFixed(6) +
+                    ", " +
+                    longitude.toFixed(6);
+
+                sourceStatus.textContent =
+                    "Current GPS location";
+
+            },
+
+            function (error) {
+
+                sourceStatus.textContent =
+                    "Unable to obtain GPS location.";
+
+                console.log(
+                    "Geolocation error:",
+                    error
+                );
+
+            },
+
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 30000
+            }
+
+        );
+
+    }
+
+
+    /*
+     * Location input handling
+     *
+     * At this stage we only detect whether the user
+     * appears to be entering GPS coordinates.
+     *
+     * Actual location-name searching/geocoding will
+     * be connected later.
+     */
+    function checkLocationInput(input, statusElement) {
+
+        const value =
+            input.value.trim();
+
+        if (value.length === 0) {
+
+            statusElement.textContent = "";
+
+            return;
+        }
+
+        /*
+         * Accept:
+         *
+         * 26.8467, 80.9462
+         *
+         * -33.8688, 151.2093
+         */
+        const coordinatePattern =
+            /^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/;
+
+        const match =
+            value.match(coordinatePattern);
+
+        if (match) {
+
+            const latitude =
+                Number(match[1]);
+
+            const longitude =
+                Number(match[2]);
+
+            if (
+                latitude >= -90 &&
+                latitude <= 90 &&
+                longitude >= -180 &&
+                longitude <= 180
+            ) {
+
+                statusElement.textContent =
+                    "GPS coordinates";
+
+            } else {
+
+                statusElement.textContent =
+                    "Invalid GPS coordinates";
+
+            }
+
+            return;
+        }
+
+        /*
+         * Anything else is currently treated as a
+         * location-name search string.
+         *
+         * Actual search will be implemented later.
+         */
+        statusElement.textContent =
+            "Location search";
+
+    }
+
+
+    sourceInput.addEventListener(
+        "input",
+        function () {
+
+            checkLocationInput(
+                sourceInput,
+                sourceStatus
+            );
+
+        }
+    );
+
+
+    destinationInput.addEventListener(
+        "input",
+        function () {
+
+            checkLocationInput(
+                destinationInput,
+                destinationStatus
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
