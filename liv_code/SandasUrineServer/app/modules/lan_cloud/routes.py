@@ -18,56 +18,57 @@ import tempfile
 import zipfile
 from flask import after_this_request
 
+import os
+
+from .traversal import (
+    get_current_directory,
+    save_current_directory,
+    resolve_path,
+)
+
 @lancloud_bp.route("/")
 def LANcloud():
+    return render_template("/lancloud/showdirfiles.html")
 
-    state.BuildLANcloudDirectoryJSON()
+def build_current_listing():
+    relative_path = get_current_directory()
+    directory = resolve_path(relative_path)
 
-    print(
-        f"[LANcloud] "
-        f"{len(state.LANcloud_JSON['entries'])} entries loaded."
-    )
+    state.BuildLANcloudDirectoryJSON(directory)
 
-    return render_template("/lancloud/showdirfiles.html")  
+    # Preserve your existing entries and entry structure.
+    listing = dict(state.LANcloud_JSON)
+    listing["current_directory"] = relative_path
 
+    return listing
 
 @lancloud_bp.route("/list")
 def LANcloudList():
+    try:
+        return jsonify(build_current_listing())
 
-    folder = request.args.get("folder", "")
-
-    requested = (paths.LAN_CLOUD_FOLDER / folder).resolve()
-
-    #
-    # Prevent leaving the shared folder.
-    #
-    if not str(requested).startswith(str(paths.LAN_CLOUD_FOLDER.resolve())):
+    except (PermissionError, ValueError):
         return jsonify({"error": "Access denied"}), 403
 
-    if not requested.exists() or not requested.is_dir():
-        return jsonify({"error": "Directory not found"}), 404
-
-    state.BuildLANcloudDirectoryJSON(requested)
-
-    return jsonify(state.LANcloud_JSON)
 
 
-@lancloud_bp.route("/change-directory")
+@lancloud_bp.route("/change-directory", methods=["POST"])
 def LANcloudChangeDirectory():
+    data = request.get_json(silent=True) or {}
+    relative_path = data.get("path", "")
 
-    item_id = request.args.get("id")
+    try:
+        # This writes the new traversal record to disk.
+        save_current_directory(relative_path)
 
-    if item_id not in state.LANcloud_ID_MAP:
-        return jsonify({"error": "Invalid directory"}), 404
+        # Build a listing for the newly selected directory.
+        return jsonify(build_current_listing())
 
-    destination = state.LANcloud_ID_MAP[item_id]
+    except PermissionError:
+        return jsonify({"error": "Access denied"}), 403
 
-    if not destination.is_dir():
-        return jsonify({"error": "Not a directory"}), 400
-
-    state.BuildLANcloudDirectoryJSON(destination)
-
-    return jsonify(state.LANcloud_JSON)
+    except (NotADirectoryError, FileNotFoundError, ValueError):
+        return jsonify({"error": "Directory not found"}), 404
 
 
 @lancloud_bp.route("/file-operation-download")
@@ -78,9 +79,25 @@ def file_operation_download():
     if not name:
         return "No file selected.", 400
 
-    path = paths.LAN_CLOUD_FOLDER / name
+    try:
+        current_directory = get_current_directory()
 
-    if not path.exists():
+        relative_path = (
+            f"{current_directory}/{name}"
+            if current_directory
+            else name
+        )
+
+        path = resolve_path(relative_path)
+
+    except (PermissionError, ValueError):
+        return "Access denied.", 403
+
+    print("Name of file:", name)
+    print("Current directory:", current_directory)
+    print("Path of file:", path)
+
+    if not path.is_file() and not path.is_dir():
         return "Selected file or directory not found.", 404
 
 
@@ -221,17 +238,17 @@ def file_operation_upload():
         ####################################################
 
 # If we are in the root shared folder, don't append it again.
+        current_directory = get_current_directory()
 
-        if current_directory == paths.LAN_CLOUD_FOLDER.name:
+        destination_directory = resolve_path(
+            current_directory
+        )
 
-            destination_directory = paths.LAN_CLOUD_FOLDER
-
-        else:
-
-            destination_directory = (
-                paths.LAN_CLOUD_FOLDER /
-                current_directory
-            )
+        if not destination_directory.is_dir():
+            return jsonify({
+                "status": "error",
+                "message": "Destination directory not found."
+            }), 404
 
         destination_directory.mkdir(
             parents=True,
@@ -314,8 +331,9 @@ def file_operation_upload():
 
             )
 
-            state.BuildLANcloudDirectoryJSON()
-
+            state.BuildLANcloudDirectoryJSON(
+                resolve_path(get_current_directory())
+            )
 
         ####################################################
         # Success
@@ -349,69 +367,64 @@ def file_operation_upload():
 
 
 
+
+
 @lancloud_bp.route("/file-operation", methods=["POST"])
 def file_operation():
+    data = request.get_json(silent=True) or {}
 
-    data = request.get_json()
-
-    operation = data.get("operation")
+    if data.get("operation") != "delete":
+        return jsonify({
+            "status": "error",
+            "message": "Unsupported operation."
+        }), 400
 
     selected = data.get("selected", [])
 
-    if operation != "delete":
-
+    if not isinstance(selected, list):
         return jsonify({
-
             "status": "error",
+            "message": "Invalid selection."
+        }), 400
 
-            "message": "Unsupported operation."
-
-        })
-
+    current_directory = get_current_directory()
     deleted = []
-
     failed = []
 
     for name in selected:
-
-        path = paths.LAN_CLOUD_FOLDER / name
+        if not isinstance(name, str) or name in ("", ".", ".."):
+            failed.append(str(name))
+            continue
 
         try:
+            relative_path = (
+                f"{current_directory}/{name}"
+                if current_directory
+                else name
+            )
+
+            path = resolve_path(relative_path)
 
             if path.is_dir():
-
                 shutil.rmtree(path)
-
             elif path.is_file():
-
                 path.unlink()
-
             else:
-
                 failed.append(name)
-
                 continue
 
             deleted.append(name)
 
-        except Exception as e:
-
-            failed.append(f"{name} ({e})")
-
-    state.BuildLANcloudDirectoryJSON()
+        except Exception as exc:
+            failed.append(f"{name} ({exc})")
 
     return jsonify({
-
         "status": "ok",
-
         "deleted": deleted,
-
         "failed": failed,
-
-        "message":
-            f"Deleted {len(deleted)} item(s)."
-
+        "message": f"Deleted {len(deleted)} item(s)."
     })
+
 
 
 @lancloud_bp.route(
@@ -419,102 +432,54 @@ def file_operation():
     methods=["POST"]
 )
 def file_operation_new_directory():
-
     try:
-
-        data = request.get_json()
-
-        current_directory = data[
-            "current_directory"
-        ]
-
-        directory_name = data[
-            "directory_name"
-        ].strip()
-
-
-        #######################################################
-        # Basic Validation
-        #######################################################
+        data = request.get_json(silent=True) or {}
+        directory_name = data.get("directory_name", "").strip()
 
         if (
-            "/" in directory_name or
-            "\\" in directory_name
+            not directory_name
+            or directory_name in (".", "..")
+            or "/" in directory_name
+            or "\\" in directory_name
         ):
+            return jsonify({
+                "status": "error",
+                "message": "Invalid directory name."
+            }), 400
 
-            return jsonify(
-            {
-                "status":"error",
-                "message":
-                "Invalid directory name."
-            })
-
-
-        #######################################################
-        # Destination
-        #######################################################
-
-        if current_directory == "":
-
-            destination = paths.LAN_CLOUD_FOLDER
-
-        else:
-
-            destination = (
-                paths.LAN_CLOUD_FOLDER /
-                current_directory
-            )
-
-
-        new_directory = (
-            destination /
-            directory_name
+        destination = resolve_path(
+            get_current_directory()
         )
 
+        if not destination.is_dir():
+            return jsonify({
+                "status": "error",
+                "message": "Current directory not found."
+            }), 404
 
-        #######################################################
-        # Already Exists
-        #######################################################
+        new_directory = destination / directory_name
 
         if new_directory.exists():
+            return jsonify({
+                "status": "error",
+                "message": "Directory already exists."
+            }), 409
 
-            return jsonify(
-            {
-                "status":"error",
+        new_directory.mkdir(exist_ok=False)
 
-                "message":
-                "Directory already exists."
-            })
-
-
-        #######################################################
-        # Create Directory
-        #######################################################
-
-        new_directory.mkdir(
-            parents=True,
-            exist_ok=False
-        )
-
-        state.BuildLANcloudDirectoryJSON(
-            destination
-        )
-
-        return jsonify(
-        {
-            "status":"ok",
-
-            "message":
-            "Directory created successfully."
+        return jsonify({
+            "status": "ok",
+            "message": "Directory created successfully."
         })
 
+    except PermissionError:
+        return jsonify({
+            "status": "error",
+            "message": "Access denied."
+        }), 403
 
-    except Exception as e:
-
-        return jsonify(
-        {
-            "status":"error",
-
-            "message":
-            str(e)
-        }),500
+    except OSError as exc:
+        return jsonify({
+            "status": "error",
+            "message": str(exc)
+        }), 500

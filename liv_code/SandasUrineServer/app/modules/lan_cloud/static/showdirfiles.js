@@ -118,37 +118,32 @@ function buildDirectoryList()
                 icon + entry.name;
 
             link.onclick =
-            function(event)
+
+
+        function(event)
+        {
+            event.preventDefault();
+
+            let targetPath;
+
+            if (entry.name === "..")
             {
-                event.preventDefault();
+                const parts = currentDirectory
+                    .split("/")
+                    .filter(Boolean);
 
-                fetch(
-                    "/lan_cloud/change-directory?id=" +
-                    encodeURIComponent(entry.id)
-                )
-                .then(r => r.json())
-                .then(function(message)
-                {
-                    currentDirectory =
-                        message.current_directory;
+                parts.pop();
+                targetPath = parts.join("/");
+            }
+            else
+            {
+                targetPath = currentDirectory
+                    ? currentDirectory + "/" + entry.name
+                    : entry.name;
+            }
 
-                    directoryEntries =
-                        message.entries;
-
-                    document.getElementById(
-                        "CurrentDirectory"
-                    ).textContent =
-                        "Current Directory : " +
-                        (
-                            currentDirectory === ""
-                            ? "SharedDataOnLan"
-                            : currentDirectory
-                        );
-
-                    buildDirectoryList();
-                });
-            };
-
+            navigateTo(targetPath);
+        };
             nameCell.appendChild(link);
         }
         else
@@ -395,6 +390,8 @@ async function uploadFile(file)
 
 }
 
+
+
 /*****************************************************************
  * Download Button
  *****************************************************************/
@@ -402,41 +399,45 @@ async function uploadFile(file)
 document
 .getElementById("DownloadButton")
 .addEventListener(
-"click",
-function()
-{
-    const selected =
-        getSelectedItems();
-
-    if (selected.length === 0)
+    "click",
+    function()
     {
+        const selected = getSelectedItems();
+
+        if (selected.length === 0)
+        {
+            alert(
+                "Please select the directory or folder to download"
+            );
+            return;
+        }
+
+        if (selected.length > 1)
+        {
+            alert(
+                "Please select only one file or directory."
+            );
+            return;
+        }
+
+        const filename = selected[0].name;
+
+        // Build the path relative to LAN_CLOUD_FOLDER.
+        const relativePath = currentDirectory
+            ? currentDirectory + "/" + filename
+            : filename;
+
         alert(
-            "Please select the directory or folder to download"
+            "You selected " +
+            relativePath +
+            " to download"
         );
-        return;
+
+        window.location =
+            "/lan_cloud/file-operation-download?name=" +
+            encodeURIComponent(filename);
     }
-
-    if (selected.length > 1)
-    {
-        alert(
-            "Please select only one file or directory."
-        );
-        return;
-    }
-
-    const name = selected[0].name;
-
-    alert(
-        "You selected " +
-        name +
-        " to download"
-    );
-
-    window.location =
-        "/lan_cloud/file-operation-download?name=" +
-        encodeURIComponent(name);
-});
-
+);
 /*****************************************************************
  * Delete Button
  *****************************************************************/
@@ -568,6 +569,56 @@ async function()
 /*****************************************************************
  * Start
  *****************************************************************/
+
+
+/*****************************************************************
+ * Navigate to a directory and persist the traversal record
+ *****************************************************************/
+
+async function navigateTo(relativePath)
+{
+    try
+    {
+        const response = await fetch(
+            "/lan_cloud/change-directory",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    path: relativePath
+                })
+            }
+        );
+
+        const message = await response.json();
+
+        if (!response.ok)
+        {
+            throw new Error(
+                message.error || "Directory navigation failed."
+            );
+        }
+
+        currentDirectory = message.current_directory || "";
+        directoryEntries = message.entries || [];
+
+        document.getElementById(
+            "CurrentDirectory"
+        ).textContent =
+            "Current Directory : " +
+            (currentDirectory || "SharedDataOnLan");
+
+        buildDirectoryList();
+    }
+    catch (error)
+    {
+        console.error(error);
+        alert(error.message);
+    }
+}
+
 window.addEventListener(
 "load",
 function()
