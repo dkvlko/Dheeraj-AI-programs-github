@@ -42,17 +42,61 @@
         }
 
 
+        #search-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2000;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 10px;
+            background: #ffffff;
+            border-bottom: 1px solid #c8c8c8;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+            font-family: Arial, sans-serif;
+        }
+
+        #locationInput {
+            flex: 1;
+            min-width: 0;
+            height: 42px;
+            padding: 8px 11px;
+            font-size: 16px;
+            border: 1px solid #aaa;
+            border-radius: 6px;
+        }
+
+        #submitLocation {
+            height: 42px;
+            padding: 0 18px;
+            border: 0;
+            border-radius: 6px;
+            background: #1976d2;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        #submitLocation:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
         #map {
 
             position: absolute;
 
-            top: 0;
+            top: 63px;
             left: 0;
             right: 0;
             bottom: 0;
 
             width: 100%;
-            height: 100%;
+            /* top + bottom determine the available map height */
 
         }
 
@@ -84,6 +128,25 @@
 
         }
 
+        @media (max-width: 520px) {
+            #search-panel {
+                padding: 7px;
+                gap: 6px;
+            }
+            #locationInput {
+                height: 40px;
+                font-size: 14px;
+            }
+            #submitLocation {
+                height: 40px;
+                padding: 0 12px;
+                font-size: 14px;
+            }
+            #map {
+                top: 54px;
+            }
+        }
+
     </style>
 
 </head>
@@ -91,6 +154,15 @@
 
 <body>
 
+<div id="search-panel">
+    <input
+        id="locationInput"
+        type="text"
+        autocomplete="off"
+        placeholder="Paste a map URL or enter latitude, longitude"
+        aria-label="Map URL or GPS coordinates">
+    <button id="submitLocation" type="button">Show location</button>
+</div>
 
 <div id="map"></div>
 
@@ -139,6 +211,199 @@ function setStatus(message)
     console.log(message);
 
 }
+
+
+/* =====================================================
+   LOCATION URL / COORDINATE INPUT
+   ===================================================== */
+const locationInput = document.getElementById("locationInput");
+const submitLocationButton = document.getElementById("submitLocation");
+
+function validCoordinates(lat, lon) {
+    return Number.isFinite(lat) && Number.isFinite(lon) &&
+        lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+}
+
+function coordinatePair(value) {
+    if (value === null || value === undefined || value === "") return null;
+
+    // URLSearchParams decodes percent-encoding, but accept encoded values too.
+    let text = String(value).trim();
+    try {
+        text = decodeURIComponent(text.replace(/\+/g, " "));
+    } catch (_) {
+        // Keep the original text if it is not valid percent-encoding.
+    }
+
+    // Match a latitude/longitude pair at the beginning of a value. This also
+    // handles values followed by zoom or other URL punctuation.
+    const match = text.match(/(?:^|[^\d.])(-?\d{1,2}(?:\.\d+)?)\s*[,;]\s*(-?\d{1,3}(?:\.\d+)?)(?=$|[^\d.])/);
+    if (!match) return null;
+
+    const lat = Number(match[1]);
+    const lon = Number(match[2]);
+    return validCoordinates(lat, lon) ? { lat, lon } : null;
+}
+
+function extractLocationInput(rawValue) {
+    let value = String(rawValue || "").trim();
+    if (!value) return { error: "Enter a map URL, address, or latitude, longitude." };
+
+    // If the user pastes Markdown such as [label](https://maps.apple.com/...),
+    // extract the URL from the link. Also accept angle-bracketed URLs.
+    const markdownLink = value.match(/^\s*\[[^\]]*\]\((https?:\/\/[^\s)]+)\)\s*$/i);
+    if (markdownLink) value = markdownLink[1];
+    value = value.replace(/^\s*</, "").replace(/>\s*$/, "").replace(/\\&/g, "&");
+
+    // Standard geo: URI, e.g. geo:26.85,80.94 or geo:26.85,80.94?q=Hazratganj
+    const geoMatch = value.match(/^geo:([^?]+)/i);
+    if (geoMatch) {
+        const pair = coordinatePair(geoMatch[1]);
+        if (pair) return { coordinates: pair };
+    }
+
+    // Bare coordinates, e.g. 26.85, 80.94
+    const barePair = value.match(/^\s*(-?\d+(?:\.\d+)?)\s*[,;]\s*(-?\d+(?:\.\d+)?)\s*$/);
+    if (barePair) {
+        const pair = { lat: Number(barePair[1]), lon: Number(barePair[2]) };
+        if (validCoordinates(pair.lat, pair.lon)) return { coordinates: pair };
+        return { error: "Coordinates are outside the valid latitude/longitude range." };
+    }
+
+    // Parse common Google Maps and Apple Maps URL formats.
+    if (/^https?:\/\//i.test(value)) {
+        let url;
+        try { url = new URL(value); }
+        catch (_) { return { error: "That URL is not valid." }; }
+
+        const host = url.hostname.toLowerCase();
+        const isGoogleMaps = host === "google.com" || host.endsWith(".google.com") || host === "maps.app.goo.gl" || host === "goo.gl";
+        const isAppleMaps = host === "maps.apple.com" || host === "apple.com" || host.endsWith(".apple.com");
+        const params = url.searchParams;
+
+        // Apple Maps place links commonly use coordinate=lat,lon; other Apple
+        // links may use ll=lat,lon. Google links often use q=lat,lon.
+        for (const key of ["coordinate", "ll", "center", "query", "q", "destination", "daddr", "origin"]) {
+            const pair = coordinatePair(params.get(key));
+            if (pair) return { coordinates: pair };
+        }
+
+        // Google Maps place links commonly contain /@latitude,longitude,zoomz.
+        const atMatch = url.pathname.match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+        if (atMatch) {
+            const pair = { lat: Number(atMatch[1]), lon: Number(atMatch[2]) };
+            if (validCoordinates(pair.lat, pair.lon)) return { coordinates: pair };
+        }
+
+        // Some Google Maps URLs encode the place coordinates as !3dLAT!4dLON
+        // in the /data=... path instead of a query parameter.
+        const dataText = url.pathname + " " + url.search;
+        const dataMatch = dataText.match(/!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/);
+        if (dataMatch) {
+            const pair = { lat: Number(dataMatch[1]), lon: Number(dataMatch[2]) };
+            if (validCoordinates(pair.lat, pair.lon)) return { coordinates: pair };
+        }
+
+        // If the URL contains an address rather than coordinates, search it
+        // through Photon. Apple Maps commonly provides address=..., while
+        // Google Maps may put an address in q= or the /place/<address> path.
+        for (const key of ["q", "query", "address", "destination", "daddr", "name"]) {
+            const candidate = params.get(key);
+            if (candidate && candidate.trim()) return { query: candidate.trim() };
+        }
+
+        if (isGoogleMaps) {
+            const placeMatch = url.pathname.match(/\/maps\/place\/([^/]+)/i);
+            if (placeMatch) {
+                const placeText = decodeURIComponent(placeMatch[1].replace(/\+/g, " "));
+                if (placeText && !/^data=/.test(placeText)) return { query: placeText.replace(/\+/g, " ") };
+            }
+        }
+
+        // Shortened map URLs generally need server-side redirect resolution.
+        return { error: "No coordinates or address could be extracted. Shortened map links may need to be expanded first." };
+    }
+
+    // Treat anything else as an address or place name for Photon.
+    return { query: value };
+}
+
+async function resolveLocation() {
+    const rawValue = locationInput.value.trim();
+    const parsed = extractLocationInput(rawValue);
+
+    if (parsed.error) {
+        setStatus(parsed.error);
+        return;
+    }
+
+    let coordinates = parsed.coordinates;
+    let label = "Selected location";
+
+    if (!coordinates && parsed.query) {
+        submitLocationButton.disabled = true;
+        setStatus("Searching Photon for: " + parsed.query);
+        try {
+            const response = await fetch(
+                "/lan_maps/api/geocode?q=" + encodeURIComponent(parsed.query) + "&limit=5&lang=en",
+                { headers: { "Accept": "application/json" } }
+            );
+            if (!response.ok) throw new Error("Geocoder returned HTTP " + response.status);
+            const data = await response.json();
+            const feature = (data.features || [])[0];
+            if (!feature || !feature.geometry || !Array.isArray(feature.geometry.coordinates)) {
+                setStatus("No matching location found in Photon. Try a more specific address or coordinates.");
+                return;
+            }
+            const [lon, lat] = feature.geometry.coordinates;
+            if (!validCoordinates(lat, lon)) throw new Error("Photon returned invalid coordinates");
+            coordinates = { lat, lon };
+            const props = feature.properties || {};
+            label = [props.name, props.street, props.city, props.state, props.postcode, props.country]
+                .filter(Boolean).filter((part, index, arr) => arr.indexOf(part) === index).join(", ") || parsed.query;
+        } catch (error) {
+            console.error("Location lookup failed:", error);
+            setStatus("Location search failed: " + error.message);
+            return;
+        } finally {
+            submitLocationButton.disabled = false;
+        }
+    }
+
+    if (!coordinates) {
+        setStatus("Could not determine the location. Enter coordinates or a supported map URL.");
+        return;
+    }
+
+    if (!map) {
+        setStatus("Map is still starting. Please try again in a moment.");
+        return;
+    }
+
+    // Use a separate marker so live GPS tracking does not move the selected location marker.
+    if (!window.selectedLocationMarker) {
+        window.selectedLocationMarker = new maplibregl.Marker({ color: "#d32f2f" });
+    }
+    window.selectedLocationMarker
+        .setLngLat([coordinates.lon, coordinates.lat])
+        .setPopup(new maplibregl.Popup({ offset: 25 }).setText(label))
+        .addTo(map);
+
+    map.flyTo({
+        center: [coordinates.lon, coordinates.lat],
+        zoom: Math.max(map.getZoom(), 15),
+        speed: 1.2
+    });
+    setStatus(label + " — " + coordinates.lat.toFixed(6) + ", " + coordinates.lon.toFixed(6));
+}
+
+submitLocationButton.addEventListener("click", resolveLocation);
+locationInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        resolveLocation();
+    }
+});
 
 
 /* =====================================================

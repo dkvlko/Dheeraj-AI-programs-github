@@ -11,6 +11,58 @@ from . import lanmaps_bp
 import requests
 import re
 
+
+# Local Photon service. The browser calls Flask, and Flask proxies to Photon.
+PHOTON_URL = "http://127.0.0.1:2322/api"
+
+@lanmaps_bp.get("/api/geocode")
+def geocode_proxy():
+    """Proxy address autocomplete requests to the local India Photon index.
+
+    Browser example:
+        /lan_maps/api/geocode?q=Hazratganj%2C%20Lucknow&limit=5&lang=en
+
+    Photon remains bound to localhost; it is not exposed directly to the LAN.
+    """
+    query = request.args.get("q", "").strip()
+
+    if len(query) < 2:
+        return jsonify({"type": "FeatureCollection", "features": []})
+
+    # Keep responses small and prevent arbitrary large requests.
+    try:
+        limit = int(request.args.get("limit", "5"))
+    except (TypeError, ValueError):
+        limit = 5
+    limit = max(1, min(limit, 8))
+
+    language = request.args.get("lang", "en").strip() or "en"
+
+    try:
+        response = requests.get(
+            PHOTON_URL,
+            params={"q": query, "limit": limit, "lang": language},
+            timeout=5,
+        )
+        response.raise_for_status()
+        data = response.json()
+
+    except requests.Timeout:
+        return jsonify({"error": "Address search timed out. Please try again."}), 504
+    except requests.RequestException as exc:
+        print(f"Photon proxy error: {exc}")
+        return jsonify({"error": "Address search service is unavailable."}), 502
+    except ValueError:
+        print("Photon proxy error: Photon returned invalid JSON")
+        return jsonify({"error": "Address search returned an invalid response."}), 502
+
+    # This Photon installation uses the India-only database. Keep the response
+    # format as GeoJSON so the frontend can use feature properties and coordinates.
+    if not isinstance(data, dict) or not isinstance(data.get("features"), list):
+        return jsonify({"error": "Address search returned an unexpected response."}), 502
+
+    return jsonify(data)
+
 @lanmaps_bp.route("/martin/<path:subpath>")
 def martin_proxy(subpath):
     """

@@ -1,0 +1,1484 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,
+                 initial-scale=1,
+                 maximum-scale=1,
+                 user-scalable=no">
+
+    <title>My Offline Map</title>
+
+
+    <!--
+        Local MapLibre CSS.
+    -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('lan_maps.static', filename='maplibre/maplibre-gl.css') }}">
+
+
+    <style>
+
+        html,
+        body {
+
+            margin: 0;
+            padding: 0;
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+        }
+
+
+        #search-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2000;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 10px;
+            background: #ffffff;
+            border-bottom: 1px solid #c8c8c8;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+            font-family: Arial, sans-serif;
+        }
+
+        #locationInput {
+            flex: 1;
+            min-width: 0;
+            height: 42px;
+            padding: 8px 11px;
+            font-size: 16px;
+            border: 1px solid #aaa;
+            border-radius: 6px;
+        }
+
+        #submitLocation {
+            height: 42px;
+            padding: 0 18px;
+            border: 0;
+            border-radius: 6px;
+            background: #1976d2;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        #submitLocation:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        #map {
+
+            position: absolute;
+
+            top: 63px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            width: 100%;
+            /* top + bottom determine the available map height */
+
+        }
+
+
+        #status {
+
+            position: absolute;
+
+            left: 10px;
+            bottom: 10px;
+
+            z-index: 1000;
+
+            max-width: calc(100% - 20px);
+
+            background: rgba(0, 0, 0, 0.80);
+
+            color: white;
+
+            padding: 10px 14px;
+
+            border-radius: 7px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 13px;
+
+            line-height: 1.4;
+
+        }
+
+        @media (max-width: 520px) {
+            #search-panel {
+                padding: 7px;
+                gap: 6px;
+            }
+            #locationInput {
+                height: 40px;
+                font-size: 14px;
+            }
+            #submitLocation {
+                height: 40px;
+                padding: 0 12px;
+                font-size: 14px;
+            }
+            #map {
+                top: 54px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div id="search-panel">
+    <input
+        id="locationInput"
+        type="text"
+        autocomplete="off"
+        placeholder="Paste a map URL or enter latitude, longitude"
+        aria-label="Map URL or GPS coordinates">
+    <button id="submitLocation" type="button">Show location</button>
+</div>
+
+<div id="map"></div>
+
+
+<div id="status">
+    Starting...
+</div>
+
+
+<!--
+    Flask-SocketIO supplies this locally.
+
+    DO NOT use an Internet CDN here.
+-->
+
+<script src="{{url_for('static',filename='socket.io.min.js')}}"></script>
+
+
+<!--
+    MapLibre is an ES module.
+-->
+
+<script type="module">
+
+
+/* =====================================================
+   IMPORT MAPLIBRE
+   ===================================================== */
+import * as maplibregl
+    from "{{url_for('lan_maps.static',filename='maplibre/maplibre-gl.mjs')}}";
+
+
+/* =====================================================
+   STATUS ELEMENT
+   ===================================================== */
+
+const statusElement =
+    document.getElementById("status");
+
+
+function setStatus(message)
+{
+
+    statusElement.textContent = message;
+
+    console.log(message);
+
+}
+
+
+/* =====================================================
+   LOCATION URL / COORDINATE INPUT
+   ===================================================== */
+const locationInput = document.getElementById("locationInput");
+const submitLocationButton = document.getElementById("submitLocation");
+
+function validCoordinates(lat, lon) {
+    return Number.isFinite(lat) && Number.isFinite(lon) &&
+        lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+}
+
+function coordinatePair(value) {
+    if (!value) return null;
+    const match = String(value).match(/(-?\d{1,2}(?:\.\d+)?)\s*[,;]\s*(-?\d{1,3}(?:\.\d+)?)/);
+    if (!match) return null;
+    const lat = Number(match[1]);
+    const lon = Number(match[2]);
+    return validCoordinates(lat, lon) ? { lat, lon } : null;
+}
+
+function extractLocationInput(rawValue) {
+    const value = rawValue.trim();
+    if (!value) return { error: "Enter a map URL, address, or latitude, longitude." };
+
+    // Standard geo: URI, e.g. geo:26.85,80.94 or geo:26.85,80.94?q=Hazratganj
+    const geoMatch = value.match(/^geo:([^?]+)/i);
+    if (geoMatch) {
+        const pair = coordinatePair(decodeURIComponent(geoMatch[1]));
+        if (pair) return { coordinates: pair };
+    }
+
+    // Bare coordinates, e.g. 26.85, 80.94
+    const barePair = value.match(/^\s*(-?\d+(?:\.\d+)?)\s*[,;]\s*(-?\d+(?:\.\d+)?)\s*$/);
+    if (barePair) {
+        const pair = { lat: Number(barePair[1]), lon: Number(barePair[2]) };
+        if (validCoordinates(pair.lat, pair.lon)) return { coordinates: pair };
+        return { error: "Coordinates are outside the valid latitude/longitude range." };
+    }
+
+    // Parse common Google Maps and Apple Maps URL formats.
+    if (/^https?:\/\//i.test(value)) {
+        let url;
+        try { url = new URL(value); }
+        catch (_) { return { error: "That URL is not valid." }; }
+
+        const params = url.searchParams;
+        // Common query parameters used by Google Maps and Apple Maps.
+        for (const key of ["coordinate", "ll", "center", "query", "q", "destination", "daddr"]) {
+            const candidate = params.get(key);
+            const pair = coordinatePair(candidate);
+            if (pair) return { coordinates: pair };
+        }
+
+        // Google Maps URLs often put the map center in /@latitude,longitude,zoomz.
+        const atMatch = url.pathname.match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+        if (atMatch) {
+            const pair = { lat: Number(atMatch[1]), lon: Number(atMatch[2]) };
+            if (validCoordinates(pair.lat, pair.lon)) return { coordinates: pair };
+        }
+
+        // If the URL contains an address rather than coordinates, send that query to Photon.
+        for (const key of ["q", "query", "address", "destination", "daddr"]) {
+            const candidate = params.get(key);
+            if (candidate && candidate.trim()) return { query: candidate.trim() };
+        }
+
+        // Shortened map URLs cannot reliably be resolved by this page due to redirects/CORS.
+        return { error: "No coordinates or address could be extracted. Try a full map URL or copy its GPS coordinates." };
+    }
+
+    // Treat anything else as an address or place name for Photon.
+    return { query: value };
+}
+
+async function resolveLocation() {
+    const rawValue = locationInput.value.trim();
+    const parsed = extractLocationInput(rawValue);
+
+    if (parsed.error) {
+        setStatus(parsed.error);
+        return;
+    }
+
+    let coordinates = parsed.coordinates;
+    let label = "Selected location";
+
+    if (!coordinates && parsed.query) {
+        submitLocationButton.disabled = true;
+        setStatus("Searching Photon for: " + parsed.query);
+        try {
+            const response = await fetch(
+                "/lan_maps/api/geocode?q=" + encodeURIComponent(parsed.query) + "&limit=5&lang=en",
+                { headers: { "Accept": "application/json" } }
+            );
+            if (!response.ok) throw new Error("Geocoder returned HTTP " + response.status);
+            const data = await response.json();
+            const feature = (data.features || [])[0];
+            if (!feature || !feature.geometry || !Array.isArray(feature.geometry.coordinates)) {
+                setStatus("No matching location found in Photon. Try a more specific address or coordinates.");
+                return;
+            }
+            const [lon, lat] = feature.geometry.coordinates;
+            if (!validCoordinates(lat, lon)) throw new Error("Photon returned invalid coordinates");
+            coordinates = { lat, lon };
+            const props = feature.properties || {};
+            label = [props.name, props.street, props.city, props.state, props.postcode, props.country]
+                .filter(Boolean).filter((part, index, arr) => arr.indexOf(part) === index).join(", ") || parsed.query;
+        } catch (error) {
+            console.error("Location lookup failed:", error);
+            setStatus("Location search failed: " + error.message);
+            return;
+        } finally {
+            submitLocationButton.disabled = false;
+        }
+    }
+
+    if (!coordinates) {
+        setStatus("Could not determine the location. Enter coordinates or a supported map URL.");
+        return;
+    }
+
+    if (!map) {
+        setStatus("Map is still starting. Please try again in a moment.");
+        return;
+    }
+
+    // Use a separate marker so live GPS tracking does not move the selected location marker.
+    if (!window.selectedLocationMarker) {
+        window.selectedLocationMarker = new maplibregl.Marker({ color: "#d32f2f" });
+    }
+    window.selectedLocationMarker
+        .setLngLat([coordinates.lon, coordinates.lat])
+        .setPopup(new maplibregl.Popup({ offset: 25 }).setText(label))
+        .addTo(map);
+
+    map.flyTo({
+        center: [coordinates.lon, coordinates.lat],
+        zoom: Math.max(map.getZoom(), 15),
+        speed: 1.2
+    });
+    setStatus(label + " — " + coordinates.lat.toFixed(6) + ", " + coordinates.lon.toFixed(6));
+}
+
+submitLocationButton.addEventListener("click", resolveLocation);
+locationInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        resolveLocation();
+    }
+});
+
+
+/* =====================================================
+   CHECK HTTPS / SECURE CONTEXT
+   ===================================================== */
+
+if (!window.isSecureContext)
+{
+
+    setStatus(
+        "ERROR: This page is not running over HTTPS."
+    );
+
+    console.error(
+        "window.isSecureContext = false"
+    );
+
+}
+
+
+/* =====================================================
+   SOCKET.IO
+   ===================================================== */
+
+let socket = null;
+
+
+if (typeof io === "undefined")
+{
+
+    setStatus(
+        "ERROR: Socket.IO client was not loaded."
+    );
+
+    console.error(
+        "window.io is undefined"
+    );
+
+}
+else
+{
+
+    socket = io();
+
+
+    socket.on(
+        "connect",
+        function ()
+        {
+
+            console.log(
+                "Socket.IO connected:",
+                socket.id
+            );
+
+            setStatus(
+                "WebSocket connected. Requesting GPS..."
+            );
+
+        }
+    );
+
+
+    socket.on(
+        "disconnect",
+        function ()
+        {
+
+            console.log(
+                "Socket.IO disconnected"
+            );
+
+            setStatus(
+                "WebSocket disconnected."
+            );
+
+        }
+    );
+
+
+    socket.on(
+        "connect_error",
+        function (error)
+        {
+
+            console.error(
+                "Socket.IO connection error:",
+                error
+            );
+
+            setStatus(
+                "WebSocket connection error."
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   MAP
+   ===================================================== */
+
+let map;
+
+
+try
+{
+
+    map = new maplibregl.Map({
+
+        container: "map",
+
+
+        /*
+         * Initial location.
+         *
+         * This is only used before GPS
+         * gives us the real location.
+         */
+
+        center: [
+            80.9462,
+            26.8467
+        ],
+
+
+        zoom: 12,
+
+        minZoom: 12,
+
+        maxZoom: 22,
+
+        /*
+         * We are using Martin's vector
+         * tile endpoint through Flask.
+         *
+         * Browser:
+         *
+         * HTTPS :8000
+         *
+         * Flask proxy:
+         *
+         * /lan_maps/martin/india/...
+         *
+         * Martin:
+         *
+         * HTTP :3000
+         */
+
+        style: {
+
+            version: 8,
+            
+            glyphs: "/lan_maps/static/fonts/{fontstack}/{range}.pbf",
+            
+            sources: {
+
+                india: {
+
+                    type: "vector",
+                    tiles: [
+                        "/lan_maps/martin/india/{z}/{x}/{y}"
+                    ],
+
+                
+                    minzoom: 0,
+
+                    maxzoom: 14
+
+                }
+
+            },
+
+
+            layers: [
+
+
+                /* -------------------------------------
+                   Background
+                   ------------------------------------- */
+
+                {
+
+                    id: "background",
+
+                    type: "background",
+
+                    paint: {
+
+                        "background-color":
+                            "#eeeeee"
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Landcover
+                   ------------------------------------- */
+
+                {
+
+                    id: "landcover",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "landcover",
+
+                    paint: {
+
+                        "fill-color":
+                            "#dcebd5",
+
+                        "fill-opacity":
+                            0.6
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Landuse
+                   ------------------------------------- */
+
+                {
+
+                    id: "landuse",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "landuse",
+
+                    paint: {
+
+                        "fill-color":
+                            "#e8e8d8",
+
+                        "fill-opacity":
+                            0.5
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Water
+                   ------------------------------------- */
+
+                {
+
+                    id: "water",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "water",
+
+                    paint: {
+
+                        "fill-color":
+                            "#8fc9e8"
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Waterways
+                   ------------------------------------- */
+
+                {
+
+                    id: "waterway",
+
+                    type: "line",
+
+                    source: "india",
+
+                    "source-layer":
+                        "waterway",
+
+                    paint: {
+
+                        "line-color":
+                            "#6daed0",
+
+                        "line-width":
+                            1.5
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Roads
+                   ------------------------------------- */
+
+                {
+
+                    id: "roads",
+
+                    type: "line",
+
+                    source: "india",
+
+                    "source-layer":
+                        "transportation",
+
+                    paint: {
+
+                        "line-color":
+                            "#ffffff",
+
+                        "line-width": [
+
+                            "interpolate",
+
+                            ["linear"],
+                            ["zoom"],
+
+                            5, 0.5,
+                            10, 1.2,
+                            14, 4
+
+                        ]
+
+                    }
+
+                },
+
+
+                /* -------------------------------------
+                   Major Roads
+                   ------------------------------------- */
+
+            {
+                id: "roads-major",
+
+                type: "line",
+
+                source: "india",
+
+                "source-layer": "transportation",
+
+                filter: [
+                    "match",
+                    ["get", "class"],
+                    [
+                        "motorway",
+                        "trunk",
+                        "primary",
+                        "secondary"
+                    ],
+                    true,
+                    false
+                ],
+
+                paint: {
+
+                    "line-color": "#d88b8b",
+
+                    "line-width": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+                        5, 1,
+                        10, 2,
+                        14, 5
+                    ]
+
+                }
+            },
+
+/* Location Names Layer*/
+                {
+                    id: "place-names",
+
+                    type: "symbol",
+
+                    source: "india",
+
+                    "source-layer": "place",
+
+                    minzoom: 5,
+
+                    layout: {
+
+                        "text-field": [
+                            "coalesce",
+                            ["get", "name:en"],
+                            ["get", "name"],
+                            ["get", "name:latin"]
+                        ],
+
+                        "text-font": [
+                            "Noto Sans Regular"
+                        ],
+
+                        "text-size": [
+
+                            "interpolate",
+
+                            ["linear"],
+
+                            ["zoom"],
+
+                            5, 10,
+                            8, 12,
+                            12, 15,
+                            16, 18
+
+                        ],
+
+                        "text-anchor": "center",
+
+                        "text-allow-overlap": false,
+
+                        "text-ignore-placement": false
+
+                    },
+
+                    paint: {
+
+                        "text-color": "#222222",
+
+                        "text-halo-color": "#ffffff",
+
+                        "text-halo-width": 1.5
+
+                    }
+
+                },
+                /* Road Names*/
+
+            {
+                id: "road-names",
+
+                type: "symbol",
+
+                source: "india",
+
+                "source-layer": "transportation_name",
+
+                minzoom: 12,
+
+                layout: {
+
+                    "symbol-placement": "line",
+
+                    "text-field": [
+                        "coalesce",
+                        ["get", "name:en"],
+                        ["get", "name"],
+                        ["get", "name:latin"]
+                    ],
+
+                    "text-font": [
+                        "Noto Sans Regular"
+                    ],
+
+                    "text-size": [
+
+                        "interpolate",
+
+                        ["linear"],
+
+                        ["zoom"],
+
+                        12, 9,
+                        14, 11,
+                        17, 14
+
+                    ],
+
+                    "text-rotation-alignment": "map",
+
+                    "text-pitch-alignment": "viewport",
+
+                    "text-max-angle": 30,
+
+                    "text-padding": 2
+
+                },
+
+                paint: {
+
+                    "text-color": "#444444",
+
+                    "text-halo-color": "#ffffff",
+
+                    "text-halo-width": 1.2
+
+                }
+
+            },
+
+            /* POI layer*/
+            {
+                id: "poi-names",
+
+                type: "symbol",
+
+                source: "india",
+
+                "source-layer": "poi",
+
+                minzoom: 12,
+
+                layout: {
+
+                    "text-field": [
+                        "coalesce",
+                        ["get", "name:en"],
+                        ["get", "name"],
+                        ["get", "name:latin"]
+                    ],
+
+                    "text-font": [
+                        "Noto Sans Regular"
+                    ],
+
+                    "text-size": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+
+                        12, 9,
+                        13, 10,
+                        14, 12,
+                        16, 14,
+                        18, 15
+
+                    ],
+
+                    "text-anchor": "top",
+
+                    "text-offset": [
+                        0,
+                        0.8
+                    ],
+
+                    "text-allow-overlap": false,
+
+                    "text-ignore-placement": false
+
+                },
+
+                paint: {
+
+                    "text-color": "#333333",
+
+                    "text-halo-color": "#ffffff",
+
+                    "text-halo-width": 1.5
+
+                }
+
+            },
+            /* House - Numbers/Address Layer */
+
+            {
+                id: "house-numbers",
+
+                type: "symbol",
+
+                source: "india",
+
+                "source-layer": "housenumber",
+
+                minzoom: 14,
+
+                layout: {
+
+                    "text-field": [
+                        "get",
+                        "housenumber"
+                    ],
+
+                    "text-font": [
+                        "Noto Sans Regular"
+                    ],
+
+                    "text-size": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+
+                        14, 9,
+                        15, 10,
+                        16, 11,
+                        17, 12,
+                        18, 13
+                    ],
+
+                    "text-anchor": "center",
+
+                    "text-allow-overlap": false,
+
+                    "text-ignore-placement": false
+
+                },
+
+                paint: {
+
+                    "text-color": "#333333",
+
+                    "text-halo-color": "#ffffff",
+
+                    "text-halo-width": 1.2
+
+                }
+
+            },
+                        /* -------------------------------------
+                           Buildings
+                           ------------------------------------- */
+
+                {
+
+                    id: "buildings",
+
+                    type: "fill",
+
+                    source: "india",
+
+                    "source-layer":
+                        "building",
+
+                    minzoom: 13,
+
+                    paint: {
+
+                        "fill-color":
+                            "#d6c5b5",
+
+                        "fill-opacity":
+                            0.70
+
+                    }
+
+                },
+                /*Water names*/
+            {
+                id: "water-names",
+
+                type: "symbol",
+
+                source: "india",
+
+                "source-layer": "water_name",
+
+                minzoom: 8,
+
+                layout: {
+
+                    "text-field": [
+                        "coalesce",
+                        ["get", "name"],
+                        ["get", "name:en"],
+                        ["get", "name:latin"]
+                    ],
+
+                    "text-font": [
+                        "Noto Sans Regular"
+                    ],
+
+                    "text-size": [
+
+                        "interpolate",
+
+                        ["linear"],
+
+                        ["zoom"],
+
+                        8, 10,
+                        12, 12,
+                        16, 15
+
+                    ]
+
+                },
+
+                paint: {
+
+                    "text-color": "#287fa3",
+
+                    "text-halo-color": "#ffffff",
+
+                    "text-halo-width": 1
+
+                }
+
+            }
+
+            ]
+
+        }
+
+    });
+
+
+    /* ---------------------------------------------
+       Navigation controls
+       --------------------------------------------- */
+
+    map.addControl(
+        new maplibregl.NavigationControl(),
+        "top-right"
+    );
+
+
+    /* ---------------------------------------------
+       Map errors
+       --------------------------------------------- */
+
+map.on("error", function (event) {
+
+    console.error("MAPLIBRE ERROR EVENT:", event);
+
+    if (event && event.error) {
+
+        console.error(
+            "MAPLIBRE ERROR MESSAGE:",
+            event.error.message
+        );
+
+        console.error(
+            "MAPLIBRE ERROR OBJECT:",
+            event.error
+        );
+
+        setStatus(
+            "Map error: " +
+            event.error.message
+        );
+
+    }
+    else {
+
+        setStatus("MapLibre error occurred.");
+
+    }
+
+});
+
+    /* ---------------------------------------------
+       Map loaded
+       --------------------------------------------- */
+
+    map.on(
+        "load",
+        function ()
+        {
+
+            console.log(
+                "MapLibre loaded."
+            );
+
+            setStatus(
+                "Map loaded. Waiting for GPS..."
+            );
+
+        }
+    );
+
+}
+catch (error)
+{
+
+    console.error(
+        "MapLibre initialization error:",
+        error
+    );
+
+    setStatus(
+        "MapLibre initialization failed."
+    );
+
+}
+
+
+/* =====================================================
+   GPS MARKER
+   ===================================================== */
+
+let gpsMarker = null;
+
+let firstLocation = true;
+
+
+/* =====================================================
+   GPS SUCCESS
+   ===================================================== */
+
+function gpsSuccess(position)
+{
+
+    const latitude =
+        position.coords.latitude;
+
+    const longitude =
+        position.coords.longitude;
+
+    const accuracy =
+        position.coords.accuracy;
+
+
+    console.log(
+        "GPS POSITION:",
+        latitude,
+        longitude,
+        "accuracy:",
+        accuracy
+    );
+
+
+    /* ---------------------------------------------
+       Update status
+       --------------------------------------------- */
+
+    setStatus(
+
+        "GPS: " +
+
+        latitude.toFixed(6) +
+
+        ", " +
+
+        longitude.toFixed(6) +
+
+        " ± " +
+
+        accuracy.toFixed(1) +
+
+        " m"
+
+    );
+
+
+    /* ---------------------------------------------
+       Create GPS marker
+       --------------------------------------------- */
+
+    if (!gpsMarker)
+    {
+
+        const markerElement =
+            document.createElement("div");
+
+
+        markerElement.style.width =
+            "22px";
+
+        markerElement.style.height =
+            "22px";
+
+        markerElement.style.borderRadius =
+            "50%";
+
+        markerElement.style.background =
+            "#1976d2";
+
+        markerElement.style.border =
+            "4px solid white";
+
+        markerElement.style.boxShadow =
+            "0 0 8px rgba(0,0,0,0.5)";
+
+
+        gpsMarker =
+            new maplibregl.Marker({
+
+                element:
+                    markerElement
+
+            })
+
+            .setLngLat([
+
+                longitude,
+                latitude
+
+            ])
+
+            .addTo(map);
+
+    }
+    else
+    {
+
+        gpsMarker.setLngLat([
+
+            longitude,
+            latitude
+
+        ]);
+
+    }
+
+
+    /* ---------------------------------------------
+       Center map on first GPS position
+       --------------------------------------------- */
+
+    if (firstLocation)
+    {
+
+        map.flyTo({
+
+            center: [
+
+                longitude,
+                latitude
+
+            ],
+
+            zoom: 14,
+
+            speed: 1.2
+
+        });
+
+        firstLocation = false;
+
+    }
+
+
+    /* ---------------------------------------------
+       Send GPS to Flask
+       --------------------------------------------- */
+
+    if (socket)
+    {
+
+        socket.emit(
+
+            "mobile_location",
+
+            {
+
+                latitude:
+                    latitude,
+
+                longitude:
+                    longitude,
+
+                accuracy:
+                    accuracy,
+
+                altitude:
+                    position.coords.altitude,
+
+                speed:
+                    position.coords.speed,
+
+                heading:
+                    position.coords.heading,
+
+                timestamp:
+                    position.timestamp
+
+            }
+
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   GPS ERROR
+   ===================================================== */
+
+function gpsError(error)
+{
+
+    console.error(
+        "GPS ERROR:",
+        error
+    );
+
+
+    let message;
+
+
+    switch (error.code)
+    {
+
+        case error.PERMISSION_DENIED:
+
+            message =
+                "GPS permission denied.";
+
+            break;
+
+
+        case error.POSITION_UNAVAILABLE:
+
+            message =
+                "GPS position unavailable.";
+
+            break;
+
+
+        case error.TIMEOUT:
+
+            message =
+                "GPS request timed out.";
+
+            break;
+
+
+        default:
+
+            message =
+                "Unknown GPS error.";
+
+            break;
+
+    }
+
+
+    setStatus(
+        message +
+        " Code: " +
+        error.code
+    );
+
+}
+
+
+/* =====================================================
+   START GPS
+   ===================================================== */
+
+if (!window.isSecureContext)
+{
+
+    setStatus(
+        "ERROR: Open this page using HTTPS."
+    );
+
+}
+else if (!navigator.geolocation)
+{
+
+    setStatus(
+        "ERROR: Browser does not support GPS."
+    );
+
+}
+else
+{
+
+    setStatus(
+        "Requesting GPS permission..."
+    );
+
+
+    navigator.geolocation.watchPosition(
+
+        gpsSuccess,
+
+        gpsError,
+
+        {
+
+            /*
+             * Ask the device for the
+             * highest accuracy available.
+             */
+
+            enableHighAccuracy:
+                true,
+
+            /*
+             * Do not deliberately use
+             * an old cached position.
+             */
+
+            maximumAge:
+                0,
+
+            /*
+             * Give the device 20 seconds
+             * to obtain a position.
+             */
+
+            timeout:
+                20000
+
+        }
+
+    );
+
+}
+
+
+</script>
+
+</body>
+
+</html>
