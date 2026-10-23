@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Movies - TV</title>
+
+    <style>
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #111;
+            color: white;
+
+            font-family: Arial, sans-serif;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .movie {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #aaa;
+            max-width: 90vw;
+            word-break: break-word;
+        }
+
+        .error {
+            color: #ff6666;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="message">
+
+        {% if ok %}
+
+            <div>
+                Playing movie in VLC
+            </div>
+
+            <div class="movie">
+                {{ movie }}
+            </div>
+
+        {% else %}
+
+            <div class="error">
+                Unable to launch VLC
+            </div>
+
+            <div class="movie">
+                {{ output }}
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

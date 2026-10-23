@@ -50,6 +50,53 @@ def launch_movie_on_tv(movie_path):
         f"{MOVIE_SERVER_URL}/movies/stream/"
         + quote(movie_name, safe="")
     )
+    
+
+    # Ensure the ADB server is running and the TV is connected.
+    try:
+        subprocess.run(
+            ["adb", "start-server"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=True,
+        )
+
+        connection = subprocess.run(
+            ["adb", "connect", TV_DEVICE],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=False,
+        )
+
+        devices = subprocess.run(
+            ["adb", "devices"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=True,
+        )
+
+        device_online = any(
+            len(parts) >= 2
+            and parts[0] == TV_DEVICE
+            and parts[1] == "device"
+            for line in devices.stdout.splitlines()
+            if (parts := line.split())
+        )
+
+        if not device_online:
+            return False, (
+                f"TV ADB connection unavailable: {TV_DEVICE}\n"
+                f"Connect output: {connection.stdout.strip()}\n"
+                f"{connection.stderr.strip()}\n"
+                f"Devices:\n{devices.stdout.strip()}"
+            )
+
+    except (subprocess.TimeoutExpired, subprocess.CalledProcessError,
+            OSError) as exc:
+        return False, f"Failed to prepare ADB connection: {exc}"
 
     command = [
         "adb",

@@ -63,6 +63,85 @@
             background: #1565c0;
         }
 
+        .location-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .location-actions .main-button {
+            flex: 1 1 170px;
+            width: auto;
+            max-width: 240px;
+            margin: 0;
+        }
+
+        .main-button:disabled {
+            background: #9aa4af;
+            color: #f7f7f7;
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+
+        /* Share-location popup */
+        .share-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .share-modal {
+            width: min(460px, 100%);
+            padding: 22px;
+            border-radius: 10px;
+            background: #fff;
+            color: #222;
+            text-align: left;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+        }
+
+        .share-modal h2 {
+            margin: 0 0 12px;
+            font-size: 21px;
+        }
+
+        .share-url-input {
+            width: 100%;
+            padding: 11px;
+            margin: 8px 0 14px;
+            border: 1px solid #bdbdbd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .share-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .share-modal-actions .main-button {
+            width: auto;
+            margin: 0;
+            padding: 10px 16px;
+            font-size: 15px;
+        }
+
+        .share-modal-status {
+            min-height: 18px;
+            margin: 0 0 10px;
+            font-size: 13px;
+            color: #28652c;
+        }
+
         .route-section {
             width: 100%;
             margin-top: 10px;
@@ -214,13 +293,31 @@
 
     <h1>LAN Maps</h1>
 
-    <!-- Current Location -->
-    <button
-        type="button"
-        class="main-button"
-        id="currentLocationButton">
-        Current location
-    </button>
+    <!-- Location actions -->
+    <div class="location-actions">
+        <button
+            type="button"
+            class="main-button"
+            id="currentLocationButton">
+            Current Location
+        </button>
+
+        <button
+            type="button"
+            class="main-button"
+            id="saveLocationButton">
+            Save Location
+        </button>
+
+        <button
+            type="button"
+            class="main-button"
+            id="shareLocationButton">
+            Share Location
+        </button>
+    </div>
+
+    <div id="locationActionStatus" class="search-status" role="status" aria-live="polite"></div>
 
     <!-- Get Route -->
     <button
@@ -295,6 +392,9 @@
 
 <script>
     const currentLocationButton = document.getElementById("currentLocationButton");
+    const saveLocationButton = document.getElementById("saveLocationButton");
+    const shareLocationButton = document.getElementById("shareLocationButton");
+    const locationActionStatus = document.getElementById("locationActionStatus");
     const getRouteButton = document.getElementById("getRouteButton");
     const routeSection = document.getElementById("routeSection");
     const sourceInput = document.getElementById("source");
@@ -306,6 +406,8 @@
     // This endpoint must be implemented by the existing Flask application.
     // Flask proxies requests to Photon at http://127.0.0.1:2322/api.
     const GEOCODE_URL = "/lan_maps/api/geocode";
+    const REVERSE_GEOCODE_URL = "/lan_maps/api/reverse";
+    const SAVE_LOCATION_URL = "/lan_maps/api/saved-locations";
     const SEARCH_DELAY_MS = 300;
     const MIN_QUERY_LENGTH = 3;
 
@@ -315,11 +417,241 @@
         window.location.href = "/lan_maps/cmaps";
     });
 
+    saveLocationButton.addEventListener("click", saveCurrentLocation);
+    shareLocationButton.addEventListener("click", shareCurrentLocation);
+
+    async function shareCurrentLocation() {
+        shareLocationButton.disabled = true;
+        locationActionStatus.textContent = "Getting current GPS location…";
+
+        try {
+            const position = await getBrowserPosition();
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
+
+            showShareLocationPopup(url);
+            locationActionStatus.textContent = "";
+        } catch (error) {
+            console.error("Share location failed:", error);
+            locationActionStatus.textContent = error.message || "Could not obtain your current location.";
+        } finally {
+            shareLocationButton.disabled = false;
+        }
+    }
+
+    function showShareLocationPopup(url) {
+        // Remove any older popup before opening a new one.
+        document.getElementById("shareLocationBackdrop")?.remove();
+
+        const backdrop = document.createElement("div");
+        backdrop.id = "shareLocationBackdrop";
+        backdrop.className = "share-modal-backdrop";
+
+        const modal = document.createElement("section");
+        modal.className = "share-modal";
+        modal.setAttribute("role", "dialog");
+        modal.setAttribute("aria-modal", "true");
+        modal.setAttribute("aria-labelledby", "shareLocationTitle");
+
+        const heading = document.createElement("h2");
+        heading.id = "shareLocationTitle";
+        heading.textContent = "Share Current Location";
+
+        const explanation = document.createElement("p");
+        explanation.textContent = "Copy this Google Maps link and send it to the person you want to share your location with.";
+
+        const urlInput = document.createElement("input");
+        urlInput.className = "share-url-input";
+        urlInput.type = "text";
+        urlInput.value = url;
+        urlInput.readOnly = true;
+        urlInput.setAttribute("aria-label", "Google Maps location URL");
+
+        const status = document.createElement("p");
+        status.className = "share-modal-status";
+        status.setAttribute("role", "status");
+        status.setAttribute("aria-live", "polite");
+
+        const actions = document.createElement("div");
+        actions.className = "share-modal-actions";
+
+        const copyButton = document.createElement("button");
+        copyButton.type = "button";
+        copyButton.className = "main-button";
+        copyButton.textContent = "Copy URL";
+        copyButton.addEventListener("click", async () => {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(url);
+                } else {
+                    // Fallback for browsers without Clipboard API support.
+                    urlInput.focus();
+                    urlInput.select();
+                    const copied = document.execCommand("copy");
+                    if (!copied) throw new Error("Clipboard copy was blocked");
+                }
+                status.textContent = "URL copied to clipboard.";
+                copyButton.textContent = "Copied!";
+            } catch (error) {
+                urlInput.focus();
+                urlInput.select();
+                status.textContent = "Automatic copy was blocked. The URL is selected; copy it manually.";
+                console.warn("Clipboard copy failed:", error);
+            }
+        });
+
+        const closeButton = document.createElement("button");
+        closeButton.type = "button";
+        closeButton.className = "main-button";
+        closeButton.textContent = "Close";
+        closeButton.style.background = "#616b75";
+        closeButton.addEventListener("click", () => backdrop.remove());
+
+        actions.append(copyButton, closeButton);
+        modal.append(heading, explanation, urlInput, status, actions);
+        backdrop.appendChild(modal);
+        backdrop.addEventListener("click", event => {
+            if (event.target === backdrop) backdrop.remove();
+        });
+        document.addEventListener("keydown", function closeOnEscape(event) {
+            if (event.key === "Escape" && document.getElementById("shareLocationBackdrop") === backdrop) {
+                backdrop.remove();
+                document.removeEventListener("keydown", closeOnEscape);
+            }
+        });
+
+        document.body.appendChild(backdrop);
+        urlInput.focus();
+        urlInput.select();
+    }
+
     getRouteButton.addEventListener("click", function () {
         routeSection.classList.remove("hidden");
         sourceInput.focus();
         getCurrentLocation();
     });
+
+
+    function photonAddress(feature) {
+        const p = feature && feature.properties ? feature.properties : {};
+        const parts = [
+            p.housenumber,
+            p.name,
+            p.street,
+            p.suburb,
+            p.district,
+            p.city,
+            p.county,
+            p.state,
+            p.postcode,
+            p.country
+        ].filter(value => typeof value === "string" && value.trim());
+
+        const unique = [];
+        for (const part of parts) {
+            const value = part.trim();
+            if (!unique.some(existing => existing.toLowerCase() === value.toLowerCase())) {
+                unique.push(value);
+            }
+        }
+        return unique.join(", ");
+    }
+
+    function getBrowserPosition() {
+        return new Promise((resolve, reject) => {
+            if (!navigator.geolocation) {
+                reject(new Error("This browser does not support GPS location."));
+                return;
+            }
+            navigator.geolocation.getCurrentPosition(
+                resolve,
+                error => {
+                    const messages = {
+                        1: "Location permission was denied.",
+                        2: "Your current location is unavailable.",
+                        3: "Timed out while obtaining your current location."
+                    };
+                    reject(new Error(messages[error.code] || "Could not obtain your current location."));
+                },
+                { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+            );
+        });
+    }
+
+    async function lookupPhotonAddress(latitude, longitude) {
+        const url = `${REVERSE_GEOCODE_URL}?lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}&lang=en`;
+        const response = await fetch(url, { headers: { "Accept": "application/json" } });
+        if (!response.ok) throw new Error(`Photon reverse search returned HTTP ${response.status}`);
+        const data = await response.json();
+        const feature = Array.isArray(data.features) ? data.features[0] : null;
+        return photonAddress(feature);
+    }
+
+    async function saveCurrentLocation() {
+        saveLocationButton.disabled = true;
+        locationActionStatus.textContent = "Getting current GPS location…";
+
+        try {
+            const position = await getBrowserPosition();
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            let address = "";
+            let addressSource = "manual";
+
+            locationActionStatus.textContent = "Looking up the address in Photon…";
+            try {
+                address = await lookupPhotonAddress(latitude, longitude);
+                if (address) addressSource = "photon_reverse";
+            } catch (error) {
+                console.warn("Photon reverse geocoding failed:", error);
+            }
+
+            if (!address) {
+                address = window.prompt(
+                    `Photon did not provide an address for ${latitude.toFixed(6)}, ${longitude.toFixed(6)}.
+Enter the full address to save this location:`,
+                    ""
+                );
+                if (address === null) {
+                    locationActionStatus.textContent = "Save cancelled.";
+                    return;
+                }
+                address = address.trim();
+                if (!address) {
+                    locationActionStatus.textContent = "A full address is required; location was not saved.";
+                    return;
+                }
+                addressSource = "manual";
+            }
+
+            locationActionStatus.textContent = "Saving location…";
+            const response = await fetch(SAVE_LOCATION_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    latitude,
+                    longitude,
+                    address,
+                    address_source: addressSource,
+                    accuracy_m: Number.isFinite(position.coords.accuracy) ? position.coords.accuracy : null
+                })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result.error || `Save failed (HTTP ${response.status})`);
+            }
+            locationActionStatus.textContent = `Location saved: ${address} (${latitude.toFixed(6)}, ${longitude.toFixed(6)}).`;
+        } catch (error) {
+            console.error("Save location failed:", error);
+            locationActionStatus.textContent = error.message || "Could not save the location.";
+        } finally {
+            saveLocationButton.disabled = false;
+        }
+    }
 
     function parseCoordinates(value) {
         const match = value.trim().match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);

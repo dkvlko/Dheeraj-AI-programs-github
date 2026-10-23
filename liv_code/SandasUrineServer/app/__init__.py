@@ -97,6 +97,13 @@ def create_app():
         url_prefix= notes_bp.app_url
     )
 
+    from app.modules.ziintrdata import ziintrdata_bp
+    app.register_blueprint(
+        ziintrdata_bp,
+        url_prefix= ziintrdata_bp.app_url
+
+    )
+
     from app.modules.dailylog import dailylog_bp
     app.register_blueprint(
         dailylog_bp,

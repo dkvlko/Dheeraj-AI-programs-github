@@ -41,7 +41,7 @@ mount_ntfs() {
     sudo mkdir -p "$mountpoint" || return 1
 
     if sudo mount -t ntfs-3g \
-        -o "uid=$USER_ID,gid=$GROUP_ID,umask=000" \
+        -o "permissions" \
         "UUID=$uuid" "$mountpoint"; then
         echo "Mounted $label at $mountpoint"
         return 0

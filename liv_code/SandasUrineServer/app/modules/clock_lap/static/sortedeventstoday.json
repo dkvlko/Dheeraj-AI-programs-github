@@ -1,14 +1,32 @@
 {
-    "generated_at": "2026-10-17T00:12:22.462309+05:30",
+    "generated_at": "2026-10-23T00:02:42.781036+05:30",
     "timezone": "Asia/Kolkata",
-    "start_date": "2026-10-17",
-    "end_date": "2026-10-23",
+    "start_date": "2026-10-23",
+    "end_date": "2026-10-29",
     "number_of_days": 7,
     "days": [
         {
-            "date": "2026-10-17",
-            "day": "Saturday",
+            "date": "2026-10-23",
+            "day": "Friday",
             "is_today": true,
+            "events": [
+                {
+                    "event_id": null,
+                    "event_name": "No Events Today",
+                    "event_type": "NO_EVENT",
+                    "description": "No holiday or registered event was found for today.",
+                    "date_status": "INFORMATIONAL",
+                    "date_calculation_method": null,
+                    "is_confirmed": true,
+                    "notes": null,
+                    "effects": []
+                }
+            ]
+        },
+        {
+            "date": "2026-10-24",
+            "day": "Saturday",
+            "is_today": false,
             "events": [
                 {
                     "event_id": null,
@@ -29,7 +47,7 @@
             ]
         },
         {
-            "date": "2026-10-18",
+            "date": "2026-10-25",
             "day": "Sunday",
             "is_today": false,
             "events": [
@@ -52,31 +70,19 @@
             ]
         },
         {
-            "date": "2026-10-19",
+            "date": "2026-10-26",
             "day": "Monday",
             "is_today": false,
             "events": []
         },
         {
-            "date": "2026-10-20",
+            "date": "2026-10-27",
             "day": "Tuesday",
             "is_today": false,
-            "events": [
-                {
-                    "event_id": 13,
-                    "event_name": "Dussehra",
-                    "event_type": "PRECALCULATED",
-                    "description": "Precalculated Dussehra holiday",
-                    "date_status": "KNOWN",
-                    "date_calculation_method": "PRECALCULATED",
-                    "is_confirmed": true,
-                    "notes": "Precalculated Dussehra date; Source: Dussehra.Date; Source ID: 7",
-                    "effects": []
-                }
-            ]
+            "events": []
         },
         {
-            "date": "2026-10-21",
+            "date": "2026-10-28",
             "day": "Wednesday",
             "is_today": false,
             "events": [
@@ -99,14 +105,8 @@
             ]
         },
         {
-            "date": "2026-10-22",
+            "date": "2026-10-29",
             "day": "Thursday",
-            "is_today": false,
-            "events": []
-        },
-        {
-            "date": "2026-10-23",
-            "day": "Friday",
             "is_today": false,
             "events": []
         }

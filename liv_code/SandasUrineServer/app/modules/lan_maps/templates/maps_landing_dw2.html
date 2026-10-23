@@ -219,6 +219,13 @@
             class="search-status">
         </div>
 
+        <button
+            type="button"
+            class="main-button"
+            id="submitRouteButton">
+            Submit route
+        </button>
+
     </div>
 
 </div>
@@ -247,6 +254,9 @@
     const destinationStatus =
         document.getElementById("destinationStatus");
 
+    const submitRouteButton =
+        document.getElementById("submitRouteButton");
+
 
     /*
      * Current Location
@@ -264,22 +274,68 @@
     /*
      * Get Route
      *
-     * First click displays the Source and Destination
-     * fields.
-     *
-     * We are deliberately NOT submitting the route yet.
+     * Display the Source and Destination fields.
+     * The actual route request is submitted to the
+     * separate maps_route.html page.
      */
     getRouteButton.addEventListener("click", function () {
 
-        routeSection.classList.toggle("hidden");
+        routeSection.classList.remove("hidden");
 
-        if (!routeSection.classList.contains("hidden")) {
+        sourceInput.focus();
+
+        getCurrentLocation();
+
+    });
+
+
+    /*
+     * Submit Route
+     *
+     * Pass Source and Destination to the separate
+     * route-display page.
+     */
+    submitRouteButton.addEventListener("click", function () {
+
+        const source =
+            sourceInput.value.trim();
+
+        const destination =
+            destinationInput.value.trim();
+
+
+        if (source.length === 0) {
+
+            sourceStatus.textContent =
+                "Please enter a source.";
 
             sourceInput.focus();
 
-            getCurrentLocation();
+            return;
 
         }
+
+
+        if (destination.length === 0) {
+
+            destinationStatus.textContent =
+                "Please enter a destination.";
+
+            destinationInput.focus();
+
+            return;
+
+        }
+
+
+        const routeUrl =
+            "/lan_maps/route?source=" +
+            encodeURIComponent(source) +
+            "&destination=" +
+            encodeURIComponent(destination);
+
+
+        window.location.href = routeUrl;
 
     });
 
